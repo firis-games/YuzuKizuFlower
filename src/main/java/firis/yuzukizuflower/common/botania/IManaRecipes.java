@@ -6,6 +6,6 @@ import net.minecraft.item.ItemStack;
 
 public interface IManaRecipes {
 	
-	public ManaRecipe getMatchesRecipe(@Nonnull ItemStack stack);
+	public ManaRecipe getMatchesRecipe(@Nonnull ItemStack stack, boolean simulate);
 
 }

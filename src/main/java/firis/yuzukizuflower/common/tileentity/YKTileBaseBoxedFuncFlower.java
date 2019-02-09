@@ -174,7 +174,7 @@ public abstract class YKTileBaseBoxedFuncFlower extends YKTileBaseManaPool {
 			ItemStack stack = this.getStackInSlot(inputSlotIndex);
 			
 			//レシピの確認
-			ManaRecipe recipe = funcFlowerRecipes.getMatchesRecipe(stack);
+			ManaRecipe recipe = funcFlowerRecipes.getMatchesRecipe(stack, true);
 			
 			if (recipe == null) {
 				return;
@@ -214,16 +214,13 @@ public abstract class YKTileBaseBoxedFuncFlower extends YKTileBaseManaPool {
 		}
 		
 		//変換する
-		ManaRecipe recipe = this.resultRecipe;
+		ManaRecipe recipe = funcFlowerRecipes.getMatchesRecipe(this.getStackInSlot(workSlotIndex), false);
 		if (recipe == null) {
-			recipe = funcFlowerRecipes.getMatchesRecipe(this.getStackInSlot(workSlotIndex));
 			//例外
-			if (recipe == null) {
-				this.timer = 0;
-				this.maxTimer = 0;
-				this.removeStackFromSlot(workSlotIndex);
-				return;
-			}
+			this.timer = 0;
+			this.maxTimer = 0;
+			this.removeStackFromSlot(workSlotIndex);
+			return;
 		}				
 		//石を変換
 		ItemStack stack = recipe.getOutputItemStack();
@@ -256,6 +253,11 @@ public abstract class YKTileBaseBoxedFuncFlower extends YKTileBaseManaPool {
 			return false;
 		}
 		
+		//レシピで判断する
+		ManaRecipe recipe = this.funcFlowerRecipes.getMatchesRecipe(stack, true);
+		if (recipe == null) {
+			return false;
+		}
 		return true;
 	}
 		

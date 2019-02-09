@@ -27,7 +27,7 @@ public class RecipesOrechid implements IManaRecipes{
 	 * 一致しない場合はnullを返却する
 	 * @return
 	 */
-	public ManaRecipe getMatchesRecipe(@Nonnull ItemStack stack) {
+	public ManaRecipe getMatchesRecipe(@Nonnull ItemStack stack, boolean simulate) {
 		
 		ManaRecipe recipe = null;
 		
@@ -38,7 +38,7 @@ public class RecipesOrechid implements IManaRecipes{
 			
 			//オアキドレシピ
 			recipe = new ManaRecipe(new ItemStack(Item.getByNameOrId("minecraft:stone"), 1, 0),
-					this.botaniaOrechid(0),
+					this.botaniaOrechid(0, simulate),
 					17500, 100);
 			
 		//ネザーラックの場合
@@ -46,7 +46,7 @@ public class RecipesOrechid implements IManaRecipes{
 				&& stack.getItem().getRegistryName().equals(new ResourceLocation("minecraft:netherrack"))) {
 			//オアキド・イグネムレシピ
 			recipe = new ManaRecipe(new ItemStack(Item.getByNameOrId("minecraft:netherrack"), 1, 0),
-					this.botaniaOrechid(1),
+					this.botaniaOrechid(1, simulate),
 					20000, 100);
 		}
 		return recipe;
@@ -59,7 +59,12 @@ public class RecipesOrechid implements IManaRecipes{
 	 * オアキドとオアキド・イグネムのレシピ変換処理
 	 * @return
 	 */
-	private ItemStack botaniaOrechid(int mode) {
+	private ItemStack botaniaOrechid(int mode, boolean simulate) {
+		
+		//シミュレートonの場合は何もしない
+		if (simulate) {
+			return ItemStack.EMPTY;
+		}
 		
 		List<WeightedRandom.Item> values = new ArrayList<>();
 		Map<String, Integer> map;
@@ -97,7 +102,7 @@ public class RecipesOrechid implements IManaRecipes{
 			return stack;
 		}
 
-		return botaniaOrechid(mode);
+		return botaniaOrechid(mode, simulate);
 	}
 	
 	private static class StringRandomItem extends WeightedRandom.Item {
