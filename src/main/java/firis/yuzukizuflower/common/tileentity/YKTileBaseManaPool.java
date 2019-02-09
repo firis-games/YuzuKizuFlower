@@ -9,6 +9,7 @@ import net.minecraft.entity.Entity;
 import net.minecraft.item.EnumDyeColor;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
+import net.minecraft.util.EnumFacing;
 import net.minecraft.util.ITickable;
 import net.minecraft.util.math.AxisAlignedBB;
 import vazkii.botania.api.mana.IManaPool;
@@ -16,9 +17,13 @@ import vazkii.botania.api.mana.spark.ISparkAttachable;
 import vazkii.botania.api.mana.spark.ISparkEntity;
 import vazkii.botania.common.block.ModBlocks;
 
+/**
+ * マナを利用するブロックのベースクラス
+ * @author computer
+ *
+ */
 public abstract class YKTileBaseManaPool extends YKTileBaseInventory 
 										implements ITickable, IManaPool, ISparkAttachable {
-
 	/**
 	 * マナ最大容量
 	 */
@@ -35,7 +40,6 @@ public abstract class YKTileBaseManaPool extends YKTileBaseInventory
 		return this.mana;
 	}
 	
-	
 	/**
 	 * NBTを読み込みクラスへ反映する処理
 	 */
@@ -47,7 +51,6 @@ public abstract class YKTileBaseManaPool extends YKTileBaseInventory
         this.mana = compound.getInteger("mana");
 
     }
-	
 	
 	/**
 	 * クラスの情報をNBTへ反映する処理
@@ -62,6 +65,18 @@ public abstract class YKTileBaseManaPool extends YKTileBaseInventory
         return compound;
     }
 	
+	/**
+	 * レッドストーン信号を受けているかを判断する
+	 * @return
+	 */
+	public boolean isRedStonePower() {
+		int redstone = 0;
+		for(EnumFacing dir : EnumFacing.VALUES) {
+			int redstoneSide = this.getWorld().getRedstonePower(this.getPos().offset(dir), dir);
+			redstone = Math.max(redstone, redstoneSide);
+		}
+		return redstone > 0;
+	}
 	
 	/**
 	 * ****************************************************************************************************
