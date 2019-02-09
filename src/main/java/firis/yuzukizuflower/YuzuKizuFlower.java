@@ -1,7 +1,5 @@
 package firis.yuzukizuflower;
 
-import javax.annotation.Nullable;
-
 import org.apache.logging.log4j.Logger;
 
 import firis.yuzukizuflower.common.YKGuiHandler;
@@ -22,11 +20,7 @@ import firis.yuzukizuflower.common.tileentity.YKTileManaTank;
 import firis.yuzukizuflower.common.tileentity.YKTileManaTankSpRenderer;
 import net.minecraft.block.Block;
 import net.minecraft.block.material.Material;
-import net.minecraft.block.state.IBlockState;
-import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.block.model.ModelResourceLocation;
-import net.minecraft.client.renderer.color.IBlockColor;
-import net.minecraft.client.renderer.color.IItemColor;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.init.Blocks;
 import net.minecraft.init.Items;
@@ -34,11 +28,6 @@ import net.minecraft.item.Item;
 import net.minecraft.item.ItemBlock;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.ResourceLocation;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.world.ColorizerGrass;
-import net.minecraft.world.IBlockAccess;
-import net.minecraft.world.biome.BiomeColorHelper;
-import net.minecraftforge.client.event.ColorHandlerEvent;
 import net.minecraftforge.client.event.ModelRegistryEvent;
 import net.minecraftforge.client.model.ModelLoader;
 import net.minecraftforge.event.RegistryEvent;
@@ -372,52 +361,5 @@ public class YuzuKizuFlower
     	
     	//マナタンク
     	ClientRegistry.bindTileEntitySpecialRenderer(YKTileManaTank.class, new YKTileManaTankSpRenderer());
-    }
-    
-    /**
-     * バイオームごとの色設定等で利用する
-     * アイテムにやる場合も設定がいるよう
-     */
-    @SubscribeEvent
-    @SideOnly(Side.CLIENT)
-    protected static void ColorHandlerEventBlock(ColorHandlerEvent.Block event)
-    {
-    	//ブロックの色設定？
-    	//net.minecraft.client.renderer.color.BlockColorsと同じ処理を行う
-    	event.getBlockColors().registerBlockColorHandler(new IBlockColor()
-			{
-	    		public int colorMultiplier(IBlockState state, @Nullable IBlockAccess worldIn, @Nullable BlockPos pos, int tintIndex)
-	    		{
-	    			return worldIn != null && pos != null ? BiomeColorHelper.getGrassColorAtPos(worldIn, pos) : ColorizerGrass.getGrassColor(0.5D, 1.0D);
-	    		}
-			},
-			YuzuKizuBlocks.METAL_FRAME, YuzuKizuBlocks.BOXED_PURE_DAISY, YuzuKizuBlocks.BOXED_ENDOFLAME, YuzuKizuBlocks.BOXED_RANNUCARPUS, YuzuKizuBlocks.BOXED_JADED_AMARANTHUS, YuzuKizuBlocks.MANASTEEL_BOXED_ENDOFLAME
-			, YuzuKizuBlocks.BOXED_ORECHID
-		);
-    }
-    
-    /**
-     * バイオームごとの色設定等で利用する
-     * アイテムにやる場合も設定がいるよう
-     */
-    @SubscribeEvent
-    @SideOnly(Side.CLIENT)
-    protected static void ColorHandlerEventItem(ColorHandlerEvent.Item event)
-    {
-    	//ブロックの色設定？
-    	//net.minecraft.client.renderer.color.BlockColorsと同じ処理を行う
-    	event.getItemColors().registerItemColorHandler(new IItemColor()
-			{
-	    		@Override
-	    		public int colorMultiplier(ItemStack stack, int tintIndex)
-	            {
-	                @SuppressWarnings("deprecation")
-					IBlockState iblockstate = ((ItemBlock)stack.getItem()).getBlock().getStateFromMeta(stack.getMetadata());
-	                return Minecraft.getMinecraft().getBlockColors().colorMultiplier(iblockstate, (IBlockAccess)null, (BlockPos)null, tintIndex);
-	            }
-			},
-			YuzuKizuBlocks.METAL_FRAME, YuzuKizuBlocks.BOXED_PURE_DAISY, YuzuKizuBlocks.BOXED_ENDOFLAME, YuzuKizuBlocks.BOXED_RANNUCARPUS, YuzuKizuBlocks.BOXED_JADED_AMARANTHUS, YuzuKizuBlocks.MANASTEEL_BOXED_ENDOFLAME
-			, YuzuKizuBlocks.BOXED_ORECHID
-		);
     }
 }
