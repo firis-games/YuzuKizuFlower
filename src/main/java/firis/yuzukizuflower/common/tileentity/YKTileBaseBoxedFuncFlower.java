@@ -241,66 +241,56 @@ public abstract class YKTileBaseBoxedFuncFlower extends YKTileBaseManaPool {
 	}
 	
 	
-	
-	//**********
-	
+	//******************************************************************************************
+	// アイテムの入出力の制御
 	//******************************************************************************************
 	
 	/**
-	 * 対象スロットの許可不許可チェック
+	 * 対象スロットの使用許可
 	 */
 	@Override
 	public boolean isItemValidForSlot(int index, ItemStack stack) {
 		
-		if (index != 0) {
+		//inputスロット以外は不許可
+		if (index != this.inputSlotIndex) {
 			return false;
 		}
+		
 		return true;
 	}
-	
+		
 	@Override
     public boolean hasCapability(net.minecraftforge.common.capabilities.Capability<?> capability, @Nullable net.minecraft.util.EnumFacing facing)
     {
 		if (capability == CapabilityItemHandler.ITEM_HANDLER_CAPABILITY) {
 			return true;
 		}
-		
 		return super.hasCapability(capability, facing);
     }
 
 	net.minecraftforge.items.IItemHandler handlerInv = new net.minecraftforge.items.wrapper.InvWrapper(this) {
-		@Override
-	    @Nonnull
-	    public ItemStack insertItem(int slot, @Nonnull ItemStack stack, boolean simulate)
-	    {
-			//net.minecraftforge.items.wrapper.InvWrapperのスロットのチェックはisItemValidForSlotを利用している
-			return super.insertItem(slot, stack, simulate);
-	    }
+		
 		@Override
 	    @Nonnull
 	    public ItemStack extractItem(int slot, int amount, boolean simulate)
 	    {
-			//出力を拒否
-			//decrStackSizeで制御できるようなのでそっちを確認する
-			//0だけ出力拒否
-			if (slot == 0) {
+			YKTileBaseBoxedFuncFlower tile = (YKTileBaseBoxedFuncFlower) this.getInv();
+			
+			//Capability経由はoutputスロットのみ許可
+			if (tile.outputSlotIndex.indexOf(slot) < 0) {
 				return ItemStack.EMPTY;
 			}
 			return super.extractItem(slot, amount, simulate);
 	    }
 	};
+	
 	@Override
     @Nullable
     public <T> T getCapability(net.minecraftforge.common.capabilities.Capability<T> capability, @Nullable net.minecraft.util.EnumFacing facing)
     {
     	if (capability == CapabilityItemHandler.ITEM_HANDLER_CAPABILITY) {
-    	    /*
-    		@SuppressWarnings("unchecked")をつかわない書き方が下記
-    		return (T) handlerInv;
-    	    */
 			return CapabilityItemHandler.ITEM_HANDLER_CAPABILITY.cast(handlerInv);
 		}
-    	
     	return super.getCapability(capability, facing);
     
     }
