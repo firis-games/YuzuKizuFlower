@@ -1,0 +1,16 @@
+[
+{
+  "modid": "yuzukizuflower",
+  "name": "YuzuKizu Flower",
+  "description": "Botania addon mod.",
+  "version": "${version}",
+  "mcversion": "${mcversion}",
+  "url": "",
+  "updateUrl": "",
+  "authorList": ["Yuzuki Yukari", "Kizuna Akari"],
+  "credits": "",
+  "logoFile": "",
+  "screenshots": [],
+  "dependencies": []
+}
+]

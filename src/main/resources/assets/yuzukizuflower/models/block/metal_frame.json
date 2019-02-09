@@ -1,0 +1,133 @@
+{
+    "parent": "block/block",
+    "elements": [
+        {   "--comment" : "土台",
+        	"from": [ 0, 0, 0 ],
+            "to": [ 16, 2, 16 ],
+            "faces": {
+                "down":  { "texture": "#base", "cullface": "down" },
+                "up":    { "texture": "#base", "cullface": "up"},
+                "north": { "texture": "#base", "cullface": "north" },
+                "south": { "texture": "#base", "cullface": "south" },
+                "west":  { "texture": "#base", "cullface": "west" },
+                "east":  { "texture": "#base", "cullface": "east" }
+            }
+        },
+        {   "--comment" : "支柱1",
+        	"from": [ 0, 2, 0 ],
+            "to": [ 2, 14, 2 ],
+            "faces": {
+                "down":  { "texture": "#base", "cullface": "down" },
+                "up":    { "texture": "#base", "cullface": "up"},
+                "north": { "texture": "#base", "cullface": "north" },
+                "south": { "texture": "#base", "cullface": "south" },
+                "west":  { "texture": "#base", "cullface": "west" },
+                "east":  { "texture": "#base", "cullface": "east" }
+            }
+        },
+        {   "--comment" : "支柱2",
+        	"from": [ 14, 2, 0 ],
+            "to": [ 16, 14, 2 ],
+            "faces": {
+                "down":  { "texture": "#base", "cullface": "down" },
+                "up":    { "texture": "#base", "cullface": "up"},
+                "north": { "texture": "#base", "cullface": "north" },
+                "south": { "texture": "#base", "cullface": "south" },
+                "west":  { "texture": "#base", "cullface": "west" },
+                "east":  { "texture": "#base", "cullface": "east" }
+            }
+        },
+        {   "--comment" : "支柱3",
+        	"from": [ 0, 2, 14 ],
+            "to": [ 2, 14, 16 ],
+            "faces": {
+                "down":  { "texture": "#base", "cullface": "down" },
+                "up":    { "texture": "#base", "cullface": "up"},
+                "north": { "texture": "#base", "cullface": "north" },
+                "south": { "texture": "#base", "cullface": "south" },
+                "west":  { "texture": "#base", "cullface": "west" },
+                "east":  { "texture": "#base", "cullface": "east" }
+            }
+        },
+        {   "--comment" : "支柱4",
+        	"from": [ 14, 2, 14 ],
+            "to": [ 16, 14, 16 ],
+            "faces": {
+                "down":  { "texture": "#base", "cullface": "down" },
+                "up":    { "texture": "#base", "cullface": "up"},
+                "north": { "texture": "#base", "cullface": "north" },
+                "south": { "texture": "#base", "cullface": "south" },
+                "west":  { "texture": "#base", "cullface": "west" },
+                "east":  { "texture": "#base", "cullface": "east" }
+            }
+        },
+        {   "--comment" : "壁面ガラス1",
+        	"from": [ 2, 2, 0 ],
+            "to": [ 14, 14, 2 ],
+            "faces": {
+                "down":  { "texture": "#cover", "cullface": "down" },
+                "up":    { "texture": "#cover", "cullface": "up"},
+                "north": { "texture": "#cover", "cullface": "north" },
+                "south": { "texture": "#cover", "cullface": "south" },
+                "west":  { "texture": "#cover", "cullface": "west" },
+                "east":  { "texture": "#cover", "cullface": "east" }
+            }
+        },
+        {   "--comment" : "壁面ガラス2",
+	       	"from": [ 0, 2, 2 ],
+            "to": [ 2, 14, 14 ],
+            "faces": {
+                "down":  { "texture": "#cover", "cullface": "down" },
+                "up":    { "texture": "#cover", "cullface": "up"},
+                "north": { "texture": "#cover", "cullface": "north" },
+                "south": { "texture": "#cover", "cullface": "south" },
+                "west":  { "texture": "#cover", "cullface": "west" },
+                "east":  { "texture": "#cover", "cullface": "east" }
+            }
+        },
+        {   "--comment" : "壁面ガラス3",
+	       	"from": [ 14, 2, 2 ],
+            "to": [ 16, 14, 14 ],
+            "faces": {
+                "down":  { "texture": "#cover", "cullface": "down" },
+                "up":    { "texture": "#cover", "cullface": "up"},
+                "north": { "texture": "#cover", "cullface": "north" },
+                "south": { "texture": "#cover", "cullface": "south" },
+                "west":  { "texture": "#cover", "cullface": "west" },
+                "east":  { "texture": "#cover", "cullface": "east" }
+            }
+        },
+        {   "--comment" : "壁面ガラス4",
+	       	"from": [ 2, 2, 14 ],
+            "to": [ 14, 14, 16 ],
+            "faces": {
+                "down":  { "texture": "#cover", "cullface": "down" },
+                "up":    { "texture": "#cover", "cullface": "up"},
+                "north": { "texture": "#cover", "cullface": "north" },
+                "south": { "texture": "#cover", "cullface": "south" },
+                "west":  { "texture": "#cover", "cullface": "west" },
+                "east":  { "texture": "#cover", "cullface": "east" }
+            }
+        },
+        {   "--comment" : "天板",
+        	"from": [ 0, 14, 0 ],
+            "to": [ 16, 16, 16 ],
+            "faces": {
+                "down":  { "texture": "#base", "cullface": "down" },
+                "up":    { "texture": "#base", "cullface": "up"},
+                "north": { "texture": "#base", "cullface": "north" },
+                "south": { "texture": "#base", "cullface": "south" },
+                "west":  { "texture": "#base", "cullface": "west" },
+                "east":  { "texture": "#base", "cullface": "east" }
+            }
+        }
+    ],
+    "textures": {
+    	"particle":"botania:blocks/flower_misc_pure_daisy",
+        "base":"botania:blocks/storage0",
+        "grass":"minecraft:blocks/grass_top",
+        "cover":"minecraft:blocks/glass_light_blue",
+        "cover1":"botania:blocks/mana_glass",
+        "cross":"botania:blocks/flower_misc_pure_daisy"
+    }
+}

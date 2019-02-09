@@ -1,0 +1,96 @@
+{
+    "parent": "block/block",
+    "elements": [
+        {   "--comment" : "土台",
+        	"from": [ 1, 0, 1 ],
+            "to": [ 15, 2, 15 ],
+            "faces": {
+                "down":  { "texture": "#base", "cullface": "down" },
+                "up":    { "texture": "#base", "cullface": "up"},
+                "north": { "texture": "#base", "cullface": "north" },
+                "south": { "texture": "#base", "cullface": "south" },
+                "west":  { "texture": "#base", "cullface": "west" },
+                "east":  { "texture": "#base", "cullface": "east" }
+            }
+        },
+        {   "--comment" : "天板",
+        	"from": [ 1, 14, 1 ],
+            "to": [ 15, 16, 15 ],
+            "faces": {
+                "down":  { "texture": "#base", "cullface": "down" },
+                "up":    { "texture": "#base", "cullface": "up"},
+                "north": { "texture": "#base", "cullface": "north" },
+                "south": { "texture": "#base", "cullface": "south" },
+                "west":  { "texture": "#base", "cullface": "west" },
+                "east":  { "texture": "#base", "cullface": "east" }
+            }
+        },
+        {   "--comment" : "支柱1",
+        	"from": [ 1, 2, 1 ],
+            "to": [ 3, 14, 3 ],
+            "faces": {
+                "down":  { "texture": "#base", "cullface": "down" },
+                "up":    { "texture": "#base", "cullface": "up"},
+                "north": { "texture": "#base", "cullface": "north" },
+                "south": { "texture": "#base", "cullface": "south" },
+                "west":  { "texture": "#base", "cullface": "west" },
+                "east":  { "texture": "#base", "cullface": "east" }
+            }
+        },
+        {   "--comment" : "支柱2",
+        	"from": [ 13, 2, 1 ],
+            "to": [ 15, 14, 3 ],
+            "faces": {
+                "down":  { "texture": "#base", "cullface": "down" },
+                "up":    { "texture": "#base", "cullface": "up"},
+                "north": { "texture": "#base", "cullface": "north" },
+                "south": { "texture": "#base", "cullface": "south" },
+                "west":  { "texture": "#base", "cullface": "west" },
+                "east":  { "texture": "#base", "cullface": "east" }
+            }
+        },
+        {   "--comment" : "支柱3",
+        	"from": [ 1, 2, 13 ],
+            "to": [ 3, 14, 15 ],
+            "faces": {
+                "down":  { "texture": "#base", "cullface": "down" },
+                "up":    { "texture": "#base", "cullface": "up"},
+                "north": { "texture": "#base", "cullface": "north" },
+                "south": { "texture": "#base", "cullface": "south" },
+                "west":  { "texture": "#base", "cullface": "west" },
+                "east":  { "texture": "#base", "cullface": "east" }
+            }
+        },
+        {   "--comment" : "支柱4",
+        	"from": [ 13, 2, 13 ],
+            "to": [ 15, 14, 15 ],
+            "faces": {
+                "down":  { "texture": "#base", "cullface": "down" },
+                "up":    { "texture": "#base", "cullface": "up"},
+                "north": { "texture": "#base", "cullface": "north" },
+                "south": { "texture": "#base", "cullface": "south" },
+                "west":  { "texture": "#base", "cullface": "west" },
+                "east":  { "texture": "#base", "cullface": "east" }
+            }
+        },
+        {   "--comment" : "壁面ガラス1",
+        	"from": [ 3, 2, 1 ],
+            "to": [ 12, 14, 1 ],
+            "faces": {
+                "down":  { "texture": "#cover", "cullface": "down" },
+                "up":    { "texture": "#cover", "cullface": "up"},
+                "north": { "texture": "#cover", "cullface": "north" },
+                "south": { "texture": "#cover", "cullface": "south" },
+                "west":  { "texture": "#cover", "cullface": "west" },
+                "east":  { "texture": "#cover", "cullface": "east" }
+            }
+        }
+    ],
+    "textures": {
+    	"particle":"botania:blocks/flower_misc_pure_daisy",
+        "base":"minecraft:blocks/iron_block",
+        "grass":"minecraft:blocks/grass_top",
+        "cover":"minecraft:blocks/glass",
+        "cross":"botania:blocks/flower_misc_pure_daisy"
+    }
+}
