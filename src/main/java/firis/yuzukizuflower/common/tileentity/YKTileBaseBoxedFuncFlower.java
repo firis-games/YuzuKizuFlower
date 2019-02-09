@@ -1,9 +1,11 @@
 package firis.yuzukizuflower.common.tileentity;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
-import firis.yuzukizuflower.common.botania.BotaniaHelper;
 import firis.yuzukizuflower.common.botania.IManaRecipes;
 import firis.yuzukizuflower.common.botania.ManaRecipe;
 import net.minecraft.item.ItemStack;
@@ -41,11 +43,6 @@ public abstract class YKTileBaseBoxedFuncFlower extends YKTileBaseManaPool {
 	protected int manaCost = 0;
 	
 	/**
-	 * 素材アイテム
-	 */
-	protected ItemStack inputItemStack = ItemStack.EMPTY.copy();
-	
-	/**
 	 * 変換レシピ
 	 */
 	protected ManaRecipe resultRecipe = null;
@@ -60,9 +57,6 @@ public abstract class YKTileBaseBoxedFuncFlower extends YKTileBaseManaPool {
 	    this.maxTimer = compound.getInteger("maxTimer");
 	    this.timer = compound.getInteger("timer");
 	    this.manaCost = compound.getInteger("manaCost");
-	    
-	    NBTTagCompound itemNbt = (NBTTagCompound) compound.getTag("inputItemStack");
-	    this.inputItemStack = new ItemStack(itemNbt);
     }
 	
 	/**
@@ -77,72 +71,68 @@ public abstract class YKTileBaseBoxedFuncFlower extends YKTileBaseManaPool {
         compound.setInteger("timer", this.timer);
         compound.setInteger("manaCost", this.manaCost);
         
-        NBTTagCompound itemNbt = new NBTTagCompound();
-        inputItemStack.writeToNBT(itemNbt);
-        compound.setTag("inputItemStack", itemNbt);
-
         return compound;
     }
 	
+	/**
+	 * inputスロットのindex
+	 */
+	protected Integer inputSlotIndex = 0;
+
+	/**
+	 * outputスロットのindex
+	 */
+	protected List<Integer> outputSlotIndex = new ArrayList<Integer>();
+	
+	/**
+	 * workスロットのindex
+	 */
+	protected Integer workSlotIndex = 0;
 	
 	
 	/**
-	 * 空きスロットにアイテムをいれる
+	 * 空きoutputスロットにアイテムを入れる
 	 * @param stack
 	 * @return
 	 */
-	public boolean insertInventoryItemStack(ItemStack stack) {
+	public boolean insertOutputSlotItemStack(ItemStack stack) {
 		
 		boolean ret = false;
 		
-		int start = 1;
-		int end = this.getSizeInventory();
-		
-		//今回は全部対象だから普通にループする
-		//インベントリの中を上からループでまわして挿入できるかを確認する
-		//1週目は空スロットは無視する
-		for (int i = start; i < end; i++) {
-			ItemStack inv = this.getStackInSlot(i);
-			if (inv.isEmpty()) {
-				//空スロットは無視する
-				////空の場合はそのまま挿入する
-				//this.setInventorySlotContents(i, stack.copy());
-				//ret = true;
-				//break;
-			} else if (ItemStack.areItemsEqual(stack, inv)
-					&& inv.getCount() + stack.getCount() <= inv.getMaxStackSize()) {
+		for(int idx : outputSlotIndex) {
+			ItemStack inv = this.getStackInSlot(idx);
+			 if (ItemStack.areItemsEqual(stack, inv)
+						&& inv.getCount() + stack.getCount() <= inv.getMaxStackSize()) {
 				//同じアイテムかつ空き容量が1件以上ある場合
 				inv.setCount(inv.getCount() + stack.getCount());
-				this.setInventorySlotContents(i, inv.copy());
+				this.setInventorySlotContents(idx, inv.copy());
 				ret = true;
 				break;
 			}
 		}
-		if (!ret) {
-			for (int i = start; i < end; i++) {
-				ItemStack inv = this.getStackInSlot(i);
-				if (inv.isEmpty()) {
-					//空の場合はそのまま挿入する
-					this.setInventorySlotContents(i, stack.copy());
-					ret = true;
-					break;
-				}
+		if(ret) return ret;
+		
+		for(int idx : outputSlotIndex) {
+			ItemStack inv = this.getStackInSlot(idx);
+			if (inv.isEmpty()) {
+				//空の場合はそのまま挿入する
+				this.setInventorySlotContents(idx, stack.copy());
+				ret = true;
+				break;
 			}
 		}
-		
 		
 		return ret;
 	}
 	
 	/**
-	 * すべてのスロットがうまったらっていう判断
-	 * 最後尾だけ除外、これはちょっといろいろ変えるつもり
+	 * outputスロットがすべて埋まっているかの判断を行う
 	 * @return
 	 */
-	public boolean isInventoryFill() {
+	public boolean isFillOutputSlot() {
 		
-		for (int i = 1; i < this.getSizeInventory(); i++) {
-			ItemStack itemstack = this.getStackInSlot(i);
+		for(int idx : outputSlotIndex) {
+			ItemStack itemstack = this.getStackInSlot(idx);
 			if (itemstack.isEmpty())
             {
                 return false;
@@ -164,11 +154,16 @@ public abstract class YKTileBaseBoxedFuncFlower extends YKTileBaseManaPool {
 			return;
 		}
 		
+		//マナが0の場合は稼動しない
+		if (this.mana == 0) {
+			return;
+		}
+		
 		//実行状態の確認
-		if (this.timer == 0) {
+		if (getStackInSlot(workSlotIndex).isEmpty()) {
 			
 			//outputスロットの容量を確認
-			if (this.isInventoryFill()) {
+			if (this.isFillOutputSlot()) {
 				if (this.timer != 0) {
 					this.timer = 0;
 					this.playerServerSendPacket();
@@ -176,7 +171,7 @@ public abstract class YKTileBaseBoxedFuncFlower extends YKTileBaseManaPool {
 				return;
 			}
 			
-			ItemStack stack = this.getStackInSlot(0);
+			ItemStack stack = this.getStackInSlot(inputSlotIndex);
 			
 			//レシピの確認
 			ManaRecipe recipe = funcFlowerRecipes.getMatchesRecipe(stack);
@@ -188,13 +183,15 @@ public abstract class YKTileBaseBoxedFuncFlower extends YKTileBaseManaPool {
 			//レシピの数値を設定
 			this.manaCost = recipe.getMana();
 			this.maxTimer = recipe.getTime();
-			this.inputItemStack = recipe.getInputItemStack();
+			
+			//workSlotへ設定
+			this.setInventorySlotContents(workSlotIndex, recipe.getInputItemStack());
 			
 			resultRecipe = recipe;
 			
 			//アイテムスロットの制御
 			stack.shrink(1);
-			this.setInventorySlotContents(0, stack);
+			this.setInventorySlotContents(inputSlotIndex, stack);
 			this.playerServerSendPacket();
 			
 		}
@@ -219,23 +216,25 @@ public abstract class YKTileBaseBoxedFuncFlower extends YKTileBaseManaPool {
 		//変換する
 		ManaRecipe recipe = this.resultRecipe;
 		if (recipe == null) {
-			recipe = funcFlowerRecipes.getMatchesRecipe(this.inputItemStack);
+			recipe = funcFlowerRecipes.getMatchesRecipe(this.getStackInSlot(workSlotIndex));
 			//例外
 			if (recipe == null) {
 				this.timer = 0;
 				this.maxTimer = 0;
-				this.inputItemStack = ItemStack.EMPTY.copy();
+				this.removeStackFromSlot(workSlotIndex);
 				return;
 			}
 		}				
 		//石を変換
 		ItemStack stack = recipe.getOutputItemStack();
 		
-		this.insertInventoryItemStack(stack);
+		this.insertOutputSlotItemStack(stack);
+		
 		//タイマーリセット
 		this.timer = 0;
 		this.maxTimer = 0;
-		this.inputItemStack = ItemStack.EMPTY.copy();
+		this.removeStackFromSlot(workSlotIndex);
+		
 		//同期をとる
 		this.playerServerSendPacket();
 		

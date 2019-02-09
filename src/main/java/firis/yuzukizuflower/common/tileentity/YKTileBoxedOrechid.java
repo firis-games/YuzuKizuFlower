@@ -1,9 +1,12 @@
 package firis.yuzukizuflower.common.tileentity;
 
+import java.util.ArrayList;
+import java.util.Arrays;
+
 import firis.yuzukizuflower.common.botania.BotaniaHelper;
 
 /**
- * マナプール系処理
+ * 箱入りオアキド
  * @author computer
  *
  */
@@ -14,11 +17,20 @@ public class YKTileBoxedOrechid extends YKTileBaseBoxedFuncFlower {
 		this.maxMana = 10000;
 		this.funcFlowerRecipes = BotaniaHelper.recipesOrechid;
 		
+		//inputスロット
+		this.inputSlotIndex = 0;
+		
+		//outputスロット
+		this.outputSlotIndex = new ArrayList<Integer>(
+				Arrays.asList(1, 2, 3, 4, 5, 6, 7, 8, 9));
+		
+		//workスロット
+		this.workSlotIndex = 10;	
 	}
 	
 	@Override
 	public int getSizeInventory() {
-		return 10;
+		return 11;
 	}
 
 	
