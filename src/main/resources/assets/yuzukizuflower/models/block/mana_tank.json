@@ -123,11 +123,11 @@
         }
     ],
     "textures": {
-    	"particle":"botania:blocks/flower_misc_pure_daisy",
+    	"particle":"minecraft:blocks/iron_block",
         "base":"minecraft:blocks/iron_block",
         "grass":"minecraft:blocks/grass_top",
         "cover":"minecraft:blocks/glass",
         "cover1":"minecraft:blocks/glass",
-        "cross":"botania:blocks/flower_misc_pure_daisy"
+        "cross":"minecraft:blocks/iron_block"
     }
 }
