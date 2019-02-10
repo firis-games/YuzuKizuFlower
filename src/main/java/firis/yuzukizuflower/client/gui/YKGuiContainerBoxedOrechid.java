@@ -22,5 +22,9 @@ public class YKGuiContainerBoxedOrechid extends YKGuiContainerBaseBoxedFuncFlowe
 		//GUIタイトル
 		this.guiTitle = "gui.boxed_orechid.name";
 		
+		//GUI矢印
+		this.guiArrowX = 73;
+		this.guiArrowY = 41;
+		
 	}
 }

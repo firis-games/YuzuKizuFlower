@@ -167,7 +167,7 @@ public abstract class YKTileBaseBoxedFuncFlower extends YKTileBaseManaPool {
 		}
 		
 		//実行状態の確認
-		if (getStackInSlot(workSlotIndex).isEmpty()) {
+		if (getStackWorkSlot().isEmpty()) {
 			
 			//outputスロットの容量を確認
 			if (this.isFillOutputSlot()) {
@@ -178,7 +178,7 @@ public abstract class YKTileBaseBoxedFuncFlower extends YKTileBaseManaPool {
 				return;
 			}
 			
-			ItemStack stack = this.getStackInSlot(inputSlotIndex);
+			ItemStack stack = getStackInputSlot();
 			
 			//レシピの確認
 			ManaRecipe recipe = funcFlowerRecipes.getMatchesRecipe(stack, true);
@@ -191,14 +191,10 @@ public abstract class YKTileBaseBoxedFuncFlower extends YKTileBaseManaPool {
 			this.manaCost = recipe.getMana();
 			this.maxTimer = recipe.getTime();
 			
-			//workSlotへ設定
-			this.setInventorySlotContents(workSlotIndex, recipe.getInputItemStack());
-			
 			resultRecipe = recipe;
 			
-			//アイテムスロットの制御
-			stack.shrink(1);
-			this.setInventorySlotContents(inputSlotIndex, stack);
+			//入力とworkスロットを制御する
+			this.shrinkStackInputSlotToWorkSlot(recipe);
 			this.playerServerSendPacket();
 			
 		}
@@ -220,28 +216,85 @@ public abstract class YKTileBaseBoxedFuncFlower extends YKTileBaseManaPool {
 			return;
 		}
 		
-		//変換する
-		ManaRecipe recipe = funcFlowerRecipes.getMatchesRecipe(this.getStackInSlot(workSlotIndex), false);
-		if (recipe == null) {
-			//例外
-			this.timer = 0;
-			this.maxTimer = 0;
-			this.removeStackFromSlot(workSlotIndex);
-			return;
-		}				
-		//石を変換
-		ItemStack stack = recipe.getOutputItemStack();
-		
+		//レシピの変換結果を取得する
+		ItemStack stack = getRecipesResult();
 		this.insertOutputSlotItemStack(stack);
 		
-		//タイマーリセット
-		this.timer = 0;
-		this.maxTimer = 0;
-		this.removeStackFromSlot(workSlotIndex);
+		//処理状態を初期化
+		clearRecipeWork();
 		
 		//同期をとる
 		this.playerServerSendPacket();
 		
+	}
+	
+	/**
+	 * 入力側のItemStackを取得する
+	 * @return
+	 */
+	public ItemStack getStackInputSlot() {
+		if (inputSlotIndex == -1) {
+			return ItemStack.EMPTY.copy();
+		}
+		return getStackInSlot(inputSlotIndex);
+	}
+	
+	/**
+	 * 入力側のItemStackを取得する
+	 * @return
+	 */
+	public ItemStack getStackWorkSlot() {
+		if (workSlotIndex == -1) {
+			return ItemStack.EMPTY.copy();
+		}
+		return getStackInSlot(workSlotIndex);
+	}
+	
+	/**
+	 * recipeに設定された入力側のItemStackをWorkスロットへ移動する
+	 */
+	public void shrinkStackInputSlotToWorkSlot(ManaRecipe recipe) {
+		
+		ItemStack stack = getStackInputSlot();
+		
+		//inputとworkが設定されていない場合は何もしない
+		if (inputSlotIndex == -1
+				&& workSlotIndex == -1) {
+			return;
+		}
+		
+		//workSlotへ設定
+		this.setInventorySlotContents(workSlotIndex, recipe.getInputItemStack());
+
+		stack.shrink(recipe.getInputItemStack().getCount());
+		this.setInventorySlotContents(inputSlotIndex, stack);
+	}
+	
+	/**
+	 * 処理状態を初期化する
+	 */
+	public void clearRecipeWork() {
+		//タイマーリセット
+		this.timer = 0;
+		this.maxTimer = 0;
+		if (workSlotIndex != -1) {
+			this.removeStackFromSlot(workSlotIndex);			
+		}
+	}
+	
+	/**
+	 * レシピの出力結果を取得する
+	 */
+	public ItemStack getRecipesResult() {
+		
+		ManaRecipe recipe = funcFlowerRecipes.getMatchesRecipe(this.getStackWorkSlot(), false);
+		if (recipe == null) {
+			//例外
+			clearRecipeWork();
+			return null;
+		}
+		
+		return recipe.getOutputItemStack();		
 	}
 	
 	/**
@@ -334,7 +387,7 @@ public abstract class YKTileBaseBoxedFuncFlower extends YKTileBaseManaPool {
 		}
 		return true;
 	}
-		
+	
 	@Override
     public boolean hasCapability(net.minecraftforge.common.capabilities.Capability<?> capability, @Nullable net.minecraft.util.EnumFacing facing)
     {

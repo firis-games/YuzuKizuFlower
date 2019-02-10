@@ -31,6 +31,12 @@ public abstract class YKGuiContainerBaseBoxedFuncFlower extends GuiContainer {
 	protected int guiHeight = 166;
 	
 	/**
+	 * Gui矢印の位置
+	 */
+	protected int guiArrowX = 0;
+	protected int guiArrowY = 0;
+	
+	/**
 	 * GUIタイトル
 	 */
 	protected String guiTitle = "";
@@ -64,7 +70,7 @@ public abstract class YKGuiContainerBaseBoxedFuncFlower extends GuiContainer {
         
         //矢印の描画
         int l = this.getProgressScaled(24);
-        this.drawTexturedModalRect(x + 73, y + 41, 192, 0, l + 1, 16);
+        this.drawTexturedModalRect(x + guiArrowX, y + guiArrowY, 192, 0, l + 1, 16);
 
         //マナゲージを描画する
         this.drawManaGage(x + 16, y + 23);

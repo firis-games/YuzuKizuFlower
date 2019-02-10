@@ -243,10 +243,7 @@ public class YuzuKizuFlower
         event.getRegistry().register(
                 new YKBlockBoxedJadedAmaranthus()
                 .setRegistryName(MODID, "boxed_jaded_amaranthus")
-                .setCreativeTab(YuzuKizuCreativeTab)
                 .setUnlocalizedName("boxed_jaded_amaranthus")
-                .setHardness(0.5F)
-                .setResistance(1.0F)
         );
         
         // 箱入り
