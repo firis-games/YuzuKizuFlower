@@ -259,14 +259,11 @@ public class YuzuKizuFlower
                 .setResistance(1.0F)
         );
         
-        // 箱入りオアチド
+        // 箱入りオアキド
         event.getRegistry().register(
                 new YKBlockBoxedOrechid()
                 .setRegistryName(MODID, "boxed_orechid")
-                .setCreativeTab(YuzuKizuCreativeTab)
                 .setUnlocalizedName("boxed_orechid")
-                .setHardness(0.5F)
-                .setResistance(1.0F)
         );
         
         
@@ -313,7 +310,7 @@ public class YuzuKizuFlower
     			.setRegistryName(MODID, "manasteel_boxed_endoflame")
     	);
     	
-    	// 箱入りオアチド
+    	// 箱入りオアキド
     	event.getRegistry().register(new ItemBlock(YuzuKizuBlocks.BOXED_ORECHID)
     			.setRegistryName(MODID, "boxed_orechid")
     	);
@@ -354,7 +351,7 @@ public class YuzuKizuFlower
     	ModelLoader.setCustomModelResourceLocation(YuzuKizuItems.MANASTEEL_BOXED_ENDOFLAME, 0,
     			new ModelResourceLocation(YuzuKizuItems.MANASTEEL_BOXED_ENDOFLAME.getRegistryName(), "inventory"));
     	
-    	// 箱入りオアチド
+    	// 箱入りオアキド
     	ModelLoader.setCustomModelResourceLocation(YuzuKizuItems.BOXED_ORECHID, 0,
     			new ModelResourceLocation(YuzuKizuItems.BOXED_ORECHID.getRegistryName(), "inventory"));
     	

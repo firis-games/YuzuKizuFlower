@@ -1,5 +1,6 @@
 package firis.yuzukizuflower.common.tileentity;
 
+import java.awt.Color;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -11,6 +12,7 @@ import firis.yuzukizuflower.common.botania.ManaRecipe;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraftforge.items.CapabilityItemHandler;
+import vazkii.botania.common.Botania;
 
 /**
  * 機能系の箱入りお花ベースクラス
@@ -145,7 +147,12 @@ public abstract class YKTileBaseBoxedFuncFlower extends YKTileBaseManaPool {
 	public void update() {
 		
 		//クライアントは処理をしない
-		if (this.getWorld().isRemote) {
+		if (this.getWorld().isRemote
+				&& isActive()) {
+			
+			//パーティクル判定
+			this.clientSpawnParticle();
+			
 			return;
 		}
 		
@@ -235,6 +242,73 @@ public abstract class YKTileBaseBoxedFuncFlower extends YKTileBaseManaPool {
 		//同期をとる
 		this.playerServerSendPacket();
 		
+	}
+	
+	/**
+	 * ランダムでパーティクルを表示する
+	 */
+	public void clientSpawnParticle() {
+		//クライアントの場合
+		if(this.getWorld().isRemote) {
+			
+			double particleChance = 0.85F;
+			
+			Color color = new Color(0x818181);
+			//color = new Color(0x00C6FF);
+			
+			if(Math.random() > particleChance) {
+				/*
+				//お花のパーティクル
+				BotaniaAPI.internalHandler.sparkleFX(this.getWorld(), 
+						this.getPos().getX() + 0.3 + Math.random() * 0.5, 
+						this.getPos().getY() + 0.5 + Math.random() * 0.5, 
+						this.getPos().getZ() + 0.3 + Math.random() * 0.5, 
+						color.getRed() / 255F, 
+						color.getGreen() / 255F, 
+						color.getBlue() / 255F, 
+						(float) Math.random() * 0.5F, 
+						10);
+				*/
+				//マナプールと同じパーティクル
+				Botania.proxy.wispFX(
+						pos.getX() + 0.3 + Math.random() * 0.5, 
+						pos.getY() + 0.6 + Math.random() * 0.25, 
+						pos.getZ() + Math.random(), 
+						color.getRed() / 255F, 
+						color.getGreen() / 255F, 
+						color.getBlue() / 255F, 
+						(float) Math.random() / 10F, 
+						(float) -Math.random() / 120F, 
+						1F);
+			}
+		}
+	}
+	
+	/**
+	 * お花が稼動状態か判断する
+	 * @return
+	 */
+	public boolean isActive() {
+		
+		//レッドストーン入力がある場合は停止状態
+		if(isRedStonePower()) {
+			return false;
+		}
+		
+		//マナが足りない場合は停止状態
+		if (this.maxTimer != 0) {
+			int mana = this.manaCost / this.maxTimer;
+			if (this.getMana() < mana) {
+				return false;
+			}
+		}
+		
+		//timerが0の場合は停止状態
+		if (this.timer == 0) {
+			return false;
+		}
+		
+		return true;
 	}
 	
 	
