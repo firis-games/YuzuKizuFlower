@@ -2,6 +2,7 @@ package firis.yuzukizuflower;
 
 import org.apache.logging.log4j.Logger;
 
+import firis.yuzukizuflower.client.tesr.YKTileManaTankSpRenderer;
 import firis.yuzukizuflower.common.YKGuiHandler;
 import firis.yuzukizuflower.common.block.YKBlock;
 import firis.yuzukizuflower.common.block.YKBlockBoxedEndoflame;
@@ -17,7 +18,6 @@ import firis.yuzukizuflower.common.tileentity.YKTileBoxedOrechid;
 import firis.yuzukizuflower.common.tileentity.YKTileBoxedPureDaisy;
 import firis.yuzukizuflower.common.tileentity.YKTileBoxedRannucarpus;
 import firis.yuzukizuflower.common.tileentity.YKTileManaTank;
-import firis.yuzukizuflower.common.tileentity.YKTileManaTankSpRenderer;
 import net.minecraft.block.Block;
 import net.minecraft.block.material.Material;
 import net.minecraft.client.renderer.block.model.ModelResourceLocation;

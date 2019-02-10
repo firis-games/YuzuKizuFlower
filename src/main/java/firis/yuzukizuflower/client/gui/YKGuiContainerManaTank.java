@@ -3,8 +3,7 @@ package firis.yuzukizuflower.client.gui;
 import java.text.NumberFormat;
 
 import firis.yuzukizuflower.common.container.YKContainerManaTank;
-import firis.yuzukizuflower.common.tileentity.YKTileBoxedEndoflame;
-import firis.yuzukizuflower.common.tileentity.YKTileManaTank;
+import firis.yuzukizuflower.common.tileentity.YKTileBaseManaPool;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.inventory.GuiContainer;
 import net.minecraft.client.renderer.texture.TextureAtlasSprite;
@@ -12,86 +11,100 @@ import net.minecraft.client.renderer.texture.TextureMap;
 import net.minecraft.inventory.IInventory;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.text.TextComponentTranslation;
-import net.minecraftforge.fluids.Fluid;
-import net.minecraftforge.fluids.FluidRegistry;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
 @SideOnly(Side.CLIENT)
 public class YKGuiContainerManaTank extends GuiContainer{
 
-	protected IInventory invTileEntity = null;
+	/**
+	 * GUIテクスチャ
+	 */
+	protected ResourceLocation guiTextures = null;
 	
+	/**
+	 * Manaテクスチャ
+	 */
+	protected TextureAtlasSprite manaWaterTextures = Minecraft.getMinecraft().getTextureMapBlocks().getTextureExtry("botania:blocks/mana_water");;
+	
+	/**
+	 * Guiサイズ
+	 */
+	protected int guiWidth = 176;
+	protected int guiHeight = 166;
+	
+	/**
+	 * GUIタイトル
+	 */
+	protected String guiTitle = "";
+	
+	/**
+	 * YKTileBaseManaPool
+	 * @param inventorySlotsIn
+	 */
+	protected YKTileBaseManaPool tileEntity = null;
+
+	/**
+	 * コンストラクタ
+	 * @param iTeInv
+	 * @param playerInv
+	 */
 	public YKGuiContainerManaTank(IInventory iTeInv, IInventory playerInv) {
 		
 		super(new YKContainerManaTank(iTeInv, playerInv));
 		
-		invTileEntity = iTeInv;
+		tileEntity = (YKTileBaseManaPool) iTeInv;
 		
+		//GUIテクスチャ
+		this.guiTextures = new ResourceLocation("yuzukizuflower", "textures/gui/mana_tank.png");
+		
+		//GUIタイトル
+		this.guiTitle = "gui.mana_tank.name";		
 	}
-
+	
+	
 	@Override
 	protected void drawGuiContainerBackgroundLayer(float partialTicks, int mouseX, int mouseY) {
+
 		//テクスチャロード
-		ResourceLocation GuiTextures = 
-				new ResourceLocation("yuzukizuflower", "textures/gui/mana_tank.png");
-        this.mc.getTextureManager().bindTexture(GuiTextures);
+        this.mc.getTextureManager().bindTexture(guiTextures);
         
         //画面へバインド（かまどのGUIサイズ）
-        int xSize = 176;
-        int ySize = 166;
+        int xSize = this.guiWidth;
+        int ySize = this.guiHeight;
+        
         //描画位置を計算
         int x = (this.width - xSize) / 2;
         int y = (this.height - ySize) / 2;
 
         //画面へ描画
         this.drawTexturedModalRect(x, y, 0, 0, xSize, ySize);
-                
-        int mana = ((YKTileManaTank)invTileEntity).getMana();
-        int maxMana = ((YKTileManaTank)invTileEntity).getMaxMana();
         
-        //マナゲージを描画する
-        this.drawManaGage(x + 72, y + 26, mana, maxMana);
+	    //マナゲージの描画
+        this.drawManaGage(x + 72, y + 26);
         
         //テクスチャを戻す
-        this.mc.getTextureManager().bindTexture(GuiTextures);
+        this.mc.getTextureManager().bindTexture(guiTextures);
 
         //メモリの描画
-        this.drawTexturedModalRect(x + 72, y + 25, 176, 0, 10, 50);
-        
-        /*
-        //炎の描画
-        int k = this.getBurnLeftScaled(13);
-        if (k != 0) {
-        	this.drawTexturedModalRect(x + 80, y + 58 + 13 - k, 176, 12 - k, 14, k + 1);
-        }
-        */
-        
-        //this.drawTexturedModalRect(x + 79, y + 34, 176, 14, l + 1, 16);
+        this.drawTexturedModalRect(x + 72, y + 25, 176, 0, 10, 50);        
 	}
-	
-	/**
-	 * マナウォーターのテクスチャ情報
-	 */
-	protected TextureAtlasSprite manaWaterTexture = null;
 	
 	/**
 	 * マナゲージを描画する
 	 */
-	public void drawManaGage(int x, int y, int mana, int maxMana) {
+	public void drawManaGage(int x, int y) {
 		
-		//マナのテクスチャ取得
-		if (manaWaterTexture == null) {
-			manaWaterTexture = Minecraft.getMinecraft().getTextureMapBlocks().getTextureExtry("botania:blocks/mana_water");
-		}
-		
+		//マナゲージを描く
+        int mana = this.tileEntity.getMana();
+        int maxMana = this.tileEntity.getMaxMana();
+        
 		//マナのテクスチャバインド
         this.mc.getTextureManager().bindTexture(TextureMap.LOCATION_BLOCKS_TEXTURE);
         
         //32 x 50
         //ゲージのy軸を計算(最大値50)
       	int gage = (int) Math.floor((double)mana / (double)maxMana * 50);
-      	
       	
       	//下から上へ最大4回描画する
       	//　16*3　+　2分のゲージ
@@ -115,65 +128,12 @@ public class YKGuiContainerManaTank extends GuiContainer{
       		}
       		
       		//左と右の2回描画する(32ドット分)
-      		this.drawTexturedModalRect(x, y + y_start, manaWaterTexture, 16, y_length);
-      		this.drawTexturedModalRect(x + 16, y + y_start, manaWaterTexture, 16, y_length);
+      		this.drawTexturedModalRect(x, y + y_start, manaWaterTextures, 16, y_length);
+      		this.drawTexturedModalRect(x + 16, y + y_start, manaWaterTextures, 16, y_length);
       	}
       	
-      	
-      	/*
-      	//this.drawTexturedModalRect(x + 76, y + 19, texture, 24, 16);
-        //this.drawTexturedModalRect(x + 76, y + 19, texture, 16, 8);
-        this.drawTexturedModalRect(x + 72, y + 26 + 8, manaWaterTexture, 16, 8);
-        this.drawTexturedModalRect(x + 72, y + 26 + 16, manaWaterTexture, 16, 16);
-        this.drawTexturedModalRect(x + 72, y + 26 + 16*2, manaWaterTexture, 16, 16);
-        this.drawTexturedModalRect(x + 72, y + 26 + 16*3, manaWaterTexture, 16, 2);
-
-        //this.drawTexturedModalRect(x + 76+16, y + 19, texture, 8, 8);
-        this.drawTexturedModalRect(x + 72+16, y + 26 + 8, manaWaterTexture, 16, 8);
-        this.drawTexturedModalRect(x + 72+16, y + 26 + 16, manaWaterTexture, 16, 16);
-        this.drawTexturedModalRect(x + 72+16, y + 26 + 16*2, manaWaterTexture, 16, 16);
-        this.drawTexturedModalRect(x + 72+16, y + 26 + 16*3, manaWaterTexture, 16, 2);
-        */
-		
 	}
 	
-	public enum FluidType
-	{
-		STILL,
-		FLOWING
-	}
-	
-	public TextureAtlasSprite getFluidTexture() 
-	//public TextureAtlasSprite getFluidTexture(Fluid fluid, FluidType type) 
-	{
-		
-		Fluid fluid = FluidRegistry.getFluid("lava");
-		FluidType type = FluidType.STILL;
-		
-		if(fluid == null || type == null)
-		{
-			//return missingIcon;
-		}
-		
-		ResourceLocation spriteLocation;
-		if (type == FluidType.STILL){
-			spriteLocation = fluid.getStill();
-		} else {
-			spriteLocation = fluid.getFlowing();
-		}
-		
-		String manaWater = "botania:blocks/mana_water";
-		//manaWater = spriteLocation.toString();
-		
-		//TextureAtlasSprite sprite = Minecraft.getMinecraft().getTextureMapBlocks().getTextureExtry(spriteLocation.toString());
-		TextureAtlasSprite sprite = Minecraft.getMinecraft().getTextureMapBlocks().getTextureExtry(manaWater);
-
-//		TextureAtlasSprite sprite = texMap.getTextureExtry(spriteLocation.toString());
-		
-		//return sprite != null ? sprite : missingIcon;
-		
-		return sprite;
-	}
 	
     /**
      * Draw the foreground layer for the GuiContainer (everything in front of the items)
@@ -183,7 +143,7 @@ public class YKGuiContainerManaTank extends GuiContainer{
     {
 		//xx_xx.langから取得
 		TextComponentTranslation langtext = 
-				new TextComponentTranslation("gui.mana_tank.name", new Object[0]);
+				new TextComponentTranslation(this.guiTitle, new Object[0]);
         String text = langtext.getFormattedText();
         
         int x = this.xSize / 2 - this.fontRenderer.getStringWidth(text) / 2;
@@ -191,6 +151,32 @@ public class YKGuiContainerManaTank extends GuiContainer{
         
         //タイトル文字
         this.fontRenderer.drawString(text, x, y, 4210752);
+        
+        
+        //基準点
+        int xSize = this.guiWidth;
+        int ySize = this.guiHeight;
+        
+        //描画位置を計算
+        int tip_x = (this.width - xSize) / 2;
+        int tip_y = (this.height - ySize) / 2;
+        
+        //ゲージの位置を計算
+        tip_x += 72;
+        tip_y += 26;
+        
+        //drawGuiContainerForegroundLayerの場合はGUI上にないとだめのよう
+        //72 * 26
+        if (tip_x <= mouseX && mouseX <= tip_x + 32
+        		&& tip_y <= mouseY && mouseY <= tip_y + 50) {
+        	Integer mana = this.tileEntity.getMana();
+
+        	//GUIの左上からの位置
+            int xAxis = (mouseX - (width - xSize) / 2);
+    		int yAxis = (mouseY - (height - ySize) / 2);
+
+        	this.drawHoveringText(NumberFormat.getNumberInstance().format(mana) + " Mana", xAxis, yAxis);
+        }
     }
 	
 	
@@ -214,25 +200,5 @@ public class YKGuiContainerManaTank extends GuiContainer{
         this.drawDefaultBackground();
         super.drawScreen(mouseX, mouseY, partialTicks);
         this.renderHoveredToolTip(mouseX, mouseY);
-        
-        //独自ツールチップを表示したい
-        //画面へバインド（かまどのGUIサイズ）
-        int xSize = 176;
-        int ySize = 166;
-        //描画位置を計算
-        int x = (this.width - xSize) / 2;
-        int y = (this.height - ySize) / 2;
-        
-        //ゲージの位置を計算
-        x += 72;
-        y += 26;
-        
-        //72 * 26
-        if (x <= mouseX && mouseX <= x + 32
-        		&& y <= mouseY && mouseY <= y + 50) {
-        	Integer mana = ((YKTileManaTank)invTileEntity).getMana();
-        	this.drawHoveringText(NumberFormat.getNumberInstance().format(mana) + " Mana", mouseX, mouseY);
-        }
-        
     }
 }

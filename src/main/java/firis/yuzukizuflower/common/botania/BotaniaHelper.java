@@ -3,6 +3,11 @@ package firis.yuzukizuflower.common.botania;
 public class BotaniaHelper {
 
 	/**
+	 * マナプールの変換レシピ
+	 */
+	public static RecipesManaPool recipesManaPool = new RecipesManaPool();
+	
+	/**
 	 * ピュアデイジーのレシピ
 	 */
 	public static IManaRecipes recipesPureDaisy = new RecipesPureDaisy();

@@ -1,7 +1,8 @@
-package firis.yuzukizuflower.common.tileentity;
+package firis.yuzukizuflower.client.tesr;
 
 import org.lwjgl.opengl.GL11;
 
+import firis.yuzukizuflower.common.tileentity.YKTileManaTank;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.BufferBuilder;
 import net.minecraft.client.renderer.GlStateManager;
