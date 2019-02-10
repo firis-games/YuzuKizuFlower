@@ -8,8 +8,6 @@ import net.minecraft.item.ItemStack;
 
 public abstract class YKContainerBaseBoxedFuncFlower extends Container {
 
-	protected IInventory tileEntity = null;
-	
 	/**
 	 * コンストラクタ
 	 * @param iTeInv
@@ -22,8 +20,6 @@ public abstract class YKContainerBaseBoxedFuncFlower extends Container {
 		
 		this.initPlayerSlot(playerInv);
 		
-		tileEntity = iTeInv;
-		
 	}
 	
 	/**
@@ -32,10 +28,18 @@ public abstract class YKContainerBaseBoxedFuncFlower extends Container {
 	protected abstract void initTileEntitySlot(IInventory iTeInv);
 	
 	/**
+	 * 内部プレイヤースロットの開始位置
+	 */
+	protected int startIndexPlayerSlot = -1;
+	
+	/**
 	 * プレイヤースロットの初期設定を行う
 	 */
 	protected void initPlayerSlot(IInventory playerInv) {
 		
+		//プレイヤースロットの開始位置を設定
+		this.startIndexPlayerSlot = this.inventorySlots.size();
+
 		//基準座標
 		int xBasePos = 0;
 		int yBasePos = 0;
@@ -80,7 +84,7 @@ public abstract class YKContainerBaseBoxedFuncFlower extends Container {
         Slot slot = this.inventorySlots.get(index);
         
         //プレイヤーインベントリの開始index
-        int playerInventoryIndex = tileEntity.getSizeInventory();
+        int playerInventoryIndex = this.startIndexPlayerSlot;
         
         if (slot != null && slot.getHasStack())
         {

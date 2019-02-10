@@ -1,7 +1,7 @@
 package firis.yuzukizuflower.client.gui;
 
 import firis.yuzukizuflower.common.container.YKContainerBoxedOrechid;
-import firis.yuzukizuflower.common.tileentity.YKTileBaseBoxedFuncFlower;
+import firis.yuzukizuflower.common.tileentity.IYKTileGuiBoxedFlower;
 import net.minecraft.inventory.IInventory;
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.fml.relauncher.Side;
@@ -14,7 +14,7 @@ public class YKGuiContainerBoxedOrechid extends YKGuiContainerBaseBoxedFuncFlowe
 		
 		super(new YKContainerBoxedOrechid(iTeInv, playerInv));
 		
-		this.tileEntity = (YKTileBaseBoxedFuncFlower) iTeInv;
+		this.tileEntity = (IYKTileGuiBoxedFlower) iTeInv;
 		
 		//GUIテクスチャ
 		this.guiTextures = new ResourceLocation("yuzukizuflower", "textures/gui/boxed_orechid.png");

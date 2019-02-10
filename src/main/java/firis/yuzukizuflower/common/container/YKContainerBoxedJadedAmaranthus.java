@@ -1,11 +1,7 @@
 package firis.yuzukizuflower.common.container;
 
-import firis.yuzukizuflower.common.container.slot.SlotPureDaisyOutput;
 import firis.yuzukizuflower.common.container.slot.YKSlotInventory;
 import net.minecraft.inventory.IInventory;
-import net.minecraft.inventory.Slot;
-import net.minecraft.item.ItemStack;
-import net.minecraft.util.ResourceLocation;
 
 public class YKContainerBoxedJadedAmaranthus extends YKContainerBaseBoxedFuncFlower {
 

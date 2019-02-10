@@ -1,7 +1,7 @@
 package firis.yuzukizuflower.client.gui;
 
 import firis.yuzukizuflower.common.container.YKContainerBoxedPureDaisy;
-import firis.yuzukizuflower.common.tileentity.YKTileBaseBoxedFuncFlower;
+import firis.yuzukizuflower.common.tileentity.IYKTileGuiBoxedFlower;
 import net.minecraft.inventory.IInventory;
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.fml.relauncher.Side;
@@ -14,7 +14,7 @@ public class YKGuiContainerBoxedPureDaisy extends YKGuiContainerBaseBoxedFuncFlo
 		
 		super(new YKContainerBoxedPureDaisy(iTeInv, playerInv));
 		
-		this.tileEntity = (YKTileBaseBoxedFuncFlower) iTeInv;
+		this.tileEntity = (IYKTileGuiBoxedFlower) iTeInv;
 		
 		//GUIテクスチャ
 		this.guiTextures = new ResourceLocation("yuzukizuflower", "textures/gui/boxed_pure_daisy.png");
@@ -27,7 +27,7 @@ public class YKGuiContainerBoxedPureDaisy extends YKGuiContainerBaseBoxedFuncFlo
 		this.guiArrowY = 34;
 		
 		//マナゲージの処理を行わない
-		this.guiManaGage = false;
+		this.guiVisibleManaGage = false;
 		
 	}
 }

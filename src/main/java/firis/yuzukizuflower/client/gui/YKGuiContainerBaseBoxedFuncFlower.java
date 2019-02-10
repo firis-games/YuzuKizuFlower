@@ -2,7 +2,7 @@ package firis.yuzukizuflower.client.gui;
 
 import java.text.NumberFormat;
 
-import firis.yuzukizuflower.common.tileentity.YKTileBaseBoxedFuncFlower;
+import firis.yuzukizuflower.common.tileentity.IYKTileGuiBoxedFlower;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.inventory.GuiContainer;
 import net.minecraft.client.renderer.RenderHelper;
@@ -37,20 +37,37 @@ public abstract class YKGuiContainerBaseBoxedFuncFlower extends GuiContainer {
 	protected int guiArrowY = 0;
 	
 	/**
+	 * Gui炎マークの位置
+	 */
+	protected int guiFireX = 0;
+	protected int guiFireY = 0;
+	
+	/**
 	 * GUIタイトル
 	 */
 	protected String guiTitle = "";
 	
-	/**
-	 * GUIマナゲージ
-	 */
-	protected boolean guiManaGage = true;
 	
 	/**
-	 * YKTileBaseBoxedFuncFlower
+	 * GUI矢印表示可否設定
+	 */
+	protected boolean guiVisibleArrow = true;
+
+	/**
+	 * GUI炎マーク表示可否設定
+	 */
+	protected boolean guiVisibleFire = false;
+
+	/**
+	 * GUIマナゲージ表示可否設定
+	 */
+	protected boolean guiVisibleManaGage = true;
+	
+	/**
+	 * IYKTileGuiBoxedFlower
 	 * @param inventorySlotsIn
 	 */
-	protected YKTileBaseBoxedFuncFlower tileEntity = null;
+	protected IYKTileGuiBoxedFlower tileEntity = null;
 	
 	public YKGuiContainerBaseBoxedFuncFlower(Container inventorySlotsIn) {
 		super(inventorySlotsIn);
@@ -74,10 +91,21 @@ public abstract class YKGuiContainerBaseBoxedFuncFlower extends GuiContainer {
         this.drawTexturedModalRect(x, y, 0, 0, xSize, ySize);
         
         //矢印の描画
-        int l = this.getProgressScaled(24);
-        this.drawTexturedModalRect(x + guiArrowX, y + guiArrowY, 192, 0, l + 1, 16);
-
-        if (guiManaGage) {
+	    if (guiVisibleArrow) {
+	        int l = this.getProgressScaled(24);
+	        this.drawTexturedModalRect(x + guiArrowX, y + guiArrowY, 192, 0, l + 1, 16);
+        }
+        
+        //炎の描画
+	    if (guiVisibleFire) {
+	        int k = this.getBurnLeftScaled(13);
+	        if (k != 0) {
+	        	this.drawTexturedModalRect(x + guiFireX, y + guiFireY + 13 - k, 200, 12 - k, 14, k + 1);
+	        }
+	    }
+	    
+	    //マナゲージの描画
+        if (guiVisibleManaGage) {
 	        //マナゲージを描画する
 	        this.drawManaGage(x + 16, y + 23);
 	        
@@ -102,6 +130,25 @@ public abstract class YKGuiContainerBaseBoxedFuncFlower extends GuiContainer {
         int j = this.tileEntity.getMaxTimer();
         
         return j != 0 && i != 0 ? i * pixels / j : 0;
+    }
+	
+	/**
+	 * 炎マーク用
+	 * @param pixels
+	 * @return
+	 */
+	private int getBurnLeftScaled(int pixels)
+    {
+		int i = this.tileEntity.getTimer();
+        int j = this.tileEntity.getMaxTimer();
+        
+        if (i == 0) {
+        	return 0;
+        }
+        
+        int ret = pixels * i / j;
+
+        return pixels - ret;
     }
 	
 	/**
@@ -169,7 +216,7 @@ public abstract class YKGuiContainerBaseBoxedFuncFlower extends GuiContainer {
         
         //マナゲージのツールチップ
         //********************************************************************************
-        if (guiManaGage) {
+        if (guiVisibleManaGage) {
         	//基準点
 	        int xSize = this.guiWidth;
 	        int ySize = this.guiHeight;

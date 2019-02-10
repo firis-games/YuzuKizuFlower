@@ -19,7 +19,7 @@ import vazkii.botania.common.Botania;
  * @author computer
  *
  */
-public abstract class YKTileBaseBoxedFuncFlower extends YKTileBaseManaPool {
+public abstract class YKTileBaseBoxedFuncFlower extends YKTileBaseManaPool implements IYKTileGuiBoxedFlower {
 	
 	
 	protected IManaRecipes funcFlowerRecipes = null;
@@ -43,12 +43,7 @@ public abstract class YKTileBaseBoxedFuncFlower extends YKTileBaseManaPool {
 	 * 必要マナコスト
 	 */
 	protected int manaCost = 0;
-	
-	/**
-	 * 変換レシピ
-	 */
-	protected ManaRecipe resultRecipe = null;
-	
+		
 	protected boolean randomRecipe = true;
 	
 	/**
@@ -220,9 +215,7 @@ public abstract class YKTileBaseBoxedFuncFlower extends YKTileBaseManaPool {
 			//レシピの数値を設定
 			this.manaCost = recipe.getMana();
 			this.maxTimer = recipe.getTime();
-			
-			resultRecipe = recipe;
-			
+
 			//入力とworkスロットを制御する
 			this.shrinkStackInputSlotToWorkSlot(recipe);
 			this.playerServerSendPacket();

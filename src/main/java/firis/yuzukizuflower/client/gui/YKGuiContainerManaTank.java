@@ -175,25 +175,6 @@ public class YKGuiContainerManaTank extends GuiContainer{
 		return sprite;
 	}
 	
-	/**
-	 * 炎マーク用
-	 * @param pixels
-	 * @return
-	 */
-	private int getBurnLeftScaled(int pixels)
-    {
-        int i = ((YKTileBoxedEndoflame) this.invTileEntity).timer;
-        int j = ((YKTileBoxedEndoflame) this.invTileEntity).maxTimer;
-        
-        if (i == 0) {
-        	return 0;
-        }
-        
-        int ret = pixels * i / j;
-
-        return pixels - ret;
-    }
-	
     /**
      * Draw the foreground layer for the GuiContainer (everything in front of the items)
      */

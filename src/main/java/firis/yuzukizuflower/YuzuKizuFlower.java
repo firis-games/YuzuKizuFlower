@@ -206,14 +206,11 @@ public class YuzuKizuFlower
                 .setUnlocalizedName("boxed_pure_daisy")
         );
         
-        // 箱入りピュアデイジー
+        // 箱入りエンドフレイム
         event.getRegistry().register(
-                new YKBlockBoxedEndoflame()
+                new YKBlockBoxedEndoflame(0)
                 .setRegistryName(MODID, "boxed_endoflame")
-                .setCreativeTab(YuzuKizuCreativeTab)
                 .setUnlocalizedName("boxed_endoflame")
-                .setHardness(0.5F)
-                .setResistance(1.0F)
         );
         
         // マナタンク
@@ -243,14 +240,11 @@ public class YuzuKizuFlower
                 .setUnlocalizedName("boxed_jaded_amaranthus")
         );
         
-        // 箱入り
+        // 箱入りマナスチールエンドフレイム
         event.getRegistry().register(
                 new YKBlockBoxedEndoflame(1)
                 .setRegistryName(MODID, "manasteel_boxed_endoflame")
-                .setCreativeTab(YuzuKizuCreativeTab)
                 .setUnlocalizedName("manasteel_boxed_endoflame")
-                .setHardness(0.5F)
-                .setResistance(1.0F)
         );
         
         // 箱入りオアキド

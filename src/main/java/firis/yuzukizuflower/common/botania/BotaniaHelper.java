@@ -17,5 +17,10 @@ public class BotaniaHelper {
 	 */
 	public static IManaRecipes recipesOrechid = new RecipesOrechid();
 	
+	/**
+	 * エンドフレイムの発電レシピ
+	 */
+	public static IManaGenerator recipesEndoflame = new GeneratorEndoflame();
+	
 
 }

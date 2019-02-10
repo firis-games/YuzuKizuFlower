@@ -113,6 +113,7 @@ public class YKBlockBoxedRannucarpus extends YKBotaniaGenBase {
 	@Override
     public void randomDisplayTick(IBlockState stateIn, World worldIn, BlockPos pos, Random rand)
     {
+		/*
         super.randomDisplayTick(stateIn, worldIn, pos, rand);
         
         if (!(worldIn.getTileEntity(pos) instanceof YKTileBoxedEndoflame)) {
@@ -131,6 +132,7 @@ public class YKBlockBoxedRannucarpus extends YKBotaniaGenBase {
         		pos.getY() + 0.7, 
         		pos.getZ() + 0.5,
         		0.0D, 0.0D, 0.0D);
+   		*/
     }
 	
     /**
