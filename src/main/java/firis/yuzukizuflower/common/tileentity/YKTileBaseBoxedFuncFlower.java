@@ -49,6 +49,8 @@ public abstract class YKTileBaseBoxedFuncFlower extends YKTileBaseManaPool {
 	 */
 	protected ManaRecipe resultRecipe = null;
 	
+	protected boolean randomRecipe = true;
+	
 	/**
 	 * NBTを読み込みクラスへ反映する処理
 	 */
@@ -143,6 +145,27 @@ public abstract class YKTileBaseBoxedFuncFlower extends YKTileBaseManaPool {
         return true;
 	}
 	
+	/**
+	 * outputスロットがすべて埋まっているかの判断を行う
+	 * スタックできるかも確認する
+	 * @return
+	 */
+	public boolean isFillOutputSlotStack(ItemStack stack) {
+		
+		for(int idx : outputSlotIndex) {
+			ItemStack itemstack = this.getStackInSlot(idx);
+			if (itemstack.isEmpty())
+            {
+                return false;
+            } else if (ItemStack.areItemsEqual(stack, itemstack)
+            		&& stack.getCount() + itemstack.getCount() <= itemstack.getMaxStackSize()) {
+            	//ItemStackが同じ場合 かつ 最大値以下の場合
+            	return false;
+            }
+		}
+        return true;
+	}
+	
 	@Override
 	public void update() {
 		
@@ -162,7 +185,8 @@ public abstract class YKTileBaseBoxedFuncFlower extends YKTileBaseManaPool {
 		}
 		
 		//マナが0の場合は稼動しない
-		if (this.mana == 0) {
+		//マナ最大値が0の場合はスキップ
+		if (this.mana == 0 && this.maxMana != 0) {
 			return;
 		}
 		
@@ -170,7 +194,8 @@ public abstract class YKTileBaseBoxedFuncFlower extends YKTileBaseManaPool {
 		if (getStackWorkSlot().isEmpty()) {
 			
 			//outputスロットの容量を確認
-			if (this.isFillOutputSlot()) {
+			//ランダムレシピの場合は事前チェックを行う
+			if (randomRecipe && this.isFillOutputSlot()) {
 				if (this.timer != 0) {
 					this.timer = 0;
 					this.playerServerSendPacket();
@@ -184,6 +209,11 @@ public abstract class YKTileBaseBoxedFuncFlower extends YKTileBaseManaPool {
 			ManaRecipe recipe = funcFlowerRecipes.getMatchesRecipe(stack, true);
 			
 			if (recipe == null) {
+				return;
+			}
+			
+			//ノーマルレシピの場合はチェックを行う
+			if (!randomRecipe && isFillOutputSlotStack(recipe.getOutputItemStack())) {
 				return;
 			}
 			
@@ -210,6 +240,10 @@ public abstract class YKTileBaseBoxedFuncFlower extends YKTileBaseManaPool {
 		//カウントアップ
 		this.timer += 1;
 		this.recieveMana(-mana);
+		
+		if (mana == 0) {
+			this.playerServerSendPacket();
+		}
 		
 		//規定値であれば何もしない
 		if (this.timer < this.maxTimer) {

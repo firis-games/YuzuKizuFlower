@@ -1,9 +1,14 @@
 package firis.yuzukizuflower.common.botania;
 
 public class BotaniaHelper {
+
+	/**
+	 * ピュアデイジーのレシピ
+	 */
+	public static IManaRecipes recipesPureDaisy = new RecipesPureDaisy();
 	
 	/**
-	 * ジェイディッド・アマランサスお花のレシピ
+	 * ジェイディッド・アマランサスのレシピ
 	 */
 	public static IManaRecipes recipesJadedAmaranthus = new RecipesJadedAmaranthus();
 	

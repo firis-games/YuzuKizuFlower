@@ -42,6 +42,11 @@ public abstract class YKGuiContainerBaseBoxedFuncFlower extends GuiContainer {
 	protected String guiTitle = "";
 	
 	/**
+	 * GUIマナゲージ
+	 */
+	protected boolean guiManaGage = true;
+	
+	/**
 	 * YKTileBaseBoxedFuncFlower
 	 * @param inventorySlotsIn
 	 */
@@ -72,14 +77,16 @@ public abstract class YKGuiContainerBaseBoxedFuncFlower extends GuiContainer {
         int l = this.getProgressScaled(24);
         this.drawTexturedModalRect(x + guiArrowX, y + guiArrowY, 192, 0, l + 1, 16);
 
-        //マナゲージを描画する
-        this.drawManaGage(x + 16, y + 23);
-        
-        //テクスチャを戻す
-        this.mc.getTextureManager().bindTexture(guiTextures);
-        
-        //メモリの描画
-        this.drawTexturedModalRect(x + 16, y + 22, 176, 0, 10, 50);
+        if (guiManaGage) {
+	        //マナゲージを描画する
+	        this.drawManaGage(x + 16, y + 23);
+	        
+	        //テクスチャを戻す
+	        this.mc.getTextureManager().bindTexture(guiTextures);
+	        
+	        //メモリの描画
+	        this.drawTexturedModalRect(x + 16, y + 22, 176, 0, 10, 50);
+        }
 
 	}
 	
@@ -160,31 +167,33 @@ public abstract class YKGuiContainerBaseBoxedFuncFlower extends GuiContainer {
         //タイトル文字
         this.fontRenderer.drawString(text, x, y, 4210752);
         
-        //ツールチップはこっちにする？
+        //マナゲージのツールチップ
         //********************************************************************************
-        //独自ツールチップを表示したい
-        //画面へバインド（かまどのGUIサイズ）
-        int xSize = this.guiWidth;
-        int ySize = this.guiHeight;
-        //描画位置を計算
-        int tip_x = (this.width - xSize) / 2;
-        int tip_y = (this.height - ySize) / 2;
-        
-        //ゲージの位置を計算
-        tip_x += 16;
-        tip_y += 23;
-        
-        //drawGuiContainerForegroundLayerの場合はGUI上にないとだめのよう
-        //72 * 26
-        if (tip_x <= mouseX && mouseX <= tip_x + 16
-        		&& tip_y <= mouseY && mouseY <= tip_y + 50) {
-        	Integer mana = this.tileEntity.getMana();
-
-        	//GUIの左上からの位置
-            int xAxis = (mouseX - (width - xSize) / 2);
-    		int yAxis = (mouseY - (height - ySize) / 2);
-
-        	this.drawHoveringText(NumberFormat.getNumberInstance().format(mana) + " Mana", xAxis, yAxis);
+        if (guiManaGage) {
+        	//基準点
+	        int xSize = this.guiWidth;
+	        int ySize = this.guiHeight;
+	        
+	        //描画位置を計算
+	        int tip_x = (this.width - xSize) / 2;
+	        int tip_y = (this.height - ySize) / 2;
+	        
+	        //ゲージの位置を計算
+	        tip_x += 16;
+	        tip_y += 23;
+	        
+	        //drawGuiContainerForegroundLayerの場合はGUI上にないとだめのよう
+	        //72 * 26
+	        if (tip_x <= mouseX && mouseX <= tip_x + 16
+	        		&& tip_y <= mouseY && mouseY <= tip_y + 50) {
+	        	Integer mana = this.tileEntity.getMana();
+	
+	        	//GUIの左上からの位置
+	            int xAxis = (mouseX - (width - xSize) / 2);
+	    		int yAxis = (mouseY - (height - ySize) / 2);
+	
+	        	this.drawHoveringText(NumberFormat.getNumberInstance().format(mana) + " Mana", xAxis, yAxis);
+	        }
         }
         //********************************************************************************
 

@@ -203,10 +203,7 @@ public class YuzuKizuFlower
         event.getRegistry().register(
                 new YKBlockBoxedPureDaisy()
                 .setRegistryName(MODID, "boxed_pure_daisy")
-                .setCreativeTab(YuzuKizuCreativeTab)
                 .setUnlocalizedName("boxed_pure_daisy")
-                .setHardness(0.5F)
-                .setResistance(1.0F)
         );
         
         // 箱入りピュアデイジー
