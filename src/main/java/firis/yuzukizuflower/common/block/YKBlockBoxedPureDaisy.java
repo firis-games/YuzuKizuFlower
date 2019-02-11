@@ -12,7 +12,7 @@ public class YKBlockBoxedPureDaisy extends YKBlockBaseManaPool {
 		super();
 
 		//GUIのIDを設定
-		this.GUI_ID = YKGuiHandler.YK_BOXED_PURE_DAISY;
+		this.GUI_ID = YKGuiHandler.BOXED_PURE_DAISY;
 		
 	}
 	

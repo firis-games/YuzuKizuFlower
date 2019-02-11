@@ -15,7 +15,7 @@ public class YKBlockBoxedEndoflame extends YKBlockBaseManaPool {
 		super();
 
 		//GUIのIDを設定
-		this.GUI_ID = YKGuiHandler.YK_BOXED_ENDOFLAME;
+		this.GUI_ID = YKGuiHandler.BOXED_ENDOFLAME;
 		
 		this.mode = mode;
 	}

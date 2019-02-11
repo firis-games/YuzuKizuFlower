@@ -12,6 +12,7 @@ import firis.yuzukizuflower.common.block.YKBlockBoxedPureDaisy;
 import firis.yuzukizuflower.common.block.YKBlockBoxedRannucarpus;
 import firis.yuzukizuflower.common.block.YKBlockManaTank;
 import firis.yuzukizuflower.common.network.NetworkHandler;
+import firis.yuzukizuflower.common.proxy.CommonProxy;
 import firis.yuzukizuflower.common.tileentity.YKTileBoxedEndoflame;
 import firis.yuzukizuflower.common.tileentity.YKTileBoxedJadedAmaranthus;
 import firis.yuzukizuflower.common.tileentity.YKTileBoxedOrechid;
@@ -36,6 +37,7 @@ import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.common.Mod.EventBusSubscriber;
 import net.minecraftforge.fml.common.Mod.EventHandler;
 import net.minecraftforge.fml.common.Mod.Instance;
+import net.minecraftforge.fml.common.SidedProxy;
 import net.minecraftforge.fml.common.event.FMLInitializationEvent;
 import net.minecraftforge.fml.common.event.FMLPostInitializationEvent;
 import net.minecraftforge.fml.common.event.FMLPreInitializationEvent;
@@ -68,6 +70,10 @@ public class YuzuKizuFlower
     
     @Instance(YuzuKizuFlower.MODID)
     public static YuzuKizuFlower INSTANCE;
+    
+    @SidedProxy(serverSide = "firis.yuzukizuflower.common.proxy.CommonProxy", 
+    		clientSide = "firis.yuzukizuflower.client.proxy.ClientProxy")
+    public static CommonProxy proxy;
     
     /**
      * クリエイティブタブ

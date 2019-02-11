@@ -12,7 +12,7 @@ public class YKBlockBoxedJadedAmaranthus extends YKBlockBaseManaPool {
 		super();
 
 		//GUIのIDを設定
-		this.GUI_ID = YKGuiHandler.YK_BOXED_JADED_AMARANTHUS;
+		this.GUI_ID = YKGuiHandler.BOXED_JADED_AMARANTHUS;
 		
 	}
 	

@@ -18,7 +18,7 @@ public class YKBlockBoxedRannucarpus extends YKBlockBaseManaPool {
 		super();
 
 		//GUIのIDを設定
-		this.GUI_ID = YKGuiHandler.YK_BOXED_RANNUCARPUS;
+		this.GUI_ID = YKGuiHandler.BOXED_RANNUCARPUS;
 		
 	}
 	

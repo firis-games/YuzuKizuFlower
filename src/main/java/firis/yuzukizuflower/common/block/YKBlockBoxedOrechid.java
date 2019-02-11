@@ -17,7 +17,7 @@ public class YKBlockBoxedOrechid extends YKBlockBaseManaPool {
 		super();
 
 		//GUIのIDを設定
-		this.GUI_ID = YKGuiHandler.YK_BOXED_ORECHID;
+		this.GUI_ID = YKGuiHandler.BOXED_ORECHID;
 		
 	}
 	
