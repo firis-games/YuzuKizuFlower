@@ -1,6 +1,5 @@
 package firis.yuzukizuflower.common.tileentity;
 
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -14,11 +13,9 @@ import net.minecraft.item.ItemPiston;
 import net.minecraft.item.ItemRedstone;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
-import net.minecraft.network.Packet;
-import net.minecraft.network.PacketBuffer;
-import net.minecraft.network.play.INetHandlerPlayServer;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.math.BlockPos;
+import net.minecraft.util.text.TextComponentTranslation;
 import vazkii.botania.api.item.IFlowerPlaceable;
 import vazkii.botania.api.subtile.ISubTileContainer;
 import vazkii.botania.api.subtile.SubTileEntity;
@@ -26,52 +23,100 @@ import vazkii.botania.common.core.handler.ConfigHandler;
 import vazkii.botania.common.item.block.ItemBlockSpecialFlower;
 
 /**
- * マナプール系処理
+ * ラナンカーパス
  * @author computer
  *
  */
-public class YKTileBoxedRannucarpus extends YKTileBaseManaPool {
-
+public class YKTileBoxedRannucarpus extends YKTileBaseBoxedProcFlower implements IYKNetworkTileBoxedFlower{
 	
-	public YKTileBoxedRannucarpus() {
-		this.maxMana = 1000;
-		this.mode = 1;
+	/**
+	 * お花モードの定義
+	 * @author computer
+	 *
+	 */
+	public static enum FlowerMode {
+		
+		MODE1(1, "小さなお花", 2, 2),
+		MODE2(2, "小さなマナのお花", 3, 2),
+		MODE3(3, "お花", 6, 6),
+		MODE4(4, "マナのお花", 8, 6);
+		
+		private int id;
+		private String name;
+		private int range;
+		private int height;
+		
+		private FlowerMode(final int id, final String name, final int range, final int height) {
+			this.id = id;
+			this.name = name;
+			this.range = range;
+			this.height = height;
+		}
+		public int getId() {
+			return this.id;
+		}
+		public String getName() {
+			return this.name;
+		}
+		public int getRange() {
+			return this.range;
+		}
+		public int getHeight() {
+			return this.height;
+		}
+		public static FlowerMode getById(int id) {
+			for(FlowerMode mode : FlowerMode.values()) {
+				if(mode.getId() == id) {
+					return mode;
+				}
+			}
+			return null;
+		}
+		public static FlowerMode nextMode(FlowerMode mode) {
+			
+			FlowerMode nextMode = null;
+			for (int i = 0 ; i < FlowerMode.values().length; i++ ) {
+				if(mode == FlowerMode.values()[i]) {
+					if (i == FlowerMode.values().length - 1) {
+						nextMode = FlowerMode.values()[0];
+					} else {
+						nextMode = FlowerMode.values()[i+1];						
+					}
+					break;
+				}
+			}
+			return nextMode;
+		}
 	}
 	
 	/**
-	 * マナのお花のモード
-	 * 1がミニ
-	 * 2がミニマナ
-	 * 3がノーマル
-	 * 4がノーマルマナ
+	 * コンストラクタ
 	 */
-	protected int mode = 1;
-	public int getMode() {
-		return this.mode;
+	public YKTileBoxedRannucarpus() {
+		this.maxMana = 1000;
+		
+		//初期mode
+		this.flowerMode = FlowerMode.MODE1;
+		
+		//inputスロット
+		this.inputSlotIndex = 0;
+		
+		//tick周期
+		this.setCycleTick(10);
 	}
-	/*
-	 * 暫定でつくったお花の名前
+	
+	/**
+	 * お花のモード
 	 */
-	public String getModeName() {
-		String message = "";
-		if (this.getMode()==1) {
-			message = "小さなお花";
-		} else if (this.getMode()==2) {
-			message = "小さなマナのお花";
-		} else if (this.getMode()==3) {
-			message = "お花";
-		} else if (this.getMode()==4) {
-			message = "マナのお花";
-		}
-		return message;
+	protected FlowerMode flowerMode;
+	public FlowerMode getFlowerMode() {
+		return this.flowerMode;
 	}
-	public void setMode(int mode) {
-		this.mode = mode;
-	}
-	public void changeMode() {
-		this.mode = mode < 4 ? mode+1 : 1 ;
-		this.playerServerSendPacket();
-	}
+	
+	/**
+	 * inputスロットのindex
+	 */
+	protected Integer inputSlotIndex = 0;
 	
 
 	@Override
@@ -79,41 +124,6 @@ public class YKTileBoxedRannucarpus extends YKTileBaseManaPool {
 		return 1;
 	}
 	
-	/**
-	 * 
-	 * @return
-	 */
-	public int getAreaWidth() {
-		int area = 0;
-		if (this.mode == 1) {
-			area = 2;
-		}else if(this.mode == 2) {
-			area = 3;
-		}else if(this.mode == 3) {
-			area = 6;
-		}else if(this.mode == 4) {
-			area = 8;
-		}
-		return area;
-	}
-	
-	/**
-	 * モードに応じて範囲をきめる
-	 * @return
-	 */
-	public int getAreaHeight() {
-		int area = 0;
-		if (this.mode == 1) {
-			area = 2;
-		}else if(this.mode == 2) {
-			area = 2;
-		}else if(this.mode == 3) {
-			area = 6;
-		}else if(this.mode == 4) {
-			area = 6;
-		}
-		return area;
-	}
 	
 	/**
 	 * NBTを読み込みクラスへ反映する処理
@@ -122,9 +132,7 @@ public class YKTileBoxedRannucarpus extends YKTileBaseManaPool {
 	public void readFromNBT(NBTTagCompound compound)
     {
 		super.readFromNBT(compound);
-		
-        this.mode = compound.getInteger("mode");
-
+        this.flowerMode = FlowerMode.getById(compound.getInteger("flowerMode"));
     }
 	
 	
@@ -135,42 +143,45 @@ public class YKTileBoxedRannucarpus extends YKTileBaseManaPool {
 	public NBTTagCompound writeToNBT(NBTTagCompound compound)
     {
         compound = super.writeToNBT(compound);
-        
-        compound.setInteger("mode", this.mode);
-        
+        compound.setInteger("flowerMode", this.flowerMode.getId());
         return compound;
     }
 	
-
-	private int tick = 0;
+	
+	/**
+	 * 指定tickごとに処理を行う
+	 * @interface YKTileBaseBoxedProcFlower
+	 */
 	@Override
-	public void update() {
+	public void updateProccessing() {
 		
-		tick += 1;
-		
-		//クライアントは処理をしない
-		if (this.getWorld().isRemote) {
+		if (this.world.isRemote) {
 			return;
 		}
-		
-		//10tickに1回処理
-		if (tick % 10 != 0) {
-			return;
-		}
-		
+
+		//ブロック設置処理
+		procRannucarpus(flowerMode.getRange(), flowerMode.getHeight());
+	}
+	
+	/**
+	 * ラナンカーパスのブロック設置処理
+	 * @param range
+	 * @param height
+	 */
+	@SuppressWarnings("deprecation")
+	private void procRannucarpus(int range, int height) {
 		//下を取得
 		IBlockState filter = this.getWorld().getBlockState(this.getPos().down());
 		
 		List<BlockPos> validPositions = new ArrayList<>();
+		
 		//マナを使い場合の範囲
-		int rangePlace = getAreaWidth();
-		int rangePlaceY = getAreaHeight();
+		int rangePlace = range;
+		int rangePlaceY = height;
 		
-		
-		ItemStack stack = this.getStackInSlot(0);
+		ItemStack stack = this.getStackInSlot(inputSlotIndex);
 		Item stackItem = stack.getItem();
 		
-		//ブロックをサーチ
 		for(BlockPos pos_ : BlockPos.getAllInBox(pos.add(-rangePlace, -rangePlaceY, -rangePlace), pos.add(rangePlace, rangePlaceY, rangePlace))) {
 			IBlockState stateAbove = this.getWorld().getBlockState(pos_.up());
 			Block blockAbove = stateAbove.getBlock();
@@ -181,22 +192,6 @@ public class YKTileBoxedRannucarpus extends YKTileBaseManaPool {
 				validPositions.add(up);
 		}
 		
-		/*
-		if (!validPositions.isEmpty()) {
-			
-			//配置場所はランダム
-			BlockPos coords = validPositions.get(this.getWorld().rand.nextInt(validPositions.size()));
-			
-			IBlockState stateToPlace = null;
-			
-			if (stackItem instanceof ItemBlock) {
-				int blockMeta = stackItem.getMetadata(stack.getItemDamage());
-				stateToPlace = ((ItemBlock) stackItem).getBlock().getStateFromMeta(blockMeta);
-			}
-		}
-		*/
-		
-
 		if(!validPositions.isEmpty()) {
 			BlockPos coords = validPositions.get(this.getWorld().rand.nextInt(validPositions.size()));
 
@@ -244,40 +239,31 @@ public class YKTileBoxedRannucarpus extends YKTileBaseManaPool {
 				}
 			}
 		}
-		
 	}
-	
-	//**********
+
+
+	/**
+	 * ClientからPacketを受け取った際に呼び出される
+	 * @intarface IYKNetworkTileBoxedFlower
+	 */
+	@Override
+	public void receiveFromClientMessage(int mode) {
+		//モード切替を行う
+		changeFlowerMode();
+	}
 	
 	/**
-	 * パケット用
-	 * @author computer
-	 *
+	 * モード切替を行う
 	 */
-	public static class ClientPacket implements Packet<INetHandlerPlayServer> {
-
-		@Override
-		public void readPacketData(PacketBuffer buf) throws IOException {
-			// TODO 自動生成されたメソッド・スタブ
-			System.out.println("readPacketData");
-			
-		}
-
-		@Override
-		public void writePacketData(PacketBuffer buf) throws IOException {
-			// TODO 自動生成されたメソッド・スタブ
-			System.out.println("writePacketData");
-
-		}
-
-		@Override
-		public void processPacket(INetHandlerPlayServer handler) {
-			// TODO 自動生成されたメソッド・スタブ
-			System.out.println("processPacket");
-
-		}
-		
+	public void changeFlowerMode() {
+		this.flowerMode = FlowerMode.nextMode(flowerMode);
+		this.playerServerSendPacket();
 	}
-
 	
+	/**
+	 * モードチェンジメッセージを取得する
+	 */
+	public TextComponentTranslation getMessageChangeFlowerMode() {
+		return new TextComponentTranslation(this.flowerMode.getName() + "モードに変更しました", new Object[0]);
+	}
 }

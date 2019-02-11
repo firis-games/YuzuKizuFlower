@@ -162,8 +162,8 @@ public abstract class YKBlockBaseManaPool extends BlockContainer implements IWan
 		ItemStack handItem = playerIn.getHeldItem(hand);
 		//杖系だとなにもしない
 		if (handItem.getItem() instanceof ICoordBoundItem) {
-			//杖の場合は何もしない
-			return false;
+			//森の杖の場合
+			return onBlockActivatedICoordBoundItem(worldIn, pos, state, playerIn, hand, facing, hitZ, hitZ, hitZ);
 		}
 		
     	//右クリックでGUIを開く
@@ -173,6 +173,13 @@ public abstract class YKBlockBaseManaPool extends BlockContainer implements IWan
     	return true;
     }
 	
+	/**
+	 * メインハンドが森の杖の場合の処理
+	 * @return
+	 */
+	protected boolean onBlockActivatedICoordBoundItem(World worldIn, BlockPos pos, IBlockState state, EntityPlayer playerIn, EnumHand hand, EnumFacing facing, float hitX, float hitY, float hitZ) {
+		return false;
+	}
 	
 	/**
 	 * ****************************************************************************************************

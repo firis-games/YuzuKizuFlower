@@ -3,7 +3,7 @@ package firis.yuzukizuflower.common.container;
 import firis.yuzukizuflower.common.container.slot.YKSlotInventory;
 import net.minecraft.inventory.IInventory;
 
-public class YKContainerBoxedPureDaisy  extends YKContainerBaseBoxedFuncFlower {
+public class YKContainerBoxedPureDaisy extends YKContainerBaseBoxedFuncFlower {
 
 	/**
 	 * コンストラクタ

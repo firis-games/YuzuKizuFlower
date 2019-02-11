@@ -11,8 +11,8 @@ public class NetworkHandler {
 	
 	public static void init() {
 		
-		//箱入りラナンカーパス
-		network.registerMessage(PacketRannucarpus.class, MessageRannucarpus.class, 0, Side.SERVER);
+		//箱入りお花の汎用
+		network.registerMessage(PacketTileBoxedFlower.class, PacketTileBoxedFlower.MessageTileBoxedFlower.class, 0, Side.SERVER);
 		
     }
 

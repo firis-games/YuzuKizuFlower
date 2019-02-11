@@ -5,7 +5,7 @@ package firis.yuzukizuflower.common.tileentity;
  * @author computer
  *
  */
-public abstract class YKTileBaseBoxedProcFlower extends YKTileBaseManaPool {
+public abstract class YKTileBaseBoxedProcFlower extends YKTileBaseManaPool implements IYKTileGuiBoxedFlower{
 	
 	/**
 	 * Tickカウンタ
@@ -40,4 +40,18 @@ public abstract class YKTileBaseBoxedProcFlower extends YKTileBaseManaPool {
 	 * 一定周期ごとに処理を行う
 	 */
 	public abstract void updateProccessing();
+	
+	/**
+	 * 処理系標準では使用しない
+	 */
+	public int getMaxTimer() {
+		return 0;
+	}
+	/**
+	 * 処理系標準では使用しない
+	 */
+	public int getTimer() {
+		return 0;
+	}
+	
 }
