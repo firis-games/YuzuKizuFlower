@@ -15,7 +15,7 @@ import net.minecraftforge.items.CapabilityItemHandler;
 import vazkii.botania.api.mana.IManaItem;
 import vazkii.botania.api.mana.IManaUsingItem;
 
-public class YKTileManaTank extends YKTileBaseManaPool {
+public class YKTileManaTank extends YKTileBaseBoxedProcFlower {
 	
 	/**
 	 * コンストラクタ
@@ -33,6 +33,9 @@ public class YKTileManaTank extends YKTileBaseManaPool {
 				Arrays.asList(2, 3, 4, 5));
 		//catalystスロット
 		this.catalystSlotIndex = 6;
+		
+		//10tickに1回処理を行う
+		this.setCycleTick(10);
 		
 	}
 	
@@ -63,28 +66,19 @@ public class YKTileManaTank extends YKTileBaseManaPool {
 	public int getSizeInventory() {
 		return 7;
 	}
-
-	private int tick = 0;
 	
 	/**
-	 * @interface ITickable
+	 * 指定tickごとに処理を行う
+	 * @interface YKTileBaseBoxedProcFlower
 	 */
 	@Override
-	public void update() {
+	public void updateProccessing() {
 		
 		//クライアントは処理を行わない
 		if (this.getWorld().isRemote) {
 			return;
 		}
 
-		//計算用
-		tick = tick < 10000000 ? tick + 1 : 0;
-		
-		//負荷軽減のため10tickに1回処理を行う
-		if (tick % 10 != 0) {
-			return;
-		}
-		
 		//マナ変換処理
 		if (updateManaPoolConvert()) {
 		} else if (updateManaRelease()) {

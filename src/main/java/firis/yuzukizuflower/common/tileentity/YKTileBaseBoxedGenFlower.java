@@ -13,7 +13,7 @@ import net.minecraftforge.items.CapabilityItemHandler;
 import vazkii.botania.common.Botania;
 
 /**
- * 機能系の箱入りお花ベースクラス
+ * 発電系の箱入りお花ベースクラス
  * @author computer
  *
  */
