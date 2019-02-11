@@ -2,7 +2,6 @@ package firis.yuzukizuflower.common.tileentity;
 
 import firis.yuzukizuflower.common.botania.BotaniaHelper;
 import net.minecraft.item.ItemStack;
-import net.minecraft.util.ResourceLocation;
 
 public class YKTileBoxedEndoflame extends YKTileBaseBoxedGenFlower {
 
@@ -42,14 +41,8 @@ public class YKTileBoxedEndoflame extends YKTileBaseBoxedGenFlower {
 	 */
 	@Override
 	public boolean isUpgradeParts(ItemStack stack) {
-		
 		//エンドフレイム
-		if (!stack.isEmpty() 
-				&& stack.getItem().getRegistryName().equals(new ResourceLocation("botania:specialflower"))
-				&& stack.getItemDamage() == 0) {
-			return true;
-		}
-		return false;
+		return BotaniaHelper.isSpecialFlower(stack, "endoflame");
 	}
 	
 	

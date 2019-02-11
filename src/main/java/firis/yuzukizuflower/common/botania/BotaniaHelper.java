@@ -1,5 +1,9 @@
 package firis.yuzukizuflower.common.botania;
 
+import net.minecraft.item.ItemStack;
+import net.minecraft.util.ResourceLocation;
+import vazkii.botania.common.item.block.ItemBlockSpecialFlower;
+
 public class BotaniaHelper {
 
 	/**
@@ -27,5 +31,24 @@ public class BotaniaHelper {
 	 */
 	public static IManaGenerator recipesEndoflame = new GeneratorEndoflame();
 	
+	
+	/**
+	 * 対象アイテムがbotania:specialFlowerかチェックする
+	 * @param stack
+	 * @param type
+	 * @return 
+	 */
+	public static boolean isSpecialFlower(ItemStack stack, String type) {
+		
+		//specialFlower
+		if (!stack.isEmpty() 
+				&& stack.getItem().getRegistryName().equals(new ResourceLocation("botania:specialflower"))
+				&& stack.getItemDamage() == 0
+				&& type.equals(ItemBlockSpecialFlower.getType(stack))) {
+			return true;
+		}
+		
+		return false;
+	}
 
 }

@@ -13,6 +13,7 @@ import firis.yuzukizuflower.common.block.YKBlockBoxedRannucarpus;
 import firis.yuzukizuflower.common.block.YKBlockManaTank;
 import firis.yuzukizuflower.common.network.NetworkHandler;
 import firis.yuzukizuflower.common.proxy.CommonProxy;
+import firis.yuzukizuflower.common.recipe.RecipeBoxedFlower;
 import firis.yuzukizuflower.common.tileentity.YKTileBoxedEndoflame;
 import firis.yuzukizuflower.common.tileentity.YKTileBoxedJadedAmaranthus;
 import firis.yuzukizuflower.common.tileentity.YKTileBoxedOrechid;
@@ -27,6 +28,7 @@ import net.minecraft.init.Items;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemBlock;
 import net.minecraft.item.ItemStack;
+import net.minecraft.item.crafting.IRecipe;
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.client.event.ModelRegistryEvent;
 import net.minecraftforge.client.model.ModelLoader;
@@ -345,5 +347,14 @@ public class YuzuKizuFlower
     	
     	//マナタンク
     	ClientRegistry.bindTileEntitySpecialRenderer(YKTileManaTank.class, new YKTileManaTankSpRenderer());
+    }
+    
+    @SubscribeEvent
+	public static void registerRecipes(RegistryEvent.Register<IRecipe> event) {
+    	
+    	for (String key : RecipeBoxedFlower.flowerMap.keySet()) {
+    		//レシピの追加
+        	event.getRegistry().register(new RecipeBoxedFlower(key));
+    	}
     }
 }
