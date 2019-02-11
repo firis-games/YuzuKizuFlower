@@ -38,9 +38,10 @@ public class YKGuiContainerBoxedRannucarpus extends YKGuiContainerBaseBoxedFuncF
 		//GUIタイトル
 		this.guiTitle = "gui.boxed_rannucarpus.name";
 		
-		//GUI矢印と炎
+		//GUI矢印と炎とマナゲージ
 		this.guiVisibleArrow = false;
 		this.guiVisibleFire = false;
+		this.guiVisibleManaGage = false;
 		
 	}
 	

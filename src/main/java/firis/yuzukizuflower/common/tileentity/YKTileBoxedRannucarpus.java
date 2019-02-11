@@ -93,7 +93,7 @@ public class YKTileBoxedRannucarpus extends YKTileBaseBoxedProcFlower implements
 	 * コンストラクタ
 	 */
 	public YKTileBoxedRannucarpus() {
-		this.maxMana = 1000;
+		this.maxMana = 0;
 		
 		//初期mode
 		this.flowerMode = FlowerMode.MODE1;
@@ -113,17 +113,10 @@ public class YKTileBoxedRannucarpus extends YKTileBaseBoxedProcFlower implements
 		return this.flowerMode;
 	}
 	
-	/**
-	 * inputスロットのindex
-	 */
-	protected Integer inputSlotIndex = 0;
-	
-
 	@Override
 	public int getSizeInventory() {
 		return 1;
 	}
-	
 	
 	/**
 	 * NBTを読み込みクラスへ反映する処理
@@ -147,6 +140,19 @@ public class YKTileBoxedRannucarpus extends YKTileBaseBoxedProcFlower implements
         return compound;
     }
 	
+	@Override
+	public void update() {
+		super.update();
+		
+		if (this.world.isRemote) {
+			//パーティクル判定
+			if(!isRedStonePower()
+					&& !this.getStackInSlot(this.inputSlotIndex).isEmpty()) {
+				clientSpawnParticle();
+			}
+			return;
+		}
+	}
 	
 	/**
 	 * 指定tickごとに処理を行う
@@ -155,10 +161,15 @@ public class YKTileBoxedRannucarpus extends YKTileBaseBoxedProcFlower implements
 	@Override
 	public void updateProccessing() {
 		
-		if (this.world.isRemote) {
+		if (this.world.isRemote) {			
 			return;
 		}
-
+		
+		//レッドストーン入力がある場合は停止する
+		if(isRedStonePower()) {
+			return;
+		}
+		
 		//ブロック設置処理
 		procRannucarpus(flowerMode.getRange(), flowerMode.getHeight());
 	}
@@ -233,8 +244,9 @@ public class YKTileBoxedRannucarpus extends YKTileBaseBoxedProcFlower implements
 
 					stack.shrink(1);
 
-					if(mana > 1)
-						mana--;
+					//if(mana > 1)
+					//	mana--;
+					
 					return;
 				}
 			}
