@@ -4,7 +4,7 @@ import org.apache.logging.log4j.Logger;
 
 import firis.yuzukizuflower.client.tesr.YKTileManaTankSpRenderer;
 import firis.yuzukizuflower.common.YKGuiHandler;
-import firis.yuzukizuflower.common.block.YKBlock;
+import firis.yuzukizuflower.common.block.YKBlockBaseBoxed;
 import firis.yuzukizuflower.common.block.YKBlockBoxedEndoflame;
 import firis.yuzukizuflower.common.block.YKBlockBoxedJadedAmaranthus;
 import firis.yuzukizuflower.common.block.YKBlockBoxedOrechid;
@@ -20,7 +20,6 @@ import firis.yuzukizuflower.common.tileentity.YKTileBoxedPureDaisy;
 import firis.yuzukizuflower.common.tileentity.YKTileBoxedRannucarpus;
 import firis.yuzukizuflower.common.tileentity.YKTileManaTank;
 import net.minecraft.block.Block;
-import net.minecraft.block.material.Material;
 import net.minecraft.client.renderer.block.model.ModelResourceLocation;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.init.Blocks;
@@ -92,7 +91,7 @@ public class YuzuKizuFlower
      */
     @ObjectHolder(YuzuKizuFlower.MODID)
     public static class YuzuKizuItems{
-    	public final static Item METAL_FRAME = null;
+    	public final static Item FLOWER_BOX = null;
     	public final static Item BOXED_PURE_DAISY = null;
     	public final static Item BOXED_ENDOFLAME = null;
     	public final static Item MANA_TANK = null;
@@ -102,11 +101,11 @@ public class YuzuKizuFlower
     	public final static Item BOXED_ORECHID = null;
     }
     /**
-     * アイテムインスタンス保持用
+     * ブロックインスタンス保持用
      */
     @ObjectHolder(YuzuKizuFlower.MODID)
     public static class YuzuKizuBlocks{
-    	public final static Block METAL_FRAME = null;
+    	public final static Block FLOWER_BOX = null;
     	public final static Block BOXED_PURE_DAISY = null;
     	public final static Block BOXED_ENDOFLAME = null;
     	public final static Block MANA_TANK = null;
@@ -141,8 +140,6 @@ public class YuzuKizuFlower
         
         GameRegistry.registerTileEntity(YKTileBoxedOrechid.class, 
 				new ResourceLocation(YuzuKizuFlower.MODID, "ykte_boxed_orechid"));
-        
-        
         
         //ネットワーク登録
         NetworkHandler.init();
@@ -195,14 +192,11 @@ public class YuzuKizuFlower
     protected static void registerBlocks(RegistryEvent.Register<Block> event)
     {
     	
-        //　メタルフレームブロック
+        //　フラワーボックス
         event.getRegistry().register(
-                new YKBlock(Material.IRON)
-                .setRegistryName(MODID, "metal_frame")
-                .setCreativeTab(YuzuKizuCreativeTab)
-                .setUnlocalizedName("metal_frame")
-                .setHardness(0.5F)
-                .setResistance(1.0F)
+                new YKBlockBaseBoxed()
+                .setRegistryName(MODID, "flower_box")
+                .setUnlocalizedName("flower_box")
         );
         
         // 箱入りピュアデイジー
@@ -223,20 +217,14 @@ public class YuzuKizuFlower
         event.getRegistry().register(
                 new YKBlockManaTank()
                 .setRegistryName(MODID, "mana_tank")
-                .setCreativeTab(YuzuKizuCreativeTab)
                 .setUnlocalizedName("mana_tank")
-                .setHardness(0.5F)
-                .setResistance(1.0F)
         );
         
         // 箱入りラナンカーパス
         event.getRegistry().register(
                 new YKBlockBoxedRannucarpus()
                 .setRegistryName(MODID, "boxed_rannucarpus")
-                .setCreativeTab(YuzuKizuCreativeTab)
                 .setUnlocalizedName("boxed_rannucarpus")
-                .setHardness(0.5F)
-                .setResistance(1.0F)
         );
         
         // 箱入りジェイディッド・アマランサス
@@ -246,12 +234,14 @@ public class YuzuKizuFlower
                 .setUnlocalizedName("boxed_jaded_amaranthus")
         );
         
+        /*
         // 箱入りマナスチールエンドフレイム
         event.getRegistry().register(
                 new YKBlockBoxedEndoflame(1)
                 .setRegistryName(MODID, "manasteel_boxed_endoflame")
                 .setUnlocalizedName("manasteel_boxed_endoflame")
         );
+        */
         
         // 箱入りオアキド
         event.getRegistry().register(
@@ -269,9 +259,9 @@ public class YuzuKizuFlower
     @SubscribeEvent
     protected static void registerItems(RegistryEvent.Register<Item> event)
     {
-    	// メタルフレーム
-    	event.getRegistry().register(new ItemBlock(YuzuKizuBlocks.METAL_FRAME)
-    			.setRegistryName(MODID, "metal_frame")
+    	// フラワーボックス
+    	event.getRegistry().register(new ItemBlock(YuzuKizuBlocks.FLOWER_BOX)
+    			.setRegistryName(MODID, "flower_box")
     	);
     	
     	// 箱入りピュアデイジー
@@ -299,10 +289,12 @@ public class YuzuKizuFlower
     			.setRegistryName(MODID, "boxed_jaded_amaranthus")
     	);
     	
+    	/*
     	// 箱入りエンドフレイム
     	event.getRegistry().register(new ItemBlock(YuzuKizuBlocks.MANASTEEL_BOXED_ENDOFLAME)
     			.setRegistryName(MODID, "manasteel_boxed_endoflame")
     	);
+    	*/
     	
     	// 箱入りオアキド
     	event.getRegistry().register(new ItemBlock(YuzuKizuBlocks.BOXED_ORECHID)
@@ -317,19 +309,19 @@ public class YuzuKizuFlower
     @SideOnly(Side.CLIENT)
     protected static void registerModels(ModelRegistryEvent event)
     {
-    	// メタルフレーム
-    	ModelLoader.setCustomModelResourceLocation(YuzuKizuItems.METAL_FRAME, 0,
-    			new ModelResourceLocation(YuzuKizuItems.METAL_FRAME.getRegistryName(), "inventory"));
+    	// フワラーボックス
+    	ModelLoader.setCustomModelResourceLocation(YuzuKizuItems.FLOWER_BOX, 0,
+    			new ModelResourceLocation(YuzuKizuItems.FLOWER_BOX.getRegistryName(), "inventory"));
     	
     	// 箱入りピュアデイジー
     	ModelLoader.setCustomModelResourceLocation(YuzuKizuItems.BOXED_PURE_DAISY, 0,
     			new ModelResourceLocation(YuzuKizuItems.BOXED_PURE_DAISY.getRegistryName(), "inventory"));
 
-    	// 箱入りピュアデイジー
+    	// 箱入りエンドフレイム
     	ModelLoader.setCustomModelResourceLocation(YuzuKizuItems.BOXED_ENDOFLAME, 0,
     			new ModelResourceLocation(YuzuKizuItems.BOXED_ENDOFLAME.getRegistryName(), "inventory"));
     	
-    	// 箱入りピュアデイジー
+    	// マナタンク
     	ModelLoader.setCustomModelResourceLocation(YuzuKizuItems.MANA_TANK, 0,
     			new ModelResourceLocation(YuzuKizuItems.MANA_TANK.getRegistryName(), "inventory"));
     	
@@ -341,14 +333,15 @@ public class YuzuKizuFlower
     	ModelLoader.setCustomModelResourceLocation(YuzuKizuItems.BOXED_JADED_AMARANTHUS, 0,
     			new ModelResourceLocation(YuzuKizuItems.BOXED_JADED_AMARANTHUS.getRegistryName(), "inventory"));
     	
-    	// 箱入りピュアデイジー
+    	/*
+    	// 箱入りエンドフレイム
     	ModelLoader.setCustomModelResourceLocation(YuzuKizuItems.MANASTEEL_BOXED_ENDOFLAME, 0,
     			new ModelResourceLocation(YuzuKizuItems.MANASTEEL_BOXED_ENDOFLAME.getRegistryName(), "inventory"));
+		*/
     	
     	// 箱入りオアキド
     	ModelLoader.setCustomModelResourceLocation(YuzuKizuItems.BOXED_ORECHID, 0,
     			new ModelResourceLocation(YuzuKizuItems.BOXED_ORECHID.getRegistryName(), "inventory"));
-    	
     	
     	//マナタンク
     	ClientRegistry.bindTileEntitySpecialRenderer(YKTileManaTank.class, new YKTileManaTankSpRenderer());
