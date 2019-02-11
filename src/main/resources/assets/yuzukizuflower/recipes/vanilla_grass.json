@@ -1,0 +1,20 @@
+{
+	"type": "forge:ore_shaped",
+	"pattern": [
+		"x",
+		"y"
+	],
+	"key": {
+		"x": {
+			"item": "minecraft:tallgrass",
+			"data": 1
+		},
+		"y": {
+			"item": "minecraft:dirt",
+			"data": 0
+		}
+	},
+	"result": {
+		"item": "minecraft:grass"
+	}
+}
