@@ -17,7 +17,7 @@ public class YKGuiHandler implements IGuiHandler {
 	public static final int MANA_TANK = 3;
 	
 	//箱入り・ラナンカーパス
-	public static final int BOXED_RANNUCARPUS = 4;
+	public static final int BOXED_RANNUNCARPUS = 4;
 	
 	//箱入りジェイディッド・アマランサス
 	public static final int BOXED_JADED_AMARANTHUS = 5;

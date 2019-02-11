@@ -27,7 +27,7 @@ import vazkii.botania.common.item.block.ItemBlockSpecialFlower;
  * @author computer
  *
  */
-public class YKTileBoxedRannucarpus extends YKTileBaseBoxedProcFlower implements IYKNetworkTileBoxedFlower{
+public class YKTileBoxedRannuncarpus extends YKTileBaseBoxedProcFlower implements IYKNetworkTileBoxedFlower{
 	
 	/**
 	 * お花モードの定義
@@ -92,7 +92,7 @@ public class YKTileBoxedRannucarpus extends YKTileBaseBoxedProcFlower implements
 	/**
 	 * コンストラクタ
 	 */
-	public YKTileBoxedRannucarpus() {
+	public YKTileBoxedRannuncarpus() {
 		this.maxMana = 0;
 		
 		//初期mode
@@ -161,7 +161,7 @@ public class YKTileBoxedRannucarpus extends YKTileBaseBoxedProcFlower implements
 	@Override
 	public void updateProccessing() {
 		
-		if (this.world.isRemote) {			
+		if (this.world.isRemote) {
 			return;
 		}
 		
@@ -171,7 +171,7 @@ public class YKTileBoxedRannucarpus extends YKTileBaseBoxedProcFlower implements
 		}
 		
 		//ブロック設置処理
-		procRannucarpus(flowerMode.getRange(), flowerMode.getHeight());
+		procRannuncarpus(flowerMode.getRange(), flowerMode.getHeight());
 	}
 	
 	/**
@@ -180,7 +180,7 @@ public class YKTileBoxedRannucarpus extends YKTileBaseBoxedProcFlower implements
 	 * @param height
 	 */
 	@SuppressWarnings("deprecation")
-	private void procRannucarpus(int range, int height) {
+	private void procRannuncarpus(int range, int height) {
 		//下を取得
 		IBlockState filter = this.getWorld().getBlockState(this.getPos().down());
 		

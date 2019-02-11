@@ -4,11 +4,11 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
-import firis.yuzukizuflower.common.container.YKContainerBoxedRannucarpus;
+import firis.yuzukizuflower.common.container.YKContainerBoxedRannuncarpus;
 import firis.yuzukizuflower.common.network.NetworkHandler;
 import firis.yuzukizuflower.common.network.PacketTileBoxedFlower;
 import firis.yuzukizuflower.common.tileentity.IYKTileGuiBoxedFlower;
-import firis.yuzukizuflower.common.tileentity.YKTileBoxedRannucarpus;
+import firis.yuzukizuflower.common.tileentity.YKTileBoxedRannuncarpus;
 import net.minecraft.client.gui.GuiButton;
 import net.minecraft.client.renderer.RenderHelper;
 import net.minecraft.inventory.IInventory;
@@ -19,24 +19,24 @@ import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
 @SideOnly(Side.CLIENT)
-public class YKGuiContainerBoxedRannucarpus extends YKGuiContainerBaseBoxedFuncFlower{
+public class YKGuiContainerBoxedRannuncarpus extends YKGuiContainerBaseBoxedFuncFlower{
 	
 	/**
 	 * 
 	 * @param iTeInv
 	 * @param playerInv
 	 */
-	public YKGuiContainerBoxedRannucarpus(IInventory iTeInv, IInventory playerInv) {
+	public YKGuiContainerBoxedRannuncarpus(IInventory iTeInv, IInventory playerInv) {
 		
-		super(new YKContainerBoxedRannucarpus(iTeInv, playerInv));
+		super(new YKContainerBoxedRannuncarpus(iTeInv, playerInv));
 		
 		this.tileEntity = (IYKTileGuiBoxedFlower) iTeInv;
 		
 		//GUIテクスチャ
-		this.guiTextures = new ResourceLocation("yuzukizuflower", "textures/gui/boxed_rannucarpus.png");
+		this.guiTextures = new ResourceLocation("yuzukizuflower", "textures/gui/boxed_rannuncarpus.png");
 		
 		//GUIタイトル
-		this.guiTitle = "gui.boxed_rannucarpus.name";
+		this.guiTitle = "gui.boxed_rannuncarpus.name";
 		
 		//GUI矢印と炎とマナゲージ
 		this.guiVisibleArrow = false;
@@ -81,7 +81,7 @@ public class YKGuiContainerBoxedRannucarpus extends YKGuiContainerBaseBoxedFuncF
             	if (guibutton.id == 0) {
             		int xAxis = (mouseX - (width - this.guiWidth) / 2);
             		int yAxis = (mouseY - (height - this.guiHeight) / 2);
-            		YKTileBoxedRannucarpus tile = ((YKTileBoxedRannucarpus)this.tileEntity);
+            		YKTileBoxedRannuncarpus tile = ((YKTileBoxedRannuncarpus)this.tileEntity);
             		
             		String modeName = tile.getFlowerMode().getName();
             		Integer width = tile.getFlowerMode().getRange();

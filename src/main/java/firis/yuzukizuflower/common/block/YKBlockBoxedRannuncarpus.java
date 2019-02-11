@@ -1,7 +1,7 @@
 package firis.yuzukizuflower.common.block;
 
 import firis.yuzukizuflower.common.YKGuiHandler;
-import firis.yuzukizuflower.common.tileentity.YKTileBoxedRannucarpus;
+import firis.yuzukizuflower.common.tileentity.YKTileBoxedRannuncarpus;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
@@ -11,14 +11,14 @@ import net.minecraft.util.EnumHand;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 
-public class YKBlockBoxedRannucarpus extends YKBlockBaseManaPool {
+public class YKBlockBoxedRannuncarpus extends YKBlockBaseManaPool {
 
-	public YKBlockBoxedRannucarpus() {
+	public YKBlockBoxedRannuncarpus() {
 
 		super();
 
 		//GUIのIDを設定
-		this.GUI_ID = YKGuiHandler.BOXED_RANNUCARPUS;
+		this.GUI_ID = YKGuiHandler.BOXED_RANNUNCARPUS;
 		
 	}
 	
@@ -27,7 +27,7 @@ public class YKBlockBoxedRannucarpus extends YKBlockBaseManaPool {
 	 */
 	@Override
 	public TileEntity createNewTileEntity(World worldIn, int meta) {
-		return new YKTileBoxedRannucarpus();
+		return new YKTileBoxedRannuncarpus();
 	}
 	
 	/**
@@ -46,7 +46,7 @@ public class YKBlockBoxedRannucarpus extends YKBlockBaseManaPool {
 			return false;
 		}
 		
-		YKTileBoxedRannucarpus tile = (YKTileBoxedRannucarpus)worldIn.getTileEntity(pos);
+		YKTileBoxedRannuncarpus tile = (YKTileBoxedRannuncarpus)worldIn.getTileEntity(pos);
 		
 		//モード切替
 		tile.changeFlowerMode();

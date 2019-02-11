@@ -9,7 +9,7 @@ import firis.yuzukizuflower.common.block.YKBlockBoxedEndoflame;
 import firis.yuzukizuflower.common.block.YKBlockBoxedJadedAmaranthus;
 import firis.yuzukizuflower.common.block.YKBlockBoxedOrechid;
 import firis.yuzukizuflower.common.block.YKBlockBoxedPureDaisy;
-import firis.yuzukizuflower.common.block.YKBlockBoxedRannucarpus;
+import firis.yuzukizuflower.common.block.YKBlockBoxedRannuncarpus;
 import firis.yuzukizuflower.common.block.YKBlockManaTank;
 import firis.yuzukizuflower.common.network.NetworkHandler;
 import firis.yuzukizuflower.common.proxy.CommonProxy;
@@ -18,7 +18,7 @@ import firis.yuzukizuflower.common.tileentity.YKTileBoxedEndoflame;
 import firis.yuzukizuflower.common.tileentity.YKTileBoxedJadedAmaranthus;
 import firis.yuzukizuflower.common.tileentity.YKTileBoxedOrechid;
 import firis.yuzukizuflower.common.tileentity.YKTileBoxedPureDaisy;
-import firis.yuzukizuflower.common.tileentity.YKTileBoxedRannucarpus;
+import firis.yuzukizuflower.common.tileentity.YKTileBoxedRannuncarpus;
 import firis.yuzukizuflower.common.tileentity.YKTileManaTank;
 import net.minecraft.block.Block;
 import net.minecraft.client.renderer.block.model.ModelResourceLocation;
@@ -97,7 +97,7 @@ public class YuzuKizuFlower
     	public final static Item BOXED_PURE_DAISY = null;
     	public final static Item BOXED_ENDOFLAME = null;
     	public final static Item MANA_TANK = null;
-    	public final static Item BOXED_RANNUCARPUS = null;
+    	public final static Item BOXED_RANNUNCARPUS = null;
     	public final static Item BOXED_JADED_AMARANTHUS = null;
     	public final static Item MANASTEEL_BOXED_ENDOFLAME = null;
     	public final static Item BOXED_ORECHID = null;
@@ -111,7 +111,7 @@ public class YuzuKizuFlower
     	public final static Block BOXED_PURE_DAISY = null;
     	public final static Block BOXED_ENDOFLAME = null;
     	public final static Block MANA_TANK = null;
-    	public final static Block BOXED_RANNUCARPUS = null;
+    	public final static Block BOXED_RANNUNCARPUS = null;
     	public final static Block BOXED_JADED_AMARANTHUS = null;
     	public final static Block MANASTEEL_BOXED_ENDOFLAME = null;
     	public final static Block BOXED_ORECHID = null;
@@ -134,8 +134,8 @@ public class YuzuKizuFlower
         GameRegistry.registerTileEntity(YKTileManaTank.class, 
 					new ResourceLocation(YuzuKizuFlower.MODID, "ykte_mana_tank"));
         
-        GameRegistry.registerTileEntity(YKTileBoxedRannucarpus.class, 
-				new ResourceLocation(YuzuKizuFlower.MODID, "ykte_boxed_rannucarpus"));
+        GameRegistry.registerTileEntity(YKTileBoxedRannuncarpus.class, 
+				new ResourceLocation(YuzuKizuFlower.MODID, "ykte_boxed_rannuncarpus"));
         
         GameRegistry.registerTileEntity(YKTileBoxedJadedAmaranthus.class, 
 				new ResourceLocation(YuzuKizuFlower.MODID, "ykte_boxed_jaded_amaranthus"));
@@ -224,9 +224,9 @@ public class YuzuKizuFlower
         
         // 箱入りラナンカーパス
         event.getRegistry().register(
-                new YKBlockBoxedRannucarpus()
-                .setRegistryName(MODID, "boxed_rannucarpus")
-                .setUnlocalizedName("boxed_rannucarpus")
+                new YKBlockBoxedRannuncarpus()
+                .setRegistryName(MODID, "boxed_rannuncarpus")
+                .setUnlocalizedName("boxed_rannuncarpus")
         );
         
         // 箱入りジェイディッド・アマランサス
@@ -282,8 +282,8 @@ public class YuzuKizuFlower
     	);
     	
     	// 箱入りラナンカーパス
-    	event.getRegistry().register(new ItemBlock(YuzuKizuBlocks.BOXED_RANNUCARPUS)
-    			.setRegistryName(MODID, "boxed_rannucarpus")
+    	event.getRegistry().register(new ItemBlock(YuzuKizuBlocks.BOXED_RANNUNCARPUS)
+    			.setRegistryName(MODID, "boxed_rannuncarpus")
     	);
     	
     	// 箱入りジェイディッド・アマランサス
@@ -328,8 +328,8 @@ public class YuzuKizuFlower
     			new ModelResourceLocation(YuzuKizuItems.MANA_TANK.getRegistryName(), "inventory"));
     	
     	// 箱入りラナンカーパス
-    	ModelLoader.setCustomModelResourceLocation(YuzuKizuItems.BOXED_RANNUCARPUS, 0,
-    			new ModelResourceLocation(YuzuKizuItems.BOXED_RANNUCARPUS.getRegistryName(), "inventory"));
+    	ModelLoader.setCustomModelResourceLocation(YuzuKizuItems.BOXED_RANNUNCARPUS, 0,
+    			new ModelResourceLocation(YuzuKizuItems.BOXED_RANNUNCARPUS.getRegistryName(), "inventory"));
     	
     	// 箱入りジェイディッド・アマランサス
     	ModelLoader.setCustomModelResourceLocation(YuzuKizuItems.BOXED_JADED_AMARANTHUS, 0,

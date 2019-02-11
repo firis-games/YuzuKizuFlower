@@ -9,8 +9,8 @@ gui.boxed_endoflame.name=箱入りエンドフレイム
 tile.mana_tank.name=マナタンク
 gui.mana_tank.name=マナタンク
 
-tile.boxed_rannucarpus.name=箱入りラナンカーパス
-gui.boxed_rannucarpus.name=箱入りラナンカーパス
+tile.boxed_rannuncarpus.name=箱入りラナンカーパス
+gui.boxed_rannuncarpus.name=箱入りラナンカーパス
 
 tile.boxed_jaded_amaranthus.name=箱入りジェイディッド・アマランサス
 gui.boxed_jaded_amaranthus.name=箱入りジェイディッド・アマランサス

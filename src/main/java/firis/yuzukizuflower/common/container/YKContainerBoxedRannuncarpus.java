@@ -3,14 +3,14 @@ package firis.yuzukizuflower.common.container;
 import net.minecraft.inventory.IInventory;
 import net.minecraft.inventory.Slot;
 
-public class YKContainerBoxedRannucarpus extends YKContainerBaseBoxedFuncFlower {
+public class YKContainerBoxedRannuncarpus extends YKContainerBaseBoxedFuncFlower {
 
 	/**
 	 * コンストラクタ
 	 * @param iTeInv
 	 * @param playerInv
 	 */
-	public YKContainerBoxedRannucarpus(IInventory iTeInv, IInventory playerInv) {
+	public YKContainerBoxedRannuncarpus(IInventory iTeInv, IInventory playerInv) {
 		super(iTeInv, playerInv);
 	}
 	 
