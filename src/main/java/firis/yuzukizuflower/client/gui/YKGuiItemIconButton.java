@@ -2,7 +2,6 @@ package firis.yuzukizuflower.client.gui;
 
 import firis.yuzukizuflower.YuzuKizuFlower;
 import net.minecraft.client.Minecraft;
-import net.minecraft.client.gui.FontRenderer;
 import net.minecraft.client.gui.GuiButton;
 import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.client.renderer.texture.TextureAtlasSprite;
@@ -13,20 +12,23 @@ public class YKGuiItemIconButton extends GuiButton {
 
     protected static final ResourceLocation GUI_PARTS_TEXTURES = new ResourceLocation(YuzuKizuFlower.MODID, "textures/gui/gui_parts.png");
     
+    protected String iconTexture = "";
+    
     /**
-     * ボタン生成
+     * コンストラクタ
      * @param buttonId
      * @param x
      * @param y
-     * @param buttonText
+     * @param iconTexture
      */
-    public YKGuiItemIconButton(int buttonId, int x, int y, String buttonText)
+    public YKGuiItemIconButton(int buttonId, int x, int y, String iconTexture)
     {
-    	super(buttonId, x, y, 20, 20, buttonText);
+    	super(buttonId, x, y, 20, 20, "");
+    	this.iconTexture = iconTexture;
     }
-    
-    protected YKGuiItemIconButton(int buttonId, int x, int y, int widthIn, int heightIn, String buttonText) {
-    	super(buttonId, x, y, 20, 20, buttonText);
+    protected YKGuiItemIconButton(int buttonId, int x, int y, int widthIn, int heightIn, String iconTexture) {
+    	super(buttonId, x, y, 20, 20, "");
+       	this.iconTexture = iconTexture;
     }
     
     /**
@@ -37,11 +39,9 @@ public class YKGuiItemIconButton extends GuiButton {
     {
         if (this.visible)
         {
-            FontRenderer fontrenderer = mc.fontRenderer;
             mc.getTextureManager().bindTexture(GUI_PARTS_TEXTURES);
             
             GlStateManager.color(1.0F, 1.0F, 1.0F, 1.0F);
-            
             this.hovered = mouseX >= this.x && mouseY >= this.y && mouseX < this.x + this.width && mouseY < this.y + this.height;
             int i = this.getHoverState(this.hovered);
             
@@ -54,42 +54,15 @@ public class YKGuiItemIconButton extends GuiButton {
             int btn_textures_y = 0;
             
             //左半分と右半分を連結して長い長さも対応してるよう
-            //今回は決めうちでやるので独自でやる
+            //今回は決めうちでやるので独自実装
             this.drawTexturedModalRect(this.x, this.y, btn_textures_x, btn_textures_y, this.width, this.height);
             
-            //レッドローズ
-            TextureAtlasSprite textureSprite = Minecraft.getMinecraft().getTextureMapBlocks().getTextureExtry("minecraft:blocks/flower_rose");
+            //icon表示
+            TextureAtlasSprite textureSprite = Minecraft.getMinecraft().getTextureMapBlocks().getTextureExtry(this.iconTexture);
             mc.getTextureManager().bindTexture(TextureMap.LOCATION_BLOCKS_TEXTURE);
-            
             this.drawTexturedModalRect(this.x + 2, this.y + 2, textureSprite, 16, 16);
             
-            
-            
-            /*
-            this.drawTexturedModalRect(this.x, this.y, 0, 46 + i * 20, this.width / 2, this.height);
-            this.drawTexturedModalRect(this.x + this.width / 2, this.y, 200 - this.width / 2, 46 + i * 20, this.width / 2, this.height);
-            */
-            
             this.mouseDragged(mc, mouseX, mouseY);
-            /*
-            int j = 14737632;
-
-            if (packedFGColour != 0)
-            {
-                j = packedFGColour;
-            }
-            else
-            if (!this.enabled)
-            {
-                j = 10526880;
-            }
-            else if (this.hovered)
-            {
-                j = 16777120;
-            }
-
-            this.drawCenteredString(fontrenderer, this.displayString, this.x + this.width / 2, this.y + (this.height - 8) / 2, j);
-            */
         }
     }
 }
