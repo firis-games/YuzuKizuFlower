@@ -5,6 +5,7 @@ import java.util.List;
 
 import net.minecraft.block.Block;
 import net.minecraft.block.state.IBlockState;
+import net.minecraft.client.resources.I18n;
 import net.minecraft.init.Blocks;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemBlock;
@@ -36,10 +37,10 @@ public class YKTileBoxedRannuncarpus extends YKTileBaseBoxedProcFlower implement
 	 */
 	public static enum FlowerMode {
 		
-		MODE1(1, "小さなお花", 2, 2),
-		MODE2(2, "小さなマナのお花", 3, 2),
-		MODE3(3, "お花", 6, 6),
-		MODE4(4, "マナのお花", 8, 6);
+		MODE1(1, "mode1", 2, 2),
+		MODE2(2, "mode2", 3, 2),
+		MODE3(3, "mode3", 6, 6),
+		MODE4(4, "mode4", 8, 6);
 		
 		private int id;
 		private String name;
@@ -56,7 +57,8 @@ public class YKTileBoxedRannuncarpus extends YKTileBaseBoxedProcFlower implement
 			return this.id;
 		}
 		public String getName() {
-			return this.name;
+	        return I18n.format("gui.boxed_rannuncarpus."
+	        		+ this.name + ".name");
 		}
 		public int getRange() {
 			return this.range;
@@ -276,6 +278,10 @@ public class YKTileBoxedRannuncarpus extends YKTileBaseBoxedProcFlower implement
 	 * モードチェンジメッセージを取得する
 	 */
 	public TextComponentTranslation getMessageChangeFlowerMode() {
-		return new TextComponentTranslation(this.flowerMode.getName() + "モードに変更しました", new Object[0]);
+		
+		String name = this.flowerMode.getName();
+		String text = I18n.format("gui.boxed_rannuncarpus.mode.message.name", name);
+		
+		return new TextComponentTranslation(text);
 	}
 }

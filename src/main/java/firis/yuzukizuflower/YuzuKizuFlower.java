@@ -79,12 +79,12 @@ public class YuzuKizuFlower
     /**
      * クリエイティブタブ
      */
-    public static final CreativeTabs YuzuKizuCreativeTab = new CreativeTabs("tabYuzuKoto") {
+    public static final CreativeTabs YuzuKizuCreativeTab = new CreativeTabs("tabYuzuKizuFlower") {
     	@SideOnly(Side.CLIENT)
     	@Override
         public ItemStack getTabIconItem()
         {
-            return new ItemStack(Blocks.DIAMOND_BLOCK);
+            return new ItemStack(YuzuKizuFlower.YuzuKizuBlocks.FLOWER_BOX);
         }
     };
     
@@ -201,6 +201,13 @@ public class YuzuKizuFlower
                 .setUnlocalizedName("flower_box")
         );
         
+        // マナタンク
+        event.getRegistry().register(
+                new YKBlockManaTank()
+                .setRegistryName(MODID, "mana_tank")
+                .setUnlocalizedName("mana_tank")
+        );
+        
         // 箱入りピュアデイジー
         event.getRegistry().register(
                 new YKBlockBoxedPureDaisy()
@@ -213,13 +220,6 @@ public class YuzuKizuFlower
                 new YKBlockBoxedEndoflame(0)
                 .setRegistryName(MODID, "boxed_endoflame")
                 .setUnlocalizedName("boxed_endoflame")
-        );
-        
-        // マナタンク
-        event.getRegistry().register(
-                new YKBlockManaTank()
-                .setRegistryName(MODID, "mana_tank")
-                .setUnlocalizedName("mana_tank")
         );
         
         // 箱入りラナンカーパス
@@ -266,6 +266,11 @@ public class YuzuKizuFlower
     			.setRegistryName(MODID, "flower_box")
     	);
     	
+    	// 箱入りマナタンク
+    	event.getRegistry().register(new ItemBlock(YuzuKizuBlocks.MANA_TANK)
+    			.setRegistryName(MODID, "mana_tank")
+    	);
+    	
     	// 箱入りピュアデイジー
     	event.getRegistry().register(new ItemBlock(YuzuKizuBlocks.BOXED_PURE_DAISY)
     			.setRegistryName(MODID, "boxed_pure_daisy")
@@ -274,11 +279,6 @@ public class YuzuKizuFlower
     	// 箱入りエンドフレイム
     	event.getRegistry().register(new ItemBlock(YuzuKizuBlocks.BOXED_ENDOFLAME)
     			.setRegistryName(MODID, "boxed_endoflame")
-    	);
-    	
-    	// 箱入りエンドフレイム
-    	event.getRegistry().register(new ItemBlock(YuzuKizuBlocks.MANA_TANK)
-    			.setRegistryName(MODID, "mana_tank")
     	);
     	
     	// 箱入りラナンカーパス
