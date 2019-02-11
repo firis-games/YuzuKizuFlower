@@ -9,7 +9,7 @@ import net.minecraft.client.renderer.texture.TextureAtlasSprite;
 import net.minecraft.client.renderer.texture.TextureMap;
 import net.minecraft.util.ResourceLocation;
 
-public class YKGuiButton extends GuiButton {
+public class YKGuiItemIconButton extends GuiButton {
 
     protected static final ResourceLocation GUI_PARTS_TEXTURES = new ResourceLocation(YuzuKizuFlower.MODID, "textures/gui/gui_parts.png");
     
@@ -20,12 +20,12 @@ public class YKGuiButton extends GuiButton {
      * @param y
      * @param buttonText
      */
-    public YKGuiButton(int buttonId, int x, int y, String buttonText)
+    public YKGuiItemIconButton(int buttonId, int x, int y, String buttonText)
     {
     	super(buttonId, x, y, 20, 20, buttonText);
     }
     
-    protected YKGuiButton(int buttonId, int x, int y, int widthIn, int heightIn, String buttonText) {
+    protected YKGuiItemIconButton(int buttonId, int x, int y, int widthIn, int heightIn, String buttonText) {
     	super(buttonId, x, y, 20, 20, buttonText);
     }
     

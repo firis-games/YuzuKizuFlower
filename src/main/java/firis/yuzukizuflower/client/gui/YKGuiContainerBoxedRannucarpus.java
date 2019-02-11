@@ -56,7 +56,7 @@ public class YKGuiContainerBoxedRannucarpus extends YKGuiContainerBaseBoxedFuncF
         int y = (this.height - this.guiHeight) / 2;
         
         //ボタンの定義
-        this.buttonList.add(new YKGuiButton(0, x + 135 , y + 20, "モード"));
+        this.buttonList.add(new YKGuiItemIconButton(0, x + 135 , y + 20, "モード"));
         
     }
 	
