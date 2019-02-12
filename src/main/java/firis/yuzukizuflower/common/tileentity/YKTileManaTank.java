@@ -10,6 +10,7 @@ import javax.annotation.Nullable;
 import firis.yuzukizuflower.common.botania.BotaniaHelper;
 import firis.yuzukizuflower.common.botania.ManaRecipe;
 import net.minecraft.item.ItemStack;
+import net.minecraft.util.EnumFacing;
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.items.CapabilityItemHandler;
 import vazkii.botania.api.mana.IManaItem;
@@ -319,6 +320,18 @@ public class YKTileManaTank extends YKTileBaseBoxedProcFlower {
 	//******************************************************************************************
 	// アイテムの入出力の制御
 	//******************************************************************************************
+	
+	/**
+	 * 出力スロットの制御
+	 */
+	@Override
+	public boolean canExtractItem(int index, ItemStack stack, EnumFacing direction) {
+		if (this.outputSlotIndex != index) {
+			return false;
+		}
+		return true;
+	}
+	
 	/**
 	 * 対象スロットの使用許可
 	 */

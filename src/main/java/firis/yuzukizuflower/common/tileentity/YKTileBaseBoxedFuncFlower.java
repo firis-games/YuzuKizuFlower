@@ -11,6 +11,7 @@ import firis.yuzukizuflower.common.botania.IManaRecipes;
 import firis.yuzukizuflower.common.botania.ManaRecipe;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
+import net.minecraft.util.EnumFacing;
 import net.minecraftforge.items.CapabilityItemHandler;
 import vazkii.botania.common.Botania;
 
@@ -395,6 +396,28 @@ public abstract class YKTileBaseBoxedFuncFlower extends YKTileBaseManaPool imple
 	//******************************************************************************************
 	// アイテムの入出力の制御
 	//******************************************************************************************
+	
+	/**
+	 * 入力スロットの制御
+	 */
+	@Override
+	public boolean canInsertItem(int index, ItemStack itemStackIn, EnumFacing direction) {
+		if (index != this.inputSlotIndex) {
+			return false;
+		}
+		return true;
+	}
+
+	/**
+	 * 出力スロットの制御
+	 */
+	@Override
+	public boolean canExtractItem(int index, ItemStack stack, EnumFacing direction) {
+		if (this.outputSlotIndex.indexOf(index) < 0) {
+			return false;
+		}
+		return true;
+	}
 	
 	/**
 	 * 対象スロットの使用許可

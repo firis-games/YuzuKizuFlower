@@ -6,13 +6,14 @@ import javax.annotation.Nullable;
 
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.EntityPlayerMP;
-import net.minecraft.inventory.IInventory;
+import net.minecraft.inventory.ISidedInventory;
 import net.minecraft.inventory.ItemStackHelper;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.network.Packet;
 import net.minecraft.network.play.server.SPacketUpdateTileEntity;
 import net.minecraft.tileentity.TileEntity;
+import net.minecraft.util.EnumFacing;
 import net.minecraft.util.NonNullList;
 import net.minecraft.world.World;
 
@@ -22,7 +23,7 @@ import net.minecraft.world.World;
  * @author computer
  *
  */
-public abstract class YKTileBaseInventory extends TileEntity implements IInventory {
+public abstract class YKTileBaseInventory extends TileEntity implements ISidedInventory {
 	
 	/**
 	 * IInventoryの保存用領域
@@ -171,6 +172,30 @@ public abstract class YKTileBaseInventory extends TileEntity implements IInvento
 	
 	
 	/**
+	 * ISidedInventory
+	 *********************************************************************************/
+	@Override
+	public int[] getSlotsForFace(EnumFacing side) {
+		int[] slot = new int[this.getSizeInventory()];
+		for (int i = 0; i < this.getSizeInventory(); i++) {
+			slot[i] = i;
+		}
+		return slot;
+	}
+
+	@Override
+	public boolean canInsertItem(int index, ItemStack itemStackIn, EnumFacing direction) {
+		return true;
+	}
+
+	@Override
+	public boolean canExtractItem(int index, ItemStack stack, EnumFacing direction) {
+		return true;
+	}
+	
+	
+	
+	/**
 	 * **************************************************
 	 * NBT関連
 	 * 基本的にreadFromNBT/writeToNBTでデータのやり取りを行う
@@ -290,5 +315,5 @@ public abstract class YKTileBaseInventory extends TileEntity implements IInvento
 			}
 		}
 	}
-	
+
 }
