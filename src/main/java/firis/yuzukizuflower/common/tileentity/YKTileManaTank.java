@@ -4,15 +4,10 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
-import javax.annotation.Nonnull;
-import javax.annotation.Nullable;
-
 import firis.yuzukizuflower.common.botania.BotaniaHelper;
 import firis.yuzukizuflower.common.botania.ManaRecipe;
 import net.minecraft.item.ItemStack;
-import net.minecraft.util.EnumFacing;
 import net.minecraft.util.ResourceLocation;
-import net.minecraftforge.items.CapabilityItemHandler;
 import vazkii.botania.api.mana.IManaItem;
 import vazkii.botania.api.mana.IManaUsingItem;
 
@@ -28,7 +23,9 @@ public class YKTileManaTank extends YKTileBaseBoxedProcFlower {
 		//inputスロット
 		this.inputSlotIndex = 0;
 		//outputスロット
-		this.outputSlotIndex = 1;
+		this.outputSlotIndex = new ArrayList<Integer>(
+				Arrays.asList(1));
+		
 		//chargeスロット
 		this.chargeSlotIndex = new ArrayList<Integer>(
 				Arrays.asList(2, 3, 4, 5));
@@ -39,16 +36,6 @@ public class YKTileManaTank extends YKTileBaseBoxedProcFlower {
 		this.setCycleTick(10);
 		
 	}
-	
-	/**
-	 * inputスロットのindex
-	 */
-	protected Integer inputSlotIndex = -1;
-
-	/**
-	 * outputスロットのindex
-	 */
-	protected Integer outputSlotIndex = -1;
 	
 	/**
 	 * catalystスロットのindex
@@ -108,7 +95,7 @@ public class YKTileManaTank extends YKTileBaseBoxedProcFlower {
 			
 			//必要な情報を準備
 			int recipeMana = recipe.getMana();
-			ItemStack outputSlot = this.getStackInSlot(this.outputSlotIndex);
+			ItemStack outputSlot = this.getStackInSlot(this.outputSlotIndex.get(0));
 			ItemStack outputRecipe = recipe.getOutputItemStack();
 			
 			//マナが既定数以下
@@ -140,7 +127,7 @@ public class YKTileManaTank extends YKTileBaseBoxedProcFlower {
 			} else {
 				outputSlot.setCount(outputSlot.getCount() + outputRecipe.getCount());
 			}
-			this.setInventorySlotContents(this.outputSlotIndex, outputSlot);
+			this.setInventorySlotContents(this.outputSlotIndex.get(0), outputSlot);
 			
 			//同期
 			this.playerServerSendPacket();
@@ -306,7 +293,7 @@ public class YKTileManaTank extends YKTileBaseBoxedProcFlower {
 				}
 				//満タンの場合はアイテムを移動する
 				if (this.isFull()) {
-					this.setInventorySlotContents(this.outputSlotIndex, stack.copy());
+					this.setInventorySlotContents(this.outputSlotIndex.get(0), stack.copy());
 					this.setInventorySlotContents(this.inputSlotIndex, ItemStack.EMPTY);
 					this.playerServerSendPacket();
 					ret = true;
@@ -320,64 +307,4 @@ public class YKTileManaTank extends YKTileBaseBoxedProcFlower {
 	//******************************************************************************************
 	// アイテムの入出力の制御
 	//******************************************************************************************
-	
-	/**
-	 * 出力スロットの制御
-	 */
-	@Override
-	public boolean canExtractItem(int index, ItemStack stack, EnumFacing direction) {
-		if (this.outputSlotIndex != index) {
-			return false;
-		}
-		return true;
-	}
-	
-	/**
-	 * 対象スロットの使用許可
-	 */
-	@Override
-	public boolean isItemValidForSlot(int index, ItemStack stack) {
-		
-		//inputスロット以外は不許可
-		if (index != this.inputSlotIndex) {
-			return false;
-		}
-		return true;
-	}
-	
-	@Override
-    public boolean hasCapability(net.minecraftforge.common.capabilities.Capability<?> capability, @Nullable net.minecraft.util.EnumFacing facing)
-    {
-		if (capability == CapabilityItemHandler.ITEM_HANDLER_CAPABILITY) {
-			return true;
-		}
-		return super.hasCapability(capability, facing);
-    }
-
-	net.minecraftforge.items.IItemHandler handlerInv = new net.minecraftforge.items.wrapper.InvWrapper(this) {
-		
-		@Override
-	    @Nonnull
-	    public ItemStack extractItem(int slot, int amount, boolean simulate)
-	    {
-			YKTileManaTank tile = (YKTileManaTank) this.getInv();
-			
-			//Capability経由はoutputスロットのみ許可
-			if (tile.outputSlotIndex != slot) {
-				return ItemStack.EMPTY;
-			}
-			return super.extractItem(slot, amount, simulate);
-	    }
-	};
-	
-	@Override
-    @Nullable
-    public <T> T getCapability(net.minecraftforge.common.capabilities.Capability<T> capability, @Nullable net.minecraft.util.EnumFacing facing)
-    {
-    	if (capability == CapabilityItemHandler.ITEM_HANDLER_CAPABILITY) {
-			return CapabilityItemHandler.ITEM_HANDLER_CAPABILITY.cast(handlerInv);
-		}
-    	return super.getCapability(capability, facing);
-    
-    }
 }

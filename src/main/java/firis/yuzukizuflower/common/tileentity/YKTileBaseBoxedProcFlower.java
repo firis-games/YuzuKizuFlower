@@ -2,12 +2,6 @@ package firis.yuzukizuflower.common.tileentity;
 
 import java.awt.Color;
 
-import javax.annotation.Nonnull;
-import javax.annotation.Nullable;
-
-import net.minecraft.item.ItemStack;
-import net.minecraft.util.EnumFacing;
-import net.minecraftforge.items.CapabilityItemHandler;
 import vazkii.botania.common.Botania;
 
 /**
@@ -16,12 +10,6 @@ import vazkii.botania.common.Botania;
  *
  */
 public abstract class YKTileBaseBoxedProcFlower extends YKTileBaseManaPool implements IYKTileGuiBoxedFlower{
-	
-	/**
-	 * inputスロットのindex
-	 */
-	protected Integer inputSlotIndex = 0;
-	
 	
 	/**
 	 * Tickカウンタ
@@ -113,68 +101,5 @@ public abstract class YKTileBaseBoxedProcFlower extends YKTileBaseManaPool imple
 	//******************************************************************************************
 	// アイテムの入出力の制御
 	//******************************************************************************************
-	/**
-	 * 入力スロットの制御
-	 */
-	@Override
-	public boolean canInsertItem(int index, ItemStack itemStackIn, EnumFacing direction) {
-		if (index != this.inputSlotIndex) {
-			return false;
-		}
-		return true;
-	}
-
-	/**
-	 * 出力スロットの制御
-	 */
-	@Override
-	public boolean canExtractItem(int index, ItemStack stack, EnumFacing direction) {
-		//出力は許可しない
-		return false;
-	}
-	
-	/**
-	 * 対象スロットの使用許可
-	 */
-	@Override
-	public boolean isItemValidForSlot(int index, ItemStack stack) {
-		
-		//inputスロット
-		if (index == this.inputSlotIndex) {
-			return true;
-		}
-		return false;
-	}
-	
-	@Override
-    public boolean hasCapability(net.minecraftforge.common.capabilities.Capability<?> capability, @Nullable net.minecraft.util.EnumFacing facing)
-    {
-		if (capability == CapabilityItemHandler.ITEM_HANDLER_CAPABILITY) {
-			return true;
-		}
-		return super.hasCapability(capability, facing);
-    }
-
-	net.minecraftforge.items.IItemHandler handlerInv = new net.minecraftforge.items.wrapper.InvWrapper(this) {
-		
-		@Override
-	    @Nonnull
-	    public ItemStack extractItem(int slot, int amount, boolean simulate)
-	    {
-			//Capabilityは許可しない
-			return ItemStack.EMPTY;
-	    }
-	};
-	
-	@Override
-    @Nullable
-    public <T> T getCapability(net.minecraftforge.common.capabilities.Capability<T> capability, @Nullable net.minecraft.util.EnumFacing facing)
-    {
-    	if (capability == CapabilityItemHandler.ITEM_HANDLER_CAPABILITY) {
-			return CapabilityItemHandler.ITEM_HANDLER_CAPABILITY.cast(handlerInv);
-		}
-    	return super.getCapability(capability, facing);
-    
-    }
 	
 }

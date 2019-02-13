@@ -24,6 +24,7 @@ public class YKTileBoxedEndoflame extends YKTileBaseBoxedGenFlower {
 		//inputスロット
 		this.inputSlotIndex = 0;
 		
+		//upgradeスロット
 		this.upgradeSlotIndex = 1;
 		
 	}

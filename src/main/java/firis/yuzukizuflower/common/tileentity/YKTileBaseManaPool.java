@@ -1,6 +1,10 @@
 package firis.yuzukizuflower.common.tileentity;
 
+import java.util.ArrayList;
 import java.util.List;
+
+import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
 
 import com.google.common.base.Predicates;
 
@@ -12,6 +16,7 @@ import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.ITickable;
 import net.minecraft.util.math.AxisAlignedBB;
+import net.minecraftforge.items.CapabilityItemHandler;
 import vazkii.botania.api.mana.IManaPool;
 import vazkii.botania.api.mana.spark.ISparkAttachable;
 import vazkii.botania.api.mana.spark.ISparkEntity;
@@ -228,4 +233,136 @@ public abstract class YKTileBaseManaPool extends YKTileBaseInventory
 	public boolean areIncomingTranfersDone() {
 		return false;
 	}
+	
+	
+	//******************************************************************************************
+	// アイテムの入出力スロット操作用
+	//******************************************************************************************
+	
+	/**
+	 * inputスロットのindex
+	 */
+	protected int inputSlotIndex = -1;
+
+	/**
+	 * outputスロットのindex
+	 */
+	protected List<Integer> outputSlotIndex = new ArrayList<Integer>();
+	
+	/**
+	 * workスロットのindex
+	 */
+	protected int workSlotIndex = -1;
+	
+	
+	/**
+	 * 入力側のItemStackを取得する
+	 * @return
+	 */
+	public ItemStack getStackInputSlot() {
+		if (inputSlotIndex < 0) {
+			return ItemStack.EMPTY.copy();
+		}
+		return getStackInSlot(inputSlotIndex);
+	}
+	
+	/**
+	 * 入力側のItemStackを取得する
+	 * @return
+	 */
+	public ItemStack getStackWorkSlot() {
+		if (workSlotIndex < 0) {
+			return ItemStack.EMPTY.copy();
+		}
+		return getStackInSlot(workSlotIndex);
+	}
+	
+	//******************************************************************************************
+	// アイテムの入出力の制御
+	//******************************************************************************************
+	
+	/**
+	 * 入力スロットの制御
+	 * @Intarface ISidedInventory
+	 */
+	@Override
+	public boolean canInsertItem(int index, ItemStack itemStackIn, EnumFacing direction) {
+		if (this.inputSlotIndex != index) {
+			return false;
+		}
+		return isItemValidRecipesForInputSlot(itemStackIn);
+	}
+
+	/**
+	 * 出力スロットの制御
+	 * @Intarface ISidedInventory
+	 */
+	@Override
+	public boolean canExtractItem(int index, ItemStack stack, EnumFacing direction) {
+		if (this.outputSlotIndex.indexOf(index) < 0) {
+			return false;
+		}
+		return true;
+	}
+	
+	/**
+	 * 対象スロットの使用許可
+	 * @Intarface IInventory
+	 */
+	@Override
+	public boolean isItemValidForSlot(int index, ItemStack stack) {
+		
+		//inputスロット以外は不許可
+		if (this.inputSlotIndex != index) {
+			return false;
+		}
+		
+		//レシピで判断する
+		return isItemValidRecipesForInputSlot(stack);
+	}
+	
+	/**
+	 * inputスロットのレシピチェック用
+	 * @param stack
+	 * @return
+	 */
+	public boolean isItemValidRecipesForInputSlot(ItemStack stack) {
+		return true;
+	}
+	
+	@Override
+    public boolean hasCapability(net.minecraftforge.common.capabilities.Capability<?> capability, @Nullable net.minecraft.util.EnumFacing facing)
+    {
+		if (capability == CapabilityItemHandler.ITEM_HANDLER_CAPABILITY) {
+			return true;
+		}
+		return super.hasCapability(capability, facing);
+    }
+
+	net.minecraftforge.items.IItemHandler handlerInv = new net.minecraftforge.items.wrapper.InvWrapper(this) {
+		
+		@Override
+	    @Nonnull
+	    public ItemStack extractItem(int slot, int amount, boolean simulate)
+	    {
+			YKTileBaseManaPool tile = (YKTileBaseManaPool) this.getInv();
+			
+			//Capability経由はoutputスロットのみ許可
+			if (tile.outputSlotIndex.indexOf(slot) < 0) {
+				return ItemStack.EMPTY;
+			}
+			return super.extractItem(slot, amount, simulate);
+	    }
+	};
+	
+	@Override
+    @Nullable
+    public <T> T getCapability(net.minecraftforge.common.capabilities.Capability<T> capability, @Nullable net.minecraft.util.EnumFacing facing)
+    {
+    	if (capability == CapabilityItemHandler.ITEM_HANDLER_CAPABILITY) {
+			return CapabilityItemHandler.ITEM_HANDLER_CAPABILITY.cast(handlerInv);
+		}
+    	return super.getCapability(capability, facing);
+    
+    }
 }

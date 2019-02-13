@@ -2,15 +2,10 @@ package firis.yuzukizuflower.common.tileentity;
 
 import java.awt.Color;
 
-import javax.annotation.Nonnull;
-import javax.annotation.Nullable;
-
 import firis.yuzukizuflower.common.botania.IManaGenerator;
 import firis.yuzukizuflower.common.botania.ManaGenerator;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
-import net.minecraft.util.EnumFacing;
-import net.minecraftforge.items.CapabilityItemHandler;
 import vazkii.botania.common.Botania;
 
 /**
@@ -77,11 +72,6 @@ public abstract class YKTileBaseBoxedGenFlower extends YKTileBaseManaPool implem
         return compound;
     }
 
-	/**
-	 * inputスロットのindex
-	 */
-	protected int inputSlotIndex = -1;
-	
 	/**
 	 * upgradeスロットのindex
 	 */
@@ -174,18 +164,6 @@ public abstract class YKTileBaseBoxedGenFlower extends YKTileBaseManaPool implem
 		}
 		
 	}
-	
-	/**
-	 * 入力側のItemStackを取得する
-	 * @return
-	 */
-	public ItemStack getStackInputSlot() {
-		if (inputSlotIndex == -1) {
-			return ItemStack.EMPTY.copy();
-		}
-		return getStackInSlot(inputSlotIndex);
-	}
-	
 	
 	/**
 	 * 処理状態を初期化する
@@ -286,23 +264,17 @@ public abstract class YKTileBaseBoxedGenFlower extends YKTileBaseManaPool implem
 	//******************************************************************************************
 	
 	/**
-	 * 入力スロットの制御
+	 * inputスロットのレシピチェック用
+	 * @param stack
+	 * @return
 	 */
 	@Override
-	public boolean canInsertItem(int index, ItemStack itemStackIn, EnumFacing direction) {
-		if (index != this.inputSlotIndex) {
+	public boolean isItemValidRecipesForInputSlot(ItemStack stack) {
+		ManaGenerator recipe = this.genFlowerRecipes.getMatchesRecipe(stack);
+		if (recipe == null) {
 			return false;
-		}
+		}		
 		return true;
-	}
-
-	/**
-	 * 出力スロットの制御
-	 */
-	@Override
-	public boolean canExtractItem(int index, ItemStack stack, EnumFacing direction) {
-		//出力は許可しない
-		return false;
 	}
 	
 	/**
@@ -310,16 +282,6 @@ public abstract class YKTileBaseBoxedGenFlower extends YKTileBaseManaPool implem
 	 */
 	@Override
 	public boolean isItemValidForSlot(int index, ItemStack stack) {
-		
-		//inputスロット
-		if (index == this.inputSlotIndex) {
-			//レシピで判断する
-			ManaGenerator recipe = this.genFlowerRecipes.getMatchesRecipe(stack);
-			if (recipe == null) {
-				return false;
-			}
-			return true;
-		}
 		
 		//upgradeスロット
 		if (index == this.upgradeSlotIndex) {
@@ -330,37 +292,7 @@ public abstract class YKTileBaseBoxedGenFlower extends YKTileBaseManaPool implem
 			}
 			return true;
 		}
-		return false;
-	}
-	
-	@Override
-    public boolean hasCapability(net.minecraftforge.common.capabilities.Capability<?> capability, @Nullable net.minecraft.util.EnumFacing facing)
-    {
-		if (capability == CapabilityItemHandler.ITEM_HANDLER_CAPABILITY) {
-			return true;
-		}
-		return super.hasCapability(capability, facing);
-    }
-
-	net.minecraftforge.items.IItemHandler handlerInv = new net.minecraftforge.items.wrapper.InvWrapper(this) {
 		
-		@Override
-	    @Nonnull
-	    public ItemStack extractItem(int slot, int amount, boolean simulate)
-	    {
-			//Capabilityは許可しない
-			return ItemStack.EMPTY;
-	    }
-	};
-	
-	@Override
-    @Nullable
-    public <T> T getCapability(net.minecraftforge.common.capabilities.Capability<T> capability, @Nullable net.minecraft.util.EnumFacing facing)
-    {
-    	if (capability == CapabilityItemHandler.ITEM_HANDLER_CAPABILITY) {
-			return CapabilityItemHandler.ITEM_HANDLER_CAPABILITY.cast(handlerInv);
-		}
-    	return super.getCapability(capability, facing);
-    
-    }
+		return super.isItemValidForSlot(index, stack);
+	}
 }
