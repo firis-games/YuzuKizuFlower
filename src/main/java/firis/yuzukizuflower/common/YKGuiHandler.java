@@ -24,6 +24,10 @@ public class YKGuiHandler implements IGuiHandler {
 	
 	//箱入りオアキド
 	public static final int BOXED_ORECHID = 6;
+	
+	//箱入りガーマリリス
+	public static final int BOXED_GOURMARYLLIS = 7;
+		
 		
 	
 	@Override

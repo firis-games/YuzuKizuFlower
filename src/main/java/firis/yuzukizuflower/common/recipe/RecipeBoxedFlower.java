@@ -28,6 +28,7 @@ public class RecipeBoxedFlower extends IForgeRegistryEntry.Impl<IRecipe> impleme
 			put("rannuncarpus", YuzuKizuFlower.YuzuKizuBlocks.BOXED_RANNUNCARPUS);
 			put("jadedAmaranthus", YuzuKizuFlower.YuzuKizuBlocks.BOXED_JADED_AMARANTHUS);
 			put("orechid", YuzuKizuFlower.YuzuKizuBlocks.BOXED_ORECHID);
+			put("gourmaryllis", YuzuKizuFlower.YuzuKizuBlocks.BOXED_GOURMARYLLIS);
 		}
 	};
 	

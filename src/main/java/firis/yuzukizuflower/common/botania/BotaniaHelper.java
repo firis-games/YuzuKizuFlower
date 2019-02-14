@@ -31,6 +31,11 @@ public class BotaniaHelper {
 	 */
 	public static IManaGenerator recipesEndoflame = new GeneratorEndoflame();
 	
+	/**
+	 * ガーマリリスの発電レシピ
+	 */
+	public static IManaGenerator recipesGourmaryllis = new GeneratorGourmaryllis();
+	
 	
 	/**
 	 * 対象アイテムがbotania:specialFlowerかチェックする

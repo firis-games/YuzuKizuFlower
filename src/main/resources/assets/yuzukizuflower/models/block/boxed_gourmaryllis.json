@@ -1,0 +1,10 @@
+{
+    "parent": "yuzukizuflower:block/boxed_base",
+    "textures": {
+    	"particle":"botania:blocks/flower_gen_gourmaryllis",
+        "base":"minecraft:blocks/iron_block",
+        "grass":"yuzukizuflower:blocks/boxed_grass",
+        "cover":"minecraft:blocks/glass",
+        "cross":"botania:blocks/flower_gen_gourmaryllis"
+    }
+}
