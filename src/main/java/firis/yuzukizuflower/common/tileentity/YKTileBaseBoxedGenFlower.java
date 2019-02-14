@@ -1,6 +1,7 @@
 package firis.yuzukizuflower.common.tileentity;
 
 import java.awt.Color;
+import java.util.List;
 
 import firis.yuzukizuflower.common.botania.IManaGenerator;
 import firis.yuzukizuflower.common.botania.ManaGenerator;
@@ -50,6 +51,7 @@ public abstract class YKTileBaseBoxedGenFlower extends YKTileBaseManaPool implem
 	public void readFromNBT(NBTTagCompound compound)
     {
 		super.readFromNBT(compound);
+		
 	    this.maxTimer = compound.getInteger("maxTimer");
 	    this.timer = compound.getInteger("timer");
 	    this.genMana = compound.getInteger("genMana");
@@ -105,16 +107,16 @@ public abstract class YKTileBaseBoxedGenFlower extends YKTileBaseManaPool implem
 		//実行状態の確認
 		if (this.timer == 0) {
 			
-			ItemStack stack = getStackInputSlot();
+			List<ItemStack> stackList = getStackInputSlotList();
 			
 			//レシピの確認
-			ManaGenerator recipe = genFlowerRecipes.getMatchesRecipe(stack);
+			ManaGenerator recipe = genFlowerRecipes.getMatchesRecipe(stackList);
 			if (recipe == null) {
 				return;
 			}
 			
 			//燃料消費して準備
-			this.decrStackSize(inputSlotIndex, 1);
+			this.decrStackSizeInputSlot(1);
 			
 			this.maxTimer = recipe.getTime();
 			this.genMana = recipe.getMana();
@@ -155,6 +157,11 @@ public abstract class YKTileBaseBoxedGenFlower extends YKTileBaseManaPool implem
 		if (this.timer >= this.maxTimer) {
 			//処理状態を初期化
 			clearRecipeWork();
+			syncFlg = true;
+		}
+		
+		//2tickに1回同期する
+		if (!syncFlg && this.timer % 2 == 0) {
 			syncFlg = true;
 		}
 		
@@ -270,11 +277,7 @@ public abstract class YKTileBaseBoxedGenFlower extends YKTileBaseManaPool implem
 	 */
 	@Override
 	public boolean isItemValidRecipesForInputSlot(ItemStack stack) {
-		ManaGenerator recipe = this.genFlowerRecipes.getMatchesRecipe(stack);
-		if (recipe == null) {
-			return false;
-		}		
-		return true;
+		return this.genFlowerRecipes.isMatchesItemStackSlot(stack);
 	}
 	
 	/**

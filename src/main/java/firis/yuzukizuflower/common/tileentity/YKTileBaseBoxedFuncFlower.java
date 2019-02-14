@@ -164,7 +164,7 @@ public abstract class YKTileBaseBoxedFuncFlower extends YKTileBaseManaPool imple
 		}
 		
 		//実行状態の確認
-		if (getStackWorkSlot().isEmpty()) {
+		if (getStackWorkSlotFirst().isEmpty()) {
 			
 			//outputスロットの容量を確認
 			//ランダムレシピの場合は事前チェックを行う
@@ -176,7 +176,7 @@ public abstract class YKTileBaseBoxedFuncFlower extends YKTileBaseManaPool imple
 				return;
 			}
 			
-			ItemStack stack = getStackInputSlot();
+			ItemStack stack = getStackInputSlotFirst();
 			
 			//レシピの確認
 			ManaRecipe recipe = funcFlowerRecipes.getMatchesRecipe(stack, true);
@@ -238,19 +238,19 @@ public abstract class YKTileBaseBoxedFuncFlower extends YKTileBaseManaPool imple
 	 */
 	public void shrinkStackInputSlotToWorkSlot(ManaRecipe recipe) {
 		
-		ItemStack stack = getStackInputSlot();
+		ItemStack stack = getStackInputSlotFirst();
 		
 		//inputとworkが設定されていない場合は何もしない
-		if (inputSlotIndex == -1
-				&& workSlotIndex == -1) {
+		if (inputSlotIndex.size() == 0
+				&& workSlotIndex.size() == 0) {
 			return;
 		}
 		
-		//workSlotへ設定
-		this.setInventorySlotContents(workSlotIndex, recipe.getInputItemStack());
+		//inputからworkSlotへ設定
+		this.setInventorySlotContents(workSlotIndex.get(0), recipe.getInputItemStack());
 
 		stack.shrink(recipe.getInputItemStack().getCount());
-		this.setInventorySlotContents(inputSlotIndex, stack);
+		this.setInventorySlotContents(inputSlotIndex.get(0), stack);
 	}
 	
 	/**
@@ -260,8 +260,8 @@ public abstract class YKTileBaseBoxedFuncFlower extends YKTileBaseManaPool imple
 		//タイマーリセット
 		this.timer = 0;
 		this.maxTimer = 0;
-		if (workSlotIndex != -1) {
-			this.removeStackFromSlot(workSlotIndex);			
+		for(Integer idx : workSlotIndex) {
+			this.removeStackFromSlot(idx);
 		}
 	}
 	
@@ -270,7 +270,7 @@ public abstract class YKTileBaseBoxedFuncFlower extends YKTileBaseManaPool imple
 	 */
 	public ItemStack getRecipesResult() {
 		
-		ManaRecipe recipe = funcFlowerRecipes.getMatchesRecipe(this.getStackWorkSlot(), false);
+		ManaRecipe recipe = funcFlowerRecipes.getMatchesRecipe(this.getStackWorkSlotFirst(), false);
 		if (recipe == null) {
 			//例外
 			clearRecipeWork();

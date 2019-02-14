@@ -18,10 +18,11 @@ public class YKContainerBoxedGourmaryllis extends YKContainerBaseBoxedFuncFlower
 	protected void initTileEntitySlot(IInventory iTeInv) {
 		
 		//inputスロット
-		this.addSlotToContainer(new YKSlotInventory(iTeInv, 0, 80, 35));
+		this.addSlotToContainer(new YKSlotInventory(iTeInv, 0, 66, 35));
+		this.addSlotToContainer(new YKSlotInventory(iTeInv, 1, 93, 35));
 		
 		//upgradeスロット
-		this.addSlotToContainer(new YKSlotInventory(iTeInv, 1, 144, 23) {
+		this.addSlotToContainer(new YKSlotInventory(iTeInv, 2, 144, 23) {
 			@Override
 			public int getSlotStackLimit()
 		    {

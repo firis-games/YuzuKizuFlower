@@ -1,6 +1,6 @@
 package firis.yuzukizuflower.client.gui;
 
-import firis.yuzukizuflower.common.container.YKContainerBoxedEndoflame;
+import firis.yuzukizuflower.common.container.YKContainerBoxedGourmaryllis;
 import firis.yuzukizuflower.common.tileentity.IYKTileGuiBoxedFlower;
 import net.minecraft.inventory.IInventory;
 import net.minecraft.util.ResourceLocation;
@@ -17,7 +17,7 @@ public class YKGuiContainerBoxedGourmaryllis extends YKGuiContainerBaseBoxedFunc
 	 */
 	public YKGuiContainerBoxedGourmaryllis(IInventory iTeInv, IInventory playerInv) {
 		
-		super(new YKContainerBoxedEndoflame(iTeInv, playerInv));
+		super(new YKContainerBoxedGourmaryllis(iTeInv, playerInv));
 		
 		this.tileEntity = (IYKTileGuiBoxedFlower) iTeInv;
 		

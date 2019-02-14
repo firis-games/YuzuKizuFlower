@@ -1,10 +1,17 @@
 package firis.yuzukizuflower.common.tileentity;
 
+import java.util.ArrayList;
+import java.util.Arrays;
+
 import firis.yuzukizuflower.common.botania.BotaniaHelper;
 import net.minecraft.item.ItemStack;
 
 public class YKTileBoxedGourmaryllis extends YKTileBaseBoxedGenFlower {
 
+	public YKTileBoxedGourmaryllis() {
+		this(0);
+	}
+	
 	/**
 	 * 
 	 * @param mode
@@ -22,10 +29,11 @@ public class YKTileBoxedGourmaryllis extends YKTileBaseBoxedGenFlower {
 		this.genFlowerRecipes = BotaniaHelper.recipesGourmaryllis;
 		
 		//inputスロット
-		this.inputSlotIndex = 0;
+		this.inputSlotIndex = new ArrayList<Integer>(
+				Arrays.asList(0, 1));
 		
 		//upgradeスロット
-		this.upgradeSlotIndex = 1;
+		this.upgradeSlotIndex = 2;
 		
 	}
 
@@ -33,7 +41,7 @@ public class YKTileBoxedGourmaryllis extends YKTileBaseBoxedGenFlower {
 
 	@Override
 	public int getSizeInventory() {
-		return 2;
+		return 3;
 	}
 	
 	/**

@@ -21,7 +21,8 @@ public class YKTileManaTank extends YKTileBaseBoxedProcFlower {
 		//Slotの設定
 		
 		//inputスロット
-		this.inputSlotIndex = 0;
+		this.inputSlotIndex = new ArrayList<Integer>(
+				Arrays.asList(0));
 		//outputスロット
 		this.outputSlotIndex = new ArrayList<Integer>(
 				Arrays.asList(1));
@@ -85,7 +86,7 @@ public class YKTileManaTank extends YKTileBaseBoxedProcFlower {
 		
 		boolean ret = false;
 
-		ItemStack stack = this.getStackInSlot(this.inputSlotIndex);
+		ItemStack stack = this.getStackInputSlotFirst();
 		ItemStack catalyst = this.getStackInSlot(this.catalystSlotIndex);
 		
 		//レシピ取得
@@ -146,7 +147,7 @@ public class YKTileManaTank extends YKTileBaseBoxedProcFlower {
 	 */
 	protected boolean updateManaRelease() {
 		
-		ItemStack stack = this.getStackInSlot(this.inputSlotIndex);
+		ItemStack stack = this.getStackInputSlotFirst();
 		
 		if (stack.isEmpty() || !(stack.getItem() instanceof IManaItem)) {
 			return false;
@@ -267,7 +268,7 @@ public class YKTileManaTank extends YKTileBaseBoxedProcFlower {
 		boolean ret = false;
 		//スイレンを取り込む
 			
-		ItemStack stack = this.getStackInSlot(this.inputSlotIndex);
+		ItemStack stack = this.getStackInputSlotFirst();
 		
 		//botania:blacklotus
 		if (!stack.isEmpty()) {
@@ -294,7 +295,7 @@ public class YKTileManaTank extends YKTileBaseBoxedProcFlower {
 				//満タンの場合はアイテムを移動する
 				if (this.isFull()) {
 					this.setInventorySlotContents(this.outputSlotIndex.get(0), stack.copy());
-					this.setInventorySlotContents(this.inputSlotIndex, ItemStack.EMPTY);
+					this.setInventorySlotContents(this.inputSlotIndex.get(0), ItemStack.EMPTY);
 					this.playerServerSendPacket();
 					ret = true;
 				}

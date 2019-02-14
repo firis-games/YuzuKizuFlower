@@ -1,5 +1,7 @@
 package firis.yuzukizuflower.common.botania;
 
+import java.util.List;
+
 import javax.annotation.Nonnull;
 
 import net.minecraft.item.ItemStack;
@@ -12,9 +14,15 @@ public class GeneratorEndoflame implements IManaGenerator {
 	 * 一致しない場合はnullを返却する
 	 * @return
 	 */
-	public ManaGenerator getMatchesRecipe(@Nonnull ItemStack stack) {
+	public ManaGenerator getMatchesRecipe(@Nonnull List<ItemStack> stackList) {
 		
 		ManaGenerator generator = null;
+		
+		if (stackList.size() <= 0) {
+			return generator;
+		}
+		
+		ItemStack stack = stackList.get(0);
 		
 		//かまどを検索
 		int burnTime = TileEntityFurnace.getItemBurnTime(stack);
@@ -36,6 +44,16 @@ public class GeneratorEndoflame implements IManaGenerator {
 				2);
 		
 		return generator;
+	}
+	
+	/**
+	 * スロットのチェック処理
+	 */
+	public boolean isMatchesItemStackSlot(@Nonnull ItemStack stack) {
+		if(TileEntityFurnace.getItemBurnTime(stack) <= 0) {
+			return false;
+		}
+		return true;
 	}
 	
 	

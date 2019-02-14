@@ -13,14 +13,16 @@ public class YKTileBoxedPureDaisy  extends YKTileBaseBoxedFuncFlower {
 		this.funcFlowerRecipes = BotaniaHelper.recipesPureDaisy;
 		
 		//inputスロット
-		this.inputSlotIndex = 0;
+		this.inputSlotIndex = new ArrayList<Integer>(
+				Arrays.asList(0));
 		
 		//outputスロット
 		this.outputSlotIndex = new ArrayList<Integer>(
 				Arrays.asList(1));
 		
 		//workスロット
-		this.workSlotIndex = 2;
+		this.workSlotIndex = new ArrayList<Integer>(
+				Arrays.asList(2));
 		
 		//ノーマルレシピ
 		randomRecipe = false;

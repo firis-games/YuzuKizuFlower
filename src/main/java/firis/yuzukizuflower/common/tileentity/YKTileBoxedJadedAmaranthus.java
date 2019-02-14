@@ -21,14 +21,14 @@ public class YKTileBoxedJadedAmaranthus extends YKTileBaseBoxedFuncFlower {
 		this.funcFlowerRecipes = BotaniaHelper.recipesJadedAmaranthus;
 		
 		//inputスロット
-		this.inputSlotIndex = -1;
+		this.inputSlotIndex = new ArrayList<Integer>();
 		
 		//outputスロット
 		this.outputSlotIndex = new ArrayList<Integer>(
 				Arrays.asList(0, 1, 2, 3, 4, 5, 6, 7, 8));
 		
 		//workスロット
-		this.workSlotIndex = -1;
+		this.workSlotIndex = new ArrayList<Integer>();
 		
 		//upgradeスロット
 		this.upgradeSlotIndex = 9;
@@ -52,7 +52,7 @@ public class YKTileBoxedJadedAmaranthus extends YKTileBaseBoxedFuncFlower {
 		//アップグレードスロット
 		ItemStack upgrade = this.getStackInSlot(upgradeSlotIndex);
 		
-		ItemStack stack = this.getStackInputSlot();
+		ItemStack stack = this.getStackInputSlotFirst();
 		if (!upgrade.isEmpty()
 				&& upgrade.getItem() instanceof ItemShears) {
 			stack = upgrade.copy();

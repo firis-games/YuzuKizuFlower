@@ -1,6 +1,7 @@
 package firis.yuzukizuflower.common.tileentity;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 import net.minecraft.block.Block;
@@ -101,7 +102,8 @@ public class YKTileBoxedRannuncarpus extends YKTileBaseBoxedProcFlower implement
 		this.flowerMode = FlowerMode.MODE1;
 		
 		//inputスロット
-		this.inputSlotIndex = 0;
+		this.inputSlotIndex = new ArrayList<Integer>(
+				Arrays.asList(0));
 		
 		//tick周期
 		this.setCycleTick(10);
@@ -149,7 +151,7 @@ public class YKTileBoxedRannuncarpus extends YKTileBaseBoxedProcFlower implement
 		if (this.world.isRemote) {
 			//パーティクル判定
 			if(!isRedStonePower()
-					&& !this.getStackInSlot(this.inputSlotIndex).isEmpty()) {
+					&& !this.getStackInputSlotFirst().isEmpty()) {
 				clientSpawnParticle();
 			}
 			return;
@@ -192,7 +194,7 @@ public class YKTileBoxedRannuncarpus extends YKTileBaseBoxedProcFlower implement
 		int rangePlace = range;
 		int rangePlaceY = height;
 		
-		ItemStack stack = this.getStackInSlot(inputSlotIndex);
+		ItemStack stack = this.getStackInputSlotFirst();
 		Item stackItem = stack.getItem();
 		
 		for(BlockPos pos_ : BlockPos.getAllInBox(pos.add(-rangePlace, -rangePlaceY, -rangePlace), pos.add(rangePlace, rangePlaceY, rangePlace))) {

@@ -242,7 +242,7 @@ public abstract class YKTileBaseManaPool extends YKTileBaseInventory
 	/**
 	 * inputスロットのindex
 	 */
-	protected int inputSlotIndex = -1;
+	protected List<Integer> inputSlotIndex = new ArrayList<Integer>();
 
 	/**
 	 * outputスロットのindex
@@ -252,29 +252,56 @@ public abstract class YKTileBaseManaPool extends YKTileBaseInventory
 	/**
 	 * workスロットのindex
 	 */
-	protected int workSlotIndex = -1;
+	protected List<Integer> workSlotIndex = new ArrayList<Integer>();
 	
 	
 	/**
 	 * 入力側のItemStackを取得する
 	 * @return
 	 */
-	public ItemStack getStackInputSlot() {
-		if (inputSlotIndex < 0) {
+	public ItemStack getStackInputSlotFirst() {
+		if (inputSlotIndex.size() <= 0) {
 			return ItemStack.EMPTY.copy();
 		}
-		return getStackInSlot(inputSlotIndex);
+		return getStackInSlot(inputSlotIndex.get(0));
+	}
+	
+	/**
+	 * 入力側のItemStackのリストを取得する
+	 * @return
+	 */
+	public List<ItemStack> getStackInputSlotList() {
+		List<ItemStack> stackList = new ArrayList<ItemStack>();
+		if (inputSlotIndex.size() <= 0) {
+			return stackList;
+		}
+		
+		for(int idx : inputSlotIndex) {
+			stackList.add(getStackInSlot(idx));
+		}
+		return stackList;
 	}
 	
 	/**
 	 * 入力側のItemStackを取得する
 	 * @return
 	 */
-	public ItemStack getStackWorkSlot() {
-		if (workSlotIndex < 0) {
+	public ItemStack getStackWorkSlotFirst() {
+		if (workSlotIndex.size() <= 0) {
 			return ItemStack.EMPTY.copy();
 		}
-		return getStackInSlot(workSlotIndex);
+		return getStackInSlot(workSlotIndex.get(0));
+	}
+	
+	/**
+	 * inputスロットのアイテムを指定数分減らす
+	 */
+	public void decrStackSizeInputSlot(int count) {
+		
+		for(int idx : this.inputSlotIndex) {
+			
+			this.decrStackSize(idx, count);
+		}
 	}
 	
 	//******************************************************************************************
@@ -287,7 +314,7 @@ public abstract class YKTileBaseManaPool extends YKTileBaseInventory
 	 */
 	@Override
 	public boolean canInsertItem(int index, ItemStack itemStackIn, EnumFacing direction) {
-		if (this.inputSlotIndex != index) {
+		if (this.inputSlotIndex.indexOf(index) < 0) {
 			return false;
 		}
 		return isItemValidRecipesForInputSlot(itemStackIn);
@@ -313,7 +340,7 @@ public abstract class YKTileBaseManaPool extends YKTileBaseInventory
 	public boolean isItemValidForSlot(int index, ItemStack stack) {
 		
 		//inputスロット以外は不許可
-		if (this.inputSlotIndex != index) {
+		if (this.inputSlotIndex.indexOf(index) < 0) {
 			return false;
 		}
 		

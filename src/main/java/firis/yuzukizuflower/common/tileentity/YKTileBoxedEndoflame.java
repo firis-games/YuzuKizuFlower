@@ -1,10 +1,16 @@
 package firis.yuzukizuflower.common.tileentity;
 
+import java.util.ArrayList;
+import java.util.Arrays;
+
 import firis.yuzukizuflower.common.botania.BotaniaHelper;
 import net.minecraft.item.ItemStack;
 
 public class YKTileBoxedEndoflame extends YKTileBaseBoxedGenFlower {
 
+	public YKTileBoxedEndoflame() {
+		this(0);
+	}
 	/**
 	 * 
 	 * @param mode
@@ -22,7 +28,8 @@ public class YKTileBoxedEndoflame extends YKTileBaseBoxedGenFlower {
 		this.genFlowerRecipes = BotaniaHelper.recipesEndoflame;
 		
 		//inputスロット
-		this.inputSlotIndex = 0;
+		this.inputSlotIndex = new ArrayList<Integer>(
+				Arrays.asList(0));
 		
 		//upgradeスロット
 		this.upgradeSlotIndex = 1;
