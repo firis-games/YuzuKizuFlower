@@ -14,6 +14,7 @@ import firis.yuzukizuflower.common.block.YKBlockBoxedRannuncarpus;
 import firis.yuzukizuflower.common.block.YKBlockManaTank;
 import firis.yuzukizuflower.common.network.NetworkHandler;
 import firis.yuzukizuflower.common.proxy.CommonProxy;
+import firis.yuzukizuflower.common.recipe.BotaniaRecipes;
 import firis.yuzukizuflower.common.recipe.RecipeBoxedFlower;
 import firis.yuzukizuflower.common.tileentity.YKTileBoxedEndoflame;
 import firis.yuzukizuflower.common.tileentity.YKTileBoxedGourmaryllis;
@@ -25,8 +26,6 @@ import firis.yuzukizuflower.common.tileentity.YKTileManaTank;
 import net.minecraft.block.Block;
 import net.minecraft.client.renderer.block.model.ModelResourceLocation;
 import net.minecraft.creativetab.CreativeTabs;
-import net.minecraft.init.Blocks;
-import net.minecraft.init.Items;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemBlock;
 import net.minecraft.item.ItemStack;
@@ -50,8 +49,6 @@ import net.minecraftforge.fml.common.registry.GameRegistry;
 import net.minecraftforge.fml.common.registry.GameRegistry.ObjectHolder;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
-import vazkii.botania.api.BotaniaAPI;
-import vazkii.botania.api.recipe.RecipeManaInfusion;
 
 @Mod(
 		modid = YuzuKizuFlower.MODID, 
@@ -167,31 +164,8 @@ public class YuzuKizuFlower
     @EventHandler
     public void postInit(FMLPostInitializationEvent event)
     {
-    	
-    	
-    	
-    	//インゴット倍化
-    	
-    	//botania
-    	//BotaniaAPI.registerManaInfusionRecipe(output, input, mana);
-    	//registerManaInfusionRecipeだと触媒の設定ができないよう
-    	RecipeManaInfusion recipe = new RecipeManaInfusion(new ItemStack(Items.IRON_INGOT, 2), new ItemStack(Items.IRON_INGOT, 1), 5000);
-    	recipe.setCatalyst(RecipeManaInfusion.conjurationState);
-    	BotaniaAPI.manaInfusionRecipes.add(recipe);
-    	
-    	recipe = new RecipeManaInfusion(new ItemStack(Items.GOLD_INGOT, 2), new ItemStack(Items.GOLD_INGOT, 1), 5000);
-    	recipe.setCatalyst(RecipeManaInfusion.conjurationState);
-    	BotaniaAPI.manaInfusionRecipes.add(recipe);
-    	
-    	//エンダーストーン
-    	recipe = new RecipeManaInfusion(new ItemStack(Blocks.END_STONE, 1), new ItemStack(Blocks.STONE, 1, 0), 5000);
-    	recipe.setCatalyst(Blocks.DRAGON_EGG.getDefaultState());
-    	BotaniaAPI.manaInfusionRecipes.add(recipe);
-    	
-    	//エンダー空気ビン
-    	recipe = new RecipeManaInfusion(new ItemStack(Item.getByNameOrId("botania:manaresource"), 1, 15), new ItemStack(Items.GLASS_BOTTLE, 1), 5000);
-    	recipe.setCatalyst(Blocks.DRAGON_EGG.getDefaultState());
-    	BotaniaAPI.manaInfusionRecipes.add(recipe);
+    	//botaniaのレシピを追加
+    	BotaniaRecipes.init();
     }
     
     /**
