@@ -1,0 +1,33 @@
+itemGroup.tabYuzuKizuFlower=YuzuKizuFlower
+
+tile.flower_box.name=Flower Box
+
+tile.boxed_pure_daisy.name=Boxed PureDaisy
+gui.boxed_pure_daisy.name=Boxed PureDaisy
+
+tile.boxed_endoflame.name=Boxed Endoflame
+gui.boxed_endoflame.name=Boxed Endoflame
+
+tile.mana_tank.name=Mana Tank
+gui.mana_tank.name=Mana Tank
+
+tile.boxed_rannuncarpus.name=Boxed Rannuncarpus
+gui.boxed_rannuncarpus.name=Boxed Rannuncarpus
+
+gui.boxed_rannuncarpus.mode1.name=Mini Flower
+gui.boxed_rannuncarpus.mode2.name=Powerd Mini Flower
+gui.boxed_rannuncarpus.mode3.name=Flower
+gui.boxed_rannuncarpus.mode4.name=Powerd Flower
+gui.boxed_rannuncarpus.mode.message.name=Change %1$s Mode
+
+tile.boxed_jaded_amaranthus.name=Boxed Jaded Amaranthus
+gui.boxed_jaded_amaranthus.name=Boxed Jaded Amaranthus
+
+tile.manasteel_boxed_endoflame.name=Boxed Endoflame
+gui.manasteel_boxed_endoflame.name=Boxed Endoflame
+
+tile.boxed_orechid.name=Boxed Orechid
+gui.boxed_orechid.name=Boxed Orechid
+
+tile.boxed_gourmaryllis.name=Boxed Gourmaryllis
+gui.boxed_gourmaryllis.name=Boxed Gourmaryllis
