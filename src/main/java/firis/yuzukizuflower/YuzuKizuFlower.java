@@ -63,7 +63,7 @@ public class YuzuKizuFlower
     public static final String MODID = "yuzukizuflower";
     public static final String NAME = "YuzuKizu Flower";
     public static final String VERSION = "0.1";
-    public static final String MOD_DEPENDENCIES = "required-after:forge@[1.12.2-14.23.5.2768,);required-after:baubles@[1.5.2,);required-after:botania@[r1.10-358,);after:jei@[1.12.2-4.13.1.220,)";
+    public static final String MOD_DEPENDENCIES = "required-after:forge@[1.12.2-14.23.5.2768,);required-after:baubles@[1.5.2,);required-after:botania@[r1.10,);after:jei@[1.12.2-4.13.1.220,)";
     public static final String MOD_ACCEPTED_MINECRAFT_VERSIONS = "[1.12.2]";
 
     private static Logger logger;
@@ -155,6 +155,8 @@ public class YuzuKizuFlower
     @EventHandler
     public void init(FMLInitializationEvent event)
     {
+    	//botaniaのレシピを追加
+    	BotaniaRecipes.init();
     	
     	//GUIの登録
     	NetworkRegistry.INSTANCE.registerGuiHandler(YuzuKizuFlower.INSTANCE, new YKGuiHandler());
@@ -164,8 +166,7 @@ public class YuzuKizuFlower
     @EventHandler
     public void postInit(FMLPostInitializationEvent event)
     {
-    	//botaniaのレシピを追加
-    	BotaniaRecipes.init();
+    	
     }
     
     /**
