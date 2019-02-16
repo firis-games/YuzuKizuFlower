@@ -126,38 +126,31 @@ public abstract class YKTileBaseBoxedGenFlower extends YKTileBaseManaPool implem
 			syncFlg = true;
 		}
 		
-		//タイマー加算
-		this.timer += 1;
 		
-		//サイクルtickのみマナの加算
-		if (this.timer % this.genCycle == 0) {
-			
-			int boosts = getUpgradePartsCount();
-			int boostsTime = this.timer;
-			int boostsCount = 0;
-			
-			//個数分だけ値を増やす
-			for (int i = 0; i < boosts; i++) {
-				boostsTime += this.genCycle;
-				if (boostsTime >= this.maxTimer) {
-					break;
-				}
-				boostsCount += 1;
+		//アップデートの分だけtickを加算する
+		int boosts = getUpgradePartsCount();
+
+		//タイマーの加算回数
+		int timerCount = 1 + boosts;
+		
+		for (int i = 0; i < timerCount; i++) {
+			//タイマー加算
+			this.timer += 1;
+			//アップグレードのブースト分のマナの損失は無視
+			//サイクルtickのみマナの加算
+			if (this.timer % this.genCycle == 0) {
+				//マナの加算
+				mana = Math.min(maxMana, mana + this.genMana);
+				syncFlg = true;
 			}
-			//必要tickを加算する
-			this.timer += boostsCount * this.genCycle;
-			
-			//マナの加算
-			mana = Math.min(maxMana, mana + this.genMana + this.genMana * boostsCount);
-			syncFlg = true;
-		}
-				
-		//規定数をすぎたらリセット
-		//タイマーリセット
-		if (this.timer >= this.maxTimer) {
-			//処理状態を初期化
-			clearRecipeWork();
-			syncFlg = true;
+			//規定数をすぎたらリセット
+			//タイマーリセット
+			if (this.timer >= this.maxTimer) {
+				//処理状態を初期化
+				clearRecipeWork();
+				syncFlg = true;
+				break;
+			}
 		}
 		
 		//2tickに1回同期する
