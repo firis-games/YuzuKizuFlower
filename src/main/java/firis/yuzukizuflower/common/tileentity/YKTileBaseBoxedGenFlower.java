@@ -73,6 +73,15 @@ public abstract class YKTileBaseBoxedGenFlower extends YKTileBaseManaPool implem
         
         return compound;
     }
+	
+	/**
+	 * @interface IManaPool
+	 * スパークの入力を拒否するために常にtrueとする
+	 */
+	@Override
+	public boolean isFull() {
+		return true;
+	}
 
 	/**
 	 * upgradeスロットのindex
@@ -284,6 +293,11 @@ public abstract class YKTileBaseBoxedGenFlower extends YKTileBaseManaPool implem
 			//レシピで判断する
 			boolean recipe = this.isUpgradeParts(stack);
 			if (!recipe) {
+				return false;
+			}
+			//upgradeスロットの上限確認
+			ItemStack upgradeStack = this.getStackInSlot(this.upgradeSlotIndex);
+			if (upgradeStack.getCount() >= 8) {
 				return false;
 			}
 			return true;
