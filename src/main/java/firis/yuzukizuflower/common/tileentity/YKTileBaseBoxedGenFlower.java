@@ -91,6 +91,8 @@ public abstract class YKTileBaseBoxedGenFlower extends YKTileBaseManaPool implem
 	@Override
 	public void update() {
 		
+		super.update();
+		
 		//クライアントは処理をしない
 		if (this.getWorld().isRemote
 				&& isActive()) {

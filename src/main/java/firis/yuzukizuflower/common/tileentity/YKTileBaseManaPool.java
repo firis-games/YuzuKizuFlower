@@ -18,9 +18,11 @@ import net.minecraft.util.ITickable;
 import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraftforge.items.CapabilityItemHandler;
 import vazkii.botania.api.mana.IManaPool;
+import vazkii.botania.api.mana.ManaNetworkEvent;
 import vazkii.botania.api.mana.spark.ISparkAttachable;
 import vazkii.botania.api.mana.spark.ISparkEntity;
 import vazkii.botania.common.block.ModBlocks;
+import vazkii.botania.common.core.handler.ManaNetworkHandler;
 
 /**
  * マナを利用するブロックのベースクラス
@@ -302,6 +304,34 @@ public abstract class YKTileBaseManaPool extends YKTileBaseInventory
 			
 			this.decrStackSize(idx, count);
 		}
+	}
+	
+	/**
+	 * @interface ITickable
+	 */
+	@Override
+	public void update() {
+		//マナプール管理へ追加する
+		if(!ManaNetworkHandler.instance.isPoolIn(this) && !isInvalid())
+			ManaNetworkEvent.addPool(this);
+	}
+	
+	/**
+	 * マナプール管理から除外する
+	 */
+	@Override
+	public void invalidate() {
+		super.invalidate();
+		ManaNetworkEvent.removePool(this);
+	}
+
+	/**
+	 * マナプール管理から除外する
+	 */
+	@Override
+	public void onChunkUnload() {
+		super.onChunkUnload();
+		ManaNetworkEvent.removePool(this);
 	}
 	
 	//******************************************************************************************

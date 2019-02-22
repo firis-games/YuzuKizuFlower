@@ -142,6 +142,8 @@ public abstract class YKTileBaseBoxedFuncFlower extends YKTileBaseManaPool imple
 	@Override
 	public void update() {
 		
+		super.update();
+		
 		//クライアントは処理をしない
 		if (this.getWorld().isRemote
 				&& isActive()) {

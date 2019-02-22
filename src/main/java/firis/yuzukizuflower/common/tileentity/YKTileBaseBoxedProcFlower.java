@@ -31,6 +31,8 @@ public abstract class YKTileBaseBoxedProcFlower extends YKTileBaseManaPool imple
 	@Override
 	public void update() {
 		
+		super.update();
+		
 		//tickをカウントする
 		counterTick = counterTick < Integer.MAX_VALUE ? counterTick + 1 : 0;
 		
