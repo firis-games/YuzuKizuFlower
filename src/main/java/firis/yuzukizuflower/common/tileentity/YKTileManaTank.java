@@ -56,6 +56,17 @@ public class YKTileManaTank extends YKTileBaseBoxedProcFlower {
 		return 7;
 	}
 	
+	@Override
+	public void update() {
+		
+		super.update();
+		
+		//同期処理
+		if(!this.getWorld().isRemote) {
+			playerServerSendPacketOnce();
+		}
+	}
+	
 	/**
 	 * 指定tickごとに処理を行う
 	 * @interface YKTileBaseBoxedProcFlower
@@ -306,6 +317,23 @@ public class YKTileManaTank extends YKTileBaseBoxedProcFlower {
 	}
 	
 	//******************************************************************************************
-	// アイテムの入出力の制御
+	// 同期制御
 	//******************************************************************************************
+	boolean playerServerSendPacketFlg = false;
+	
+	@Override
+	public void playerServerSendPacket() {
+		this.playerServerSendPacketFlg = true;
+	}
+	
+	/**
+	 * 1tick 1回だけ呼ばれる
+	 */
+	public void playerServerSendPacketOnce() {
+		if (playerServerSendPacketFlg) {
+			super.playerServerSendPacket();
+		}
+		this.playerServerSendPacketFlg = false;
+	}
+	
 }
