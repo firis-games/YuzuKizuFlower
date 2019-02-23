@@ -84,6 +84,9 @@ public class YKTileManaTankSpRenderer extends TileEntitySpecialRenderer<YKTileMa
         double manaCap = (double)te.getMana() / (double)te.getMaxMana();
         vertY *= manaCap;
         
+        //最低値
+        vertY = Math.max(0.001D, vertY);
+        
         //描画処理
         //天板
         GL11.glBegin(GL11.GL_QUADS);
