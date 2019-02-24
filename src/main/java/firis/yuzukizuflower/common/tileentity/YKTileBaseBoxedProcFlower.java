@@ -15,6 +15,13 @@ import vazkii.botania.common.Botania;
 public abstract class YKTileBaseBoxedProcFlower extends YKTileBaseManaPool implements IYKTileGuiBoxedFlower{
 	
 	/**
+	 * 機能系のお花との自動リンク
+	 */
+	protected boolean autoManaLink() {
+		return false;
+	}
+	
+	/**
 	 * Tickカウンタ
 	 */
 	private int counterTick = 0;

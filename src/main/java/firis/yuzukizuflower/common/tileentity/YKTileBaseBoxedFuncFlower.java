@@ -18,6 +18,12 @@ import vazkii.botania.common.Botania;
  */
 public abstract class YKTileBaseBoxedFuncFlower extends YKTileBaseManaPool implements IYKTileGuiBoxedFlower {
 	
+	/**
+	 * 機能系のお花との自動リンク
+	 */
+	protected boolean autoManaLink() {
+		return false;
+	}
 	
 	protected IManaRecipes funcFlowerRecipes = null;
 	

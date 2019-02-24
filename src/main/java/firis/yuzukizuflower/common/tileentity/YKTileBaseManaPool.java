@@ -330,8 +330,15 @@ public abstract class YKTileBaseManaPool extends YKTileBaseInventory
 	@Override
 	public void update() {
 		//マナプール管理へ追加する
-		if(!ManaNetworkHandler.instance.isPoolIn(this) && !isInvalid())
+		if(autoManaLink() && !ManaNetworkHandler.instance.isPoolIn(this) && !isInvalid())
 			ManaNetworkEvent.addPool(this);
+	}
+	
+	//******************************************************************************************
+	// 機能系のお花との自動リンク用
+	//******************************************************************************************
+	protected boolean autoManaLink() {
+		return true;
 	}
 	
 	/**
@@ -340,7 +347,9 @@ public abstract class YKTileBaseManaPool extends YKTileBaseInventory
 	@Override
 	public void invalidate() {
 		super.invalidate();
-		ManaNetworkEvent.removePool(this);
+		if (autoManaLink()) {
+			ManaNetworkEvent.removePool(this);
+		}
 	}
 
 	/**
@@ -349,7 +358,9 @@ public abstract class YKTileBaseManaPool extends YKTileBaseInventory
 	@Override
 	public void onChunkUnload() {
 		super.onChunkUnload();
-		ManaNetworkEvent.removePool(this);
+		if (autoManaLink()) {
+			ManaNetworkEvent.removePool(this);
+		}
 	}
 	
 		
