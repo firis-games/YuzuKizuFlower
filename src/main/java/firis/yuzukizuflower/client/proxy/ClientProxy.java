@@ -1,5 +1,6 @@
 package firis.yuzukizuflower.client.proxy;
 
+import firis.yuzukizuflower.client.gui.YKGuiContainerBoxedAkariculture;
 import firis.yuzukizuflower.client.gui.YKGuiContainerBoxedEndoflame;
 import firis.yuzukizuflower.client.gui.YKGuiContainerBoxedGourmaryllis;
 import firis.yuzukizuflower.client.gui.YKGuiContainerBoxedJadedAmaranthus;
@@ -60,6 +61,10 @@ public class ClientProxy extends CommonProxy{
 				//箱入りガーマリリス
 				case YKGuiHandler.BOXED_GOURMARYLLIS :
 					return new YKGuiContainerBoxedGourmaryllis(tile, player.inventory);
+				
+				//箱入りアカリカルチャー
+				case YKGuiHandler.BOXED_AKARICULTURE :
+					return new YKGuiContainerBoxedAkariculture(tile, player.inventory);
 		}
 		return null;
 	}
