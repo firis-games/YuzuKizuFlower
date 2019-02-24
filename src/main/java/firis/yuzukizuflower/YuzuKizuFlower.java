@@ -313,16 +313,17 @@ public class YuzuKizuFlower
     			.setRegistryName(MODID, "boxed_gourmaryllis")
     	);
     	
-    	// 箱入りアカリカルチャー
-    	event.getRegistry().register(new ItemBlock(YuzuKizuBlocks.BOXED_AKARICULTURE)
-    			.setRegistryName(MODID, "boxed_akariculture")
-    	);
-    	
     	// アカリカルチャー
     	event.getRegistry().register(new YKItemBase()
     			.setRegistryName(MODID, "akariculture")
     			.setUnlocalizedName("akariculture")
     	);
+    	
+    	// 箱入りアカリカルチャー
+    	event.getRegistry().register(new ItemBlock(YuzuKizuBlocks.BOXED_AKARICULTURE)
+    			.setRegistryName(MODID, "boxed_akariculture")
+    	);
+    	
     }
     
     /**
