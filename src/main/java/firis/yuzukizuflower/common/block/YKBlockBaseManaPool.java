@@ -182,6 +182,23 @@ public abstract class YKBlockBaseManaPool extends BlockContainer implements IWan
 	}
 	
 	/**
+	 * レッドストーンコンパレーター対応
+	 */
+	@Override
+	public boolean hasComparatorInputOverride(IBlockState state) {
+		return true;
+	}
+
+	/**
+	 * マナの量によってコンパレーターの数値を変動させる
+	 */
+	@Override
+	public int getComparatorInputOverride(IBlockState state, World world, BlockPos pos) {
+		YKTileBaseManaPool pool = (YKTileBaseManaPool) world.getTileEntity(pos);
+		return pool.getComparatorInputOverride();
+	}
+	
+	/**
 	 * ****************************************************************************************************
 	 * IWandHUD
 	 * ****************************************************************************************************

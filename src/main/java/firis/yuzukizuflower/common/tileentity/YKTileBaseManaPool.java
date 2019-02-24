@@ -86,6 +86,24 @@ public abstract class YKTileBaseManaPool extends YKTileBaseInventory
 	}
 	
 	/**
+	 * コンパレータ用の制御
+	 * @param mana
+	 * @param max
+	 * @return
+	 */
+	public int getComparatorInputOverride() {
+		
+		if (this.maxMana == 0) {
+			return 0;
+		}
+		
+		int val = (int) ((double) this.mana / (double) this.maxMana * 15.0);
+		if(mana > 0)
+			val = Math.max(val, 1);
+		return val;
+	}
+	
+	/**
 	 * ****************************************************************************************************
 	 * IManaPool
 	 * ****************************************************************************************************
@@ -334,6 +352,7 @@ public abstract class YKTileBaseManaPool extends YKTileBaseInventory
 		ManaNetworkEvent.removePool(this);
 	}
 	
+		
 	//******************************************************************************************
 	// アイテムの入出力の制御
 	//******************************************************************************************
@@ -397,6 +416,18 @@ public abstract class YKTileBaseManaPool extends YKTileBaseInventory
     }
 
 	net.minecraftforge.items.IItemHandler handlerInv = new net.minecraftforge.items.wrapper.InvWrapper(this) {
+		
+		@Override
+	    @Nonnull
+	    public ItemStack insertItem(int slot, @Nonnull ItemStack stack, boolean simulate)
+		{
+			YKTileBaseManaPool tile = (YKTileBaseManaPool) this.getInv();
+			//Capability経由はinputスロットのみ許可
+			if (tile.inputSlotIndex.indexOf(slot) < 0) {
+				return stack;
+			}
+			return super.insertItem(slot, stack, simulate);
+		}
 		
 		@Override
 	    @Nonnull
