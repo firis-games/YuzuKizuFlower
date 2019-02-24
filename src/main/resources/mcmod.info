@@ -5,12 +5,12 @@
   "description": "Botania addon mod.",
   "version": "${version}",
   "mcversion": "${mcversion}",
-  "url": "",
+  "url": "https://github.com/firis-games/YuzuKizuFlower",
   "updateUrl": "",
-  "authorList": ["Yuzuki Yukari", "Kizuna Akari"],
+  "authorList": ["Yuzuki Yukari", "Kizuna Akari", "Kotonoha Akane", "Kotonoha Aoi", "firis-games"],
   "credits": "",
   "logoFile": "",
   "screenshots": [],
-  "dependencies": []
+  "dependencies": ["baubles", "botania"]
 }
 ]
