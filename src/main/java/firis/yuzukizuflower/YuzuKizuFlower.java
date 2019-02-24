@@ -13,6 +13,7 @@ import firis.yuzukizuflower.common.block.YKBlockBoxedOrechid;
 import firis.yuzukizuflower.common.block.YKBlockBoxedPureDaisy;
 import firis.yuzukizuflower.common.block.YKBlockBoxedRannuncarpus;
 import firis.yuzukizuflower.common.block.YKBlockManaTank;
+import firis.yuzukizuflower.common.item.YKItemBase;
 import firis.yuzukizuflower.common.network.NetworkHandler;
 import firis.yuzukizuflower.common.proxy.CommonProxy;
 import firis.yuzukizuflower.common.recipe.BotaniaRecipes;
@@ -104,6 +105,7 @@ public class YuzuKizuFlower
     	public final static Item BOXED_ORECHID = null;
     	public final static Item BOXED_GOURMARYLLIS = null;
     	public final static Item BOXED_AKARICULTURE = null;
+    	public final static Item AKARICULTURE = null;
     }
     /**
      * ブロックインスタンス保持用
@@ -315,6 +317,12 @@ public class YuzuKizuFlower
     	event.getRegistry().register(new ItemBlock(YuzuKizuBlocks.BOXED_AKARICULTURE)
     			.setRegistryName(MODID, "boxed_akariculture")
     	);
+    	
+    	// アカリカルチャー
+    	event.getRegistry().register(new YKItemBase()
+    			.setRegistryName(MODID, "akariculture")
+    			.setUnlocalizedName("akariculture")
+    	);
     }
     
     /**
@@ -365,6 +373,10 @@ public class YuzuKizuFlower
     	// 箱入りアカリカルチャー
     	ModelLoader.setCustomModelResourceLocation(YuzuKizuItems.BOXED_AKARICULTURE, 0,
     			new ModelResourceLocation(YuzuKizuItems.BOXED_AKARICULTURE.getRegistryName(), "inventory"));
+    	
+    	// アカリカルチャー
+    	ModelLoader.setCustomModelResourceLocation(YuzuKizuItems.AKARICULTURE, 0,
+    			new ModelResourceLocation(YuzuKizuItems.AKARICULTURE.getRegistryName(), "inventory"));
     	
     	
     	//マナタンク
