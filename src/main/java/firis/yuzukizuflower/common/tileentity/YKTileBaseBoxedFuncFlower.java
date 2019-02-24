@@ -6,6 +6,9 @@ import firis.yuzukizuflower.common.botania.IManaRecipes;
 import firis.yuzukizuflower.common.botania.ManaRecipe;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
+import net.minecraft.tileentity.TileEntity;
+import net.minecraft.util.EnumFacing;
+import net.minecraft.util.math.BlockPos;
 import vazkii.botania.common.Botania;
 
 /**
@@ -158,6 +161,9 @@ public abstract class YKTileBaseBoxedFuncFlower extends YKTileBaseManaPool imple
 		if(isRedStonePower()) {
 			return;
 		}
+		
+		//マナ移動処理
+		moveMana();
 		
 		//マナが0の場合は稼動しない
 		//マナ最大値が0の場合はスキップ
@@ -347,6 +353,53 @@ public abstract class YKTileBaseBoxedFuncFlower extends YKTileBaseManaPool imple
 		}
 		
 		return true;
+	}
+	
+	/**
+	 * マナ移動を行う
+	 */
+	public boolean moveMana() {
+		
+		if (this.maxMana <= this.mana) {
+			return false;
+		}
+		
+		//マナを移動する
+		for(EnumFacing dir : EnumFacing.VALUES) {
+			
+			//指定方向のBlockPos
+			BlockPos pos = this.getPos().offset(dir, 1);
+			
+			TileEntity tile = this.getWorld().getTileEntity(pos);
+			
+			//マナタンクor発電系のお花
+			if (tile != null && (tile instanceof YKTileManaTank 
+					|| tile instanceof YKTileBaseBoxedGenFlower)) {
+				
+				//マナタンクの場合
+				YKTileBaseManaPool manaTile = (YKTileBaseManaPool)tile;
+				
+				//容量がある場合は処理を行う
+				if(manaTile.getCurrentMana() > 0) {
+					
+					//お花の空き容量を確認
+					int emptyMana = this.getMaxMana() - this.getCurrentMana(); 
+					
+					//内部マナの空き容量or1000
+					int maxMoveMana = Math.min(1000, emptyMana);
+					
+					//実際に移動するマナ
+					int moveMana = Math.min(manaTile.getCurrentMana(), maxMoveMana);
+					
+					//マナを移動
+					this.recieveMana(moveMana);
+					manaTile.recieveMana(-moveMana);
+					return true;
+				}
+				
+			}
+		}
+		return false;
 	}
 	
 	
