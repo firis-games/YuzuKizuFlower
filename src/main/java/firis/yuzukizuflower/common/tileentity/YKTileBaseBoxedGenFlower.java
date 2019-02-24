@@ -351,11 +351,6 @@ public abstract class YKTileBaseBoxedGenFlower extends YKTileBaseManaPool implem
 			if (!recipe) {
 				return false;
 			}
-			//upgradeスロットの上限確認
-			ItemStack upgradeStack = this.getStackInSlot(this.upgradeSlotIndex);
-			if (upgradeStack.getCount() >= 8) {
-				return false;
-			}
 			return true;
 		}
 		
