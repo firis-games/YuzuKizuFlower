@@ -1,0 +1,14 @@
+{
+	"type": "forge:ore_shapeless",
+	"ingredients": [
+	{
+		"item": "yuzukizuflower:flower_box"
+	},
+	{
+		"item": "yuzukizuflower:akariculture"
+	}
+	],
+	"result": {
+		"item": "yuzukizuflower:boxed_akariculture"
+	}
+}
