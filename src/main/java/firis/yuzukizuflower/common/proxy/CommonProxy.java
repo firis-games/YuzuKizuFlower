@@ -8,6 +8,7 @@ import firis.yuzukizuflower.common.container.YKContainerBoxedJadedAmaranthus;
 import firis.yuzukizuflower.common.container.YKContainerBoxedOrechid;
 import firis.yuzukizuflower.common.container.YKContainerBoxedPureDaisy;
 import firis.yuzukizuflower.common.container.YKContainerBoxedRannuncarpus;
+import firis.yuzukizuflower.common.container.YKContainerBoxedYuquarry;
 import firis.yuzukizuflower.common.container.YKContainerManaTank;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.inventory.IInventory;
@@ -64,6 +65,10 @@ public class CommonProxy {
 				//箱入りアカリカルチャー
 				case YKGuiHandler.BOXED_AKARICULTURE :
 					return new YKContainerBoxedAkariculture(tile, player.inventory);
+				
+				//箱入りユクァーリー
+				case YKGuiHandler.BOXED_YUQUARRY :
+					return new YKContainerBoxedYuquarry(tile, player.inventory);
 		}
 		return null;
 	}

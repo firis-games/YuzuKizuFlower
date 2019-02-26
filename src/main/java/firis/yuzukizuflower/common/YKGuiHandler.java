@@ -28,9 +28,13 @@ public class YKGuiHandler implements IGuiHandler {
 	//箱入りガーマリリス
 	public static final int BOXED_GOURMARYLLIS = 7;
 		
-	//箱入りガーマリリス
+	//箱入りアカリカルチャー
 	public static final int BOXED_AKARICULTURE = 8;
 	
+	//箱入りユクァーリー
+	public static final int BOXED_YUQUARRY = 9;
+	
+		
 	@Override
 	public Object getServerGuiElement(int ID, EntityPlayer player, World world, int x, int y, int z) {
 		return YuzuKizuFlower.proxy.getServerGuiElement(ID, player, world, x, y, z);
