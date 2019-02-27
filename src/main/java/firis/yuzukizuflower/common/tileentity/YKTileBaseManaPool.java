@@ -325,13 +325,75 @@ public abstract class YKTileBaseManaPool extends YKTileBaseInventory
 	}
 	
 	/**
-	 * @interface ITickable
+	 * 空きoutputスロットにアイテムを入れる
+	 * @param stack
+	 * @return
 	 */
-	@Override
-	public void update() {
-		//マナプール管理へ追加する
-		if(autoManaLink() && !ManaNetworkHandler.instance.isPoolIn(this) && !isInvalid())
-			ManaNetworkEvent.addPool(this);
+	public boolean insertOutputSlotItemStack(ItemStack stack) {
+		
+		boolean ret = false;
+		
+		for(int idx : outputSlotIndex) {
+			ItemStack inv = this.getStackInSlot(idx);
+			 if (ItemStack.areItemsEqual(stack, inv)
+						&& inv.getCount() + stack.getCount() <= inv.getMaxStackSize()) {
+				//同じアイテムかつ空き容量が1件以上ある場合
+				inv.setCount(inv.getCount() + stack.getCount());
+				this.setInventorySlotContents(idx, inv.copy());
+				ret = true;
+				break;
+			}
+		}
+		if(ret) return ret;
+		
+		for(int idx : outputSlotIndex) {
+			ItemStack inv = this.getStackInSlot(idx);
+			if (inv.isEmpty()) {
+				//空の場合はそのまま挿入する
+				this.setInventorySlotContents(idx, stack.copy());
+				ret = true;
+				break;
+			}
+		}
+		
+		return ret;
+	}
+	
+	/**
+	 * outputスロットがすべて埋まっているかの判断を行う
+	 * @return
+	 */
+	public boolean isFillOutputSlot() {
+		
+		for(int idx : outputSlotIndex) {
+			ItemStack itemstack = this.getStackInSlot(idx);
+			if (itemstack.isEmpty())
+            {
+                return false;
+            }
+		}
+        return true;
+	}
+	
+	/**
+	 * outputスロットがすべて埋まっているかの判断を行う
+	 * スタックできるかも確認する
+	 * @return
+	 */
+	public boolean isFillOutputSlotStack(ItemStack stack) {
+		
+		for(int idx : outputSlotIndex) {
+			ItemStack itemstack = this.getStackInSlot(idx);
+			if (itemstack.isEmpty())
+            {
+                return false;
+            } else if (ItemStack.areItemsEqual(stack, itemstack)
+            		&& stack.getCount() + itemstack.getCount() <= itemstack.getMaxStackSize()) {
+            	//ItemStackが同じ場合 かつ 最大値以下の場合
+            	return false;
+            }
+		}
+        return true;
 	}
 	
 	//******************************************************************************************
@@ -339,6 +401,16 @@ public abstract class YKTileBaseManaPool extends YKTileBaseInventory
 	//******************************************************************************************
 	protected boolean autoManaLink() {
 		return true;
+	}
+	
+	/**
+	 * @interface ITickable
+	 */
+	@Override
+	public void update() {
+		//マナプール管理へ追加する
+		if(autoManaLink() && !ManaNetworkHandler.instance.isPoolIn(this) && !isInvalid())
+			ManaNetworkEvent.addPool(this);
 	}
 	
 	/**

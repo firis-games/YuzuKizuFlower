@@ -3,8 +3,12 @@ package firis.yuzukizuflower.common.tileentity;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 
+import net.minecraft.block.Block;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.init.Blocks;
+import net.minecraft.item.ItemStack;
+import net.minecraft.nbt.NBTTagCompound;
+import net.minecraft.util.NonNullList;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.chunk.Chunk;
 
@@ -35,6 +39,31 @@ public class YKTileBoxedYuquarry extends YKTileBaseBoxedProcFlower {
 	public int getSizeInventory() {
 		return 21;
 	}
+	
+	/**
+	 * NBTを読み込みクラスへ反映する処理
+	 */
+	@Override
+	public void readFromNBT(NBTTagCompound compound)
+    {
+		super.readFromNBT(compound);
+		
+        this.workY = compound.getInteger("workY");
+
+    }
+	
+	/**
+	 * クラスの情報をNBTへ反映する処理
+	 */
+	@Override
+	public NBTTagCompound writeToNBT(NBTTagCompound compound)
+    {
+        compound = super.writeToNBT(compound);
+        
+        compound.setInteger("workY", this.workY);
+        
+        return compound;
+    }
 	
 	@Override
 	public void update() {
@@ -78,8 +107,13 @@ public class YKTileBoxedYuquarry extends YKTileBaseBoxedProcFlower {
 	 */
 	private void procYuquarry() {
 		
+		//処理終了
+		if (workY == 0) {
+			return;
+		}
+		
 		//高さを設定
-		if (workY <= 0) {
+		if (workY <= -1) {
 			workY = this.getPos().down().getY();
 		}
 		
@@ -105,13 +139,39 @@ public class YKTileBoxedYuquarry extends YKTileBaseBoxedProcFlower {
 				
 				IBlockState state = this.getWorld().getBlockState(pos);
 				
+				//空気の場合はスルー
 				if (state.getBlock().isAir(state, this.getWorld(), pos)) {
 					continue;
 				}
+				//液体の場合はスルー
+				if (state.getMaterial().isLiquid()) {
+					continue;
+				}
+				
+				//ドロップを手動で行う
+				//幸運
+				int fortune = 1;
+				//ドロップリストを取得
+				NonNullList<ItemStack> drops = NonNullList.create();
+				state.getBlock().getDrops(drops, this.getWorld(), pos, state, fortune);
+				
+				//
+				NonNullList<ItemStack> dropsList = NonNullList.create();
+				for (ItemStack drop : drops) {
+					if(!this.insertOutputSlotItemStack(drop)) {
+						dropsList.add(drop);
+					}
+				}
+				
+				for (ItemStack drop : dropsList) {
+					Block.spawnAsEntity(this.getWorld(), this.getPos().up(), drop);
+				}
+				
 				
 				//それ以外の場合はブロックを破壊して終了
 				//ただのブロック破壊
-				this.getWorld().destroyBlock(pos, true);
+				this.getWorld().destroyBlock(pos, false);
+				
 				//空気への入れ替え
 				this.getWorld().notifyBlockUpdate(pos, state, Blocks.AIR.getDefaultState(), 3);
 				flg = true;
@@ -121,8 +181,9 @@ public class YKTileBoxedYuquarry extends YKTileBaseBoxedProcFlower {
 				break;
 			}
 			//基準点を一段下げる
-			workY = workY--;
+			workY = workY - 1;
 		}
 
 	}
+	
 }
