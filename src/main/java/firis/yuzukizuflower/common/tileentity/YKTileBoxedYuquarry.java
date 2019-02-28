@@ -3,9 +3,11 @@ package firis.yuzukizuflower.common.tileentity;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 
+import firis.yuzukizuflower.common.entity.YKFakePlayer;
 import net.minecraft.block.Block;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.init.Blocks;
+import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.NonNullList;
@@ -150,10 +152,30 @@ public class YKTileBoxedYuquarry extends YKTileBaseBoxedProcFlower {
 				
 				//ドロップを手動で行う
 				//幸運
-				int fortune = 1;
+				int fortune = 0;
 				//ドロップリストを取得
 				NonNullList<ItemStack> drops = NonNullList.create();
-				state.getBlock().getDrops(drops, this.getWorld(), pos, state, fortune);
+				
+				
+				//シルクタッチ
+				if(state.getBlock().canSilkHarvest(world, pos, state, new YKFakePlayer(world))) {
+					
+					//Blockクラスのメソッドを参考
+					//シルクタッチ
+					Item item = Item.getItemFromBlock(state.getBlock());
+			        int i = 0;
+			        if (item.getHasSubtypes())
+			        {
+			            i = state.getBlock().getMetaFromState(state);
+			        }
+			        ItemStack silk = new ItemStack(item, 1, i);
+					
+					drops.add(silk);
+				} else {
+					//ノーマル採掘
+					state.getBlock().getDrops(drops, this.getWorld(), pos, state, fortune);
+				}
+				
 				
 				//
 				NonNullList<ItemStack> dropsList = NonNullList.create();
