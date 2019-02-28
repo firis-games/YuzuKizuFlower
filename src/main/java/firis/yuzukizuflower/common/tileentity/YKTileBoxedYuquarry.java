@@ -1,13 +1,14 @@
 package firis.yuzukizuflower.common.tileentity;
 
+import java.lang.reflect.Method;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 
 import firis.yuzukizuflower.common.entity.YKFakePlayer;
+import firis.yuzukizuflower.common.helpler.YKReflectionHelper;
 import net.minecraft.block.Block;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.init.Blocks;
-import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.NonNullList;
@@ -160,15 +161,13 @@ public class YKTileBoxedYuquarry extends YKTileBaseBoxedProcFlower {
 				//シルクタッチ
 				if(state.getBlock().canSilkHarvest(world, pos, state, new YKFakePlayer(world))) {
 					
-					//Blockクラスのメソッドを参考
 					//シルクタッチ
-					Item item = Item.getItemFromBlock(state.getBlock());
-			        int i = 0;
-			        if (item.getHasSubtypes())
-			        {
-			            i = state.getBlock().getMetaFromState(state);
-			        }
-			        ItemStack silk = new ItemStack(item, 1, i);
+					ItemStack silk = ItemStack.EMPTY.copy();
+					Method method = YKReflectionHelper.findMethod(state.getBlock().getClass(), "getSilkTouchDrop", "func_180643_i", IBlockState.class);
+					try {
+						silk = (ItemStack) method.invoke(state.getBlock(), state);
+					} catch (Exception e) {
+					}
 					
 					drops.add(silk);
 				} else {
