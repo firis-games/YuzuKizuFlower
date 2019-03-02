@@ -13,9 +13,13 @@ import net.minecraft.block.state.IBlockState;
 import net.minecraft.init.Blocks;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
+import net.minecraft.tileentity.TileEntity;
+import net.minecraft.util.EnumFacing;
 import net.minecraft.util.NonNullList;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.chunk.Chunk;
+import net.minecraftforge.items.CapabilityItemHandler;
+import net.minecraftforge.items.IItemHandler;
 
 /**
  * ユクァーリーの処理
@@ -95,6 +99,9 @@ public class YKTileBoxedYuquarry extends YKTileBaseBoxedProcFlower {
 			return;
 		}
 		
+		//インベントリ操作
+		this.autoOutputInventory();
+		
 		//レッドストーン入力がある場合に動作する
 		if(!isRedStonePower()) {
 			return;
@@ -113,6 +120,7 @@ public class YKTileBoxedYuquarry extends YKTileBaseBoxedProcFlower {
 	private void procYuquarry() {
 		
 		boolean startY = false;
+		
 		//処理終了
 		if (workY == 0) {
 			return;
@@ -182,9 +190,6 @@ public class YKTileBoxedYuquarry extends YKTileBaseBoxedProcFlower {
 								replaceState = Blocks.COBBLESTONE.getDefaultState();
 							}
 							
-							
-							
-							
 							//液体を置換する
 							this.getWorld().setBlockState(liquidPos, replaceState, 3);
 							
@@ -230,7 +235,6 @@ public class YKTileBoxedYuquarry extends YKTileBaseBoxedProcFlower {
 					state.getBlock().getDrops(drops, this.getWorld(), pos, state, fortune);
 				}
 				
-				
 				//
 				NonNullList<ItemStack> dropsList = NonNullList.create();
 				for (ItemStack drop : drops) {
@@ -260,7 +264,68 @@ public class YKTileBoxedYuquarry extends YKTileBaseBoxedProcFlower {
 			workY = workY - 1;
 			startY = true;
 		}
-
+	}
+	
+	/**
+	 * 内部インベントリを隣接チェストへ自動搬出する
+	 */
+	public void autoOutputInventory() {
+		
+		//outputインベントリ操作
+		if(!this.isEmpty()) {
+			
+			//outputから移動用のアイテムを選別
+			int moveStackIdx = -1;
+			for (int slot : this.outputSlotIndex) {
+				if (!this.getStackInSlot(slot).isEmpty()) {
+					moveStackIdx = slot;
+					break;
+				}
+			}
+			
+			//inventoryが空でない場合
+			for(EnumFacing facing : EnumFacing.VALUES) {
+				//tileEntity
+				TileEntity tile = this.getWorld().getTileEntity(this.getPos().offset(facing));
+				if (tile == null) {
+					continue;
+				}
+				//方角を反転して取得
+				//Capability取得
+				IItemHandler capability = tile.getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY, facing.getOpposite());
+				if (capability == null) {
+					continue;
+				}
+				//最大8つだけ移動
+				ItemStack insertStack = this.getStackInSlot(moveStackIdx).copy();
+				int insertStackCount = Math.min(8, insertStack.getCount());
+				insertStack.setCount(insertStackCount);
+				
+				//シミュレート
+				ItemStack result = insertStack.copy();
+				for (int slot = 0; slot < capability.getSlots(); slot++) {
+					//insert
+					result = capability.insertItem(slot, result, true);
+					if (result.isEmpty()) {
+						break;
+					}
+				}
+				//問題なければ移動する
+				insertStackCount = insertStack.getCount() - result.getCount();
+				insertStack = this.decrStackSize(moveStackIdx, insertStackCount);
+				
+				if (insertStack.getCount() > 0) {
+					for (int slot = 0; slot < capability.getSlots(); slot++) {
+						//insert
+						insertStack = capability.insertItem(slot, insertStack, false);
+						if (insertStack.isEmpty()) {
+							break;
+						}
+					}
+				}
+			}
+		}
+				
 	}
 	
 }
