@@ -1,11 +1,9 @@
 package firis.yuzukizuflower.common.tileentity;
 
-import java.lang.reflect.Method;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 
-import firis.yuzukizuflower.common.entity.YKFakePlayer;
-import firis.yuzukizuflower.common.helpler.YKReflectionHelper;
+import firis.yuzukizuflower.common.helpler.YKBlockHelper;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockLiquid;
 import net.minecraft.block.material.Material;
@@ -209,51 +207,22 @@ public class YKTileBoxedYuquarry extends YKTileBaseBoxedProcFlower {
 				if (state.getMaterial().isLiquid()) {
 					continue;
 				}
-
 				
-				//ドロップを手動で行う
-				//幸運
+				//幸運とシルクタッチ
 				int fortune = 0;
-				//ドロップリストを取得
-				NonNullList<ItemStack> drops = NonNullList.create();
+				boolean silkTouch = true;
 				
+				//ブロック破壊してドロップを取得
+				NonNullList<ItemStack> drops = YKBlockHelper.destroyBlock(world, pos, silkTouch, fortune);
 				
-				//シルクタッチ
-				if(state.getBlock().canSilkHarvest(world, pos, state, new YKFakePlayer(world))) {
-					
-					//シルクタッチ
-					ItemStack silk = ItemStack.EMPTY.copy();
-					Method method = YKReflectionHelper.findMethod(state.getBlock().getClass(), "getSilkTouchDrop", "func_180643_i", IBlockState.class);
-					try {
-						silk = (ItemStack) method.invoke(state.getBlock(), state);
-					} catch (Exception e) {
-					}
-					
-					drops.add(silk);
-				} else {
-					//ノーマル採掘
-					state.getBlock().getDrops(drops, this.getWorld(), pos, state, fortune);
-				}
-				
-				//
-				NonNullList<ItemStack> dropsList = NonNullList.create();
+				//アイテムの挿入orワールドへドロップ
 				for (ItemStack drop : drops) {
 					if(!this.insertOutputSlotItemStack(drop)) {
-						dropsList.add(drop);
+						//ワールドへドロップ
+						Block.spawnAsEntity(this.getWorld(), this.getPos().up(), drop);
 					}
 				}
 				
-				for (ItemStack drop : dropsList) {
-					Block.spawnAsEntity(this.getWorld(), this.getPos().up(), drop);
-				}
-				
-				
-				//それ以外の場合はブロックを破壊して終了
-				//ただのブロック破壊
-				this.getWorld().destroyBlock(pos, false);
-				
-				//空気への入れ替え
-				this.getWorld().notifyBlockUpdate(pos, state, Blocks.AIR.getDefaultState(), 3);
 				flg = true;
 				break;
 			}
