@@ -273,16 +273,8 @@ public class YKTileBoxedYuquarry extends YKTileBaseBoxedProcFlower {
 		
 		//outputインベントリ操作
 		if(!this.isEmpty()) {
-			
-			//outputから移動用のアイテムを選別
-			int moveStackIdx = -1;
-			for (int slot : this.outputSlotIndex) {
-				if (!this.getStackInSlot(slot).isEmpty()) {
-					moveStackIdx = slot;
-					break;
-				}
-			}
-			
+						
+			//チェスト単位で処理を行う
 			//inventoryが空でない場合
 			for(EnumFacing facing : EnumFacing.VALUES) {
 				//tileEntity
@@ -296,32 +288,53 @@ public class YKTileBoxedYuquarry extends YKTileBaseBoxedProcFlower {
 				if (capability == null) {
 					continue;
 				}
-				//最大8つだけ移動
-				ItemStack insertStack = this.getStackInSlot(moveStackIdx).copy();
-				int insertStackCount = Math.min(8, insertStack.getCount());
-				insertStack.setCount(insertStackCount);
 				
-				//シミュレート
-				ItemStack result = insertStack.copy();
-				for (int slot = 0; slot < capability.getSlots(); slot++) {
-					//insert
-					result = capability.insertItem(slot, result, true);
-					if (result.isEmpty()) {
-						break;
+				//空ではないスロットがある場合に処理を行う
+				boolean flg = false;
+				for(int slot : this.outputSlotIndex) {
+					
+					//inventoryのitemstackのコピー
+					ItemStack simInsStack = this.getStackInSlot(slot).copy();
+					
+					if (simInsStack.isEmpty()) {
+						continue;
 					}
-				}
-				//問題なければ移動する
-				insertStackCount = insertStack.getCount() - result.getCount();
-				insertStack = this.decrStackSize(moveStackIdx, insertStackCount);
-				
-				if (insertStack.getCount() > 0) {
-					for (int slot = 0; slot < capability.getSlots(); slot++) {
+					
+					//最大8個アイテムを移動する
+					int simInsStackCount = Math.min(8, simInsStack.getCount());
+					simInsStack.setCount(simInsStackCount);
+					
+					//移動のシミュレート
+					for (int cabSlot = 0; cabSlot < capability.getSlots(); cabSlot++) {
 						//insert
-						insertStack = capability.insertItem(slot, insertStack, false);
-						if (insertStack.isEmpty()) {
+						simInsStack = capability.insertItem(cabSlot, simInsStack, true);
+						if (simInsStack.isEmpty()) {
 							break;
 						}
 					}
+					//移動の結果
+					if (simInsStackCount == simInsStack.getCount()) {
+						//移動できていないので対象外
+						continue;
+					}
+					
+					//実際のインベントリを操作してアイテムを移動させる
+					int insStackCount = simInsStackCount - simInsStack.getCount();
+					ItemStack insItemStack = this.decrStackSize(slot, insStackCount);
+					for (int cabSlot = 0; cabSlot < capability.getSlots(); cabSlot++) {
+						//insert
+						insItemStack = capability.insertItem(cabSlot, insItemStack, false);
+						if (insItemStack.isEmpty()) {
+							break;
+						}
+					}
+					flg = true;
+					break;
+				}
+				
+				//移動済みの場合は処理終了
+				if (flg) {
+					break;
 				}
 			}
 		}
