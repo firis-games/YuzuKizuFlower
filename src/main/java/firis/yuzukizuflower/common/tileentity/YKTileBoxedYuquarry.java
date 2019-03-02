@@ -9,11 +9,14 @@ import net.minecraft.block.BlockLiquid;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.init.Blocks;
+import net.minecraft.init.SoundEvents;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.NonNullList;
+import net.minecraft.util.SoundCategory;
+import net.minecraft.util.SoundEvent;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.chunk.Chunk;
 import net.minecraftforge.items.CapabilityItemHandler;
@@ -156,47 +159,14 @@ public class YKTileBoxedYuquarry extends YKTileBaseBoxedProcFlower {
 				//段を下げた一回目だけ処理をやりたい
 				//液体変換処理
 				if (startY) {
-					
 					//north z軸マイナス
 					//south z軸プラス
 					//west  x軸マイナス
 					//east  x軸プラス
-					
-					//一段上と2段分の液体を検索して変換する
-					for(BlockPos liquidPos : BlockPos.getAllInBox(posStart.north().west().up(), posEnd.south().east())) {
-						
-						IBlockState liquidState = this.getWorld().getBlockState(liquidPos);
-						
-						//液体かどうか
-						if (liquidState.getMaterial().isLiquid()) {
-							
-							//デフォルト土
-							IBlockState replaceState = Blocks.DIRT.getDefaultState();
-							
-							//水 -> 氷塊
-							if (liquidState.getMaterial().equals(Material.WATER)) {
-								replaceState = Blocks.PACKED_ICE.getDefaultState();
-							}
-							//溶岩源 -> 黒曜石
-							else if (liquidState.getMaterial().equals(Material.LAVA)
-									&& liquidState.getValue(BlockLiquid.LEVEL).intValue() == 0) {
-								replaceState = Blocks.OBSIDIAN.getDefaultState();
-							}
-							//溶岩流 -> 丸石
-							else if (liquidState.getMaterial().equals(Material.LAVA)
-									&& liquidState.getValue(BlockLiquid.LEVEL).intValue() > 0) {
-								replaceState = Blocks.COBBLESTONE.getDefaultState();
-							}
-							
-							//液体を置換する
-							this.getWorld().setBlockState(liquidPos, replaceState, 3);
-							
-							continue;
-						}
-						
-					}
+					this.replaceLiquidBlock(
+							posStart.north().west().up(), 
+							posEnd.south().east());
 					startY = false;
-					
 				}
 				
 				//空気の場合はスルー
@@ -204,9 +174,23 @@ public class YKTileBoxedYuquarry extends YKTileBaseBoxedProcFlower {
 					continue;
 				}
 				//液体の場合はスルー
-				if (state.getMaterial().isLiquid()) {
+				else if (state.getMaterial().isLiquid()) {
 					continue;
 				}
+				//非破壊ブロック(岩盤を除く)
+				else if (state.getBlockHardness(this.getWorld(), pos) == -1.0
+						&& !Blocks.BEDROCK.equals(state.getBlock())) {
+					continue;
+				}
+				//Mobスポナーは破壊しない
+				else if (Blocks.MOB_SPAWNER.equals(state.getBlock())) {
+					continue;
+				}
+				//TileEntityもちは破壊しない
+				else if (this.getWorld().getTileEntity(pos) != null) {
+					continue;
+				}
+				
 				
 				//幸運とシルクタッチ
 				int fortune = 0;
@@ -214,6 +198,11 @@ public class YKTileBoxedYuquarry extends YKTileBaseBoxedProcFlower {
 				
 				//ブロック破壊してドロップを取得
 				NonNullList<ItemStack> drops = YKBlockHelper.destroyBlock(world, pos, silkTouch, fortune);
+				
+				//岩盤はアイテムドロップさせない
+				if (Blocks.BEDROCK.equals(state.getBlock())) {
+					drops.clear();
+				}
 				
 				//アイテムの挿入orワールドへドロップ
 				for (ItemStack drop : drops) {
@@ -232,6 +221,49 @@ public class YKTileBoxedYuquarry extends YKTileBaseBoxedProcFlower {
 			//基準点を一段下げる
 			workY = workY - 1;
 			startY = true;
+		}
+	}
+	
+	/**
+	 * 液体を固体ブロックへ変換する処理
+	 */
+	private void replaceLiquidBlock(BlockPos posStart, BlockPos posEnd) {
+		//一段上と2段分の液体を検索して変換する
+		for(BlockPos liquidPos : BlockPos.getAllInBox(posStart, posEnd)) {
+			
+			IBlockState liquidState = this.getWorld().getBlockState(liquidPos);
+			SoundEvent soundEvent = SoundEvents.BLOCK_LAVA_EXTINGUISH;
+			//液体かどうか
+			if (liquidState.getMaterial().isLiquid()) {
+				//デフォルト土
+				IBlockState replaceState = Blocks.DIRT.getDefaultState();
+				//水 -> 氷塊
+				if (liquidState.getMaterial().equals(Material.WATER)) {
+					replaceState = Blocks.PACKED_ICE.getDefaultState();
+					//氷塊の破壊音
+					soundEvent = SoundEvents.BLOCK_GLASS_BREAK;
+				}
+				//溶岩源 -> 黒曜石
+				else if (liquidState.getMaterial().equals(Material.LAVA)
+						&& liquidState.getValue(BlockLiquid.LEVEL).intValue() == 0) {
+					replaceState = Blocks.OBSIDIAN.getDefaultState();
+				}
+				//溶岩流 -> 丸石
+				else if (liquidState.getMaterial().equals(Material.LAVA)
+						&& liquidState.getValue(BlockLiquid.LEVEL).intValue() > 0) {
+					replaceState = Blocks.COBBLESTONE.getDefaultState();
+				}
+				//液体を置換する
+				this.getWorld().setBlockState(liquidPos, replaceState, 3);
+				//音
+				this.getWorld().playSound(null, liquidPos, 
+						soundEvent, 
+						SoundCategory.BLOCKS, 
+						0.5F, 
+						2.6F + (world.rand.nextFloat() - world.rand.nextFloat()) * 0.8F);
+				continue;
+			}
+			
 		}
 	}
 	
