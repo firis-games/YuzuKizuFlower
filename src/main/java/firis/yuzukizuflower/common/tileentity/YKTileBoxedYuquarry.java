@@ -7,6 +7,8 @@ import java.util.stream.IntStream;
 import firis.yuzukizuflower.common.entity.YKFakePlayer;
 import firis.yuzukizuflower.common.helpler.YKReflectionHelper;
 import net.minecraft.block.Block;
+import net.minecraft.block.BlockLiquid;
+import net.minecraft.block.material.Material;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.init.Blocks;
 import net.minecraft.item.ItemStack;
@@ -110,6 +112,7 @@ public class YKTileBoxedYuquarry extends YKTileBaseBoxedProcFlower {
 	 */
 	private void procYuquarry() {
 		
+		boolean startY = false;
 		//処理終了
 		if (workY == 0) {
 			return;
@@ -118,6 +121,7 @@ public class YKTileBoxedYuquarry extends YKTileBaseBoxedProcFlower {
 		//高さを設定
 		if (workY <= -1) {
 			workY = this.getPos().down().getY();
+			startY = true;
 		}
 		
 		Chunk chunk = this.getWorld().getChunkFromBlockCoords(this.getPos());
@@ -138,9 +142,59 @@ public class YKTileBoxedYuquarry extends YKTileBaseBoxedProcFlower {
 					chunk.getPos().getZEnd()
 					);
 			
+			
 			for(BlockPos pos : BlockPos.getAllInBox(posStart, posEnd)) {
 				
 				IBlockState state = this.getWorld().getBlockState(pos);
+				
+				//段を下げた一回目だけ処理をやりたい
+				//液体変換処理
+				if (startY) {
+					
+					//north z軸マイナス
+					//south z軸プラス
+					//west  x軸マイナス
+					//east  x軸プラス
+					
+					//一段上と2段分の液体を検索して変換する
+					for(BlockPos liquidPos : BlockPos.getAllInBox(posStart.north().west().up(), posEnd.south().east())) {
+						
+						IBlockState liquidState = this.getWorld().getBlockState(liquidPos);
+						
+						//液体かどうか
+						if (liquidState.getMaterial().isLiquid()) {
+							
+							//デフォルト土
+							IBlockState replaceState = Blocks.DIRT.getDefaultState();
+							
+							//水 -> 氷塊
+							if (liquidState.getMaterial().equals(Material.WATER)) {
+								replaceState = Blocks.PACKED_ICE.getDefaultState();
+							}
+							//溶岩源 -> 黒曜石
+							else if (liquidState.getMaterial().equals(Material.LAVA)
+									&& liquidState.getValue(BlockLiquid.LEVEL).intValue() == 0) {
+								replaceState = Blocks.OBSIDIAN.getDefaultState();
+							}
+							//溶岩流 -> 丸石
+							else if (liquidState.getMaterial().equals(Material.LAVA)
+									&& liquidState.getValue(BlockLiquid.LEVEL).intValue() > 0) {
+								replaceState = Blocks.COBBLESTONE.getDefaultState();
+							}
+							
+							
+							
+							
+							//液体を置換する
+							this.getWorld().setBlockState(liquidPos, replaceState, 3);
+							
+							continue;
+						}
+						
+					}
+					startY = false;
+					
+				}
 				
 				//空気の場合はスルー
 				if (state.getBlock().isAir(state, this.getWorld(), pos)) {
@@ -150,6 +204,7 @@ public class YKTileBoxedYuquarry extends YKTileBaseBoxedProcFlower {
 				if (state.getMaterial().isLiquid()) {
 					continue;
 				}
+
 				
 				//ドロップを手動で行う
 				//幸運
@@ -203,6 +258,7 @@ public class YKTileBoxedYuquarry extends YKTileBaseBoxedProcFlower {
 			}
 			//基準点を一段下げる
 			workY = workY - 1;
+			startY = true;
 		}
 
 	}
