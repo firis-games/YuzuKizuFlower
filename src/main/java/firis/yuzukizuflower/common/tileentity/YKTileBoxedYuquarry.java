@@ -1,9 +1,12 @@
 package firis.yuzukizuflower.common.tileentity;
 
+import java.awt.Color;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 
 import firis.yuzukizuflower.common.helpler.YKBlockHelper;
+import firis.yuzukizuflower.common.network.NetworkHandler;
+import firis.yuzukizuflower.common.network.PacketTileParticle;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockLiquid;
 import net.minecraft.block.material.Material;
@@ -21,6 +24,7 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.chunk.Chunk;
 import net.minecraftforge.items.CapabilityItemHandler;
 import net.minecraftforge.items.IItemHandler;
+import vazkii.botania.common.Botania;
 
 /**
  * ユクァーリーの処理
@@ -41,8 +45,8 @@ public class YKTileBoxedYuquarry extends YKTileBaseBoxedProcFlower {
 		//outputスロット
 		this.outputSlotIndex = IntStream.range(0, 21).boxed().collect(Collectors.toList());
 
-		//tick周期
-		this.setCycleTick(1);
+		//tick周期(2秒で5回)
+		this.setCycleTick(8);
 	}
 	
 	@Override
@@ -82,12 +86,17 @@ public class YKTileBoxedYuquarry extends YKTileBaseBoxedProcFlower {
 		if (this.world.isRemote) {
 			//パーティクル判定
 			if(!isRedStonePower()
-					&& !this.getStackInputSlotFirst().isEmpty()) {
+					&& !(this.mana < this.procMana)) {
 				clientSpawnParticle();
 			}
 			return;
 		}
 	}
+	
+	/**
+	 * 1回の動作に必要なマナ
+	 */
+	protected final int procMana = 100;
 	
 	/**
 	 * 指定tickごとに処理を行う
@@ -103,15 +112,19 @@ public class YKTileBoxedYuquarry extends YKTileBaseBoxedProcFlower {
 		//インベントリ操作
 		this.autoOutputInventory();
 		
-		//レッドストーン入力がある場合に動作する
-		if(!isRedStonePower()) {
+		//レッドストーン入力がある場合に動作を停止する
+		if(isRedStonePower()) {
+			return;
+		}
+		
+		//最低マナより少ない場合は処理を行わない
+		if (this.mana < this.procMana) {
 			return;
 		}
 		
 		//ブロック設置処理
 		procYuquarry();
 	}
-	
 	
 	protected Integer workY = -1;
 	
@@ -166,7 +179,9 @@ public class YKTileBoxedYuquarry extends YKTileBaseBoxedProcFlower {
 					this.replaceLiquidBlock(
 							posStart.north().west().up(), 
 							posEnd.south().east());
-					startY = false;
+					//マナを消費して処理を終了
+					this.recieveMana(-this.procMana);
+					return;
 				}
 				
 				//空気の場合はスルー
@@ -211,7 +226,8 @@ public class YKTileBoxedYuquarry extends YKTileBaseBoxedProcFlower {
 						Block.spawnAsEntity(this.getWorld(), this.getPos().up(), drop);
 					}
 				}
-				
+				this.recieveMana(-this.procMana);
+				serverSpawnParticle(pos);
 				flg = true;
 				break;
 			}
@@ -283,6 +299,10 @@ public class YKTileBoxedYuquarry extends YKTileBaseBoxedProcFlower {
 				if (tile == null) {
 					continue;
 				}
+				//箱入り系のブロックは許可しないようにする
+				if (tile instanceof YKTileBaseManaPool) {
+					continue;
+				}
 				//方角を反転して取得
 				//Capability取得
 				IItemHandler capability = tile.getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY, facing.getOpposite());
@@ -340,6 +360,47 @@ public class YKTileBoxedYuquarry extends YKTileBaseBoxedProcFlower {
 			}
 		}
 				
+	}
+	
+	/**
+	 * ランダムでパーティクルを表示する
+	 */
+	@Override
+	public void clientSpawnParticle() {
+		
+		//クライアントの場合
+		if(this.getWorld().isRemote) {
+			
+			double particleChance = 0.75F;
+			
+			//紫色
+			Color color = new Color(167, 87, 168);
+			
+			if(Math.random() > particleChance) {
+				//マナプールと同じパーティクル
+				Botania.proxy.wispFX(
+						pos.getX() + 0.3 + Math.random() * 0.5, 
+						pos.getY() + 0.6 + Math.random() * 0.25, 
+						pos.getZ() + Math.random(), 
+						color.getRed() / 255F, 
+						color.getGreen() / 255F, 
+						color.getBlue() / 255F, 
+						(float) Math.random() / 10F, 
+						(float) -Math.random() / 100F, 
+						1.5F);
+			}
+		}
+	}
+	
+	
+	/**
+	 * パーティクルを表示する
+	 */
+	public void serverSpawnParticle(BlockPos pos) {
+		
+		//クライアントへ送信
+		NetworkHandler.network.sendToAll(
+				new PacketTileParticle.MessageTileParticle(pos));
 	}
 	
 }

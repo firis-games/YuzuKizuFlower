@@ -11,8 +11,13 @@ public class NetworkHandler {
 	
 	public static void init() {
 		
+		int idx = 1;
+		
 		//箱入りお花の汎用
-		network.registerMessage(PacketTileBoxedFlower.class, PacketTileBoxedFlower.MessageTileBoxedFlower.class, 0, Side.SERVER);
+		network.registerMessage(PacketTileBoxedFlower.class, PacketTileBoxedFlower.MessageTileBoxedFlower.class, idx++, Side.SERVER);
+
+		//箱入りお花の汎用
+		network.registerMessage(PacketTileParticle.class, PacketTileParticle.MessageTileParticle.class, idx++, Side.CLIENT);
 		
     }
 
