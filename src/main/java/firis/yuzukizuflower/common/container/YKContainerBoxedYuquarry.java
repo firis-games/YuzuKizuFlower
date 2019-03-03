@@ -21,7 +21,7 @@ public class YKContainerBoxedYuquarry extends YKContainerBaseBoxedFuncFlower {
 		int xBasePos = 44;
 		int yBasePos = 22;
 
-		int invX = 7;
+		int invX = 5;
 		int invY = 3;
 		//outputスロット
 		for (int i = 0; i < invY; i++) {

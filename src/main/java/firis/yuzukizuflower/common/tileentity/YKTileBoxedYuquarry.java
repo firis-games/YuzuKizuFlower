@@ -11,6 +11,7 @@ import net.minecraft.block.Block;
 import net.minecraft.block.BlockLiquid;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.state.IBlockState;
+import net.minecraft.client.resources.I18n;
 import net.minecraft.init.Blocks;
 import net.minecraft.init.SoundEvents;
 import net.minecraft.item.ItemStack;
@@ -21,7 +22,6 @@ import net.minecraft.util.NonNullList;
 import net.minecraft.util.SoundCategory;
 import net.minecraft.util.SoundEvent;
 import net.minecraft.util.math.BlockPos;
-import net.minecraft.world.chunk.Chunk;
 import net.minecraftforge.items.CapabilityItemHandler;
 import net.minecraftforge.items.IItemHandler;
 import vazkii.botania.common.Botania;
@@ -31,7 +31,80 @@ import vazkii.botania.common.Botania;
  * @author computer
  *
  */
-public class YKTileBoxedYuquarry extends YKTileBaseBoxedProcFlower {
+public class YKTileBoxedYuquarry extends YKTileBaseBoxedProcFlower implements IYKNetworkTileBoxedFlower {
+	
+	/**
+	 * お花モードの定義
+	 * @author computer
+	 *
+	 */
+	public static enum FlowerMode {
+		
+		MODE1(1, "mode1", 2),
+		MODE2(2, "mode2", 4),
+		MODE3(3, "mode3", 8),
+		MODE4(4, "mode4", 16);
+		
+		private int id;
+		private String name;
+		private int range;
+		
+		private FlowerMode(final int id, final String name, final int range) {
+			this.id = id;
+			this.name = name;
+			this.range = range;
+		}
+		public int getId() {
+			return this.id;
+		}
+		public String getName() {
+	        return I18n.format("gui.boxed_yuquarry."
+	        		+ this.name + ".name");
+		}
+		public int getRange() {
+			return this.range;
+		}
+		public static FlowerMode getById(int id) {
+			for(FlowerMode mode : FlowerMode.values()) {
+				if(mode.getId() == id) {
+					return mode;
+				}
+			}
+			return null;
+		}
+		public static FlowerMode nextMode(FlowerMode mode) {
+			
+			FlowerMode nextMode = null;
+			for (int i = 0 ; i < FlowerMode.values().length; i++ ) {
+				if(mode == FlowerMode.values()[i]) {
+					if (i == FlowerMode.values().length - 1) {
+						nextMode = FlowerMode.values()[0];
+					} else {
+						nextMode = FlowerMode.values()[i+1];						
+					}
+					break;
+				}
+			}
+			return nextMode;
+		}
+	}
+	
+	/**
+	 * お花のモード
+	 */
+	protected FlowerMode flowerMode;
+	public FlowerMode getFlowerMode() {
+		return this.flowerMode;
+	}
+	
+	/**
+	 * シルクタッチモード
+	 */
+	protected boolean silkTouch = false;
+	public boolean getSilkTouch() {
+		return this.silkTouch;
+	}
+	
 	
 	/**
 	 * コンストラクタ
@@ -40,10 +113,12 @@ public class YKTileBoxedYuquarry extends YKTileBaseBoxedProcFlower {
 		
 		this.maxMana = 10000;
 		
-		//inputスロット
-
+		//初期mode
+		this.flowerMode = FlowerMode.MODE1;
+		this.silkTouch = false;
+		
 		//outputスロット
-		this.outputSlotIndex = IntStream.range(0, 21).boxed().collect(Collectors.toList());
+		this.outputSlotIndex = IntStream.range(0, 15).boxed().collect(Collectors.toList());
 
 		//tick周期(2秒で5回)
 		this.setCycleTick(8);
@@ -51,7 +126,7 @@ public class YKTileBoxedYuquarry extends YKTileBaseBoxedProcFlower {
 	
 	@Override
 	public int getSizeInventory() {
-		return 21;
+		return 15;
 	}
 	
 	/**
@@ -63,6 +138,8 @@ public class YKTileBoxedYuquarry extends YKTileBaseBoxedProcFlower {
 		super.readFromNBT(compound);
 		
         this.workY = compound.getInteger("workY");
+        this.flowerMode = FlowerMode.getById(compound.getInteger("flowerMode"));
+        this.silkTouch = compound.getBoolean("silkTouch");
 
     }
 	
@@ -75,6 +152,8 @@ public class YKTileBoxedYuquarry extends YKTileBaseBoxedProcFlower {
         compound = super.writeToNBT(compound);
         
         compound.setInteger("workY", this.workY);
+        compound.setInteger("flowerMode", this.flowerMode.getId());
+        compound.setBoolean("silkTouch", this.silkTouch);
         
         return compound;
     }
@@ -146,22 +225,25 @@ public class YKTileBoxedYuquarry extends YKTileBaseBoxedProcFlower {
 			startY = true;
 		}
 		
-		Chunk chunk = this.getWorld().getChunkFromBlockCoords(this.getPos());
+		//範囲を取得
+		int range = this.flowerMode.getRange();
+		BlockPos startBasePos = this.getPos().add(-range, 0, -range);
+		BlockPos endBasePos = this.getPos().add(range, 0, range);
 		
 		//ブロックをチャンク範囲で取得してみる
 		boolean flg = false;
 		for (int posY = workY; 0 < posY; posY--) {
 			
 			BlockPos posStart = new BlockPos(
-					chunk.getPos().getXStart(),
+					startBasePos.getX(),
 					posY,
-					chunk.getPos().getZStart()
+					startBasePos.getZ()
 					);
 			
 			BlockPos posEnd = new BlockPos(
-					chunk.getPos().getXEnd(),
+					endBasePos.getX(),
 					posY,
-					chunk.getPos().getZEnd()
+					endBasePos.getZ()
 					);
 			
 			
@@ -206,13 +288,11 @@ public class YKTileBoxedYuquarry extends YKTileBaseBoxedProcFlower {
 					continue;
 				}
 				
-				
 				//幸運とシルクタッチ
 				int fortune = 0;
-				boolean silkTouch = true;
 				
 				//ブロック破壊してドロップを取得
-				NonNullList<ItemStack> drops = YKBlockHelper.destroyBlock(world, pos, silkTouch, fortune);
+				NonNullList<ItemStack> drops = YKBlockHelper.destroyBlock(world, pos, this.silkTouch, fortune);
 				
 				//岩盤はアイテムドロップさせない
 				if (Blocks.BEDROCK.equals(state.getBlock())) {
@@ -279,7 +359,6 @@ public class YKTileBoxedYuquarry extends YKTileBaseBoxedProcFlower {
 						2.6F + (world.rand.nextFloat() - world.rand.nextFloat()) * 0.8F);
 				continue;
 			}
-			
 		}
 	}
 	
@@ -359,7 +438,6 @@ public class YKTileBoxedYuquarry extends YKTileBaseBoxedProcFlower {
 				}
 			}
 		}
-				
 	}
 	
 	/**
@@ -392,7 +470,6 @@ public class YKTileBoxedYuquarry extends YKTileBaseBoxedProcFlower {
 		}
 	}
 	
-	
 	/**
 	 * パーティクルを表示する
 	 */
@@ -401,6 +478,38 @@ public class YKTileBoxedYuquarry extends YKTileBaseBoxedProcFlower {
 		//クライアントへ送信
 		NetworkHandler.network.sendToAll(
 				new PacketTileParticle.MessageTileParticle(pos));
+	}
+	
+	/****************************************************
+	 * モード切替処理
+	 ***************************************************/
+	/**
+	 * ClientからPacketを受け取った際に呼び出される
+	 * @intarface IYKNetworkTileBoxedFlower
+	 */
+	@Override
+	public void receiveFromClientMessage(int mode) {
+		
+		if (mode == 0) {
+			//モード切替を行う
+			changeFlowerMode();			
+		} else if(mode == 1) {
+			this.silkTouch = !this.silkTouch;
+			this.playerServerSendPacket();
+		}
+	}
+	
+	/**
+	 * モード切替を行う
+	 */
+	public void changeFlowerMode() {
+		
+		this.flowerMode = FlowerMode.nextMode(flowerMode);
+		
+		//モード変更された場合最初からやり直す
+		this.workY = this.getPos().down().getY();
+		
+		this.playerServerSendPacket();
 	}
 	
 }

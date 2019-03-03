@@ -65,4 +65,37 @@ public class YKGuiItemIconButton extends GuiButton {
             this.mouseDragged(mc, mouseX, mouseY);
         }
     }
+    
+    @Override
+    protected int getHoverState(boolean mouseOver)
+    {
+        int i = 1;
+
+        if (!this.enabled)
+        {
+            i = 0;
+        }
+        else if (this.selected)
+        {
+            i = 0;
+        }
+        else if (mouseOver)
+        {
+            i = 2;
+        }
+
+        return i;
+    }
+    
+    protected boolean selected = false;
+    
+    public boolean isSelected()
+    {
+        return this.selected;
+    }
+
+    public void setSelected(boolean selectedIn)
+    {
+        this.selected = selectedIn;
+    }
 }
