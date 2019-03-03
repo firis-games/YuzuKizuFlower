@@ -109,6 +109,7 @@ public class YuzuKizuFlower
     	public final static Item BOXED_AKARICULTURE = null;
     	public final static Item AKARICULTURE = null;
     	public final static Item BOXED_YUQUARRY = null;
+    	public final static Item YUQUARRY = null;
     }
     /**
      * ブロックインスタンス保持用
@@ -338,6 +339,12 @@ public class YuzuKizuFlower
     			.setRegistryName(MODID, "boxed_akariculture")
     	);
     	
+    	// ユクァーリー
+    	event.getRegistry().register(new YKItemBase()
+    			.setRegistryName(MODID, "yuquarry")
+    			.setUnlocalizedName("yuquarry")
+    	);
+    	
     	// 箱入りユクァーリー
     	event.getRegistry().register(new ItemBlock(YuzuKizuBlocks.BOXED_YUQUARRY)
     			.setRegistryName(MODID, "boxed_yuquarry")
@@ -401,6 +408,10 @@ public class YuzuKizuFlower
     	// 箱入りユクァーリー
     	ModelLoader.setCustomModelResourceLocation(YuzuKizuItems.BOXED_YUQUARRY, 0,
     			new ModelResourceLocation(YuzuKizuItems.BOXED_YUQUARRY.getRegistryName(), "inventory"));
+    	
+    	// ユクァーリー
+    	ModelLoader.setCustomModelResourceLocation(YuzuKizuItems.YUQUARRY, 0,
+    			new ModelResourceLocation(YuzuKizuItems.YUQUARRY.getRegistryName(), "inventory"));
     	
     	
     	//マナタンク

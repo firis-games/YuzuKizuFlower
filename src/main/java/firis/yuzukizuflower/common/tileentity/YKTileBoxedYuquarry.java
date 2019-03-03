@@ -165,7 +165,8 @@ public class YKTileBoxedYuquarry extends YKTileBaseBoxedProcFlower implements IY
 		if (this.world.isRemote) {
 			//パーティクル判定
 			if(!isRedStonePower()
-					&& !(this.mana < this.procMana)) {
+					&& !(this.mana < this.procMana)
+					&& 0 < this.workY) {
 				clientSpawnParticle();
 			}
 			return;
@@ -216,15 +217,15 @@ public class YKTileBoxedYuquarry extends YKTileBaseBoxedProcFlower implements IY
 		
 		boolean startY = false;
 		
-		//処理終了
-		if (workY == 0) {
-			return;
-		}
-		
 		//高さを設定
 		if (workY <= -1) {
 			workY = this.getPos().down().getY();
 			startY = true;
+		}
+		
+		//処理終了
+		if (workY == 0) {
+			return;
 		}
 		
 		//範囲を取得
@@ -318,6 +319,7 @@ public class YKTileBoxedYuquarry extends YKTileBaseBoxedProcFlower implements IY
 			}
 			//基準点を一段下げる
 			workY = workY - 1;
+			this.playerServerSendPacket();
 			startY = true;
 		}
 	}

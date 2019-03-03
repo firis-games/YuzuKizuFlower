@@ -116,6 +116,18 @@ public class BotaniaRecipes {
 				OREDICT_PETAL[10],
 				RUNE[2],
 				"redstoneRoot");
+		
+		//ユクァーリー
+		BotaniaAPI.registerPetalRecipe(
+				new ItemStack(YuzuKizuItems.YUQUARRY),
+				OREDICT_PETAL[10],
+				OREDICT_PETAL[10],
+				OREDICT_PETAL[10],
+				OREDICT_PETAL[1],
+				OREDICT_PETAL[11],
+				OREDICT_PETAL[14],
+				RUNE[8],
+				new ItemStack(Items.DIAMOND_PICKAXE));
 	}
 	
 
