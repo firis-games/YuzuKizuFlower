@@ -170,6 +170,11 @@ public class YKTileBoxedYuquarry extends YKTileBaseBoxedProcFlower implements IY
 			}
 			return;
 		}
+		
+		//インベントリ操作
+		if (!this.getWorld().isRemote) {
+			this.autoOutputInventory();			
+		}
 	}
 	
 	/**
@@ -187,9 +192,6 @@ public class YKTileBoxedYuquarry extends YKTileBaseBoxedProcFlower implements IY
 		if (this.world.isRemote) {
 			return;
 		}
-		
-		//インベントリ操作
-		this.autoOutputInventory();
 		
 		//レッドストーン入力がある場合に動作を停止する
 		if(isRedStonePower()) {
@@ -429,6 +431,7 @@ public class YKTileBoxedYuquarry extends YKTileBaseBoxedProcFlower implements IY
 						}
 					}
 					flg = true;
+					this.playerServerSendPacket();
 					break;
 				}
 				
