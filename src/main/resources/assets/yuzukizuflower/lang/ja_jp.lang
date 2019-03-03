@@ -18,6 +18,9 @@ gui.boxed_rannuncarpus.mode1.name=小さなお花
 gui.boxed_rannuncarpus.mode2.name=小さなマナのお花
 gui.boxed_rannuncarpus.mode3.name=お花
 gui.boxed_rannuncarpus.mode4.name=マナのお花
+gui.boxed_rannuncarpus.mode.name=モード
+gui.boxed_rannuncarpus.range.name=範囲
+gui.boxed_rannuncarpus.height.name=高さ
 gui.boxed_rannuncarpus.mode.message.name=%1$sモードに変更しました
 
 tile.boxed_jaded_amaranthus.name=箱入りジェイディッド・アマランサス

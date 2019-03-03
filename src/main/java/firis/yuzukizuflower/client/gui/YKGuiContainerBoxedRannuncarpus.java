@@ -11,6 +11,7 @@ import firis.yuzukizuflower.common.tileentity.IYKTileGuiBoxedFlower;
 import firis.yuzukizuflower.common.tileentity.YKTileBoxedRannuncarpus;
 import net.minecraft.client.gui.GuiButton;
 import net.minecraft.client.renderer.RenderHelper;
+import net.minecraft.client.resources.I18n;
 import net.minecraft.inventory.IInventory;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.ResourceLocation;
@@ -88,9 +89,12 @@ public class YKGuiContainerBoxedRannuncarpus extends YKGuiContainerBaseBoxedFunc
             		Integer height = tile.getFlowerMode().getHeight();
             		
             		List<String> message = new ArrayList<String>();
-            		message.add(modeName + "モード");
-            		message.add("範囲：" + width.toString());
-            		message.add("高さ：" + height.toString());
+            		message.add(modeName 
+            				+ I18n.format("gui.boxed_rannuncarpus.mode.name"));
+            		message.add(I18n.format("gui.boxed_rannuncarpus.range.name")  
+            				+ "：" + width.toString());
+            		message.add(I18n.format("gui.boxed_rannuncarpus.height.name")
+            				+ "：" + height.toString());
             		
             		this.drawHoveringText(message, xAxis, yAxis);
                     break;
