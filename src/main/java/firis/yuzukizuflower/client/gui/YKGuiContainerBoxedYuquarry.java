@@ -11,6 +11,7 @@ import firis.yuzukizuflower.common.tileentity.IYKTileGuiBoxedFlower;
 import firis.yuzukizuflower.common.tileentity.YKTileBoxedYuquarry;
 import net.minecraft.client.gui.GuiButton;
 import net.minecraft.client.renderer.RenderHelper;
+import net.minecraft.client.resources.I18n;
 import net.minecraft.inventory.IInventory;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.ResourceLocation;
@@ -90,8 +91,8 @@ public class YKGuiContainerBoxedYuquarry extends YKGuiContainerBaseBoxedFuncFlow
             		Integer width = tile.getFlowerMode().getRange();
             		
             		List<String> message = new ArrayList<String>();
-            		message.add(modeName + "モード");
-            		message.add("範囲：" + width.toString());
+            		message.add(modeName + "" + I18n.format("gui.boxed_yuquarry.mode.name"));
+            		message.add(I18n.format("gui.boxed_yuquarry.range.name") + "：" + width.toString());
             		
             		this.drawHoveringText(message, xAxis, yAxis);
                     break;
@@ -103,7 +104,8 @@ public class YKGuiContainerBoxedYuquarry extends YKGuiContainerBaseBoxedFuncFlow
             		boolean silkTouch = tile.getSilkTouch();
             		
             		List<String> message = new ArrayList<String>();
-            		message.add("シルクタッチモード：" + (silkTouch ? "ON" : "OFF"));
+            		message.add(I18n.format("gui.boxed_yuquarry.silk_touch.name") 
+            				+ (silkTouch ? "ON" : "OFF"));
             		this.drawHoveringText(message, xAxis, yAxis);
                     break;
             	}

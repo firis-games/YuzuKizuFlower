@@ -39,3 +39,11 @@ item.akariculture.name=アカリカルチャー
 
 tile.boxed_yuquarry.name=箱入りユクァーリー
 gui.boxed_yuquarry.name=箱入りユクァーリー
+
+gui.boxed_yuquarry.mode1.name=小さなお花
+gui.boxed_yuquarry.mode2.name=小さなマナのお花
+gui.boxed_yuquarry.mode3.name=お花
+gui.boxed_yuquarry.mode4.name=マナのお花
+gui.boxed_yuquarry.silk_touch.name=シルクタッチモード
+gui.boxed_yuquarry.mode.name=モード
+gui.boxed_yuquarry.range.name=範囲
