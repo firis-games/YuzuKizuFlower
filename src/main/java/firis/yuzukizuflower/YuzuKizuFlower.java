@@ -32,6 +32,7 @@ import firis.yuzukizuflower.common.tileentity.YKTileBoxedPureDaisy;
 import firis.yuzukizuflower.common.tileentity.YKTileBoxedRannuncarpus;
 import firis.yuzukizuflower.common.tileentity.YKTileBoxedYuquarry;
 import firis.yuzukizuflower.common.tileentity.YKTileManaTank;
+import firis.yuzukizuflower.common.tileentity.YKTileManaTankExtends;
 import net.minecraft.block.Block;
 import net.minecraft.client.renderer.block.model.ModelResourceLocation;
 import net.minecraft.creativetab.CreativeTabs;
@@ -155,6 +156,9 @@ public class YuzuKizuFlower
         
         GameRegistry.registerTileEntity(YKTileManaTank.class, 
 					new ResourceLocation(YuzuKizuFlower.MODID, "ykte_mana_tank"));
+        
+        GameRegistry.registerTileEntity(YKTileManaTankExtends.class, 
+					new ResourceLocation(YuzuKizuFlower.MODID, "ykte_mana_tank_ext"));
         
         GameRegistry.registerTileEntity(YKTileBoxedRannuncarpus.class, 
 				new ResourceLocation(YuzuKizuFlower.MODID, "ykte_boxed_rannuncarpus"));

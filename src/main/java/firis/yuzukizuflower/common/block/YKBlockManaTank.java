@@ -7,6 +7,7 @@ import javax.annotation.Nullable;
 
 import firis.yuzukizuflower.common.YKGuiHandler;
 import firis.yuzukizuflower.common.tileentity.YKTileManaTank;
+import firis.yuzukizuflower.common.tileentity.YKTileManaTankExtends;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.client.util.ITooltipFlag;
 import net.minecraft.item.Item;
@@ -34,7 +35,7 @@ public class YKBlockManaTank extends YKBlockBaseManaPool {
 	 */
 	@Override
 	public TileEntity createNewTileEntity(World worldIn, int meta) {
-		return new YKTileManaTank();
+		return new YKTileManaTankExtends();
 	}
 	
     /**
