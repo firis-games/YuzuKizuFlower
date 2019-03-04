@@ -53,7 +53,6 @@ gui.boxed_yuquarry.silk_touch.name=シルクタッチモード
 gui.boxed_yuquarry.mode.name=モード
 gui.boxed_yuquarry.range.name=範囲
 
-
 tile.boxed_aocean.name=箱入りアオーシャン
 gui.boxed_aocean.name=箱入りアオーシャン
 
@@ -63,3 +62,5 @@ tile.boxed_akanerald.name=箱入りアカネラルド
 gui.boxed_akanerald.name=箱入りアカネラルド
 
 item.akanerald.name=アカネラルド
+
+fluid.liquid_mana=液体マナ

@@ -22,7 +22,7 @@ public class YKTileManaTankExtends extends YKTileManaTank implements IFluidHandl
 	/************************************************
 	 * 液体管理用（現時点では水を代用）
 	 *************************************************/
-	protected final Fluid fluidType = FluidRegistry.getFluid("water");
+	protected final Fluid fluidType = FluidRegistry.getFluid("liquid_mana");
 	
 	/************************************************
 	 * IFluidHandler

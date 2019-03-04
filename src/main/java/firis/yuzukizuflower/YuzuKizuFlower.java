@@ -44,6 +44,8 @@ import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.client.event.ModelRegistryEvent;
 import net.minecraftforge.client.model.ModelLoader;
 import net.minecraftforge.event.RegistryEvent;
+import net.minecraftforge.fluids.Fluid;
+import net.minecraftforge.fluids.FluidRegistry;
 import net.minecraftforge.fml.client.registry.ClientRegistry;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.common.Mod.EventBusSubscriber;
@@ -139,6 +141,14 @@ public class YuzuKizuFlower
     	public final static Block BOXED_AOCEAN = null;
     	public final static Block BOXED_AKANERALD = null;
     }
+    
+    public static class YuzuKizuFluids {
+    	//液体マナ
+    	public final static Fluid LIQUID_MANA = new Fluid(
+    			"liquid_mana", 
+    			new ResourceLocation("botania:blocks/mana_water"), 
+    			new ResourceLocation("botania:blocks/mana_water"));
+    }
 
 
     @EventHandler
@@ -186,6 +196,9 @@ public class YuzuKizuFlower
         
         //ネットワーク登録
         NetworkHandler.init();
+        
+        //流体登録
+        FluidRegistry.registerFluid(YuzuKizuFluids.LIQUID_MANA);
         
     }
     
