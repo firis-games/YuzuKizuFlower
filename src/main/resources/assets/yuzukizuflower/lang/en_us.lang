@@ -18,6 +18,9 @@ gui.boxed_rannuncarpus.mode1.name=Mini Flower
 gui.boxed_rannuncarpus.mode2.name=Powerd Mini Flower
 gui.boxed_rannuncarpus.mode3.name=Flower
 gui.boxed_rannuncarpus.mode4.name=Powerd Flower
+gui.boxed_rannuncarpus.mode.name=Mode
+gui.boxed_rannuncarpus.range.name=Range
+gui.boxed_rannuncarpus.height.name=Height
 gui.boxed_rannuncarpus.mode.message.name=Change %1$s Mode
 
 tile.boxed_jaded_amaranthus.name=Boxed Jaded Amaranthus
@@ -31,3 +34,21 @@ gui.boxed_orechid.name=Boxed Orechid
 
 tile.boxed_gourmaryllis.name=Boxed Gourmaryllis
 gui.boxed_gourmaryllis.name=Boxed Gourmaryllis
+
+tile.boxed_akariculture.name=Boxed Akariculture
+gui.boxed_akariculture.name=Boxed Akariculture
+
+item.akariculture.name=Akariculture
+
+tile.boxed_yuquarry.name=Boxed Yuquarry
+gui.boxed_yuquarry.name=Boxed Yuquarry
+
+item.yuquarry.name=Yuquarry
+
+gui.boxed_yuquarry.mode1.name=Mini Flower
+gui.boxed_yuquarry.mode2.name=Powerd Mini Flower
+gui.boxed_yuquarry.mode3.name=Flower
+gui.boxed_yuquarry.mode4.name=Powerd Flower
+gui.boxed_yuquarry.silk_touch.name=Silktouch
+gui.boxed_yuquarry.mode.name=Mode
+gui.boxed_yuquarry.range.name=Range
