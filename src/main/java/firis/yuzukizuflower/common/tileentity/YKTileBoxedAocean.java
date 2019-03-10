@@ -25,7 +25,7 @@ public class YKTileBoxedAocean extends YKTileBaseBoxedFuncFlower {
 		this.inputSlotIndex = new ArrayList<Integer>();
 		
 		//outputスロット
-		this.outputSlotIndex = IntStream.range(0, 8).boxed().collect(Collectors.toList());
+		this.outputSlotIndex = IntStream.rangeClosed(0, 14).boxed().collect(Collectors.toList());
 		
 		//workスロット
 		this.workSlotIndex = new ArrayList<Integer>();
@@ -34,7 +34,7 @@ public class YKTileBoxedAocean extends YKTileBaseBoxedFuncFlower {
 	
 	@Override
 	public int getSizeInventory() {
-		return 9;
+		return 15;
 	}
 	
 	/**

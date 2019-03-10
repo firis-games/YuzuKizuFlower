@@ -18,13 +18,15 @@ public class YKContainerBoxedAocean extends YKContainerBaseBoxedFuncFlower {
 	protected void initTileEntitySlot(IInventory iTeInv) {
 		
 		//基準座標
-		int xBasePos = 72;
+		int xBasePos = 71;
 		int yBasePos = 22;
-				
+
+		int invX = 5;
+		int invY = 3;
 		//outputスロット
-		for (int i = 0; i < 3; i++) {
-            for (int j = 0; j < 3; j++) {
-            	int slotIndex = j + i * 3;
+		for (int i = 0; i < invY; i++) {
+            for (int j = 0; j < invX; j++) {
+            	int slotIndex = j + i * invX;
             	int xPos = xBasePos + j * 18;
             	int yPos = yBasePos + i * 18;
             	this.addSlotToContainer(new YKSlotInventory(iTeInv, slotIndex, xPos, yPos));
