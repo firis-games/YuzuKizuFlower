@@ -286,4 +286,12 @@ public class YKTileBoxedRannuncarpus extends YKTileBaseBoxedProcFlower implement
 		
 		return new TextComponentTranslation(text);
 	}
+	
+	//******************************************************************************************
+	// SubTile設定
+	//******************************************************************************************
+	@Override
+	public int getFlowerRange() {
+		return this.flowerMode.getRange();
+	}
 }

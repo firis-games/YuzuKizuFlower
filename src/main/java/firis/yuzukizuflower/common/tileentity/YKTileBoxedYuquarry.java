@@ -517,4 +517,12 @@ public class YKTileBoxedYuquarry extends YKTileBaseBoxedProcFlower implements IY
 		this.playerServerSendPacket();
 	}
 	
+	//******************************************************************************************
+	// SubTile設定
+	//******************************************************************************************
+	@Override
+	public int getFlowerRange() {
+		return this.flowerMode.getRange();
+	}
+	
 }

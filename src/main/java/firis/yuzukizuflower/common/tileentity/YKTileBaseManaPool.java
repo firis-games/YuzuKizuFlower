@@ -10,17 +10,22 @@ import com.google.common.base.Predicates;
 
 import net.minecraft.block.Block;
 import net.minecraft.entity.Entity;
+import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.EnumDyeColor;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.ITickable;
 import net.minecraft.util.math.AxisAlignedBB;
+import net.minecraft.util.math.BlockPos;
 import net.minecraftforge.items.CapabilityItemHandler;
 import vazkii.botania.api.mana.IManaPool;
 import vazkii.botania.api.mana.ManaNetworkEvent;
 import vazkii.botania.api.mana.spark.ISparkAttachable;
 import vazkii.botania.api.mana.spark.ISparkEntity;
+import vazkii.botania.api.subtile.ISubTileContainer;
+import vazkii.botania.api.subtile.SubTileEntity;
+import vazkii.botania.api.wand.IWandBindable;
 import vazkii.botania.common.block.ModBlocks;
 import vazkii.botania.common.core.handler.ManaNetworkHandler;
 
@@ -30,7 +35,8 @@ import vazkii.botania.common.core.handler.ManaNetworkHandler;
  *
  */
 public abstract class YKTileBaseManaPool extends YKTileBaseInventory 
-										implements ITickable, IManaPool, ISparkAttachable {
+										implements ITickable, IManaPool, ISparkAttachable, 
+										ISubTileContainer, IWandBindable {
 	/**
 	 * マナ最大容量
 	 */
@@ -536,4 +542,52 @@ public abstract class YKTileBaseManaPool extends YKTileBaseInventory
     	return super.getCapability(capability, facing);
     
     }
+	
+	//******************************************************************************************
+	// vazkii.botania.client.core.handler.BlockHighlightRenderHandler
+	// 箱入りお花の範囲表示用のダミーのSubTileEntityを作成する
+	//******************************************************************************************
+	/**
+	 * @ISubTileContainer
+	 */
+	public SubTileEntity getSubTile() {
+		return null;
+	}
+
+	/**
+	 * @ISubTileContainer
+	 */
+	public void setSubTile(String name) {
+		//なにもしない
+	}
+	
+	
+	
+	//******************************************************************************************
+	// vazkii.botania.client.core.handler.BlockHighlightRenderHandler
+	// 箱入りお花の範囲表示でbindするために追加
+	//******************************************************************************************
+	/**
+	 * @IWandBindable
+	 */
+	@Override
+	public boolean canSelect(EntityPlayer player, ItemStack wand, BlockPos pos, EnumFacing side) {
+		return false;
+	}
+	
+	/**
+	 * @IWandBindable
+	 */
+	@Override
+	public boolean bindTo(EntityPlayer player, ItemStack wand, BlockPos pos, EnumFacing side) {
+		return false;
+	}
+	
+	/**
+	 * @IWandBindable
+	 */
+	public BlockPos getBinding() {
+		return null;
+	}
+
 }

@@ -335,5 +335,13 @@ public class YKTileManaTank extends YKTileBaseBoxedProcFlower {
 		}
 		this.playerServerSendPacketFlg = false;
 	}
+
+	//******************************************************************************************
+	// SubTile設定
+	//******************************************************************************************
+	@Override
+	public int getFlowerRange() {
+		return 0;
+	}
 	
 }

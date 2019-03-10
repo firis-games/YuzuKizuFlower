@@ -2,9 +2,15 @@ package firis.yuzukizuflower.common.tileentity;
 
 import java.awt.Color;
 
+import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.math.BlockPos;
+import net.minecraftforge.fml.relauncher.Side;
+import net.minecraftforge.fml.relauncher.SideOnly;
+import vazkii.botania.api.subtile.RadiusDescriptor;
+import vazkii.botania.api.subtile.SubTileEntity;
 import vazkii.botania.common.Botania;
 
 /**
@@ -164,6 +170,75 @@ public abstract class YKTileBaseBoxedProcFlower extends YKTileBaseManaPool imple
 			}
 		}
 		return false;
+	}
+
+	//******************************************************************************************
+	// モノクルの範囲描画用
+	//******************************************************************************************
+	/**
+	 * 箱入りお花用のSubTileEntity
+	 * @author computer
+	 */
+	public static class BoxedSubTileEntity extends SubTileEntity {
+		
+		private BlockPos pos;
+		private int range;
+		
+		public BoxedSubTileEntity(BlockPos pos, int range) {
+			super();
+			this.pos = pos;
+			this.range = range;
+		}
+		
+		@SideOnly(Side.CLIENT)
+		public RadiusDescriptor getRadius() {
+			return new RadiusDescriptor.Square(pos, range);
+		}
+	}
+	
+	/**
+	 * お花の有効範囲を返す
+	 * @return
+	 */
+	public abstract int getFlowerRange();
+	
+	/**
+	 * SubTileEntityの有効化設定
+	 * @return
+	 */
+	public boolean isSubTile() {
+		int range = this.getFlowerRange();
+		if (range < 0) {
+			return false;
+		}
+		return true;
+	}
+	
+	@Override
+	public SubTileEntity getSubTile() {
+		
+		if (!isSubTile()) {
+			return null;
+		}
+		
+		return new BoxedSubTileEntity(this.getPos(), this.getFlowerRange());
+	}
+	
+	@Override
+	public boolean canSelect(EntityPlayer player, ItemStack wand, BlockPos pos, EnumFacing side) {
+		if (!isSubTile()) {
+			return super.canSelect(player, wand, pos, side);
+		}
+		return true;
+	}
+	
+	@Override
+	public boolean bindTo(EntityPlayer player, ItemStack wand, BlockPos pos, EnumFacing side) {
+		if (!isSubTile()) {
+			return super.bindTo(player, wand, pos, side);
+		}
+		//バインドはできないが解除処理のためにtrueを返す
+		return true;
 	}
 	
 	//******************************************************************************************

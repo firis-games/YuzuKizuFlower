@@ -139,4 +139,12 @@ public class YKTileBoxedAkariculture extends YKTileBaseBoxedProcFlower {
 			}				
 		}	
 	}
+	
+	//******************************************************************************************
+	// SubTile設定
+	//******************************************************************************************
+	@Override
+	public int getFlowerRange() {
+		return 8;
+	}
 }
