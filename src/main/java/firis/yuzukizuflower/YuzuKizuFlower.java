@@ -5,6 +5,7 @@ import org.apache.logging.log4j.Logger;
 import firis.yuzukizuflower.client.tesr.YKTileManaTankSpRenderer;
 import firis.yuzukizuflower.common.YKGuiHandler;
 import firis.yuzukizuflower.common.block.YKBlockBaseBoxed;
+import firis.yuzukizuflower.common.block.YKBlockBoxedAkanerald;
 import firis.yuzukizuflower.common.block.YKBlockBoxedAkariculture;
 import firis.yuzukizuflower.common.block.YKBlockBoxedAocean;
 import firis.yuzukizuflower.common.block.YKBlockBoxedEndoflame;
@@ -20,6 +21,7 @@ import firis.yuzukizuflower.common.network.NetworkHandler;
 import firis.yuzukizuflower.common.proxy.CommonProxy;
 import firis.yuzukizuflower.common.recipe.BotaniaRecipes;
 import firis.yuzukizuflower.common.recipe.RecipeBoxedFlower;
+import firis.yuzukizuflower.common.tileentity.YKTileBoxedAkanerald;
 import firis.yuzukizuflower.common.tileentity.YKTileBoxedAkariculture;
 import firis.yuzukizuflower.common.tileentity.YKTileBoxedAocean;
 import firis.yuzukizuflower.common.tileentity.YKTileBoxedEndoflame;
@@ -114,6 +116,8 @@ public class YuzuKizuFlower
     	public final static Item YUQUARRY = null;
     	public final static Item BOXED_AOCEAN = null;
     	public final static Item AOCEAN = null;
+    	public final static Item BOXED_AKANERALD = null;
+    	public final static Item AKANERALD = null;
     }
     /**
      * ブロックインスタンス保持用
@@ -132,6 +136,7 @@ public class YuzuKizuFlower
     	public final static Block BOXED_AKARICULTURE = null;
     	public final static Block BOXED_YUQUARRY = null;
     	public final static Block BOXED_AOCEAN = null;
+    	public final static Block BOXED_AKANERALD = null;
     }
 
 
@@ -171,6 +176,9 @@ public class YuzuKizuFlower
         
         GameRegistry.registerTileEntity(YKTileBoxedAocean.class, 
 				new ResourceLocation(YuzuKizuFlower.MODID, "ykte_boxed_aocean"));
+        
+        GameRegistry.registerTileEntity(YKTileBoxedAkanerald.class, 
+				new ResourceLocation(YuzuKizuFlower.MODID, "ykte_boxed_akanerald"));
         
         //ネットワーク登録
         NetworkHandler.init();
@@ -287,6 +295,13 @@ public class YuzuKizuFlower
                 .setUnlocalizedName("boxed_aocean")
         );
         
+        // 箱入りアカネラルド
+        event.getRegistry().register(
+                new YKBlockBoxedAkanerald()
+                .setRegistryName(MODID, "boxed_akanerald")
+                .setUnlocalizedName("boxed_akanerald")
+        );
+        
     }
     
     /**
@@ -375,6 +390,17 @@ public class YuzuKizuFlower
     			.setRegistryName(MODID, "boxed_aocean")
     	);
     	
+    	// アカネラルド
+    	event.getRegistry().register(new YKItemBase()
+    			.setRegistryName(MODID, "akanerald")
+    			.setUnlocalizedName("akanerald")
+    	);
+    	
+    	// 箱入りアカネラルド
+    	event.getRegistry().register(new ItemBlock(YuzuKizuBlocks.BOXED_AKANERALD)
+    			.setRegistryName(MODID, "boxed_akanerald")
+    	);
+    	
     }
     
     /**
@@ -445,6 +471,14 @@ public class YuzuKizuFlower
     	// アオーシャン
     	ModelLoader.setCustomModelResourceLocation(YuzuKizuItems.AOCEAN, 0,
     			new ModelResourceLocation(YuzuKizuItems.AOCEAN.getRegistryName(), "inventory"));
+    	
+    	// 箱入りアカネラルド
+    	ModelLoader.setCustomModelResourceLocation(YuzuKizuItems.BOXED_AKANERALD, 0,
+    			new ModelResourceLocation(YuzuKizuItems.BOXED_AKANERALD.getRegistryName(), "inventory"));
+    	
+    	// アカネラルド
+    	ModelLoader.setCustomModelResourceLocation(YuzuKizuItems.AKANERALD, 0,
+    			new ModelResourceLocation(YuzuKizuItems.AKANERALD.getRegistryName(), "inventory"));
     	
     	
     	//マナタンク

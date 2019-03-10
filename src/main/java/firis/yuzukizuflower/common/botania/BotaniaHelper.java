@@ -32,6 +32,12 @@ public class BotaniaHelper {
 	public static IManaRecipes recipesAocean = new RecipesAocean();
 	
 	/**
+	 * アカネラルド変換レシピ
+	 */
+	public static IManaRecipes recipesAkanerald = new RecipesAkanerald();
+	
+	
+	/**
 	 * エンドフレイムの発電レシピ
 	 */
 	public static IManaGenerator recipesEndoflame = new GeneratorEndoflame();
