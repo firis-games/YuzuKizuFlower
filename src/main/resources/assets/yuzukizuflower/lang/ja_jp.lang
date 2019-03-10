@@ -52,3 +52,9 @@ gui.boxed_yuquarry.mode4.name=マナのお花
 gui.boxed_yuquarry.silk_touch.name=シルクタッチモード
 gui.boxed_yuquarry.mode.name=モード
 gui.boxed_yuquarry.range.name=範囲
+
+
+tile.boxed_aocean.name=箱入りアオーシャン
+gui.boxed_aocean.name=箱入りアオーシャン
+
+item.aocean.name=アオーシャン

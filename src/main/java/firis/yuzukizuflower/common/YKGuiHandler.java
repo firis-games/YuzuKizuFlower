@@ -34,6 +34,9 @@ public class YKGuiHandler implements IGuiHandler {
 	//箱入りユクァーリー
 	public static final int BOXED_YUQUARRY = 9;
 	
+	//箱入りアオーシャン
+	public static final int BOXED_AOCEAN = 10;
+	
 		
 	@Override
 	public Object getServerGuiElement(int ID, EntityPlayer player, World world, int x, int y, int z) {

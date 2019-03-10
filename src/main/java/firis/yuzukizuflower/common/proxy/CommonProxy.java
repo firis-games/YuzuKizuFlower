@@ -2,6 +2,7 @@ package firis.yuzukizuflower.common.proxy;
 
 import firis.yuzukizuflower.common.YKGuiHandler;
 import firis.yuzukizuflower.common.container.YKContainerBoxedAkariculture;
+import firis.yuzukizuflower.common.container.YKContainerBoxedAocean;
 import firis.yuzukizuflower.common.container.YKContainerBoxedEndoflame;
 import firis.yuzukizuflower.common.container.YKContainerBoxedGourmaryllis;
 import firis.yuzukizuflower.common.container.YKContainerBoxedJadedAmaranthus;
@@ -69,6 +70,10 @@ public class CommonProxy {
 				//箱入りユクァーリー
 				case YKGuiHandler.BOXED_YUQUARRY :
 					return new YKContainerBoxedYuquarry(tile, player.inventory);
+
+				//箱入りアオーシャン
+				case YKGuiHandler.BOXED_AOCEAN :
+					return new YKContainerBoxedAocean(tile, player.inventory);
 		}
 		return null;
 	}

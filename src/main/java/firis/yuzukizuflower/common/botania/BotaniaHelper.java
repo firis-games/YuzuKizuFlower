@@ -27,6 +27,11 @@ public class BotaniaHelper {
 	public static IManaRecipes recipesOrechid = new RecipesOrechid();
 	
 	/**
+	 * アオーシャン変換レシピ
+	 */
+	public static IManaRecipes recipesAocean = new RecipesAocean();
+	
+	/**
 	 * エンドフレイムの発電レシピ
 	 */
 	public static IManaGenerator recipesEndoflame = new GeneratorEndoflame();
@@ -35,8 +40,7 @@ public class BotaniaHelper {
 	 * ガーマリリスの発電レシピ
 	 */
 	public static IManaGenerator recipesGourmaryllis = new GeneratorGourmaryllis();
-	
-	
+		
 	/**
 	 * 対象アイテムがbotania:specialFlowerかチェックする
 	 * @param stack
