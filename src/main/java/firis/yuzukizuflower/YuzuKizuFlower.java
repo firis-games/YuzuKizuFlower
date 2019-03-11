@@ -200,6 +200,10 @@ public class YuzuKizuFlower
         //流体登録
         FluidRegistry.registerFluid(YuzuKizuFluids.LIQUID_MANA);
         
+        //汎用バケツの登録処理
+        FluidRegistry.enableUniversalBucket();
+        FluidRegistry.addBucketForFluid(YuzuKizuFluids.LIQUID_MANA);
+        
     }
     
     @EventHandler
