@@ -156,6 +156,14 @@ public class YuzuKizuFlower
     			new ResourceLocation("yuzukizuflower:blocks/mana_water_still"), 
     			new ResourceLocation("yuzukizuflower:blocks/mana_water_flow"));
     }
+    
+    /**
+     * 初期化ブロック
+     */
+    static {
+    	//enableUniversalBucketの有効化は初期化ブロックでしないと有効化されない
+    	FluidRegistry.enableUniversalBucket();
+    }
 
 
     @EventHandler
@@ -214,13 +222,12 @@ public class YuzuKizuFlower
     	
     	//GUIの登録
     	NetworkRegistry.INSTANCE.registerGuiHandler(YuzuKizuFlower.INSTANCE, new YKGuiHandler());
-        
+    	
     }
     
     @EventHandler
     public void postInit(FMLPostInitializationEvent event)
     {
-    	
     }
     
     /**
@@ -325,9 +332,8 @@ public class YuzuKizuFlower
         
         //流体登録
         FluidRegistry.registerFluid(YuzuKizuFluids.LIQUID_MANA);
-        
+    	
         //汎用バケツの登録処理
-        FluidRegistry.enableUniversalBucket();
         FluidRegistry.addBucketForFluid(YuzuKizuFluids.LIQUID_MANA);
         
         // 液体マナ
