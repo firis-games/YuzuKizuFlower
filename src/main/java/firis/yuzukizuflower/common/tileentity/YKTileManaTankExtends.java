@@ -20,9 +20,32 @@ import net.minecraftforge.fluids.capability.IFluidTankProperties;
 public class YKTileManaTankExtends extends YKTileManaTank implements IFluidHandler, IFluidTankProperties {
 	
 	/************************************************
-	 * 液体管理用（現時点では水を代用）
+	 * 液体管理用
 	 *************************************************/
 	protected final Fluid fluidType = FluidRegistry.getFluid("liquid_mana");
+	
+	/************************************************
+	 * マナと液体マナの変換用
+	 *************************************************/
+	int liquidManaRate = 10;
+	
+	protected int getLiquidMana() {
+		int mana = this.getMana();
+		mana = (int) Math.floor(mana / liquidManaRate);
+		return mana;
+	}
+	
+	protected int getLiquidMaxMana() {
+		int mana = this.getMaxMana();
+		mana = (int) Math.floor(mana / liquidManaRate);
+		return mana;
+	}
+	
+	protected void recieveLiquidMana(int mana) {
+		mana = mana * liquidManaRate;
+		this.recieveMana(mana);
+	}
+	
 	
 	/************************************************
 	 * IFluidHandler
@@ -58,18 +81,18 @@ public class YKTileManaTankExtends extends YKTileManaTank implements IFluidHandl
         
 		//シミュレート
     	if (!doFill) {
-    		return Math.min(this.getMaxMana() - this.getMana(), resource.amount);
+    		return Math.min(this.getLiquidMaxMana() - this.getLiquidMana(), resource.amount);
     	}
     	
     	//実際に処理を行う
-    	int filled = this.getMaxMana() - this.getMana();
+    	int filled = this.getLiquidMaxMana() - this.getLiquidMana();
 
     	//最大値より受け入れる値が低い場合はそのまま加算
         if (resource.amount < filled) {
-            this.recieveMana(resource.amount);
+            this.recieveLiquidMana(resource.amount);
             filled = resource.amount;
         } else {
-        	this.recieveMana(filled);
+        	this.recieveLiquidMana(filled);
         }
 
         /* IFluidTankを継承している場合は呼ばれる
@@ -97,13 +120,13 @@ public class YKTileManaTankExtends extends YKTileManaTank implements IFluidHandl
 	public FluidStack drain(int maxDrain, boolean doDrain) {
 		
 		//空の場合
-		if (this.getMana() <= 0 || maxDrain <= 0) {
+		if (this.getLiquidMana() <= 0 || maxDrain <= 0) {
             return null;
         }
 		
 		int drained = maxDrain;
-        if (this.getMana() < drained) {
-            drained = this.getMana();
+        if (this.getLiquidMana() < drained) {
+            drained = this.getLiquidMana();
         }
 
         //返却用の流体Stack
@@ -112,7 +135,7 @@ public class YKTileManaTankExtends extends YKTileManaTank implements IFluidHandl
         //シミュレート
         if (doDrain) {
         	//マナ操作
-            this.recieveMana(-drained);
+            this.recieveLiquidMana(-drained);
             /* IFluidTankを継承している場合は呼ばれる
             FluidEvent.fireEvent(new FluidEvent.FluidDrainingEvent(fluid, tile.getWorld(), tile.getPos(), this, drained));
             */
@@ -127,13 +150,13 @@ public class YKTileManaTankExtends extends YKTileManaTank implements IFluidHandl
 	 *************************************************/
 	@Override
 	public FluidStack getContents() {
-		FluidStack contents = new FluidStack(fluidType, this.getMana());
+		FluidStack contents = new FluidStack(fluidType, this.getLiquidMana());
         return contents == null ? null : contents.copy();
 	}
 
 	@Override
 	public int getCapacity() {
-		 return this.getMaxMana();
+		 return this.getLiquidMaxMana();
 	}
 
 	/**
