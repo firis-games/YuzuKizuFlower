@@ -20,11 +20,13 @@ public class YKContainerBoxedJadedAmaranthus extends YKContainerBaseBoxedFuncFlo
 		//基準座標
 		int xBasePos = 72;
 		int yBasePos = 22;
-				
+		
 		//outputスロット
-		for (int i = 0; i < 3; i++) {
-            for (int j = 0; j < 3; j++) {
-            	int slotIndex = j + i * 3;
+		int invX = 3;
+		int invY = 3;
+		for (int i = 0; i < invY; i++) {
+            for (int j = 0; j < invX; j++) {
+            	int slotIndex = j + i * invX;
             	int xPos = xBasePos + j * 18;
             	int yPos = yBasePos + i * 18;
             	this.addSlotToContainer(new YKSlotInventory(iTeInv, slotIndex, xPos, yPos));

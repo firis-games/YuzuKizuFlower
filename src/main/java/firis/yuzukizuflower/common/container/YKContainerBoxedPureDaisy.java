@@ -23,5 +23,14 @@ public class YKContainerBoxedPureDaisy extends YKContainerBaseBoxedFuncFlower {
 		//output
 		this.addSlotToContainer(new YKSlotInventory(iTeInv, 1, 116, 35));
 		
+		//work
+		this.addSlotToContainer(new YKSlotInventory(iTeInv, 2, 0, 0) {
+			@Override
+			public boolean isEnabled()
+		    {
+		        return false;
+		    }
+		});
+		
 	}
 }

@@ -27,15 +27,26 @@ public class YKContainerBoxedOrechid extends YKContainerBaseBoxedFuncFlower {
 		xBasePos = 108;
 		yBasePos = 22;
 		
-		//output
-		for (int i = 0; i < 3; i++) {
-            for (int j = 0; j < 3; j++) {
-            	int slotIndex = j + i * 3 + 1;
+		//outputスロット
+		int invX = 3;
+		int invY = 3;
+		for (int i = 0; i < invY; i++) {
+            for (int j = 0; j < invX; j++) {
+            	int slotIndex = j + i * invX;
             	int xPos = xBasePos + j * 18;
             	int yPos = yBasePos + i * 18;
             	this.addSlotToContainer(new YKSlotInventory(iTeInv, slotIndex, xPos, yPos));
             }
         }
+		
+		//work
+		this.addSlotToContainer(new YKSlotInventory(iTeInv, 10, 0, 0) {
+			@Override
+			public boolean isEnabled()
+		    {
+		        return false;
+		    }
+		});
 	}
 	
 }

@@ -143,8 +143,10 @@ public abstract class YKTileBaseBoxedFuncFlower extends YKTileBaseManaPool imple
 			this.playerServerSendPacket();
 			
 		}
-		
-		
+		//例外処理
+		if (this.maxTimer == 0) {
+			return;
+		}
 		//マナがない場合はなにもしない
 		//1tick あたりの マナの消費
 		int mana = this.manaCost / this.maxTimer;
