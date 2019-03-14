@@ -39,7 +39,7 @@ public class YKTileManaTankSpRenderer extends TileEntitySpecialRenderer<YKTileMa
 	protected void renderFluid(YKTileManaTank te, double x, double y, double z) {
 		
 		if (spriteMana == null) {
-			spriteMana = Minecraft.getMinecraft().getTextureMapBlocks().getTextureExtry("botania:blocks/mana_water");
+			spriteMana = Minecraft.getMinecraft().getTextureMapBlocks().getTextureExtry("yuzukizuflower:blocks/mana_water_still");
 		}
 		
 		//Manaがない場合は描画しない

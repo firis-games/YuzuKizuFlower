@@ -22,7 +22,7 @@ public abstract class YKGuiContainerBaseBoxedFuncFlower extends GuiContainer {
 	/**
 	 * Manaテクスチャ
 	 */
-	protected TextureAtlasSprite manaWaterTextures = Minecraft.getMinecraft().getTextureMapBlocks().getTextureExtry("botania:blocks/mana_water");;
+	protected TextureAtlasSprite manaWaterTextures = Minecraft.getMinecraft().getTextureMapBlocks().getTextureExtry("yuzukizuflower:blocks/mana_water_still");;
 	
 	/**
 	 * Guiサイズ

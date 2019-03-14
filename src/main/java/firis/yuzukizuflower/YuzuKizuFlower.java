@@ -149,7 +149,6 @@ public class YuzuKizuFlower
     }
     
     public static class YuzuKizuFluids {
-    	//botania:blocks/mana_water
     	//液体マナ
     	public final static Fluid LIQUID_MANA = new Fluid(
     			"liquid_mana", 
