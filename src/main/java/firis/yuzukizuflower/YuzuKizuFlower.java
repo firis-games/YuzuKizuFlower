@@ -34,7 +34,11 @@ import firis.yuzukizuflower.common.tileentity.YKTileBoxedYuquarry;
 import firis.yuzukizuflower.common.tileentity.YKTileManaTank;
 import firis.yuzukizuflower.common.tileentity.YKTileManaTankExtends;
 import net.minecraft.block.Block;
+import net.minecraft.block.material.Material;
+import net.minecraft.block.state.IBlockState;
+import net.minecraft.client.renderer.ItemMeshDefinition;
 import net.minecraft.client.renderer.block.model.ModelResourceLocation;
+import net.minecraft.client.renderer.block.statemap.StateMapperBase;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemBlock;
@@ -44,6 +48,7 @@ import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.client.event.ModelRegistryEvent;
 import net.minecraftforge.client.model.ModelLoader;
 import net.minecraftforge.event.RegistryEvent;
+import net.minecraftforge.fluids.BlockFluidClassic;
 import net.minecraftforge.fluids.Fluid;
 import net.minecraftforge.fluids.FluidRegistry;
 import net.minecraftforge.fml.client.registry.ClientRegistry;
@@ -140,14 +145,16 @@ public class YuzuKizuFlower
     	public final static Block BOXED_YUQUARRY = null;
     	public final static Block BOXED_AOCEAN = null;
     	public final static Block BOXED_AKANERALD = null;
+    	public final static Block LIQUID_MANA = null;
     }
     
     public static class YuzuKizuFluids {
+    	//botania:blocks/mana_water
     	//液体マナ
     	public final static Fluid LIQUID_MANA = new Fluid(
     			"liquid_mana", 
-    			new ResourceLocation("botania:blocks/mana_water"), 
-    			new ResourceLocation("botania:blocks/mana_water"));
+    			new ResourceLocation("yuzukizuflower:blocks/mana_water_still"), 
+    			new ResourceLocation("yuzukizuflower:blocks/mana_water_flow"));
     }
 
 
@@ -196,13 +203,6 @@ public class YuzuKizuFlower
         
         //ネットワーク登録
         NetworkHandler.init();
-        
-        //流体登録
-        FluidRegistry.registerFluid(YuzuKizuFluids.LIQUID_MANA);
-        
-        //汎用バケツの登録処理
-        FluidRegistry.enableUniversalBucket();
-        FluidRegistry.addBucketForFluid(YuzuKizuFluids.LIQUID_MANA);
         
     }
     
@@ -323,6 +323,21 @@ public class YuzuKizuFlower
                 .setUnlocalizedName("boxed_akanerald")
         );
         
+        //流体登録
+        FluidRegistry.registerFluid(YuzuKizuFluids.LIQUID_MANA);
+        
+        //汎用バケツの登録処理
+        FluidRegistry.enableUniversalBucket();
+        FluidRegistry.addBucketForFluid(YuzuKizuFluids.LIQUID_MANA);
+        
+        // 液体マナ
+        event.getRegistry().register(
+                new BlockFluidClassic(YuzuKizuFluids.LIQUID_MANA, Material.WATER)
+                .setRegistryName(MODID, "liquid_mana")
+                .setUnlocalizedName("liquid_mana")
+                .setCreativeTab(YuzuKizuCreativeTab)
+        );
+        
     }
     
     /**
@@ -422,6 +437,11 @@ public class YuzuKizuFlower
     			.setRegistryName(MODID, "boxed_akanerald")
     	);
     	
+    	// 液体マナ
+    	event.getRegistry().register(new ItemBlock(YuzuKizuBlocks.LIQUID_MANA)
+    			.setRegistryName(MODID, "liquid_mana")
+    	);
+    	
     }
     
     /**
@@ -500,6 +520,22 @@ public class YuzuKizuFlower
     	// アカネラルド
     	ModelLoader.setCustomModelResourceLocation(YuzuKizuItems.AKANERALD, 0,
     			new ModelResourceLocation(YuzuKizuItems.AKANERALD.getRegistryName(), "inventory"));
+    	    	
+    	//ブロック描画用StateMapper
+    	ModelLoader.setCustomStateMapper(YuzuKizuBlocks.LIQUID_MANA, new StateMapperBase() {
+    	    @Override
+    	    protected ModelResourceLocation getModelResourceLocation(IBlockState state) {
+    	        return new ModelResourceLocation("yuzukizuflower:liquid_mana", "fluid");
+    	    }
+    	});
+    	
+    	//アイテム描画用ItemMeshDefinition
+        ModelLoader.setCustomMeshDefinition(Item.getItemFromBlock(YuzuKizuBlocks.LIQUID_MANA), new ItemMeshDefinition() {
+            @Override
+            public ModelResourceLocation getModelLocation(ItemStack stack) {
+            	return new ModelResourceLocation("yuzukizuflower:liquid_mana", "fluid");
+            }
+        });
     	
     	
     	//マナタンク
