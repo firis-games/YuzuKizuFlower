@@ -24,6 +24,8 @@ import net.minecraft.util.SoundEvent;
 import net.minecraft.util.math.BlockPos;
 import net.minecraftforge.items.CapabilityItemHandler;
 import net.minecraftforge.items.IItemHandler;
+import vazkii.botania.api.BotaniaAPI;
+import vazkii.botania.api.subtile.SubTileEntity;
 import vazkii.botania.common.Botania;
 
 /**
@@ -140,6 +142,7 @@ public class YKTileBoxedYuquarry extends YKTileBaseBoxedProcFlower implements IY
         this.workY = compound.getInteger("workY");
         this.flowerMode = FlowerMode.getById(compound.getInteger("flowerMode"));
         this.silkTouch = compound.getBoolean("silkTouch");
+        this.flowerFacing = EnumFacing.getFront(compound.getInteger("flowerFacing"));
 
     }
 	
@@ -154,6 +157,7 @@ public class YKTileBoxedYuquarry extends YKTileBaseBoxedProcFlower implements IY
         compound.setInteger("workY", this.workY);
         compound.setInteger("flowerMode", this.flowerMode.getId());
         compound.setBoolean("silkTouch", this.silkTouch);
+        compound.setInteger("flowerFacing", this.flowerFacing.getIndex());
         
         return compound;
     }
@@ -169,6 +173,10 @@ public class YKTileBoxedYuquarry extends YKTileBaseBoxedProcFlower implements IY
 					&& 0 < this.workY) {
 				clientSpawnParticle();
 			}
+			
+			//方角用パーティクル
+			clientSpawnParticleFacing();
+			
 			return;
 		}
 		
@@ -232,6 +240,12 @@ public class YKTileBoxedYuquarry extends YKTileBaseBoxedProcFlower implements IY
 		int range = this.flowerMode.getRange();
 		BlockPos startBasePos = this.getPos().add(-range, 0, -range);
 		BlockPos endBasePos = this.getPos().add(range, 0, range);
+		
+		//方角設定がある場合ベース座標をずらす
+		if (this.flowerFacing != EnumFacing.UP) {
+			startBasePos = startBasePos.offset(this.flowerFacing, range + 1);
+			endBasePos = endBasePos.offset(this.flowerFacing, range + 1);
+		}
 		
 		//ブロックをチャンク範囲で取得してみる
 		boolean flg = false;
@@ -476,6 +490,46 @@ public class YKTileBoxedYuquarry extends YKTileBaseBoxedProcFlower implements IY
 	}
 	
 	/**
+	 * 方角用パーティクルを表示する
+	 */
+	public void clientSpawnParticleFacing() {
+		
+		if (!this.getWorld().isRemote) {
+			return;
+		}
+		
+		if (this.flowerFacing == EnumFacing.UP) {
+			return;
+		}
+		
+		//処理が終了している場合は何もしない
+		if (this.workY == 0) {
+			return;
+		}
+		
+		double particleChance = 0.9F;
+		
+		BlockPos pos = this.getPos().add(this.flowerFacing.getDirectionVec());
+		
+		//紫色
+		Color color = new Color(167, 87, 168);
+		
+		if(Math.random() > particleChance) {
+			//マナプールと同じパーティクル
+			//お花のパーティクル
+			BotaniaAPI.internalHandler.sparkleFX(this.getWorld(), 
+					pos.getX() + 0.3 + Math.random() * 0.5, 
+					pos.getY() + 0.5 + Math.random() * 0.5, 
+					pos.getZ() + 0.3 + Math.random() * 0.5, 
+					color.getRed() / 255F, 
+					color.getGreen() / 255F, 
+					color.getBlue() / 255F, 
+					(float) Math.random() * 2.5F, 
+					8);
+		}
+	}
+	
+	/**
 	 * パーティクルを表示する
 	 */
 	public void serverSpawnParticle(BlockPos pos) {
@@ -523,6 +577,52 @@ public class YKTileBoxedYuquarry extends YKTileBaseBoxedProcFlower implements IY
 	@Override
 	public int getFlowerRange() {
 		return this.flowerMode.getRange();
+	}
+	
+	//******************************************************************************************
+	// 方向を設定する
+	//******************************************************************************************
+	protected EnumFacing flowerFacing = EnumFacing.UP;
+	public void setFacing(EnumFacing facing) {
+		
+		//何もしない
+		if (EnumFacing.UP == facing
+				|| EnumFacing.DOWN == facing) {
+			return;
+		}
+		
+		if (facing != this.flowerFacing) {
+			this.flowerFacing = facing;
+		} else {
+			//同じ場合はリセット
+			this.flowerFacing = EnumFacing.UP;
+		}
+		
+		//処理座標を初期化
+		this.workY = -1;
+		
+		this.playerServerSendPacket();
+	}
+	
+	/**
+	 * モノクルの範囲制御
+	 */
+	@Override
+	public SubTileEntity getSubTile() {
+		
+		if (!isSubTile()) {
+			return null;
+		}
+		
+		BlockPos viewPos = this.getPos();
+		
+
+		//方角設定がある場合ベース座標をずらす
+		if (this.flowerFacing != EnumFacing.UP) {
+			viewPos = viewPos.offset(this.flowerFacing, this.getFlowerRange() + 1);
+		}
+		
+		return new BoxedSubTileEntity(viewPos, this.getFlowerRange());
 	}
 	
 }
