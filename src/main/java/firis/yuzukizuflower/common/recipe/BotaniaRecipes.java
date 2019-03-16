@@ -115,7 +115,7 @@ public class BotaniaRecipes {
 				OREDICT_PETAL[1],
 				OREDICT_PETAL[10],
 				RUNE[2],
-				"redstoneRoot");
+				new ItemStack(Items.DIAMOND_HOE));
 		
 		//ユクァーリー
 		BotaniaAPI.registerPetalRecipe(
@@ -128,6 +128,26 @@ public class BotaniaRecipes {
 				OREDICT_PETAL[14],
 				RUNE[8],
 				new ItemStack(Items.DIAMOND_PICKAXE));
+		
+		//アオーシャン
+		BotaniaAPI.registerPetalRecipe(
+				new ItemStack(YuzuKizuItems.AOCEAN), 
+				OREDICT_PETAL[11], 
+				OREDICT_PETAL[11],
+				OREDICT_PETAL[10],
+				RUNE[0],
+				new ItemStack(Item.getByNameOrId("botania:manaresource"), 1, 2),
+				new ItemStack(Items.FISHING_ROD));
+		
+		//アカネラルド
+		BotaniaAPI.registerPetalRecipe(
+				new ItemStack(YuzuKizuItems.AKANERALD), 
+				OREDICT_PETAL[14], 
+				OREDICT_PETAL[14],
+				OREDICT_PETAL[10],
+				RUNE[3],
+				new ItemStack(Blocks.EMERALD_BLOCK),
+				new ItemStack(Item.getByNameOrId("botania:storage"), 1, 3));
 	}
 	
 
