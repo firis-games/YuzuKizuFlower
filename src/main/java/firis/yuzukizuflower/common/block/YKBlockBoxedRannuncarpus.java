@@ -1,6 +1,7 @@
 package firis.yuzukizuflower.common.block;
 
 import firis.yuzukizuflower.common.YKGuiHandler;
+import firis.yuzukizuflower.common.botania.BotaniaHelper;
 import firis.yuzukizuflower.common.tileentity.YKTileBoxedRannuncarpus;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.player.EntityPlayer;
@@ -39,10 +40,9 @@ public class YKBlockBoxedRannuncarpus extends YKBlockBaseManaPool {
 		
 		ItemStack handItem = playerIn.getHeldItem(hand);
 		
-		//NBTから杖モードを取得して機能モードの判断
-		if (!handItem.hasTagCompound() 
-				|| handItem.getTagCompound().getBoolean("bindMode")) {
-			//接続モードの場合は何もしない
+		//機能モード以外
+		if (BotaniaHelper.getTwingWandMode(handItem) != BotaniaHelper.TwingWandMode.FUNC) {
+			//機能モード以外は何もしない
 			return false;
 		}
 		

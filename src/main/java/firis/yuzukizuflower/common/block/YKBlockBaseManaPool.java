@@ -1,6 +1,7 @@
 package firis.yuzukizuflower.common.block;
 
 import firis.yuzukizuflower.YuzuKizuFlower;
+import firis.yuzukizuflower.common.botania.BotaniaHelper;
 import firis.yuzukizuflower.common.tileentity.YKTileBaseManaPool;
 import net.minecraft.block.BlockContainer;
 import net.minecraft.block.material.MapColor;
@@ -22,7 +23,6 @@ import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
-import vazkii.botania.api.wand.ICoordBoundItem;
 import vazkii.botania.api.wand.IWandHUD;
 import vazkii.botania.api.wand.IWandable;
 import vazkii.botania.client.core.handler.HUDHandler;
@@ -161,7 +161,7 @@ public abstract class YKBlockBaseManaPool extends BlockContainer implements IWan
 		
 		ItemStack handItem = playerIn.getHeldItem(hand);
 		//杖系だとなにもしない
-		if (handItem.getItem() instanceof ICoordBoundItem) {
+		if (BotaniaHelper.isTwingWand(handItem)) {
 			//森の杖の場合
 			return onBlockActivatedICoordBoundItem(worldIn, pos, state, playerIn, hand, facing, hitZ, hitZ, hitZ);
 		}

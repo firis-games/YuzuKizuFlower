@@ -2,6 +2,7 @@ package firis.yuzukizuflower.common.botania;
 
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.ResourceLocation;
+import vazkii.botania.api.wand.ICoordBoundItem;
 import vazkii.botania.common.item.block.ItemBlockSpecialFlower;
 
 public class BotaniaHelper {
@@ -65,5 +66,56 @@ public class BotaniaHelper {
 		
 		return false;
 	}
+	
+	/**
+	 * 対象アイテムがbotania:twingwandかチェックする
+	 * ICoordBoundItemインターフェースをもつアイテムかどうかの判断
+	 * @param stack
+	 * @return 
+	 */
+	public static boolean isTwingWand(ItemStack stack) {
+		
+		if (stack.getItem() instanceof ICoordBoundItem) {
+			return true;
+		}
+		return false;
+	}
+	
+	/**
+	 * 森の杖(botania:twingwand)のモードを取得する
+	 * ICoordBoundItemインターフェースとbindModeの判断
+	 * @param stack
+	 * @return mode
+	 */
+	public static TwingWandMode getTwingWandMode(ItemStack stack) {
+		
+		if(!isTwingWand(stack)) {
+			return TwingWandMode.NONE;
+		}
+		
+		//bindModeがfalseの場合は機能モード
+		//それ以外が接続モード（初期値はbindModeがない）
+		if (stack.hasTagCompound() 
+				&& stack.getTagCompound().hasKey("bindMode")
+				&& stack.getTagCompound().getBoolean("bindMode") == false) {
+			//機能モード
+			return TwingWandMode.FUNC;
+		}
+		
+		//接続モード
+		return TwingWandMode.BIND;
+	}
+	
+	/**
+	 * 森の杖(botania:twingwand)のモード
+	 * NONE:森の杖でない
+	 * BIND:接続モード
+	 * FUNC:機能モード
+	 */
+	public enum TwingWandMode {
+		NONE,
+		BIND,
+		FUNC
+	};
 
 }
