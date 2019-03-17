@@ -19,6 +19,9 @@ import net.minecraftforge.fml.common.Mod.EventBusSubscriber;
 import net.minecraftforge.fml.common.eventhandler.Event.Result;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 
+/**
+ * MinecraftForge.EVENT_BUS.registerの代わりに@EventBusSubscriber
+ */
 @EventBusSubscriber
 public class PlayerFillBucketEvent {
 
@@ -27,14 +30,18 @@ public class PlayerFillBucketEvent {
 	 * @param events
 	 */
 	@SubscribeEvent
-	public static void fillBucketEvent(FillBucketEvent events) {
+	public static void fillBucketEvent(FillBucketEvent event) {
+		
+		if (event.getTarget() == null) {
+			return;
+		}
 		
 		//バケツイベント
-		EntityPlayer player = events.getEntityPlayer();
-		EnumFacing posSide = events.getTarget().sideHit;
-		BlockPos pos = events.getTarget().getBlockPos();
-		ItemStack stack = events.getEmptyBucket();
-		World world = events.getWorld();
+		EntityPlayer player = event.getEntityPlayer();
+		EnumFacing posSide = event.getTarget().sideHit;
+		BlockPos pos = event.getTarget().getBlockPos();
+		ItemStack stack = event.getEmptyBucket();
+		World world = event.getWorld();
 		
 		if (!player.canPlayerEdit(pos.offset(posSide), posSide, stack)) {
 			return;
@@ -49,8 +56,8 @@ public class PlayerFillBucketEvent {
 			world.setBlockState(pos, Blocks.AIR.getDefaultState(), 11);
 			player.playSound(SoundEvents.ITEM_BUCKET_FILL, 1.0F, 1.0F);
 			ItemStack fstack = FluidUtil.getFilledBucket(FluidRegistry.getFluidStack(YuzuKizuFluids.LIQUID_MANA.getName(), Fluid.BUCKET_VOLUME));
-			events.setFilledBucket(fstack);
-			events.setResult(Result.ALLOW);
+			event.setFilledBucket(fstack);
+			event.setResult(Result.ALLOW);
         }
 		
 	}
