@@ -93,12 +93,25 @@ public class PopulateChunkEventHandler {
 			//置き換えるブロックの4方向と下を確認する
 			List<EnumFacing> facingList = Arrays.asList(EnumFacing.NORTH, EnumFacing.WEST, EnumFacing.SOUTH, EnumFacing.EAST, EnumFacing.DOWN);
 			boolean ret = true;
-			for (EnumFacing facing : facingList) {
-				BlockPos facingPos = pos.offset(facing);
+			
+			//上のブロックが液体の場合は処理しない
+			if (ret) {
+				BlockPos facingPos = pos.offset(EnumFacing.UP);
 				IBlockState facingState = event.getWorld().getBlockState(facingPos);
-				if(!facingState.getMaterial().isSolid()) {
+				if(facingState.getMaterial().isLiquid()) {
 					ret = false;
-					break;
+				}
+			}
+			
+			//固体ブロック確認
+			if (ret) {
+				for (EnumFacing facing : facingList) {
+					BlockPos facingPos = pos.offset(facing);
+					IBlockState facingState = event.getWorld().getBlockState(facingPos);
+					if(!facingState.getMaterial().isSolid()) {
+						ret = false;
+						break;
+					}
 				}
 			}
 			if (ret) {
