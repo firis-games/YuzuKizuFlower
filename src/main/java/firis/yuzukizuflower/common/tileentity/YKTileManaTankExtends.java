@@ -3,13 +3,17 @@ package firis.yuzukizuflower.common.tileentity;
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
+import firis.yuzukizuflower.YuzuKizuFlower.YuzuKizuFluids;
+import net.minecraft.item.ItemStack;
 import net.minecraft.util.EnumFacing;
 import net.minecraftforge.common.capabilities.Capability;
 import net.minecraftforge.fluids.Fluid;
 import net.minecraftforge.fluids.FluidRegistry;
 import net.minecraftforge.fluids.FluidStack;
+import net.minecraftforge.fluids.FluidUtil;
 import net.minecraftforge.fluids.capability.CapabilityFluidHandler;
 import net.minecraftforge.fluids.capability.IFluidHandler;
+import net.minecraftforge.fluids.capability.IFluidHandlerItem;
 import net.minecraftforge.fluids.capability.IFluidTankProperties;
 
 /**
@@ -204,4 +208,62 @@ public class YKTileManaTankExtends extends YKTileManaTank implements IFluidHandl
         return super.getCapability(capability, facing);
     }
 
+    
+    /************************************************
+	 * 液体バケツ系も対応する
+	 *************************************************/
+	/**
+	 * 黒いスイレン専用の変換処理
+	 * @return
+	 */
+	protected boolean updateManaLotus() {
+		
+		if (super.updateManaLotus()) {
+			return true;
+		}
+		ItemStack slotStack = this.getStackInputSlotFirst();
+		
+		//液体タンク系の処理
+		FluidStack fuildStack = FluidUtil.getFluidContained(slotStack);
+		
+		//マナタンクに空き容量がある かつ 液体マナが入った液体容器であること
+		if (!this.isFull() && fuildStack != null && fuildStack.getFluid() == YuzuKizuFluids.LIQUID_MANA) {
+			
+			//Stackをひとつだけ取得する
+			ItemStack stack = slotStack.copy();
+			stack.setCount(1);
+			
+			//液体Capability
+			IFluidHandlerItem fluidHandler = FluidUtil.getFluidHandler(stack);
+			
+			int emptyLiquidMana = this.getLiquidMaxMana() - this.getLiquidMana();
+			
+			//液体容器からマナを取得
+			FluidStack hndFluidStack = fluidHandler.drain(emptyLiquidMana, true);
+			if (hndFluidStack == null) {
+				return false;
+			}
+			
+			//処理後の容器
+			stack = fluidHandler.getContainer().copy();
+			
+			//outputスロットがあいていいる or スタック可能アイテムの場合処理を続行する
+			if(this.isFillOutputSlotStack(stack)) {
+				return false;
+			}
+			
+			//液体マナを充填
+			this.fill(hndFluidStack, true);
+			
+			//アイテムの移動処理
+			slotStack.shrink(1); //input
+			this.insertOutputSlotItemStack(stack); //output
+			
+			//同期処理
+			this.playerServerSendPacket();
+			
+			return true;
+		}
+		return false;
+	}
 }
