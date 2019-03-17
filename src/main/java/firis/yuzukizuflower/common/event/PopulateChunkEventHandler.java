@@ -4,6 +4,7 @@ import java.util.Arrays;
 import java.util.List;
 
 import firis.yuzukizuflower.YuzuKizuFlower.YuzuKizuBlocks;
+import firis.yuzukizuflower.common.YKConfig;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.init.Blocks;
 import net.minecraft.util.EnumFacing;
@@ -46,8 +47,11 @@ public class PopulateChunkEventHandler {
 		if((event.getResult() == Result.ALLOW || event.getResult() == Result.DEFAULT) 
 				&& event.getType() == Populate.EventType.LAKE) {
 			
-			//20%で池生成を差し替える
-			if (event.getRand().nextInt(100) > 20) return;
+			//池生成を差し替える
+			//Configで生成率を制御
+			if (YKConfig.GEN_RATE_MANA_LAKE == 0 ||
+					event.getRand().nextInt(1000) > YKConfig.GEN_RATE_MANA_LAKE) return;
+			
 			ChunkPos chunkPos = new ChunkPos(event.getChunkX(), event.getChunkZ());
 			chunkPos.getBlock(0, 0, 0);
 			BlockPos blockPos = chunkPos.getBlock(0, 0, 0);
@@ -78,8 +82,10 @@ public class PopulateChunkEventHandler {
 		
 		if((event.getResult() == Result.ALLOW || event.getResult() == Result.DEFAULT)) {
 			
-			//1%で1ブロックのマナたまりを生成
-			if (event.getRand().nextInt(100) > 1) return;
+			//マナ溜りの生成
+			//Configで生成率を制御
+			if (YKConfig.GEN_RATE_MANA_POOL == 0 ||
+					event.getRand().nextInt(1000) > YKConfig.GEN_RATE_MANA_POOL) return;
 			
 			//1-14の間の座標をランダムで取得する
 			Chunk chunk = event.getWorld().getChunkFromChunkCoords(event.getChunkX(), event.getChunkZ());
