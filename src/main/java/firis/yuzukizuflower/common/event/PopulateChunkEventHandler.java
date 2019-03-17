@@ -8,6 +8,7 @@ import net.minecraft.block.state.IBlockState;
 import net.minecraft.init.Blocks;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.math.BlockPos;
+import net.minecraft.world.WorldType;
 import net.minecraft.world.chunk.Chunk;
 import net.minecraft.world.gen.feature.WorldGenLakes;
 import net.minecraftforge.event.terraingen.PopulateChunkEvent;
@@ -57,6 +58,12 @@ public class PopulateChunkEventHandler {
 	
 	@SubscribeEvent(priority = EventPriority.LOWEST)
 	public static void decorateBiomeEvent(PopulateChunkEvent.Pre event) {
+				
+		//ワールドタイプFLAT・オーバーワールド以外は生成を行わない
+		if (event.getWorld().getWorldType() == WorldType.FLAT
+				|| !(event.getWorld().provider.getDimension() == 0)) {
+			return;
+		}
 		
 		if((event.getResult() == Result.ALLOW || event.getResult() == Result.DEFAULT)) {
 			
