@@ -52,3 +52,15 @@ gui.boxed_yuquarry.mode4.name=Powerd Flower
 gui.boxed_yuquarry.silk_touch.name=Silktouch
 gui.boxed_yuquarry.mode.name=Mode
 gui.boxed_yuquarry.range.name=Range
+tile.boxed_aocean.name=Boxed Aocean
+gui.boxed_aocean.name=Boxed Aocean
+
+item.aocean.name=Aocean
+
+tile.boxed_akanerald.name=Boxed Akanerald
+gui.boxed_akanerald.name=Boxed Akanerald
+
+item.akanerald.name=Akanerald
+
+fluid.liquid_mana=Liquid Mana
+tile.liquid_mana.name=Liquid Mana
