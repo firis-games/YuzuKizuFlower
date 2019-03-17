@@ -8,6 +8,7 @@ import net.minecraft.block.state.IBlockState;
 import net.minecraft.init.Blocks;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.math.BlockPos;
+import net.minecraft.util.math.ChunkPos;
 import net.minecraft.world.WorldType;
 import net.minecraft.world.chunk.Chunk;
 import net.minecraft.world.gen.feature.WorldGenLakes;
@@ -34,6 +35,10 @@ import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 @EventBusSubscriber
 public class PopulateChunkEventHandler {
 
+	/**
+	 * 池生成を一定確率でマナ池生成へ差し替える
+	 * @param event
+	 */
 	@SubscribeEvent(priority = EventPriority.LOWEST)
 	public static void populateChunkEvent(PopulateChunkEvent.Populate event) {
 		
@@ -43,19 +48,25 @@ public class PopulateChunkEventHandler {
 			
 			//20%で池生成を差し替える
 			if (event.getRand().nextInt(100) > 20) return;
-			
-			BlockPos chunkPos = new BlockPos(event.getChunkX(), 0, event.getChunkZ());
+			ChunkPos chunkPos = new ChunkPos(event.getChunkX(), event.getChunkZ());
+			chunkPos.getBlock(0, 0, 0);
+			BlockPos blockPos = chunkPos.getBlock(0, 0, 0);
 			
 			int i1 = event.getRand().nextInt(16) + 8;
             int j1 = event.getRand().nextInt(256);
             int k1 = event.getRand().nextInt(16) + 8;
             
-            (new WorldGenLakes(YuzuKizuBlocks.LIQUID_MANA)).generate(event.getWorld(), event.getRand(), chunkPos.add(i1, j1, k1));
+            (new WorldGenLakes(YuzuKizuBlocks.LIQUID_MANA)).generate(event.getWorld(), event.getRand(), blockPos.add(i1, j1, k1));
 			
 			event.setResult(Result.DENY);
 		}
 	}
 	
+	
+	/**
+	 * マナ溜りを生成
+	 * @param event
+	 */
 	@SubscribeEvent(priority = EventPriority.LOWEST)
 	public static void decorateBiomeEvent(PopulateChunkEvent.Pre event) {
 				
