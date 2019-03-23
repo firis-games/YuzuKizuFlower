@@ -114,7 +114,9 @@ public class PopulateChunkEventHandler {
 				for (EnumFacing facing : facingList) {
 					BlockPos facingPos = pos.offset(facing);
 					IBlockState facingState = event.getWorld().getBlockState(facingPos);
-					if(!facingState.getMaterial().isSolid()) {
+					//固体ブロックでない or 透過ブロックである
+					if(!facingState.getMaterial().isSolid()
+							|| !facingState.getMaterial().isOpaque()) {
 						ret = false;
 						break;
 					}
