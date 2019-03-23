@@ -34,11 +34,11 @@ public class RecipesAkanerald implements IManaRecipes {
 		
 		ManaRecipe recipe = null;
 		
-		//20000mana 40tick
+		//50000mana 100tick
 		recipe = new ManaRecipe(
 				stack,
 				createVillagerItem(simulate),
-				20000, 40);
+				50000, 100);
 		
 		return recipe;
 	}
