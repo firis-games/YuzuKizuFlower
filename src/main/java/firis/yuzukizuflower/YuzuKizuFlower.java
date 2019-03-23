@@ -155,7 +155,8 @@ public class YuzuKizuFlower
     	public final static Fluid LIQUID_MANA = new Fluid(
     			"liquid_mana", 
     			new ResourceLocation("yuzukizuflower:blocks/mana_water_still"), 
-    			new ResourceLocation("yuzukizuflower:blocks/mana_water_flow"));
+    			new ResourceLocation("yuzukizuflower:blocks/mana_water_flow"))
+    			.setLuminosity(15);
     }
     
     /**
