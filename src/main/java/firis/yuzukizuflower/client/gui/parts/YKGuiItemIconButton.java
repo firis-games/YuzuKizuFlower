@@ -1,4 +1,4 @@
-package firis.yuzukizuflower.client.gui;
+package firis.yuzukizuflower.client.gui.parts;
 
 import firis.yuzukizuflower.YuzuKizuFlower;
 import net.minecraft.client.Minecraft;
