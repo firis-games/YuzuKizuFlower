@@ -16,6 +16,7 @@ import firis.yuzukizuflower.common.block.YKBlockBoxedPureDaisy;
 import firis.yuzukizuflower.common.block.YKBlockBoxedRannuncarpus;
 import firis.yuzukizuflower.common.block.YKBlockBoxedYuquarry;
 import firis.yuzukizuflower.common.block.YKBlockManaTank;
+import firis.yuzukizuflower.common.block.YKBlockScrollChest;
 import firis.yuzukizuflower.common.event.PopulateChunkEventHandler;
 import firis.yuzukizuflower.common.item.YKItemBase;
 import firis.yuzukizuflower.common.network.NetworkHandler;
@@ -34,6 +35,7 @@ import firis.yuzukizuflower.common.tileentity.YKTileBoxedRannuncarpus;
 import firis.yuzukizuflower.common.tileentity.YKTileBoxedYuquarry;
 import firis.yuzukizuflower.common.tileentity.YKTileManaTank;
 import firis.yuzukizuflower.common.tileentity.YKTileManaTankExtends;
+import firis.yuzukizuflower.common.tileentity.YKTileScrollChest;
 import net.minecraft.block.Block;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.state.IBlockState;
@@ -148,6 +150,7 @@ public class YuzuKizuFlower
     	public final static Block BOXED_AOCEAN = null;
     	public final static Block BOXED_AKANERALD = null;
     	public final static Block LIQUID_MANA = null;
+    	public final static Block SCROLL_CHEST = null;
     }
     
     public static class YuzuKizuFluids {
@@ -210,6 +213,9 @@ public class YuzuKizuFlower
         
         GameRegistry.registerTileEntity(YKTileBoxedAkanerald.class, 
 				new ResourceLocation(YuzuKizuFlower.MODID, "ykte_boxed_akanerald"));
+        
+        GameRegistry.registerTileEntity(YKTileScrollChest.class, 
+				new ResourceLocation(YuzuKizuFlower.MODID, "ykte_scholl_chest"));
         
         //ネットワーク登録
         NetworkHandler.init();
@@ -349,6 +355,14 @@ public class YuzuKizuFlower
                 .setCreativeTab(YuzuKizuCreativeTab)
         );
         
+        // スクロールチェスト
+        event.getRegistry().register(
+                new YKBlockScrollChest()
+                .setRegistryName(MODID, "scroll_chest")
+                .setUnlocalizedName("scroll_chest")
+                .setCreativeTab(YuzuKizuCreativeTab)
+        );
+        
     }
     
     /**
@@ -453,6 +467,10 @@ public class YuzuKizuFlower
     			.setRegistryName(MODID, "liquid_mana")
     	);
     	
+    	// スクロールチェスト
+    	event.getRegistry().register(new ItemBlock(YuzuKizuBlocks.SCROLL_CHEST)
+    			.setRegistryName(MODID, "scroll_chest")
+    	);
     }
     
     /**
@@ -548,6 +566,9 @@ public class YuzuKizuFlower
             }
         });
     	
+        // スクロールチェスト
+    	ModelLoader.setCustomModelResourceLocation(Item.getItemFromBlock(YuzuKizuBlocks.SCROLL_CHEST), 0,
+    			new ModelResourceLocation(YuzuKizuBlocks.SCROLL_CHEST.getRegistryName(), "inventory"));
     	
     	//マナタンク
     	ClientRegistry.bindTileEntitySpecialRenderer(YKTileManaTank.class, new YKTileManaTankSpRenderer());

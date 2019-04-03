@@ -19,6 +19,9 @@ public class NetworkHandler {
 		//箱入りお花の汎用
 		network.registerMessage(PacketTileParticle.class, PacketTileParticle.MessageTileParticle.class, idx++, Side.CLIENT);
 		
+		//スクロールチェスト用
+		network.registerMessage(PacketGuiScroll.class, PacketGuiScroll.MessageGuiScroll.class, idx++, Side.CLIENT);
+				
     }
 
 }

@@ -12,8 +12,10 @@ import firis.yuzukizuflower.common.container.YKContainerBoxedPureDaisy;
 import firis.yuzukizuflower.common.container.YKContainerBoxedRannuncarpus;
 import firis.yuzukizuflower.common.container.YKContainerBoxedYuquarry;
 import firis.yuzukizuflower.common.container.YKContainerManaTank;
+import firis.yuzukizuflower.common.container.YKContainerScrollChest;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.inventory.IInventory;
+import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 
@@ -33,52 +35,56 @@ public class CommonProxy {
 	public Object getServerGuiElement(int ID, EntityPlayer player, World world, int x, int y, int z) {
 		
 		//TileEntityを取得する
-		IInventory tile = (IInventory) world.getTileEntity(new BlockPos(x, y ,z));
+		TileEntity tile = world.getTileEntity(new BlockPos(x, y ,z));
 		
 		switch(ID) {
 				//箱入りピュアデイジー
 				case YKGuiHandler.BOXED_PURE_DAISY :
-					return new YKContainerBoxedPureDaisy(tile, player.inventory);
+					return new YKContainerBoxedPureDaisy((IInventory) tile, player.inventory);
 			
 				//箱入りエンドフレイム
 				case YKGuiHandler.BOXED_ENDOFLAME :
-					return new YKContainerBoxedEndoflame(tile, player.inventory);
+					return new YKContainerBoxedEndoflame((IInventory) tile, player.inventory);
 
 				//マナタンク
 				case YKGuiHandler.MANA_TANK :
-					return new YKContainerManaTank(tile, player.inventory);
+					return new YKContainerManaTank((IInventory) tile, player.inventory);
 				
 				//箱入りラナンカーパス
 				case YKGuiHandler.BOXED_RANNUNCARPUS :
-					return new YKContainerBoxedRannuncarpus(tile, player.inventory);
+					return new YKContainerBoxedRannuncarpus((IInventory) tile, player.inventory);
 				
 				//箱入りジェイディッド・アマランサス
 				case YKGuiHandler.BOXED_JADED_AMARANTHUS :
-					return new YKContainerBoxedJadedAmaranthus(tile, player.inventory);
+					return new YKContainerBoxedJadedAmaranthus((IInventory) tile, player.inventory);
 				
 				//箱入りオアキド
 				case YKGuiHandler.BOXED_ORECHID :
-					return new YKContainerBoxedOrechid(tile, player.inventory);
+					return new YKContainerBoxedOrechid((IInventory) tile, player.inventory);
 					
 				//箱入りガーマリリス
 				case YKGuiHandler.BOXED_GOURMARYLLIS :
-					return new YKContainerBoxedGourmaryllis(tile, player.inventory);
+					return new YKContainerBoxedGourmaryllis((IInventory) tile, player.inventory);
 				
 				//箱入りアカリカルチャー
 				case YKGuiHandler.BOXED_AKARICULTURE :
-					return new YKContainerBoxedAkariculture(tile, player.inventory);
+					return new YKContainerBoxedAkariculture((IInventory) tile, player.inventory);
 				
 				//箱入りユクァーリー
 				case YKGuiHandler.BOXED_YUQUARRY :
-					return new YKContainerBoxedYuquarry(tile, player.inventory);
+					return new YKContainerBoxedYuquarry((IInventory) tile, player.inventory);
 
 				//箱入りアオーシャン
 				case YKGuiHandler.BOXED_AOCEAN :
-					return new YKContainerBoxedAocean(tile, player.inventory);
+					return new YKContainerBoxedAocean((IInventory) tile, player.inventory);
 					
 				//箱入りアカネラルド
 				case YKGuiHandler.BOXED_AKANERALD :
-					return new YKContainerBoxedAkanerald(tile, player.inventory);
+					return new YKContainerBoxedAkanerald((IInventory) tile, player.inventory);
+				
+				//スクロールチェスト
+				case YKGuiHandler.SCROLL_CHEST :
+					return new YKContainerScrollChest(tile, player.inventory);
 		}
 		return null;
 	}
