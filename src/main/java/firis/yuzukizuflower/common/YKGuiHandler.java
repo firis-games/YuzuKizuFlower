@@ -42,6 +42,9 @@ public class YKGuiHandler implements IGuiHandler {
 	
 	//スクロールチェスト
 	public static final int SCROLL_CHEST = 12;
+	
+	//リモート
+	public static final int REMOTE_CHEST = 13;
 		
 	@Override
 	public Object getServerGuiElement(int ID, EntityPlayer player, World world, int x, int y, int z) {

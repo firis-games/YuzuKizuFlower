@@ -7,9 +7,9 @@ import firis.yuzukizuflower.client.gui.parts.YKGuiScrollBar.IYKGuiScrollBarChang
 import firis.yuzukizuflower.common.container.YKContainerScrollChest;
 import firis.yuzukizuflower.common.network.NetworkHandler;
 import firis.yuzukizuflower.common.network.PacketGuiScroll;
+import firis.yuzukizuflower.common.tileentity.YKTileScrollChest.IScrollInventoryHandler;
 import net.minecraft.client.gui.inventory.GuiContainer;
 import net.minecraft.entity.player.InventoryPlayer;
-import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
@@ -38,8 +38,8 @@ public class YKGuiContainerScrollChest extends GuiContainer implements IYKGuiScr
 	 */
 	protected YKGuiScrollBar scrollBar;
 
-	public YKGuiContainerScrollChest(TileEntity tile, InventoryPlayer playerInv) {
-		super(new YKContainerScrollChest(tile, playerInv));
+	public YKGuiContainerScrollChest(IScrollInventoryHandler iinv, InventoryPlayer playerInv) {
+		super(new YKContainerScrollChest(iinv, playerInv));
 		
 		// GUIテクスチャ
 		this.guiTextures = new ResourceLocation("yuzukizuflower", "textures/gui/scroll_chest.png");

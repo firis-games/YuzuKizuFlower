@@ -8,14 +8,13 @@ import net.minecraft.entity.player.InventoryPlayer;
 import net.minecraft.inventory.Container;
 import net.minecraft.inventory.IInventory;
 import net.minecraft.inventory.Slot;
-import net.minecraft.tileentity.TileEntity;
 
 public class YKContainerScrollChest extends Container {
 
 	
 	public YKTileScrollChest.IScrollInventoryHandler iTeInv;
 	
-	public YKContainerScrollChest(TileEntity tile, InventoryPlayer playerInv) {
+	public YKContainerScrollChest(IScrollInventoryHandler iinv, InventoryPlayer playerInv) {
 		
 		/* 実験ソース
 		TileEntity tile1 = tile.getWorld().getTileEntity(tile.getPos().down());
@@ -24,8 +23,7 @@ public class YKContainerScrollChest extends Container {
 		*/
 		//iTeInv = (IInventory) tile1;
 		
-		YKTileScrollChest inv = (YKTileScrollChest) tile;
-		this.iTeInv = (IScrollInventoryHandler) inv.getIInventory();
+		this.iTeInv = iinv;
 		
 		//基準座標
 		int xBasePos = 8;

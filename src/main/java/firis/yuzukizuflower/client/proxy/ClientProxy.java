@@ -14,11 +14,15 @@ import firis.yuzukizuflower.client.gui.YKGuiContainerManaTank;
 import firis.yuzukizuflower.client.gui.YKGuiContainerScrollChest;
 import firis.yuzukizuflower.common.YKGuiHandler;
 import firis.yuzukizuflower.common.proxy.CommonProxy;
+import firis.yuzukizuflower.common.tileentity.YKTileScrollChest;
+import firis.yuzukizuflower.common.tileentity.YKTileScrollChest.IScrollInventoryHandler;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.inventory.IInventory;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
+import net.minecraftforge.items.CapabilityItemHandler;
+import net.minecraftforge.items.IItemHandler;
 
 public class ClientProxy extends CommonProxy{
 	
@@ -86,7 +90,17 @@ public class ClientProxy extends CommonProxy{
 
 				//スクロールチェスト
 				case YKGuiHandler.SCROLL_CHEST :
-					return new YKGuiContainerScrollChest(tile, player.inventory);
+					YKTileScrollChest yktile = (YKTileScrollChest) tile;
+					IScrollInventoryHandler iinv = (IScrollInventoryHandler) yktile.getIInventory();
+					return new YKGuiContainerScrollChest(iinv, player.inventory);
+				
+				//リモートチェスト
+				case YKGuiHandler.REMOTE_CHEST :
+					IItemHandler capability = tile.getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY, null);
+					if (capability != null) {
+						IScrollInventoryHandler ciinv = new IScrollInventoryHandler(capability, tile);
+						return new YKGuiContainerScrollChest(ciinv, player.inventory);
+					}
 
 		}
 		return null;

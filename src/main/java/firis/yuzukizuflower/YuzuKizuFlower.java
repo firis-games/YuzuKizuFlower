@@ -19,6 +19,7 @@ import firis.yuzukizuflower.common.block.YKBlockManaTank;
 import firis.yuzukizuflower.common.block.YKBlockScrollChest;
 import firis.yuzukizuflower.common.event.PopulateChunkEventHandler;
 import firis.yuzukizuflower.common.item.YKItemBase;
+import firis.yuzukizuflower.common.item.YKItemRemoteChest;
 import firis.yuzukizuflower.common.network.NetworkHandler;
 import firis.yuzukizuflower.common.proxy.CommonProxy;
 import firis.yuzukizuflower.common.recipe.BotaniaRecipes;
@@ -130,6 +131,7 @@ public class YuzuKizuFlower
     	public final static Item AOCEAN = null;
     	public final static Item BOXED_AKANERALD = null;
     	public final static Item AKANERALD = null;
+    	public final static Item REMOTE_CHEST = null;
     }
     /**
      * ブロックインスタンス保持用
@@ -471,6 +473,12 @@ public class YuzuKizuFlower
     	event.getRegistry().register(new ItemBlock(YuzuKizuBlocks.SCROLL_CHEST)
     			.setRegistryName(MODID, "scroll_chest")
     	);
+    	
+    	// リモートチェスト
+    	event.getRegistry().register(new YKItemRemoteChest()
+    			.setRegistryName(MODID, "remote_chest")
+    			.setUnlocalizedName("remote_chest")
+    	);
     }
     
     /**
@@ -572,6 +580,12 @@ public class YuzuKizuFlower
     	
     	//マナタンク
     	ClientRegistry.bindTileEntitySpecialRenderer(YKTileManaTank.class, new YKTileManaTankSpRenderer());
+    	
+    	
+    	// リモートチェスト
+    	ModelLoader.setCustomModelResourceLocation(YuzuKizuItems.REMOTE_CHEST, 0,
+    			new ModelResourceLocation(YuzuKizuItems.REMOTE_CHEST.getRegistryName(), "inventory"));
+    	 
     }
     
     @SubscribeEvent
