@@ -20,7 +20,7 @@ import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
 @SideOnly(Side.CLIENT)
-public class YKGuiContainerCorporeaChest extends GuiContainer implements IYKGuiScrollBarChanged {
+public class YKGuiContainerBaseScrollInventory extends GuiContainer implements IYKGuiScrollBarChanged {
 
 	/**
 	 * GUIテクスチャ
@@ -43,7 +43,7 @@ public class YKGuiContainerCorporeaChest extends GuiContainer implements IYKGuiS
 	 */
 	protected YKGuiScrollBar scrollBar;
 
-	public YKGuiContainerCorporeaChest(IInventoryMultiItemHandler iinv, InventoryPlayer playerInv) {
+	public YKGuiContainerBaseScrollInventory(IInventoryMultiItemHandler iinv, InventoryPlayer playerInv) {
 		super(new YKContainerCorporeaChest(iinv, playerInv));
 		
 		// GUIテクスチャ

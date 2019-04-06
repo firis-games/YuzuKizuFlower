@@ -10,7 +10,7 @@ import firis.yuzukizuflower.client.gui.YKGuiContainerBoxedOrechid;
 import firis.yuzukizuflower.client.gui.YKGuiContainerBoxedPureDaisy;
 import firis.yuzukizuflower.client.gui.YKGuiContainerBoxedRannuncarpus;
 import firis.yuzukizuflower.client.gui.YKGuiContainerBoxedYuquarry;
-import firis.yuzukizuflower.client.gui.YKGuiContainerCorporeaChest;
+import firis.yuzukizuflower.client.gui.YKGuiContainerBaseScrollInventory;
 import firis.yuzukizuflower.client.gui.YKGuiContainerManaTank;
 import firis.yuzukizuflower.client.gui.YKGuiContainerScrollChest;
 import firis.yuzukizuflower.common.YKGuiHandler;
@@ -109,7 +109,7 @@ public class ClientProxy extends CommonProxy{
 				case YKGuiHandler.CORPOREA_CHEST :
 					YKTileCorporeaChest corpTile = (YKTileCorporeaChest) tile;
 					IInventoryMultiItemHandler handler = corpTile.getIInventoryFromCorporeaNetwork();
-					return new YKGuiContainerCorporeaChest(handler, player.inventory);
+					return new YKGuiContainerBaseScrollInventory(handler, player.inventory);
 
 		}
 		return null;
