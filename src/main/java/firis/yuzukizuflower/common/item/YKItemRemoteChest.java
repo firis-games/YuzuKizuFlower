@@ -50,6 +50,7 @@ public class YKItemRemoteChest extends Item {
 			if (tile != null) {
 				IItemHandler capability = tile.getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY, null);
 				if (capability != null) {
+
 					String blockName = worldIn.getBlockState(pos).getBlock().getLocalizedName();
 					
 					//BlockPosを保存
@@ -84,11 +85,20 @@ public class YKItemRemoteChest extends Item {
         	Integer posY = nbt.getInteger("BlockPosY");
         	Integer posZ = nbt.getInteger("BlockPosZ");
         	
-        	//右クリックでGUIを開く
-    		playerIn.openGui(YuzuKizuFlower.INSTANCE, YKGuiHandler.REMOTE_CHEST,
-    				worldIn, posX, posY, posZ);
-    		
-    		return new ActionResult<ItemStack>(EnumActionResult.SUCCESS, playerIn.getHeldItem(handIn));
+        	BlockPos pos = new BlockPos(posX, posY, posZ);
+        	
+        	TileEntity tile = worldIn.getTileEntity(pos);
+        	
+        	if (tile != null && !tile.isInvalid()) {
+        		IItemHandler capability = tile.getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY, null);
+        		if (capability != null) {
+	            	//右クリックでGUIを開く
+	        		playerIn.openGui(YuzuKizuFlower.INSTANCE, YKGuiHandler.REMOTE_CHEST,
+	        				worldIn, posX, posY, posZ);
+
+	        		return new ActionResult<ItemStack>(EnumActionResult.SUCCESS, playerIn.getHeldItem(handIn));
+        		}
+        	}
         }
 		
         return new ActionResult<ItemStack>(EnumActionResult.PASS, playerIn.getHeldItem(handIn));
@@ -113,6 +123,12 @@ public class YKItemRemoteChest extends Item {
         	
         	tooltip.add(name + "<" + posX.toString() + ", " + posY.toString() + ", " + posZ.toString() + ">");
         }
+    }
+    
+    @SideOnly(Side.CLIENT)
+    public boolean hasEffect(ItemStack stack)
+    {
+        return stack.hasTagCompound();
     }
 	
 }

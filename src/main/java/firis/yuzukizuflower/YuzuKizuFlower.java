@@ -482,6 +482,11 @@ public class YuzuKizuFlower
     	event.getRegistry().register(new ItemBlock(YuzuKizuBlocks.LIQUID_MANA)
     			.setRegistryName(MODID, "liquid_mana")
     	);
+
+    	// コーポリアチェスト
+    	event.getRegistry().register(new ItemBlock(YuzuKizuBlocks.CORPOREA_CHEST)
+    			.setRegistryName(MODID, "corporea_chest")
+    	);
     	
     	// スクロールチェスト
     	event.getRegistry().register(new ItemBlock(YuzuKizuBlocks.SCROLL_CHEST)
@@ -494,10 +499,6 @@ public class YuzuKizuFlower
     			.setUnlocalizedName("remote_chest")
     	);
     	
-    	// コーポリアチェスト
-    	event.getRegistry().register(new ItemBlock(YuzuKizuBlocks.CORPOREA_CHEST)
-    			.setRegistryName(MODID, "corporea_chest")
-    	);
     }
     
     /**

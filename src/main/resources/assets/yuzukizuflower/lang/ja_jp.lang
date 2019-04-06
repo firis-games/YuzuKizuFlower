@@ -71,3 +71,5 @@ gui.scroll_chest.name=スクロールチェスト
 
 tile.corporea_chest.name=コーポリアチェスト
 gui.corporea_chest.name=コーポリアチェスト
+
+item.remote_chest.name=リモートチェスト
