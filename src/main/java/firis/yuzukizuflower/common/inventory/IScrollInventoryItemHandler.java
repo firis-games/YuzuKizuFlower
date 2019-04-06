@@ -16,7 +16,14 @@ public class IScrollInventoryItemHandler implements IScrollInventory {
 	 * @param world
 	 */
 	public IScrollInventoryItemHandler(TileEntity tile) {
+		
 		this.tile = tile;
+		
+		//MaxPageを計算する
+		float calPage = this.getItemHandler().getSlots() - this.inventoryCount;
+		if (calPage > 0) {
+			this.maxPage = (int) Math.ceil(calPage / (float)this.inventoryRowCount);
+		}
 	}
 	
 	/**

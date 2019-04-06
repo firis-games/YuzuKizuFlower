@@ -2,6 +2,8 @@ package firis.yuzukizuflower.common.tileentity;
 
 import java.util.List;
 
+import javax.annotation.Nullable;
+
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.inventory.IInventory;
@@ -13,6 +15,7 @@ import net.minecraft.server.management.PlayerChunkMapEntry;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.text.ITextComponent;
 import net.minecraft.world.WorldServer;
+import net.minecraftforge.items.CapabilityItemHandler;
 import net.minecraftforge.items.IItemHandler;
 import net.minecraftforge.items.ItemStackHandler;
 
@@ -23,9 +26,9 @@ public class YKTileScrollChest extends TileEntity {
 	public YKTileScrollChest() {
 		
 		/**
-		 * 通常ラージチェストの2倍のサイズ
+		 * 通常ラージチェストの8倍のサイズ
 		 */
-		this.itemHandler = new ItemStackHandler(9 * 6 * 2);
+		this.itemHandler = new ItemStackHandler(9 * 6 * 8);
 		
 	}
 	
@@ -55,19 +58,17 @@ public class YKTileScrollChest extends TileEntity {
         return compound;
     }
 	
-	public IInventory getIInventory() {
-		return new YKTileScrollChest.IScrollInventoryHandler(this.itemHandler, this);
-	}
-	
-	@Override
-	public void markDirty() {
-		
-		super.markDirty();
-		
-		//同期処理
-		//サーバの場合のみ
-		if (!world.isRemote) {
-			//this.markDirty();
+	/********************************************************************************/
+	/**
+	 * サーバー->クライアントのデータ同期用
+	 * サーバーからクライアントへデータを送信する
+	 */
+	protected void playerServerSendPacket() {
+		//Server Side
+		if (!this.getWorld().isRemote) {
+			
+			this.markDirty();
+			
 			List<EntityPlayer> list = world.playerEntities;
 			Packet<?> pkt = this.getUpdatePacket();
 			if (pkt != null) {
@@ -78,6 +79,54 @@ public class YKTileScrollChest extends TileEntity {
 			}
 		}
 	}
+	
+	@Override
+    public NBTTagCompound getUpdateTag()
+    {
+		return this.writeToNBT(new NBTTagCompound());
+    }
+	
+	@Override
+    public void handleUpdateTag(NBTTagCompound tag)
+    {
+        this.readFromNBT(tag);
+    }
+	
+	@Override
+    @Nullable
+    public SPacketUpdateTileEntity getUpdatePacket()
+    {
+		return new SPacketUpdateTileEntity(this.pos, 0, this.writeToNBT(new NBTTagCompound()));
+    }
+
+	@Override
+    public void onDataPacket(net.minecraft.network.NetworkManager net, net.minecraft.network.play.server.SPacketUpdateTileEntity pkt)
+    {
+		this.readFromNBT(pkt.getNbtCompound());
+    }
+	
+	/********************************************************************************/
+	@Override
+    public boolean hasCapability(net.minecraftforge.common.capabilities.Capability<?> capability, @Nullable net.minecraft.util.EnumFacing facing)
+    {
+		if (capability == CapabilityItemHandler.ITEM_HANDLER_CAPABILITY) {
+			return true;
+		}
+		return super.hasCapability(capability, facing);
+    }
+
+	@Override
+    @Nullable
+    public <T> T getCapability(net.minecraftforge.common.capabilities.Capability<T> capability, @Nullable net.minecraft.util.EnumFacing facing)
+    {
+    	if (capability == CapabilityItemHandler.ITEM_HANDLER_CAPABILITY) {
+			return CapabilityItemHandler.ITEM_HANDLER_CAPABILITY.cast(itemHandler);
+		}
+    	return super.getCapability(capability, facing);
+    
+    }
+	/********************************************************************************/
+	
 	
 	/**
 	 * IInventoryItemHandler
