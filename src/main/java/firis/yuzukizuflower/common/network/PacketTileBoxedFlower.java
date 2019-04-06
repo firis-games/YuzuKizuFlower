@@ -10,7 +10,7 @@ import net.minecraftforge.fml.common.network.simpleimpl.IMessageHandler;
 import net.minecraftforge.fml.common.network.simpleimpl.MessageContext;
 
 /**
- * 箱入りお花の汎用Client to ServerのPacketクラス
+ * 箱入りお花の汎用Server to ClientのPacketクラス
  * @author computer
  *
  */

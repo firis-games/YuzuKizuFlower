@@ -20,8 +20,8 @@ public class NetworkHandler {
 		network.registerMessage(PacketTileParticle.class, PacketTileParticle.MessageTileParticle.class, idx++, Side.CLIENT);
 		
 		//スクロールチェスト用
-		network.registerMessage(PacketGuiScroll.class, PacketGuiScroll.MessageGuiScroll.class, idx++, Side.CLIENT);
-				
+		network.registerMessage(PacketGuiScroll.class, PacketGuiScroll.MessageGuiScroll.class, idx++, Side.SERVER);
+		
     }
 
 }
