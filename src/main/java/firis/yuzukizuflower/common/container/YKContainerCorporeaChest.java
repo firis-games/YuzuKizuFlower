@@ -130,5 +130,53 @@ public class YKContainerCorporeaChest extends Container implements IYKGuiScrollB
 	        }
 		}
 	}
+	
+	/**
+     * Shift-click時の挙動を制御している
+     * Handle when the stack in slot {@code index} is shift-clicked. Normally this moves the stack between the player
+     * inventory and the other inventory(s).
+     */
+	@Override
+    public ItemStack transferStackInSlot(EntityPlayer playerIn, int index)
+    {
+		
+        ItemStack itemstack = ItemStack.EMPTY;
+        Slot slot = this.inventorySlots.get(index);
+        
+        //プレイヤーインベントリの開始index
+        int playerInventoryIndex = this.startIndexPlayerSlot;
+        
+        if (slot != null && slot.getHasStack())
+        {
+            ItemStack itemstack1 = slot.getStack();
+            itemstack = itemstack1.copy();
+            
+            if (index < playerInventoryIndex) {
+            	//コンテナーインベントリ -> プレイヤーインベントリ
+            	if (!this.mergeItemStack(itemstack1, playerInventoryIndex, this.inventorySlots.size(), false))
+                {
+                    return ItemStack.EMPTY;
+                }
+            	
+            } else {
+            	//プレイヤーインベントリ -> コンテナーインベントリ
+            	if (!this.mergeItemStack(itemstack1, 0, playerInventoryIndex, false))
+                {
+                    return ItemStack.EMPTY;
+                }
+            }
+
+            if (itemstack1.isEmpty())
+            {
+                slot.putStack(ItemStack.EMPTY);
+            }
+            else
+            {
+                slot.onSlotChanged();
+            }
+        }
+
+        return itemstack;
+    }
 
 }
