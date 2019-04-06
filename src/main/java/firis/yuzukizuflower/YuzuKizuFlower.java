@@ -15,6 +15,7 @@ import firis.yuzukizuflower.common.block.YKBlockBoxedOrechid;
 import firis.yuzukizuflower.common.block.YKBlockBoxedPureDaisy;
 import firis.yuzukizuflower.common.block.YKBlockBoxedRannuncarpus;
 import firis.yuzukizuflower.common.block.YKBlockBoxedYuquarry;
+import firis.yuzukizuflower.common.block.YKBlockCorporeaChest;
 import firis.yuzukizuflower.common.block.YKBlockManaTank;
 import firis.yuzukizuflower.common.block.YKBlockScrollChest;
 import firis.yuzukizuflower.common.event.PopulateChunkEventHandler;
@@ -34,6 +35,7 @@ import firis.yuzukizuflower.common.tileentity.YKTileBoxedOrechid;
 import firis.yuzukizuflower.common.tileentity.YKTileBoxedPureDaisy;
 import firis.yuzukizuflower.common.tileentity.YKTileBoxedRannuncarpus;
 import firis.yuzukizuflower.common.tileentity.YKTileBoxedYuquarry;
+import firis.yuzukizuflower.common.tileentity.YKTileCorporeaChest;
 import firis.yuzukizuflower.common.tileentity.YKTileManaTank;
 import firis.yuzukizuflower.common.tileentity.YKTileManaTankExtends;
 import firis.yuzukizuflower.common.tileentity.YKTileScrollChest;
@@ -153,6 +155,7 @@ public class YuzuKizuFlower
     	public final static Block BOXED_AKANERALD = null;
     	public final static Block LIQUID_MANA = null;
     	public final static Block SCROLL_CHEST = null;
+    	public final static Block CORPOREA_CHEST = null;
     }
     
     public static class YuzuKizuFluids {
@@ -218,6 +221,9 @@ public class YuzuKizuFlower
         
         GameRegistry.registerTileEntity(YKTileScrollChest.class, 
 				new ResourceLocation(YuzuKizuFlower.MODID, "ykte_scholl_chest"));
+        
+        GameRegistry.registerTileEntity(YKTileCorporeaChest.class, 
+				new ResourceLocation(YuzuKizuFlower.MODID, "ykte_corporea_chest"));
         
         //ネットワーク登録
         NetworkHandler.init();
@@ -365,6 +371,14 @@ public class YuzuKizuFlower
                 .setCreativeTab(YuzuKizuCreativeTab)
         );
         
+        // コーポリアチェスト
+        event.getRegistry().register(
+                new YKBlockCorporeaChest()
+                .setRegistryName(MODID, "corporea_chest")
+                .setUnlocalizedName("corporea_chest")
+                .setCreativeTab(YuzuKizuCreativeTab)
+        );
+        
     }
     
     /**
@@ -479,6 +493,11 @@ public class YuzuKizuFlower
     			.setRegistryName(MODID, "remote_chest")
     			.setUnlocalizedName("remote_chest")
     	);
+    	
+    	// コーポリアチェスト
+    	event.getRegistry().register(new ItemBlock(YuzuKizuBlocks.CORPOREA_CHEST)
+    			.setRegistryName(MODID, "corporea_chest")
+    	);
     }
     
     /**
@@ -585,6 +604,11 @@ public class YuzuKizuFlower
     	// リモートチェスト
     	ModelLoader.setCustomModelResourceLocation(YuzuKizuItems.REMOTE_CHEST, 0,
     			new ModelResourceLocation(YuzuKizuItems.REMOTE_CHEST.getRegistryName(), "inventory"));
+    	
+    	// コーポリアチェスト
+    	ModelLoader.setCustomModelResourceLocation(Item.getItemFromBlock(YuzuKizuBlocks.CORPOREA_CHEST), 0,
+    			new ModelResourceLocation(YuzuKizuBlocks.CORPOREA_CHEST.getRegistryName(), "inventory"));
+    	
     	 
     }
     

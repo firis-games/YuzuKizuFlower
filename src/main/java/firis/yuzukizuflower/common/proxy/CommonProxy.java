@@ -11,8 +11,11 @@ import firis.yuzukizuflower.common.container.YKContainerBoxedOrechid;
 import firis.yuzukizuflower.common.container.YKContainerBoxedPureDaisy;
 import firis.yuzukizuflower.common.container.YKContainerBoxedRannuncarpus;
 import firis.yuzukizuflower.common.container.YKContainerBoxedYuquarry;
+import firis.yuzukizuflower.common.container.YKContainerCorporeaChest;
 import firis.yuzukizuflower.common.container.YKContainerManaTank;
 import firis.yuzukizuflower.common.container.YKContainerScrollChest;
+import firis.yuzukizuflower.common.inventory.IInventoryMultiItemHandler;
+import firis.yuzukizuflower.common.tileentity.YKTileCorporeaChest;
 import firis.yuzukizuflower.common.tileentity.YKTileScrollChest;
 import firis.yuzukizuflower.common.tileentity.YKTileScrollChest.IScrollInventoryHandler;
 import net.minecraft.entity.player.EntityPlayer;
@@ -40,6 +43,7 @@ public class CommonProxy {
 		
 		//TileEntityを取得する
 		TileEntity tile = world.getTileEntity(new BlockPos(x, y ,z));
+		IItemHandler capability;
 		
 		switch(ID) {
 				//箱入りピュアデイジー
@@ -94,11 +98,17 @@ public class CommonProxy {
 				
 				//リモートチェスト
 				case YKGuiHandler.REMOTE_CHEST :
-					IItemHandler capability = tile.getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY, null);
+					capability = tile.getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY, null);
 					if (capability != null) {
 						IScrollInventoryHandler ciinv = new IScrollInventoryHandler(capability, tile);
 						return new YKContainerScrollChest(ciinv, player.inventory);
 					}
+				
+				//コーポリアチェスト
+				case YKGuiHandler.CORPOREA_CHEST :
+					YKTileCorporeaChest corpTile = (YKTileCorporeaChest) tile;
+					IInventoryMultiItemHandler handler = corpTile.getIInventoryFromCorporeaNetwork();
+					return new YKContainerCorporeaChest(handler, player.inventory);
 		}
 		return null;
 	}
