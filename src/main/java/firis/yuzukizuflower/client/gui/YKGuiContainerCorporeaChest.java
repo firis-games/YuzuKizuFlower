@@ -10,7 +10,9 @@ import firis.yuzukizuflower.common.network.NetworkHandler;
 import firis.yuzukizuflower.common.network.PacketGuiScroll;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.inventory.GuiContainer;
+import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.entity.player.InventoryPlayer;
+import net.minecraft.inventory.Slot;
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
@@ -101,8 +103,46 @@ public class YKGuiContainerCorporeaChest extends GuiContainer implements IYKGuiS
 	public void drawScreen(int mouseX, int mouseY, float partialTicks) {
 		this.drawDefaultBackground();
 		super.drawScreen(mouseX, mouseY, partialTicks);
+		
+		this.drawLockedSlot();
+		
 		this.renderHoveredToolTip(mouseX, mouseY);
 	}
+	
+	
+	/**
+	 * ロックスロットの色を変える
+	 */
+	protected void drawLockedSlot() {
+		
+		int x = (this.width - xSize) / 2;
+		int y = (this.height - ySize) / 2;
+		
+		for (int i1 = 0; i1 < this.inventorySlots.inventorySlots.size(); ++i1) {
+            Slot slot = this.inventorySlots.inventorySlots.get(i1);
+            
+            //符号あり4byte
+            //AA RR GG BB の16進数で色を表している
+            //16進数と10進数を変換するツールを使えば簡単
+            //-2130706433 = 80FFFFFF
+            //1073741824 = 40 00 00 00 黒で透過率25%を設定
+            Integer color_code = 1073741824;
+            
+            //テクスチャを描画
+            if (!slot.isEnabled()) {
+                GlStateManager.disableLighting();
+                GlStateManager.disableDepth();
+                int j1 = slot.xPos + x;
+                int k1 = slot.yPos + y;
+                GlStateManager.colorMask(true, true, true, false);
+                this.drawGradientRect(j1, k1, j1 + 16, k1 + 16, color_code, color_code);
+                GlStateManager.colorMask(true, true, true, true);
+                GlStateManager.enableLighting();
+                GlStateManager.enableDepth();
+            }
+        }
+	}
+	
 
 	/**
 	 * マウス移動等の入力イベント Handles mouse input.

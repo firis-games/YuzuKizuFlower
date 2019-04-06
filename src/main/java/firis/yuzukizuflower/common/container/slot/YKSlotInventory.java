@@ -29,16 +29,21 @@ public class YKSlotInventory extends Slot{
         return this.inventory.isItemValidForSlot(this.getSlotIndex(), stack);
     }
 	
-	/**
-	 * スクロールバー制御用
-	 */
     @SideOnly(Side.CLIENT)
     public boolean isEnabled()
     {
+    	return !this.isScrollInventoryLocked();
+    }
+    
+    /**
+     * スクロールバーのスロット制御用
+     * @return
+     */
+    protected boolean isScrollInventoryLocked() {
     	if (!(this.inventory instanceof IInventoryMultiItemHandler)) {
     		return true;
     	}
     	IInventoryMultiItemHandler multiInv = (IInventoryMultiItemHandler) this.inventory;
-        return multiInv.getSlotLocked(this.getSlotIndex());
+        return multiInv.isSlotLocked(this.getSlotIndex());
     }
 }

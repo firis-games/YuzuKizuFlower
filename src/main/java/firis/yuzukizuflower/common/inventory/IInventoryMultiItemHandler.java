@@ -296,10 +296,10 @@ public class IInventoryMultiItemHandler implements IInventory {
 		return this.page;
 	}
 	
-	public boolean getSlotLocked(int index) {
+	public boolean isSlotLocked(int index) {
 		MultiCapability mcapa = this.getMultiCapability(index);
-		if (mcapa == null) return false;
-		return true;
+		if (mcapa == null) return true;
+		return false;
 	}
 	
 }
