@@ -4,6 +4,7 @@ import org.apache.logging.log4j.Logger;
 
 import firis.yuzukizuflower.client.tesr.YKTileCorporeaChestSpRenderer;
 import firis.yuzukizuflower.client.tesr.YKTileManaTankSpRenderer;
+import firis.yuzukizuflower.client.tesr.YKTileScrollChestSpRenderer;
 import firis.yuzukizuflower.common.YKGuiHandler;
 import firis.yuzukizuflower.common.block.YKBlockBaseBoxed;
 import firis.yuzukizuflower.common.block.YKBlockBoxedAkanerald;
@@ -369,7 +370,6 @@ public class YuzuKizuFlower
                 new YKBlockScrollChest()
                 .setRegistryName(MODID, "scroll_chest")
                 .setUnlocalizedName("scroll_chest")
-                .setCreativeTab(YuzuKizuCreativeTab)
         );
         
         // コーポリアチェスト
@@ -377,7 +377,6 @@ public class YuzuKizuFlower
                 new YKBlockCorporeaChest()
                 .setRegistryName(MODID, "corporea_chest")
                 .setUnlocalizedName("corporea_chest")
-                .setCreativeTab(YuzuKizuCreativeTab)
         );
         
     }
@@ -594,12 +593,12 @@ public class YuzuKizuFlower
             }
         });
     	
+    	//マナタンク
+    	ClientRegistry.bindTileEntitySpecialRenderer(YKTileManaTank.class, new YKTileManaTankSpRenderer());
+    	
         // スクロールチェスト
     	ModelLoader.setCustomModelResourceLocation(Item.getItemFromBlock(YuzuKizuBlocks.SCROLL_CHEST), 0,
     			new ModelResourceLocation(YuzuKizuBlocks.SCROLL_CHEST.getRegistryName(), "inventory"));
-    	
-    	//マナタンク
-    	ClientRegistry.bindTileEntitySpecialRenderer(YKTileManaTank.class, new YKTileManaTankSpRenderer());
     	
     	
     	// リモートチェスト
@@ -610,11 +609,12 @@ public class YuzuKizuFlower
     	ModelLoader.setCustomModelResourceLocation(Item.getItemFromBlock(YuzuKizuBlocks.CORPOREA_CHEST), 0,
     			new ModelResourceLocation(YuzuKizuBlocks.CORPOREA_CHEST.getRegistryName(), "inventory"));
     	
-    	//マナタンク
+    	//スクロールチェスト
+    	ClientRegistry.bindTileEntitySpecialRenderer(YKTileScrollChest.class, new YKTileScrollChestSpRenderer());
+
+    	//コーポリアチェスト
     	ClientRegistry.bindTileEntitySpecialRenderer(YKTileCorporeaChest.class, new YKTileCorporeaChestSpRenderer());
     	
-    	
-    	 
     }
     
     @SubscribeEvent

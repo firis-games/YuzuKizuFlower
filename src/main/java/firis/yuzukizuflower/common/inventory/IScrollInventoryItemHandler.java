@@ -1,5 +1,6 @@
 package firis.yuzukizuflower.common.inventory;
 
+import firis.yuzukizuflower.common.tileentity.YKTileScrollChest;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.TileEntity;
@@ -171,10 +172,17 @@ public class IScrollInventoryItemHandler implements IScrollInventory {
 
 	@Override
 	public void openInventory(EntityPlayer player) {
+		
+		if(this.tile instanceof YKTileScrollChest) {
+			((YKTileScrollChest) this.tile).animationController.openInventory(player);
+		}
 	}
 
 	@Override
 	public void closeInventory(EntityPlayer player) {
+		if(this.tile instanceof YKTileScrollChest) {
+			((YKTileScrollChest) this.tile).animationController.closeInventory(player);
+		}
 	}
 
 	@Override

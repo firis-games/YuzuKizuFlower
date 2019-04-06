@@ -1,5 +1,8 @@
 {
     "variants": {
-		"normal": { "model": "yuzukizuflower:scroll_chest" }
+        "facing=north": { "model": "yuzukizuflower:scroll_chest"},
+        "facing=south": { "model": "yuzukizuflower:scroll_chest"},
+        "facing=west":  { "model": "yuzukizuflower:scroll_chest"},
+        "facing=east":  { "model": "yuzukizuflower:scroll_chest"}
     }
 }

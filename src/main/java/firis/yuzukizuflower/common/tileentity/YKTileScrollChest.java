@@ -4,6 +4,7 @@ import java.util.List;
 
 import javax.annotation.Nullable;
 
+import firis.yuzukizuflower.common.tileentity.animation.YKChestAnimationController;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.inventory.IInventory;
@@ -13,13 +14,14 @@ import net.minecraft.network.Packet;
 import net.minecraft.network.play.server.SPacketUpdateTileEntity;
 import net.minecraft.server.management.PlayerChunkMapEntry;
 import net.minecraft.tileentity.TileEntity;
+import net.minecraft.util.ITickable;
 import net.minecraft.util.text.ITextComponent;
 import net.minecraft.world.WorldServer;
 import net.minecraftforge.items.CapabilityItemHandler;
 import net.minecraftforge.items.IItemHandler;
 import net.minecraftforge.items.ItemStackHandler;
 
-public class YKTileScrollChest extends TileEntity {
+public class YKTileScrollChest extends TileEntity implements ITickable {
 	
 	ItemStackHandler itemHandler;
 	
@@ -31,6 +33,13 @@ public class YKTileScrollChest extends TileEntity {
 		this.itemHandler = new ItemStackHandler(9 * 6 * 8);
 		
 	}
+	
+	/**
+	 * チェストアニメーション管理用クラス
+	 */
+	public YKChestAnimationController animationController = new YKChestAnimationController(this);
+	
+	/********************************************************************************/
 	
 	/**
 	 * NBTを読み込みクラスへ反映する処理
@@ -126,6 +135,16 @@ public class YKTileScrollChest extends TileEntity {
     
     }
 	/********************************************************************************/
+	
+	/**
+	 * @interface ITickable
+	 */
+	@Override
+	public void update() {
+		this.animationController.update();
+	}
+
+	
 	
 	
 	/**
@@ -460,4 +479,5 @@ public class YKTileScrollChest extends TileEntity {
 		}
 		
 	}
+
 }
