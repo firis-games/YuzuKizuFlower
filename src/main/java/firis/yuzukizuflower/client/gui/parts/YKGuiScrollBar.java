@@ -71,6 +71,17 @@ public class YKGuiScrollBar {
 		this.scroll_max_page = page;
 		this.scroll_page_idx = 0;
 	}
+	
+	/**
+	 * 最大ページを設定
+	 * 最大ページを変更する場合はページ数を初期化
+	 * @param page
+	 */
+	public void setScrollMaxPage(int page) {
+		if (page == this.scroll_max_page) return;
+		this.scroll_page_idx = 0;
+		this.scroll_max_page = page;
+	}
 
 	/**
 	 * スクロールバーの描画

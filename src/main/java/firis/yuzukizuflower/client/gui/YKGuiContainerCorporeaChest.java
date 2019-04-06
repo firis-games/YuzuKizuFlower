@@ -83,6 +83,7 @@ public class YKGuiContainerCorporeaChest extends GuiContainer implements IYKGuiS
 		this.drawTexturedModalRect(x, y, 0, 0, xSize, ySize);
 
 		// スクロールバーの描画
+		scrollBar.setScrollMaxPage(((YKContainerCorporeaChest) this.inventorySlots).iTeInv.getMaxPage());
 		scrollBar.drawScrollBar();
 
 	}

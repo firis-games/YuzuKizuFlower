@@ -29,9 +29,7 @@ public class YKContainerCorporeaChest extends Container implements IYKGuiScrollB
 		//基準座標
 		int xBasePos = 8;
 		int yBasePos = 18;
-		
-		int ii = 0;
-		
+
 		//outputスロット
 		int invX = 9;
 		int invY = 6;
@@ -41,17 +39,7 @@ public class YKContainerCorporeaChest extends Container implements IYKGuiScrollB
             	int xPos = xBasePos + j * 18;
             	int yPos = yBasePos + i * 18;
             	this.addSlotToContainer(new YKSlotInventory(iTeInv, slotIndex, xPos, yPos));
-            	
-            	ii += 1;
-            	//if (!(ii < capability.getSlots())) {
-              	if (!(ii < iTeInv.getSizeInventory())) {
-            		break;
-            	}
             }
-            //if (!(ii < capability.getSlots())) {
-            if (!(ii < iTeInv.getSizeInventory())) {
-        		break;
-        	}
         }
 		
 		
