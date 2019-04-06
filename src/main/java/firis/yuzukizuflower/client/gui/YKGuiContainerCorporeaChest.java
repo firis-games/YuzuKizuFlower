@@ -11,9 +11,11 @@ import firis.yuzukizuflower.common.network.PacketGuiScroll;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.inventory.GuiContainer;
 import net.minecraft.client.renderer.GlStateManager;
+import net.minecraft.client.renderer.RenderHelper;
 import net.minecraft.entity.player.InventoryPlayer;
 import net.minecraft.inventory.Slot;
 import net.minecraft.util.ResourceLocation;
+import net.minecraft.util.text.TextComponentTranslation;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
@@ -48,7 +50,7 @@ public class YKGuiContainerCorporeaChest extends GuiContainer implements IYKGuiS
 		this.guiTextures = new ResourceLocation("yuzukizuflower", "textures/gui/scroll_chest.png");
 
 		// GUIタイトル
-		this.guiTitle = "gui.scroll_chest.name";
+		this.guiTitle = "gui.corporea_chest.name";
 
 		// GUIサイズ
 		this.guiWidth = 193;
@@ -88,6 +90,29 @@ public class YKGuiContainerCorporeaChest extends GuiContainer implements IYKGuiS
 
 	}
 
+    /**
+     * Draw the foreground layer for the GuiContainer (everything in front of the items)
+     */
+	@Override
+    protected void drawGuiContainerForegroundLayer(int mouseX, int mouseY)
+    {
+		RenderHelper.disableStandardItemLighting();
+		
+		//xx_xx.langから取得
+		TextComponentTranslation langtext = 
+				new TextComponentTranslation(this.guiTitle, new Object[0]);
+        String text = langtext.getFormattedText();
+
+        //左寄せ
+        int x = 8;
+        int y = 6;
+        
+        //タイトル文字
+        this.fontRenderer.drawString(text, x, y, 4210752);
+        
+        RenderHelper.enableGUIStandardItemLighting();
+    }
+	
 	/**
 	 * Returns true if this GUI should pause the game when it is displayed in
 	 * single-player

@@ -65,3 +65,6 @@ item.akanerald.name=アカネラルド
 
 fluid.liquid_mana=液体マナ
 tile.liquid_mana.name=液体マナ
+
+tile.corporea_chest.name=コーポリアチェスト
+gui.corporea_chest.name=コーポリアチェスト

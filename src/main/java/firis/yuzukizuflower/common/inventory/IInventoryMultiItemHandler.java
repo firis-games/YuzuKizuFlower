@@ -248,11 +248,12 @@ public class IInventoryMultiItemHandler implements IInventory {
 
 	@Override
 	public void openInventory(EntityPlayer player) {
+		this.tile.animationController.openInventory(player);
 	}
 
 	@Override
 	public void closeInventory(EntityPlayer player) {
-		
+		this.tile.animationController.closeInventory(player);
 	}
 
 	@Override

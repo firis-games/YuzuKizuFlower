@@ -23,8 +23,10 @@ public class YKContainerCorporeaChest extends Container implements IYKGuiScrollB
 	 * @param playerInv
 	 */
 	public YKContainerCorporeaChest(IInventoryMultiItemHandler iinv, InventoryPlayer playerInv) {
-		
+				
 		this.iTeInv = iinv;
+		
+		this.iTeInv.openInventory(playerInv.player);
 				
 		//基準座標
 		int xBasePos = 8;
@@ -83,6 +85,17 @@ public class YKContainerCorporeaChest extends Container implements IYKGuiScrollB
             this.addSlotToContainer(new Slot(playerInv, slotIndex, xPos, yPos));
 		}
 	}
+	
+    /**
+     * Called when the container is closed.
+     */
+	@Override
+    public void onContainerClosed(EntityPlayer playerIn)
+    {
+        super.onContainerClosed(playerIn);
+        this.iTeInv.closeInventory(playerIn);
+    }
+    
 	
 	@Override
 	public boolean canInteractWith(EntityPlayer playerIn) {

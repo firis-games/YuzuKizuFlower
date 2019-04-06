@@ -2,6 +2,7 @@ package firis.yuzukizuflower;
 
 import org.apache.logging.log4j.Logger;
 
+import firis.yuzukizuflower.client.tesr.YKTileCorporeaChestSpRenderer;
 import firis.yuzukizuflower.client.tesr.YKTileManaTankSpRenderer;
 import firis.yuzukizuflower.common.YKGuiHandler;
 import firis.yuzukizuflower.common.block.YKBlockBaseBoxed;
@@ -608,6 +609,10 @@ public class YuzuKizuFlower
     	// コーポリアチェスト
     	ModelLoader.setCustomModelResourceLocation(Item.getItemFromBlock(YuzuKizuBlocks.CORPOREA_CHEST), 0,
     			new ModelResourceLocation(YuzuKizuBlocks.CORPOREA_CHEST.getRegistryName(), "inventory"));
+    	
+    	//マナタンク
+    	ClientRegistry.bindTileEntitySpecialRenderer(YKTileCorporeaChest.class, new YKTileCorporeaChestSpRenderer());
+    	
     	
     	 
     }
