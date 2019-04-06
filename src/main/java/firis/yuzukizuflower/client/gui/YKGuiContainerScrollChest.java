@@ -5,9 +5,9 @@ import java.io.IOException;
 import firis.yuzukizuflower.client.gui.parts.YKGuiScrollBar;
 import firis.yuzukizuflower.client.gui.parts.YKGuiScrollBar.IYKGuiScrollBarChanged;
 import firis.yuzukizuflower.common.container.YKContainerScrollChest;
+import firis.yuzukizuflower.common.inventory.IScrollInventoryItemHandler;
 import firis.yuzukizuflower.common.network.NetworkHandler;
 import firis.yuzukizuflower.common.network.PacketGuiScroll;
-import firis.yuzukizuflower.common.tileentity.YKTileScrollChest.IScrollInventoryHandler;
 import net.minecraft.client.gui.inventory.GuiContainer;
 import net.minecraft.entity.player.InventoryPlayer;
 import net.minecraft.util.ResourceLocation;
@@ -38,7 +38,7 @@ public class YKGuiContainerScrollChest extends GuiContainer implements IYKGuiScr
 	 */
 	protected YKGuiScrollBar scrollBar;
 
-	public YKGuiContainerScrollChest(IScrollInventoryHandler iinv, InventoryPlayer playerInv) {
+	public YKGuiContainerScrollChest(IScrollInventoryItemHandler iinv, InventoryPlayer playerInv) {
 		super(new YKContainerScrollChest(iinv, playerInv));
 		
 		// GUIテクスチャ
@@ -161,7 +161,7 @@ public class YKGuiContainerScrollChest extends GuiContainer implements IYKGuiScr
 		YKContainerScrollChest container = (YKContainerScrollChest)this.inventorySlots;
 		
 		//ページ設定
-		container.iTeInv.setPage(page);
+		container.iTeInv.setScrollPage(page);
 		
 		//Serverへパケット送信
 		NetworkHandler.network.sendToServer(

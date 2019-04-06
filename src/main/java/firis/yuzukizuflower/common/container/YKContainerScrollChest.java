@@ -1,8 +1,7 @@
 package firis.yuzukizuflower.common.container;
 
 import firis.yuzukizuflower.common.container.slot.YKSlotInventory;
-import firis.yuzukizuflower.common.tileentity.YKTileScrollChest;
-import firis.yuzukizuflower.common.tileentity.YKTileScrollChest.IScrollInventoryHandler;
+import firis.yuzukizuflower.common.inventory.IScrollInventoryItemHandler;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.InventoryPlayer;
 import net.minecraft.inventory.Container;
@@ -12,16 +11,9 @@ import net.minecraft.inventory.Slot;
 public class YKContainerScrollChest extends Container {
 
 	
-	public YKTileScrollChest.IScrollInventoryHandler iTeInv;
+	public IScrollInventoryItemHandler iTeInv;
 	
-	public YKContainerScrollChest(IScrollInventoryHandler iinv, InventoryPlayer playerInv) {
-		
-		/* 実験ソース
-		TileEntity tile1 = tile.getWorld().getTileEntity(tile.getPos().down());
-		IItemHandler capability = tile1.getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY, EnumFacing.UP);
-		IInventory iTeInv = new YKTileScrollChest.IInventoryHandler(capability, tile1);
-		*/
-		//iTeInv = (IInventory) tile1;
+	public YKContainerScrollChest(IScrollInventoryItemHandler iinv, InventoryPlayer playerInv) {
 		
 		this.iTeInv = iinv;
 		
@@ -42,12 +34,10 @@ public class YKContainerScrollChest extends Container {
             	this.addSlotToContainer(new YKSlotInventory(iTeInv, slotIndex, xPos, yPos));
             	
             	ii += 1;
-            	//if (!(ii < capability.getSlots())) {
               	if (!(ii < iTeInv.getSizeInventory())) {
             		break;
             	}
             }
-            //if (!(ii < capability.getSlots())) {
             if (!(ii < iTeInv.getSizeInventory())) {
         		break;
         	}

@@ -5,7 +5,6 @@ import java.util.List;
 
 import firis.yuzukizuflower.common.tileentity.YKTileCorporeaChest;
 import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.inventory.IInventory;
 import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.math.BlockPos;
@@ -19,7 +18,7 @@ import net.minecraftforge.items.IItemHandler;
  * @author computer
  *
  */
-public class IInventoryMultiItemHandler implements IInventory {
+public class IInventoryMultiItemHandler implements IScrollInventory {
 	
 	/**
 	 * コンストラクタ
@@ -115,17 +114,13 @@ public class IInventoryMultiItemHandler implements IInventory {
 	/**
 	 * 見せ掛けのインベントリの数
 	 */
-	public int inventoryCount = 54;
+	protected int inventoryCount = 54;
 	
 	/**
 	 * 1ページあたりのカウント
 	 */
-	public int inventoryRowCount = 9;
+	protected int inventoryRowCount = 9;
 
-	public int getMaxPage() {
-		return this.maxPage;
-	}
-	
 	protected int page = 0;
 	protected int maxPage = 0;
 	
@@ -282,9 +277,10 @@ public class IInventoryMultiItemHandler implements IInventory {
 	public void clear() {
 	}
 	
+	/************************************************************/
 	
 	/**
-	 * @Intarface setScrollPage
+	 * @Intarface IScrollInventory
 	 * @param page
 	 */
 	public void setScrollPage(int page) {
@@ -293,14 +289,44 @@ public class IInventoryMultiItemHandler implements IInventory {
 		this.page = page;
 	}
 	
+	/**
+	 * @Intarface IScrollInventory
+	 */
 	public int getScrollPage() {
 		return this.page;
 	}
 	
-	public boolean isSlotLocked(int index) {
+	/**
+	 * @Intarface IScrollInventory
+	 */
+	@Override
+	public int getScrollMaxPage() {
+		return this.maxPage;
+	}
+	
+	/**
+	 * @Intarface IScrollInventory
+	 */
+	public boolean isLockedScrollSlot(int index) {
 		MultiCapability mcapa = this.getMultiCapability(index);
 		if (mcapa == null) return true;
 		return false;
+	}
+
+	/**
+	 * @Intarface IScrollInventory
+	 */
+	@Override
+	public int getScrollSlotRowCount() {
+		return this.inventoryRowCount;
+	}
+
+	/**
+	 * @Intarface IScrollInventory
+	 */
+	@Override
+	public int getScrollSlotPageCount() {
+		return this.inventoryCount;
 	}
 	
 }

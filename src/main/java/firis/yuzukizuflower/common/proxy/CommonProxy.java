@@ -13,18 +13,16 @@ import firis.yuzukizuflower.common.container.YKContainerBoxedRannuncarpus;
 import firis.yuzukizuflower.common.container.YKContainerBoxedYuquarry;
 import firis.yuzukizuflower.common.container.YKContainerCorporeaChest;
 import firis.yuzukizuflower.common.container.YKContainerManaTank;
+import firis.yuzukizuflower.common.container.YKContainerRemoteChest;
 import firis.yuzukizuflower.common.container.YKContainerScrollChest;
 import firis.yuzukizuflower.common.inventory.IInventoryMultiItemHandler;
+import firis.yuzukizuflower.common.inventory.IScrollInventoryItemHandler;
 import firis.yuzukizuflower.common.tileentity.YKTileCorporeaChest;
-import firis.yuzukizuflower.common.tileentity.YKTileScrollChest;
-import firis.yuzukizuflower.common.tileentity.YKTileScrollChest.IScrollInventoryHandler;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.inventory.IInventory;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
-import net.minecraftforge.items.CapabilityItemHandler;
-import net.minecraftforge.items.IItemHandler;
 
 public class CommonProxy {
 	
@@ -43,7 +41,6 @@ public class CommonProxy {
 		
 		//TileEntityを取得する
 		TileEntity tile = world.getTileEntity(new BlockPos(x, y ,z));
-		IItemHandler capability;
 		
 		switch(ID) {
 				//箱入りピュアデイジー
@@ -92,17 +89,13 @@ public class CommonProxy {
 				
 				//スクロールチェスト
 				case YKGuiHandler.SCROLL_CHEST :
-					YKTileScrollChest yktile = (YKTileScrollChest) tile;
-					IScrollInventoryHandler iinv = (IScrollInventoryHandler) yktile.getIInventory();
+					IScrollInventoryItemHandler iinv = new IScrollInventoryItemHandler(tile);
 					return new YKContainerScrollChest(iinv, player.inventory);
 				
 				//リモートチェスト
 				case YKGuiHandler.REMOTE_CHEST :
-					capability = tile.getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY, null);
-					if (capability != null) {
-						IScrollInventoryHandler ciinv = new IScrollInventoryHandler(capability, tile);
-						return new YKContainerScrollChest(ciinv, player.inventory);
-					}
+					IScrollInventoryItemHandler cinv = new IScrollInventoryItemHandler(tile);
+					return new YKContainerRemoteChest(cinv, player.inventory);
 				
 				//コーポリアチェスト
 				case YKGuiHandler.CORPOREA_CHEST :

@@ -6,7 +6,7 @@ import java.util.stream.IntStream;
 
 import firis.yuzukizuflower.client.gui.parts.YKGuiScrollBar.IYKGuiScrollBarChanged;
 import firis.yuzukizuflower.common.container.slot.YKSlotInventory;
-import firis.yuzukizuflower.common.inventory.IInventoryMultiItemHandler;
+import firis.yuzukizuflower.common.inventory.IScrollInventory;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.InventoryPlayer;
 import net.minecraft.inventory.Container;
@@ -15,17 +15,16 @@ import net.minecraft.inventory.IInventory;
 import net.minecraft.inventory.Slot;
 import net.minecraft.item.ItemStack;
 
-public class YKContainerCorporeaChest extends Container implements IYKGuiScrollBarChanged {
+public abstract class YKContainerBaseScrollInventory extends Container implements IYKGuiScrollBarChanged {
 	
 	/**
 	 * コンストラクタ
 	 * @param iinv
 	 * @param playerInv
 	 */
-	public YKContainerCorporeaChest(IInventoryMultiItemHandler iinv, InventoryPlayer playerInv) {
+	public YKContainerBaseScrollInventory(IScrollInventory iinv, InventoryPlayer playerInv) {
 				
 		this.iTeInv = iinv;
-		
 		this.iTeInv.openInventory(playerInv.player);
 				
 		//基準座標
@@ -48,7 +47,7 @@ public class YKContainerCorporeaChest extends Container implements IYKGuiScrollB
 		this.initPlayerSlot(playerInv);
 	}
 	
-	public IInventoryMultiItemHandler iTeInv;
+	public IScrollInventory iTeInv;
 	
 	protected int startIndexPlayerSlot;
 	
@@ -116,8 +115,9 @@ public class YKContainerCorporeaChest extends Container implements IYKGuiScrollB
 		//ページ切り替えが発生していない場合は更新しない
 		if (nowPage == page) return;
 		
-		int pageRowCount = iTeInv.inventoryRowCount;
-		int pageCount = iTeInv.inventoryCount;
+		int pageRowCount = iTeInv.getScrollSlotRowCount();
+		int pageCount = iTeInv.getScrollSlotPageCount();
+		
 		int rowCount = pageCount / pageRowCount;
 		
 		//1ページ次へ

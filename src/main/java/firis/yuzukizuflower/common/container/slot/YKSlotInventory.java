@@ -1,6 +1,6 @@
 package firis.yuzukizuflower.common.container.slot;
 
-import firis.yuzukizuflower.common.inventory.IInventoryMultiItemHandler;
+import firis.yuzukizuflower.common.inventory.IScrollInventory;
 import net.minecraft.inventory.IInventory;
 import net.minecraft.inventory.Slot;
 import net.minecraft.item.ItemStack;
@@ -40,10 +40,10 @@ public class YKSlotInventory extends Slot{
      * @return
      */
     protected boolean isScrollInventoryLocked() {
-    	if (!(this.inventory instanceof IInventoryMultiItemHandler)) {
+    	if (!(this.inventory instanceof IScrollInventory)) {
     		return true;
     	}
-    	IInventoryMultiItemHandler multiInv = (IInventoryMultiItemHandler) this.inventory;
-        return multiInv.isSlotLocked(this.getSlotIndex());
+    	IScrollInventory inv = (IScrollInventory) this.inventory;
+        return inv.isLockedScrollSlot(this.getSlotIndex());
     }
 }

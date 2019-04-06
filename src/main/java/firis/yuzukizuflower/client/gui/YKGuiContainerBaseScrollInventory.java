@@ -4,15 +4,13 @@ import java.io.IOException;
 
 import firis.yuzukizuflower.client.gui.parts.YKGuiScrollBar;
 import firis.yuzukizuflower.client.gui.parts.YKGuiScrollBar.IYKGuiScrollBarChanged;
-import firis.yuzukizuflower.common.container.YKContainerCorporeaChest;
-import firis.yuzukizuflower.common.inventory.IInventoryMultiItemHandler;
+import firis.yuzukizuflower.common.inventory.IScrollInventory;
 import firis.yuzukizuflower.common.network.NetworkHandler;
 import firis.yuzukizuflower.common.network.PacketGuiScroll;
-import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.inventory.GuiContainer;
 import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.client.renderer.RenderHelper;
-import net.minecraft.entity.player.InventoryPlayer;
+import net.minecraft.inventory.Container;
 import net.minecraft.inventory.Slot;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.text.TextComponentTranslation;
@@ -20,7 +18,7 @@ import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
 @SideOnly(Side.CLIENT)
-public class YKGuiContainerBaseScrollInventory extends GuiContainer implements IYKGuiScrollBarChanged {
+public abstract class YKGuiContainerBaseScrollInventory extends GuiContainer implements IYKGuiScrollBarChanged {
 
 	/**
 	 * GUIテクスチャ
@@ -42,29 +40,14 @@ public class YKGuiContainerBaseScrollInventory extends GuiContainer implements I
 	 * Guiスクロールバー
 	 */
 	protected YKGuiScrollBar scrollBar;
+	
+	protected IScrollInventory iinventory;
 
-	public YKGuiContainerBaseScrollInventory(IInventoryMultiItemHandler iinv, InventoryPlayer playerInv) {
-		super(new YKContainerCorporeaChest(iinv, playerInv));
+	public YKGuiContainerBaseScrollInventory(Container container, IScrollInventory inventory) {
 		
-		// GUIテクスチャ
-		this.guiTextures = new ResourceLocation("yuzukizuflower", "textures/gui/scroll_chest.png");
+		super(container);
 
-		// GUIタイトル
-		this.guiTitle = "gui.corporea_chest.name";
-
-		// GUIサイズ
-		this.guiWidth = 193;
-		this.guiHeight = 222;
-
-		this.xSize = this.guiWidth;
-		this.ySize = this.guiHeight;
-
-		int maxPage = ((YKContainerCorporeaChest) this.inventorySlots).iTeInv.getMaxPage();
-		
-		// スクロールバー
-		// x座標 y座標 スクロールの高さ スクロールのページ数
-		scrollBar = new YKGuiScrollBar(this, 174, 18, 106, maxPage);
-		
+		this.iinventory = inventory;
 	}
 
 	@Override
@@ -85,7 +68,7 @@ public class YKGuiContainerBaseScrollInventory extends GuiContainer implements I
 		this.drawTexturedModalRect(x, y, 0, 0, xSize, ySize);
 
 		// スクロールバーの描画
-		scrollBar.setScrollMaxPage(((YKContainerCorporeaChest) this.inventorySlots).iTeInv.getMaxPage());
+		scrollBar.setScrollMaxPage(iinventory.getScrollMaxPage());
 		scrollBar.drawScrollBar();
 
 	}
@@ -225,16 +208,12 @@ public class YKGuiContainerBaseScrollInventory extends GuiContainer implements I
 	 */
 	@Override
 	public void onScrollChanged(int page) {
-		
-		YKContainerCorporeaChest container = (YKContainerCorporeaChest)this.inventorySlots;
-		
+				
 		//ページ設定
-		container.iTeInv.setScrollPage(page);
+		iinventory.setScrollPage(page);
 		
 		//Serverへパケット送信
 		NetworkHandler.network.sendToServer(
 				new PacketGuiScroll.MessageGuiScroll(page, ""));
-		
-		this.onResize(Minecraft.getMinecraft(), this.width, this.height);
 	}
 }
