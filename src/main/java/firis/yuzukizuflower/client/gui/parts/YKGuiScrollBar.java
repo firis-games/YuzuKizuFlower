@@ -25,6 +25,10 @@ public class YKGuiScrollBar {
 	protected final int scroll_texture_on_x = 0;
 	protected final int scroll_texture_on_y = 20;
 
+	// スクロールバーのテクスチャ座標(OFF)
+	protected final int scroll_texture_off_x = 12;
+	protected final int scroll_texture_off_y = 20;
+
 	// スクロールバーのサイズ
 	protected final int scroll_size_width = 12;
 	protected final int scroll_size_height = 15;
@@ -83,8 +87,16 @@ public class YKGuiScrollBar {
 		//スクロールバーの位置を計算
 		y += this.scroll_coord_y_rate * (float)this.scroll_height;
 
+		int tex_x = scroll_texture_on_x;
+		int tex_y = scroll_texture_on_y;
+		
+		if (this.scroll_max_page == 0) {
+			tex_x = scroll_texture_off_x;
+			tex_y = scroll_texture_off_y;
+		}
+		
 		// スクロールバーの描画
-		this.guiContainer.drawTexturedModalRect(x, y, scroll_texture_on_x, scroll_texture_on_y, scroll_size_width,
+		this.guiContainer.drawTexturedModalRect(x, y, tex_x, tex_y, scroll_size_width,
 				scroll_size_height);
 
 	}
@@ -106,34 +118,6 @@ public class YKGuiScrollBar {
 				nextFlg = true;
 			}
 			this.setScrollTo(this.scroll_coord_y_rate, nextFlg);
-
-			/*
-			// 1スクロールあたりのサイズ
-			int scrollPageY = (int) Math.floor((double) (this.scroll_height) / (double) this.page);
-
-			// スクロールの移動座標リストを作成
-			List<Integer> scrollPageYList = new ArrayList<Integer>();
-			for (int i = 0; i <= this.page; i++) {
-				int page = scrollPageY * i;
-				if (this.page == i) {
-					page = this.scroll_height;
-				}
-				scrollPageYList.add(page);
-			}
-
-			int scroll_idx = scrollPageYList.indexOf(this.scroll_y);
-			scroll_idx = scroll_idx == -1 ? 0 : scroll_idx;
-
-			if (0 < dwheel) {
-				// 上方向へ
-				scroll_idx = Math.max(0, scroll_idx - 1);
-				this.scroll_y = scrollPageYList.get(scroll_idx);
-			} else {
-				// 下方向へ
-				scroll_idx = Math.min(scrollPageYList.size() - 1, scroll_idx + 1);
-				this.scroll_y = scrollPageYList.get(scroll_idx);
-			}
-			*/
 		}
 	}
 
@@ -228,6 +212,9 @@ public class YKGuiScrollBar {
 	 */
 	protected void setScrollTo(float work, boolean next) {
 		
+		//ページ設定がない場合は何もしない
+		if (this.scroll_max_page == 0) return;
+				
 		//スクロールレートを設定
 		this.scroll_coord_y_rate = this.calScrollRate(work, next);
 		
