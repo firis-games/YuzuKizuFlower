@@ -91,7 +91,7 @@ public class ClientProxy extends CommonProxy{
 
 				//スクロールチェスト
 				case YKGuiHandler.SCROLL_CHEST :
-					IScrollInventoryItemHandler iinv = new IScrollInventoryItemHandler(tile);
+					IScrollInventoryItemHandler iinv = new IScrollInventoryItemHandler(tile, true);
 					return new YKGuiContainerScrollChest(iinv, player.inventory);
 				
 				//リモートチェスト

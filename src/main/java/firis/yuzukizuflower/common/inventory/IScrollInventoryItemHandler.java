@@ -27,6 +27,14 @@ public class IScrollInventoryItemHandler implements IScrollInventory {
 		}
 	}
 	
+	public IScrollInventoryItemHandler(TileEntity tile, boolean animation) {
+		this(tile);
+		
+		animationFlg = animation;
+	}
+	
+	protected boolean animationFlg = false;
+	
 	/**
 	 * YKTileCorporeaChest
 	 */
@@ -173,14 +181,14 @@ public class IScrollInventoryItemHandler implements IScrollInventory {
 	@Override
 	public void openInventory(EntityPlayer player) {
 		
-		if(this.tile instanceof YKTileScrollChest) {
+		if(animationFlg && this.tile instanceof YKTileScrollChest) {
 			((YKTileScrollChest) this.tile).animationController.openInventory(player);
 		}
 	}
 
 	@Override
 	public void closeInventory(EntityPlayer player) {
-		if(this.tile instanceof YKTileScrollChest) {
+		if(animationFlg && this.tile instanceof YKTileScrollChest) {
 			((YKTileScrollChest) this.tile).animationController.closeInventory(player);
 		}
 	}

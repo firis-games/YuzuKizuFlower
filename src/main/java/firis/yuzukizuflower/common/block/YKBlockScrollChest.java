@@ -5,6 +5,9 @@ import firis.yuzukizuflower.common.YKGuiHandler;
 import firis.yuzukizuflower.common.tileentity.YKTileScrollChest;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.item.Item;
+import net.minecraft.item.ItemStack;
+import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.EnumHand;
@@ -35,5 +38,37 @@ public class YKBlockScrollChest extends YKBlockBaseChest {
 				worldIn, pos.getX(), pos.getY(), pos.getZ());
 		
     	return true;
+    }
+	
+	/**
+     * インベントリ内のアイテム保持
+     */
+    @Override
+    public void breakBlock(World worldIn, BlockPos pos, IBlockState state)
+    {
+    	TileEntity tileentity = worldIn.getTileEntity(pos);
+        
+    	if (tileentity instanceof YKTileScrollChest)
+        {
+    		YKTileScrollChest tile = (YKTileScrollChest) tileentity;
+        	
+        	ItemStack stack = new ItemStack(Item.getItemFromBlock(this));
+        	
+        	NBTTagCompound nbt = tile.serializeNBT();
+        	stack.setTagInfo("BlockEntityTag", nbt);
+        	spawnAsEntity(worldIn, pos, stack);
+        }
+    	
+    	//共通側で内部インベントリのドロップ処理を行う
+    	super.breakBlock(worldIn, pos, state);
+    }
+    
+    /**
+     * breakBlockで手動ドロップ処理を行っているため
+     * 標準のドロップ処理は無効化する
+     */
+    @Override
+    public void dropBlockAsItemWithChance(World worldIn, BlockPos pos, IBlockState state, float chance, int fortune)
+    {
     }
 }

@@ -89,7 +89,7 @@ public class CommonProxy {
 				
 				//スクロールチェスト
 				case YKGuiHandler.SCROLL_CHEST :
-					IScrollInventoryItemHandler iinv = new IScrollInventoryItemHandler(tile);
+					IScrollInventoryItemHandler iinv = new IScrollInventoryItemHandler(tile, true);
 					return new YKContainerScrollChest(iinv, player.inventory);
 				
 				//リモートチェスト
