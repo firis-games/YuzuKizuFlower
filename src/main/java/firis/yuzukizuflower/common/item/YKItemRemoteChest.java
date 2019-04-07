@@ -4,6 +4,10 @@ import java.util.List;
 
 import javax.annotation.Nullable;
 
+import baubles.api.BaubleType;
+import baubles.api.BaublesApi;
+import baubles.api.IBauble;
+import baubles.api.cap.IBaublesItemHandler;
 import firis.yuzukizuflower.YuzuKizuFlower;
 import firis.yuzukizuflower.common.YKGuiHandler;
 import net.minecraft.client.util.ITooltipFlag;
@@ -18,12 +22,17 @@ import net.minecraft.util.EnumFacing;
 import net.minecraft.util.EnumHand;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
+import net.minecraftforge.event.entity.player.EntityItemPickupEvent;
+import net.minecraftforge.fml.common.Mod.EventBusSubscriber;
+import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
+import net.minecraftforge.fml.common.eventhandler.Event.Result;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 import net.minecraftforge.items.CapabilityItemHandler;
 import net.minecraftforge.items.IItemHandler;
 
-public class YKItemRemoteChest extends Item {
+@EventBusSubscriber
+public class YKItemRemoteChest extends Item implements IBauble {
 	
 	public YKItemRemoteChest() {
 		super();
@@ -130,5 +139,121 @@ public class YKItemRemoteChest extends Item {
     {
         return stack.hasTagCompound();
     }
+
+    /******************************************************************************************/
+    
+    /**
+     * NBTからブロックの登録情報を取得する
+     * @param stack
+     * @return
+     */
+    private static BlockPos getNbtBlockPos(ItemStack stack) {
+    	
+    	BlockPos pos = null;
+    	if(stack.hasTagCompound()) {
+        	NBTTagCompound nbt = stack.getTagCompound();        	
+        	Integer posX = nbt.getInteger("BlockPosX");
+        	Integer posY = nbt.getInteger("BlockPosY");
+        	Integer posZ = nbt.getInteger("BlockPosZ");
+        	
+        	pos = new BlockPos(posX, posY, posZ);
+        }
+    	
+    	return pos;
+    }
+    
+    
+    /******************************************************************************************/
+
+    /**
+     * @interface IBauble
+     */
+	@Override
+	public BaubleType getBaubleType(ItemStack stack) {
+		return BaubleType.AMULET;
+	}
+
+	/******************************************************************************************/
+	
+	/**
+	 * アイテム回収イベント
+	 * @param event
+	 */
+	@SubscribeEvent
+	public static void onItemPickup(EntityItemPickupEvent event) {
+		
+		EntityPlayer player = event.getEntityPlayer();
+		if (player == null) return;
+		
+		//アミュレット枠
+		IBaublesItemHandler baublesHandler = BaublesApi.getBaublesHandler(player);
+		
+		ItemStack chest = ItemStack.EMPTY.copy();
+		for (int i = 0; i < BaubleType.AMULET.getValidSlots().length; i++) {
+			int slot = BaubleType.AMULET.getValidSlots()[i];
+			
+			ItemStack work = baublesHandler.getStackInSlot(slot);
+			
+			if (work.getItem() instanceof YKItemRemoteChest) {
+				//チェストの登録情報をもっていること
+				BlockPos pos = getNbtBlockPos(work);
+				if(pos != null) {
+					chest = work;
+					break;
+				}
+			}
+		}
+		
+		if (chest.isEmpty()) return;
+		
+		BlockPos pos = getNbtBlockPos(chest);
+		World world = player.getEntityWorld();
+		IItemHandler capability = null;
+		TileEntity tile = world.getTileEntity(pos);
+		if (tile != null) {
+			capability = tile.getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY, null);
+		}
+		
+		if (capability == null) return;
+		
+		ItemStack stack = event.getItem().getItem();
+		
+		//自動格納を行う
+		//移動のシミュレート
+		ItemStack simInsStack = stack.copy();
+		for (int cabSlot = 0; cabSlot < capability.getSlots(); cabSlot++) {
+			//insert
+			simInsStack = capability.insertItem(cabSlot, simInsStack, true);
+			if (simInsStack.isEmpty()) {
+				break;
+			}
+		}
+		
+		//移動の結果
+		if (stack.getCount() == simInsStack.getCount()) {
+			//移動できていないので対象外
+			return;
+		}
+		
+		//実際のインベントリを操作してアイテムを移動させる
+		int insStackCount = stack.getCount() - simInsStack.getCount();
+		
+		//チェスト格納用アイテム
+		ItemStack insItemStack = stack.copy();
+		insItemStack.setCount(insStackCount);
+
+		//アイテムの数を減らす
+		stack.setCount(simInsStack.getCount());
+		
+		for (int cabSlot = 0; cabSlot < capability.getSlots(); cabSlot++) {
+			//insert
+			insItemStack = capability.insertItem(cabSlot, insItemStack, false);
+			if (insItemStack.isEmpty()) {
+				break;
+			}
+		}
+		
+		event.setResult(Result.ALLOW);
+	}
 	
 }
