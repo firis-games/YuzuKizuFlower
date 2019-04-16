@@ -64,3 +64,11 @@ item.akanerald.name=Akanerald
 
 fluid.liquid_mana=Liquid Mana
 tile.liquid_mana.name=Liquid Mana
+
+tile.scroll_chest.name=Scroll Chest
+gui.scroll_chest.name=Scroll Chest
+
+tile.corporea_chest.name=Corporea Chest
+gui.corporea_chest.name=Corporea Chest
+
+item.remote_chest.name=Bonds Bracelet

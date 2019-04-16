@@ -1,0 +1,21 @@
+{
+	"type": "forge:ore_shaped",
+	"pattern": [
+		"xxx",
+		"xyx",
+		"xxx"
+	],
+	"key": {
+		"x": {
+			"item": "botania:livingwood",
+			"data": 0
+		},
+		"y": {
+			"item": "botania:corporeaspark",
+			"data": 0
+		}
+	},
+	"result": {
+		"item": "yuzukizuflower:corporea_chest"
+	}
+}

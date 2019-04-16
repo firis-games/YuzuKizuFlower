@@ -1,0 +1,25 @@
+{
+	"type": "forge:ore_shaped",
+	"pattern": [
+		"zxz",
+		"xyx",
+		"zxz"
+	],
+	"key": {
+		"x": {
+			"item": "botania:manaresource",
+			"data": 0
+		},
+		"y": {
+			"item": "minecraft:chest",
+			"data": 0
+		},
+		"z": {
+			"item": "minecraft:wool",
+			"data": 10
+		}
+	},
+	"result": {
+		"item": "yuzukizuflower:remote_chest"
+	}
+}

@@ -1,0 +1,21 @@
+{
+	"type": "forge:ore_shaped",
+	"pattern": [
+		"xxx",
+		"xyx",
+		"xxx"
+	],
+	"key": {
+		"x": {
+			"item": "minecraft:chest",
+			"data": 0
+		},
+		"y": {
+			"item": "botania:manaresource",
+			"data": 2
+		}
+	},
+	"result": {
+		"item": "yuzukizuflower:scroll_chest"
+	}
+}

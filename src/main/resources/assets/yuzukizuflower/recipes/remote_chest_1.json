@@ -1,0 +1,11 @@
+{
+	"type": "forge:ore_shapeless",
+	"ingredients": [
+	{
+		"item": "yuzukizuflower:remote_chest"
+	}
+	],
+	"result": {
+		"item": "yuzukizuflower:remote_chest"
+	}
+}
