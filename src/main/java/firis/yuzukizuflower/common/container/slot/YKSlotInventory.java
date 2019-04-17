@@ -41,7 +41,7 @@ public class YKSlotInventory extends Slot{
      */
     protected boolean isScrollInventoryLocked() {
     	if (!(this.inventory instanceof IScrollInventory)) {
-    		return true;
+    		return false;
     	}
     	IScrollInventory inv = (IScrollInventory) this.inventory;
         return inv.isLockedScrollSlot(this.getSlotIndex());
