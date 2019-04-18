@@ -4,6 +4,7 @@ import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.SoundEvents;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.SoundCategory;
+import net.minecraft.util.math.AxisAlignedBB;
 
 public class YKChestAnimationController {
 	/**
@@ -57,12 +58,20 @@ public class YKChestAnimationController {
         //1がopen
         //-1がclose
         //0が通常状態
-        
         if (!this.tile.getWorld().isRemote 
         		&& this.numPlayersUsing != 0 
         		&& (this.ticksSinceSync + i + j + k) % 200 == 0)
         {
             this.numPlayersUsing = 0;
+            
+            for (EntityPlayer entityplayer : tile.getWorld().getEntitiesWithinAABB(EntityPlayer.class, new AxisAlignedBB((double)((float)i - 5.0F), (double)((float)j - 5.0F), (double)((float)k - 5.0F), (double)((float)(i + 1) + 5.0F), (double)((float)(j + 1) + 5.0F), (double)((float)(k + 1) + 5.0F))))
+            {
+            	//本来は自身のContainerかの判断を行う
+                if (entityplayer.openContainer != null)
+                {
+                	++this.numPlayersUsing;
+                }
+            }
         }
 
         this.prevLidAngle = this.lidAngle;
