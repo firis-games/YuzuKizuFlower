@@ -143,7 +143,9 @@ public abstract class YKTileBaseBoxedProcFlower extends YKTileBaseManaPool imple
 			TileEntity tile = this.getWorld().getTileEntity(pos);
 			
 			//マナタンクor発電系のお花
-			if (tile != null && (tile instanceof YKTileManaTank 
+			//自身がマナタンクの場合はマナタンクは対象外
+			if (tile != null && (
+					(tile instanceof YKTileManaTank && !(this instanceof YKTileManaTank))
 					|| tile instanceof YKTileBaseBoxedGenFlower)) {
 				
 				//マナタンクの場合
