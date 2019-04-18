@@ -23,10 +23,12 @@ public class YKContainerBoxedAkanerald extends YKContainerBaseBoxedFuncFlower {
 
 		int invX = 5;
 		int invY = 3;
+		int baseSlot = 0;
+		
 		//outputスロット
 		for (int i = 0; i < invY; i++) {
             for (int j = 0; j < invX; j++) {
-            	int slotIndex = j + i * invX;
+            	int slotIndex = j + i * invX + baseSlot;
             	int xPos = xBasePos + j * 18;
             	int yPos = yBasePos + i * 18;
             	this.addSlotToContainer(new YKSlotInventory(iTeInv, slotIndex, xPos, yPos));

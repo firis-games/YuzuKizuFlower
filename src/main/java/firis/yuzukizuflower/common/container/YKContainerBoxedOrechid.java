@@ -30,9 +30,11 @@ public class YKContainerBoxedOrechid extends YKContainerBaseBoxedFuncFlower {
 		//outputスロット
 		int invX = 3;
 		int invY = 3;
+		int baseSlot = 1;
+		
 		for (int i = 0; i < invY; i++) {
             for (int j = 0; j < invX; j++) {
-            	int slotIndex = j + i * invX;
+            	int slotIndex = j + i * invX + baseSlot;
             	int xPos = xBasePos + j * 18;
             	int yPos = yBasePos + i * 18;
             	this.addSlotToContainer(new YKSlotInventory(iTeInv, slotIndex, xPos, yPos));
