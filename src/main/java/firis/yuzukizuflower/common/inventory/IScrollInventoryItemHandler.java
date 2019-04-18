@@ -136,8 +136,10 @@ public class IScrollInventoryItemHandler implements IScrollInventory {
 		IItemHandler handler = getItemHandler();
 		index = getCapabilityIndex(index);
 		if (handler == null || handler.getSlots() <= index) return ItemStack.EMPTY.copy();
-		ItemStack stack = this.getItemHandler().getStackInSlot(index).splitStack(count);
-        if (!stack.isEmpty()) {
+		
+		ItemStack stack = this.getItemHandler().extractItem(index, count, false);
+				
+		if (!stack.isEmpty()) {
         	this.markDirty();
         }
         return stack;
@@ -155,11 +157,15 @@ public class IScrollInventoryItemHandler implements IScrollInventory {
 	public void setInventorySlotContents(int index, ItemStack stack) {
 		
 		IItemHandler handler = getItemHandler();
-		index = getCapabilityIndex(index);
+		int orgIndex = getCapabilityIndex(index);
 		if (handler == null || handler.getSlots() <= index) return;
-		ItemStack slot = this.getItemHandler().getStackInSlot(index);
-		this.getItemHandler().extractItem(index, slot.getCount(), false);
-		this.getItemHandler().insertItem(index, stack, false);
+		
+		//やり取りできる場合のみ処理を行う
+		if (this.isItemValidForSlot(index, stack)) {
+			ItemStack slot = handler.getStackInSlot(orgIndex);
+			handler.extractItem(orgIndex, slot.getCount(), false);
+			handler.insertItem(orgIndex, stack, false);
+		}
 		this.markDirty();
 	}
 
@@ -199,12 +205,31 @@ public class IScrollInventoryItemHandler implements IScrollInventory {
 		IItemHandler handler = getItemHandler();
 		index = getCapabilityIndex(index);
 		if (handler == null || handler.getSlots() <= index) return false;
-
-		return this.getItemHandler().isItemValid(index, stack);
+		
+		//01.isItemValidチェック
+		boolean ret = this.getItemHandler().isItemValid(index, stack);
+		
+		//02.insertItemチェック
+		if (ret) {
+			//シミュレート
+			ItemStack insertStack = this.getItemHandler().insertItem(index, stack, true);
+			//すべてのアイテムを挿入、または1つ以上挿入可能の場合true
+			if (insertStack.isEmpty() || stack.getCount() != insertStack.getCount()) {
+				ret = true;
+			} else {
+				ret = false;
+			}
+		}
+		return ret;
 	}
 
 	@Override
 	public int getField(int id) {
+		if (id == 0) {
+			return this.getItemHandler().getSlots();
+		} else if (id == 1) {
+			return this.maxPage;
+		}
 		return 0;
 	}
 
@@ -214,7 +239,7 @@ public class IScrollInventoryItemHandler implements IScrollInventory {
 
 	@Override
 	public int getFieldCount() {
-		return 0;
+		return 2;
 	}
 
 	@Override
@@ -273,5 +298,18 @@ public class IScrollInventoryItemHandler implements IScrollInventory {
 	@Override
 	public int getScrollSlotPageCount() {
 		return this.inventoryCount;
+	}
+
+	/**
+	 * @Intarface IScrollInventory
+	 */
+	@Override
+	public int getOrgSizeInventory() {
+		return this.getItemHandler().getSlots();
+	}
+
+	@Override
+	public void setScrollInitInfo(int inventorySize, int scrollMaxPage) {
+		
 	}
 }

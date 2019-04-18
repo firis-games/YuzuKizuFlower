@@ -188,7 +188,10 @@ public class IInventoryMultiItemHandler implements IScrollInventory {
 	public ItemStack getStackInSlot(int index) {
 		MultiCapability mcapa = this.getMultiCapability(index);
 		if (mcapa == null) return ItemStack.EMPTY.copy();
-		return this.itemHandlerList.get(mcapa.capabilityNo).getStackInSlot(mcapa.capabilityIdx);
+		IItemHandler handler = this.itemHandlerList.get(mcapa.capabilityNo);
+		index = mcapa.capabilityIdx;
+
+		return handler.getStackInSlot(mcapa.capabilityIdx);
 	}
 
 	/**
@@ -199,8 +202,11 @@ public class IInventoryMultiItemHandler implements IScrollInventory {
 
 		MultiCapability mcapa = this.getMultiCapability(index);
 		if (mcapa == null) return ItemStack.EMPTY.copy();
-		ItemStack stack = this.itemHandlerList.get(mcapa.capabilityNo).getStackInSlot(mcapa.capabilityIdx).splitStack(count);
-        if (!stack.isEmpty()) {
+		IItemHandler handler = this.itemHandlerList.get(mcapa.capabilityNo);
+		index = mcapa.capabilityIdx;
+		
+		ItemStack stack = handler.extractItem(index, count, false);
+		if (!stack.isEmpty()) {
         	this.markDirty();
         }
         return stack;
@@ -214,16 +220,21 @@ public class IInventoryMultiItemHandler implements IScrollInventory {
 		return this.itemHandlerList.get(mcapa.capabilityNo).insertItem(mcapa.capabilityIdx, ItemStack.EMPTY, false);
 	}
 
+	/**
+	 * 初期の同期で呼び出される
+	 */
 	@Override
 	public void setInventorySlotContents(int index, ItemStack stack) {
-		
 		MultiCapability mcapa = this.getMultiCapability(index);
 		if (mcapa == null) return;
 		IItemHandler handler = this.itemHandlerList.get(mcapa.capabilityNo);
-		ItemStack slot = handler.getStackInSlot(mcapa.capabilityIdx);
-		handler.extractItem(mcapa.capabilityIdx, slot.getCount(), false);
-		handler.insertItem(mcapa.capabilityIdx, stack, false);
-		this.markDirty();
+		
+		//やり取りできる場合のみ処理を行う
+		if (this.isItemValidForSlot(index, stack)) {
+			ItemStack slot = handler.getStackInSlot(mcapa.capabilityIdx);
+			handler.extractItem(mcapa.capabilityIdx, slot.getCount(), false);
+			handler.insertItem(mcapa.capabilityIdx, stack, false);
+		}
 	}
 
 	@Override
@@ -256,11 +267,34 @@ public class IInventoryMultiItemHandler implements IScrollInventory {
 		
 		MultiCapability mcapa = this.getMultiCapability(index);
 		if (mcapa == null) return false;
-		return this.itemHandlerList.get(mcapa.capabilityNo).isItemValid(mcapa.capabilityIdx, stack);
+		
+		//01.isItemValidチェック
+		IItemHandler handler = this.itemHandlerList.get(mcapa.capabilityNo);
+		index = mcapa.capabilityIdx;
+		boolean ret = handler.isItemValid(index, stack);
+		
+		//02.insertItemチェック
+		if (ret) {
+			//シミュレート
+			ItemStack insertStack = handler.insertItem(index, stack, true);
+			//すべてのアイテムを挿入、または1つ以上挿入可能の場合true
+			if (insertStack.isEmpty() || stack.getCount() != insertStack.getCount()) {
+				ret = true;
+			} else {
+				ret = false;
+			}
+		}
+				
+		return ret;
 	}
 
 	@Override
 	public int getField(int id) {
+		if (id == 0) {
+			return this.multiCapabilityList.size();
+		} else if (id == 1) {
+			return this.maxPage;
+		}
 		return 0;
 	}
 
@@ -270,7 +304,7 @@ public class IInventoryMultiItemHandler implements IScrollInventory {
 
 	@Override
 	public int getFieldCount() {
-		return 0;
+		return 2;
 	}
 
 	@Override
@@ -327,6 +361,20 @@ public class IInventoryMultiItemHandler implements IScrollInventory {
 	@Override
 	public int getScrollSlotPageCount() {
 		return this.inventoryCount;
+	}
+	
+	/**
+	 * @Intarface IScrollInventory
+	 */
+	@Override
+	public int getOrgSizeInventory() {
+		return this.multiCapabilityList.size();
+	}
+
+	@Override
+	public void setScrollInitInfo(int inventorySize, int scrollMaxPage) {
+		// TODO 自動生成されたメソッド・スタブ
+		
 	}
 	
 }

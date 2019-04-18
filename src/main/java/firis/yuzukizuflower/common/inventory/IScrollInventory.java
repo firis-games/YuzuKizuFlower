@@ -40,5 +40,13 @@ public interface IScrollInventory extends IInventory {
 	 * @return
 	 */
 	public int getScrollSlotPageCount();
+	
+	/**
+	 * 実際のinventory数を取得
+	 * @return
+	 */
+	public int getOrgSizeInventory();
+	
+	public void setScrollInitInfo(int inventorySize, int scrollMaxPage);
 
 }
