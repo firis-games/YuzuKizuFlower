@@ -22,6 +22,7 @@ import firis.yuzukizuflower.common.block.YKBlockManaTank;
 import firis.yuzukizuflower.common.block.YKBlockPetalWorkbench;
 import firis.yuzukizuflower.common.block.YKBlockRuneWorkbench;
 import firis.yuzukizuflower.common.block.YKBlockScrollChest;
+import firis.yuzukizuflower.common.block.YKBlockTerraPlate;
 import firis.yuzukizuflower.common.event.PopulateChunkEventHandler;
 import firis.yuzukizuflower.common.item.YKItemBase;
 import firis.yuzukizuflower.common.item.YKItemRemoteChest;
@@ -45,6 +46,7 @@ import firis.yuzukizuflower.common.tileentity.YKTileManaTankExtends;
 import firis.yuzukizuflower.common.tileentity.YKTilePetalWorkbench;
 import firis.yuzukizuflower.common.tileentity.YKTileRuneWorkbench;
 import firis.yuzukizuflower.common.tileentity.YKTileScrollChest;
+import firis.yuzukizuflower.common.tileentity.YKTileTerraPlate;
 import net.minecraft.block.Block;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.state.IBlockState;
@@ -164,6 +166,7 @@ public class YuzuKizuFlower
     	public final static Block CORPOREA_CHEST = null;
     	public final static Block PETAL_WORKBENCH = null;
     	public final static Block RUNE_WORKBENCH = null;
+    	public final static Block TERRA_PLATE = null;
     }
     
     public static class YuzuKizuFluids {
@@ -239,6 +242,8 @@ public class YuzuKizuFlower
         GameRegistry.registerTileEntity(YKTileRuneWorkbench.class, 
 				new ResourceLocation(YuzuKizuFlower.MODID, "ykte_rune_workbench"));
         
+        GameRegistry.registerTileEntity(YKTileTerraPlate.class, 
+				new ResourceLocation(YuzuKizuFlower.MODID, "ykte_terra_plate"));
         //ネットワーク登録
         NetworkHandler.init();
         
@@ -405,6 +410,13 @@ public class YuzuKizuFlower
                 .setUnlocalizedName("rune_workbench")
         );
         
+        // テラプレート
+        event.getRegistry().register(
+                new YKBlockTerraPlate()
+                .setRegistryName(MODID, "terra_plate")
+                .setUnlocalizedName("terra_plate")
+        );
+        
     }
     
     /**
@@ -535,6 +547,11 @@ public class YuzuKizuFlower
     			.setRegistryName(MODID, "rune_workbench")
     	);
     	
+    	// テラプレート
+    	event.getRegistry().register(new ItemBlock(YuzuKizuBlocks.TERRA_PLATE)
+    			.setRegistryName(MODID, "terra_plate")
+    	);
+    	
     }
     
     /**
@@ -659,6 +676,10 @@ public class YuzuKizuFlower
     	// ルーン作業台
     	ModelLoader.setCustomModelResourceLocation(Item.getItemFromBlock(YuzuKizuBlocks.RUNE_WORKBENCH), 0,
     			new ModelResourceLocation(YuzuKizuBlocks.RUNE_WORKBENCH.getRegistryName(), "inventory"));
+
+    	// テラプレート
+    	ModelLoader.setCustomModelResourceLocation(Item.getItemFromBlock(YuzuKizuBlocks.TERRA_PLATE), 0,
+    			new ModelResourceLocation(YuzuKizuBlocks.TERRA_PLATE.getRegistryName(), "inventory"));
     	
     }
     

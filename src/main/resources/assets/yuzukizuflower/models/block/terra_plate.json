@@ -1,0 +1,35 @@
+{
+    "parent": "block/block",
+    "elements": [
+        {   "--comment" : "土台",
+        	"from": [ 0, 0, 0 ],
+            "to": [ 16, 2, 16 ],
+            "faces": {
+                "down":  {"texture": "#base", "cullface": "down" },
+                "up":    {"texture": "#base", "cullface": "up"},
+                "north": {"texture": "#base", "cullface": "north" },
+                "south": {"texture": "#base", "cullface": "south" },
+                "west":  {"texture": "#base", "cullface": "west" },
+                "east":  {"texture": "#base", "cullface": "east" }
+            }
+        },
+        {   "--comment" : "ガラスカバー",
+        	"from": [ 0, 2, 0 ],
+            "to": [ 16, 16, 16 ],
+            "faces": {
+                "up":    { "uv": [ 0, 0, 16, 16 ], "texture": "#cover", "cullface": "up" },
+                "north": { "uv": [ 0, 0, 16, 16 ], "texture": "#cover", "cullface": "north" },
+                "south": { "uv": [ 0, 0, 16, 16 ], "texture": "#cover", "cullface": "south" },
+                "west":  { "uv": [ 0, 0, 16, 16 ], "texture": "#cover", "cullface": "west" },
+                "east":  { "uv": [ 0, 0, 16, 16 ], "texture": "#cover", "cullface": "east" }
+            }
+        }
+    ],
+    "textures": {
+    	"particle":"yuzukizuflower:blocks/terra_plate_top",
+        "base":"yuzukizuflower:blocks/terra_plate_top",
+        "grass":"yuzukizuflower:blocks/boxed_grass",
+        "cover":"minecraft:blocks/glass"
+    }
+    
+}

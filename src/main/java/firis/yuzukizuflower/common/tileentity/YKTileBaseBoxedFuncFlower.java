@@ -120,11 +120,7 @@ public abstract class YKTileBaseBoxedFuncFlower extends YKTileBaseManaPool imple
 				return;
 			}
 			
-			ItemStack stack = getStackInputSlotFirst();
-			
-			//レシピの確認
-			ManaRecipe recipe = funcFlowerRecipes.getMatchesRecipe(stack, true);
-			
+			ManaRecipe recipe = getManaRecipe();
 			if (recipe == null) {
 				return;
 			}
@@ -177,6 +173,18 @@ public abstract class YKTileBaseBoxedFuncFlower extends YKTileBaseManaPool imple
 		//同期をとる
 		this.playerServerSendPacket();
 		
+	}
+	
+	/**
+	 * マナ変換レシピを取得する
+	 * @return
+	 */
+	public ManaRecipe getManaRecipe() {
+		
+		ItemStack stack = getStackInputSlotFirst();
+		
+		//レシピの確認
+		return funcFlowerRecipes.getMatchesRecipe(stack, true);
 	}
 	
 	/**

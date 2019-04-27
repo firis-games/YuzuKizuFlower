@@ -17,6 +17,7 @@ import firis.yuzukizuflower.common.container.YKContainerPetalWorkbench;
 import firis.yuzukizuflower.common.container.YKContainerRemoteChest;
 import firis.yuzukizuflower.common.container.YKContainerRuneWorkbench;
 import firis.yuzukizuflower.common.container.YKContainerScrollChest;
+import firis.yuzukizuflower.common.container.YKContainerTerraPlate;
 import firis.yuzukizuflower.common.inventory.IInventoryMultiItemHandler;
 import firis.yuzukizuflower.common.inventory.IScrollInventoryItemHandler;
 import firis.yuzukizuflower.common.inventory.PetalInventory;
@@ -118,6 +119,10 @@ public class CommonProxy {
 					return new YKContainerRuneWorkbench(
 							new RuneCraftInventory(tile), 
 							player.inventory);
+				
+				//テラプレート
+				case YKGuiHandler.TERRA_PLATE :
+					return new YKContainerTerraPlate((IInventory) tile, player.inventory);
 		}
 		return null;
 	}

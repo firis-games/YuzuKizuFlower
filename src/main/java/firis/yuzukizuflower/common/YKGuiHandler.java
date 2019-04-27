@@ -55,6 +55,9 @@ public class YKGuiHandler implements IGuiHandler {
 	//ルーン作業台
 	public static final int RUNE_WORKBENCH = 16;
 		
+	//ルーン作業台
+	public static final int TERRA_PLATE = 17;
+		
 		
 	@Override
 	public Object getServerGuiElement(int ID, EntityPlayer player, World world, int x, int y, int z) {
