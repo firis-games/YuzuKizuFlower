@@ -48,6 +48,9 @@ public class YKGuiHandler implements IGuiHandler {
 	
 	//コーポリアチェスト
 	public static final int CORPOREA_CHEST = 14;
+	
+	//コーポリアチェスト
+	public static final int PETAL_WORKBENCH = 15;
 		
 	@Override
 	public Object getServerGuiElement(int ID, EntityPlayer player, World world, int x, int y, int z) {

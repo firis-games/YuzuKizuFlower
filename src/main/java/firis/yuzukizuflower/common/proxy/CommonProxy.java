@@ -13,10 +13,12 @@ import firis.yuzukizuflower.common.container.YKContainerBoxedRannuncarpus;
 import firis.yuzukizuflower.common.container.YKContainerBoxedYuquarry;
 import firis.yuzukizuflower.common.container.YKContainerCorporeaChest;
 import firis.yuzukizuflower.common.container.YKContainerManaTank;
+import firis.yuzukizuflower.common.container.YKContainerPetalWorkbench;
 import firis.yuzukizuflower.common.container.YKContainerRemoteChest;
 import firis.yuzukizuflower.common.container.YKContainerScrollChest;
 import firis.yuzukizuflower.common.inventory.IInventoryMultiItemHandler;
 import firis.yuzukizuflower.common.inventory.IScrollInventoryItemHandler;
+import firis.yuzukizuflower.common.inventory.PetalInventory;
 import firis.yuzukizuflower.common.tileentity.YKTileCorporeaChest;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.inventory.IInventory;
@@ -102,6 +104,12 @@ public class CommonProxy {
 					YKTileCorporeaChest corpTile = (YKTileCorporeaChest) tile;
 					IInventoryMultiItemHandler handler = corpTile.getIInventoryFromCorporeaNetwork();
 					return new YKContainerCorporeaChest(handler, player.inventory);
+				
+				//花びら作業台
+				case YKGuiHandler.PETAL_WORKBENCH :
+					return new YKContainerPetalWorkbench(
+							new PetalInventory(tile), 
+							player.inventory);
 		}
 		return null;
 	}

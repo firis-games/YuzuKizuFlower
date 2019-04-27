@@ -47,6 +47,11 @@ public class BotaniaHelper {
 	 * ガーマリリスの発電レシピ
 	 */
 	public static IManaGenerator recipesGourmaryllis = new GeneratorGourmaryllis();
+	
+	/**
+	 * 花びら調合所のレシピ
+	 */
+	public static RecipesPetal recipesPetal = new RecipesPetal();
 		
 	/**
 	 * 対象アイテムがbotania:specialFlowerかチェックする
