@@ -4,7 +4,7 @@ import java.text.NumberFormat;
 
 import firis.yuzukizuflower.common.container.YKContainerPetalWorkbench;
 import firis.yuzukizuflower.common.inventory.PetalInventory;
-import firis.yuzukizuflower.common.tileentity.YKWaterFluidHandler;
+import firis.yuzukizuflower.common.tileentity.handler.YKWaterFluidHandler;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.inventory.GuiContainer;
 import net.minecraft.client.renderer.RenderHelper;

@@ -5,7 +5,7 @@ import java.util.List;
 
 import firis.yuzukizuflower.common.botania.BotaniaHelper;
 import firis.yuzukizuflower.common.tileentity.YKTilePetalWorkbench;
-import firis.yuzukizuflower.common.tileentity.YKWaterFluidHandler;
+import firis.yuzukizuflower.common.tileentity.handler.YKWaterFluidHandler;
 import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraftforge.fluids.capability.CapabilityFluidHandler;
