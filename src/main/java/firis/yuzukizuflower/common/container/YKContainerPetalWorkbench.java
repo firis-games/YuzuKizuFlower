@@ -1,5 +1,6 @@
 package firis.yuzukizuflower.common.container;
 
+import firis.yuzukizuflower.common.botania.BotaniaHelper;
 import firis.yuzukizuflower.common.container.slot.YKSlotInventory;
 import firis.yuzukizuflower.common.inventory.PetalInventory;
 import net.minecraft.entity.player.EntityPlayer;
@@ -38,7 +39,13 @@ public class YKContainerPetalWorkbench extends Container {
         }
 		
 		//seedスロット
-		this.addSlotToContainer(new YKSlotInventory(iinv, 16, 16, 77));
+		this.addSlotToContainer(new YKSlotInventory(iinv, 16, 16, 77) {
+			@Override
+			public boolean isItemValid(ItemStack stack)
+		    {
+				return BotaniaHelper.recipesPetal.isSeed(stack);
+		    }
+		});
 		
 		//outputスロット
 		this.addSlotToContainer(new YKSlotInventory(iinv, 17, 156, 50) {
