@@ -14,11 +14,13 @@ import firis.yuzukizuflower.client.gui.YKGuiContainerCorporeaChest;
 import firis.yuzukizuflower.client.gui.YKGuiContainerManaTank;
 import firis.yuzukizuflower.client.gui.YKGuiContainerPetalWorkbench;
 import firis.yuzukizuflower.client.gui.YKGuiContainerRemoteChest;
+import firis.yuzukizuflower.client.gui.YKGuiContainerRuneWorkbench;
 import firis.yuzukizuflower.client.gui.YKGuiContainerScrollChest;
 import firis.yuzukizuflower.common.YKGuiHandler;
 import firis.yuzukizuflower.common.inventory.IScrollInventoryClientItemHandler;
 import firis.yuzukizuflower.common.inventory.IScrollInventoryItemHandler;
 import firis.yuzukizuflower.common.inventory.PetalInventory;
+import firis.yuzukizuflower.common.inventory.RuneCraftInventory;
 import firis.yuzukizuflower.common.proxy.CommonProxy;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.inventory.IInventory;
@@ -108,6 +110,11 @@ public class ClientProxy extends CommonProxy{
 				//花びら作業台
 				case YKGuiHandler.PETAL_WORKBENCH :
 					return new YKGuiContainerPetalWorkbench(new PetalInventory(tile), 
+							player.inventory);
+
+				//ルーン作業台
+				case YKGuiHandler.RUNE_WORKBENCH :
+					return new YKGuiContainerRuneWorkbench(new RuneCraftInventory(tile), 
 							player.inventory);
 
 		}

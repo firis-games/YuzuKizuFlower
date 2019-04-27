@@ -76,3 +76,6 @@ item.remote_chest.name=縁結びの輪
 
 tile.petal_workbench.name=花びら作業台
 gui.petal_workbench.name=花びら作業台
+
+tile.rune_workbench.name=ルーンの作業台
+gui.rune_workbench.name=ルーンの作業台

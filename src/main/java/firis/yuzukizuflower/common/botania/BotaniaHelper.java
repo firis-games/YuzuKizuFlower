@@ -52,6 +52,11 @@ public class BotaniaHelper {
 	 * 花びら調合所のレシピ
 	 */
 	public static RecipesPetal recipesPetal = new RecipesPetal();
+	
+	/**
+	 * ルーンの祭壇のレシピ
+	 */
+	public static RecipesRuneAltar recipesRuneAltar = new RecipesRuneAltar();
 		
 	/**
 	 * 対象アイテムがbotania:specialFlowerかチェックする
