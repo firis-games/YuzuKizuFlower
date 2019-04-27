@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import firis.yuzukizuflower.common.botania.BotaniaHelper;
+import firis.yuzukizuflower.common.tileentity.YKTilePetalWorkbench;
 import firis.yuzukizuflower.common.tileentity.YKWaterFluidHandler;
 import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.TileEntity;
@@ -19,6 +20,15 @@ public class PetalInventory extends IInventoryItemHandler {
 	 */
 	public PetalInventory(TileEntity tile) {
 		super(tile);
+	}
+	
+	/**
+	 * 内部インベントリ
+	 */
+	protected IItemHandler getInventory() {
+		if (tile == null) return null;
+		IItemHandler capability = ((YKTilePetalWorkbench) tile).inventory;
+		return capability;
 	}
 	
 	/**
