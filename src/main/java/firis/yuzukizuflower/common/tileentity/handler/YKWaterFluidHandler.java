@@ -1,5 +1,6 @@
 package firis.yuzukizuflower.common.tileentity.handler;
 
+import net.minecraft.tileentity.TileEntity;
 import net.minecraftforge.fluids.FluidRegistry;
 
 /**
@@ -12,7 +13,7 @@ public class YKWaterFluidHandler extends YKOnlyFluidHandler {
 	/**
 	 * コンストラクタ
 	 */
-	public YKWaterFluidHandler(int maxLiquid) {
-		super(FluidRegistry.getFluid("water"), maxLiquid);
+	public YKWaterFluidHandler(TileEntity tile, int maxLiquid) {
+		super(FluidRegistry.getFluid("water"), tile, maxLiquid);
 	}	
 }

@@ -1,6 +1,8 @@
 package firis.yuzukizuflower.common.tileentity.handler;
 
+import firis.yuzukizuflower.common.tileentity.IYKPlayerServerSendPacket;
 import net.minecraft.nbt.NBTTagCompound;
+import net.minecraft.tileentity.TileEntity;
 import net.minecraftforge.fluids.Fluid;
 import net.minecraftforge.fluids.FluidStack;
 import net.minecraftforge.fluids.capability.IFluidHandler;
@@ -16,11 +18,14 @@ public abstract class YKOnlyFluidHandler implements IFluidHandler, IFluidTankPro
 	/**
 	 * コンストラクタ
 	 */
-	public YKOnlyFluidHandler(Fluid fluidType, int maxLiquid) {
+	public YKOnlyFluidHandler(Fluid fluidType, TileEntity tile, int maxLiquid) {
 		this.liquid = 0;
 		this.maxLiquid = maxLiquid;
 		this.fluidType = fluidType;
+		this.tile = tile;
 	}
+	
+	protected final TileEntity tile;
 	
 	/************************************************
 	 * 液体管理用
@@ -33,6 +38,11 @@ public abstract class YKOnlyFluidHandler implements IFluidHandler, IFluidTankPro
 	}
 	public void receiveLiquid(Integer liquid) {
 		this.liquid = this.liquid + liquid;
+		
+		//同期処理
+		if (tile instanceof IYKPlayerServerSendPacket) {
+			((IYKPlayerServerSendPacket) tile).playerServerSendPacket();
+		}
 	}
 	
 	/**

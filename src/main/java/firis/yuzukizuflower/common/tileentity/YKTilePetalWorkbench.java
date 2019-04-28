@@ -20,7 +20,7 @@ import net.minecraftforge.fluids.FluidStack;
 import net.minecraftforge.fluids.capability.CapabilityFluidHandler;
 import net.minecraftforge.items.ItemStackHandler;
 
-public class YKTilePetalWorkbench extends TileEntity implements ITickable {
+public class YKTilePetalWorkbench extends TileEntity implements ITickable, IYKPlayerServerSendPacket {
 	
 	public ItemStackHandler inventory;
 	
@@ -31,7 +31,7 @@ public class YKTilePetalWorkbench extends TileEntity implements ITickable {
 		//Inventory初期化
 		this.inventory = new ItemStackHandler(18);
 		
-		this.fluidHandler = new YKWaterFluidHandler(10000);
+		this.fluidHandler = new YKWaterFluidHandler(this, 10000);
 		
 	}
 	
@@ -74,7 +74,7 @@ public class YKTilePetalWorkbench extends TileEntity implements ITickable {
 	 * サーバー->クライアントのデータ同期用
 	 * サーバーからクライアントへデータを送信する
 	 */
-	protected void playerServerSendPacket() {
+	public void playerServerSendPacket() {
 		//Server Side
 		if (!this.getWorld().isRemote) {
 			
