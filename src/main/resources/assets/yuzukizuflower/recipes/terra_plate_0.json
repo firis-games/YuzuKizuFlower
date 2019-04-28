@@ -1,0 +1,30 @@
+{
+	"type": "forge:ore_shaped",
+	"pattern": [
+		"nxn",
+		"mym",
+		"nzn"
+	],
+	"key": {
+		"x": {
+			"item": "yuzukizuflower:flower_box"
+		},
+		"y": {
+			"item": "botania:terraplate"
+		},
+		"z": {
+			"item": "botania:pool",
+			"data": 0
+		},
+		"m": {
+			"item": "botania:livingrock",
+			"data": 0
+		},
+		"n": {
+			"item": "minecraft:lapis_block"
+		}
+	},
+	"result": {
+		"item": "yuzukizuflower:terra_plate"
+	}
+}

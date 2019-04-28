@@ -72,3 +72,12 @@ tile.corporea_chest.name=Corporea Chest
 gui.corporea_chest.name=Corporea Chest
 
 item.remote_chest.name=Bonds Bracelet
+
+tile.petal_workbench.name=Petal Workbench
+gui.petal_workbench.name=Petal Workbench
+
+tile.rune_workbench.name=Rune Workbench
+gui.rune_workbench.name=Rune Workbench
+
+tile.terra_plate.name=Boxed Terra Plate
+gui.terra_plate.name=Boxed Terra Plate

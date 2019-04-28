@@ -1,0 +1,26 @@
+{
+	"type": "forge:ore_shaped",
+	"pattern": [
+		"nxn",
+		"nyn",
+		"nzn"
+	],
+	"key": {
+		"x": {
+			"item": "minecraft:crafting_table"
+		},
+		"y": {
+			"item": "botania:altar",
+			"data": 32767
+		},
+		"z": {
+			"item": "minecraft:bucket"
+		},
+		"n": {
+			"item": "minecraft:iron_ingot"
+		}
+	},
+	"result": {
+		"item": "yuzukizuflower:petal_workbench"
+	}
+}

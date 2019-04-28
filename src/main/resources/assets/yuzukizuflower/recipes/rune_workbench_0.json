@@ -1,0 +1,27 @@
+{
+	"type": "forge:ore_shaped",
+	"pattern": [
+		"nxn",
+		"nyn",
+		"nzn"
+	],
+	"key": {
+		"x": {
+			"item": "minecraft:crafting_table"
+		},
+		"y": {
+			"item": "botania:runealtar"
+		},
+		"z": {
+			"item": "botania:pool",
+			"data": 0
+		},
+		"n": {
+			"item": "botania:livingrock",
+			"data": 0
+		}
+	},
+	"result": {
+		"item": "yuzukizuflower:rune_workbench"
+	}
+}
