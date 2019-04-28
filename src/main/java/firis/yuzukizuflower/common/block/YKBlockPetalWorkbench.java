@@ -7,6 +7,8 @@ import net.minecraft.block.BlockContainer;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.inventory.InventoryHelper;
+import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.BlockRenderLayer;
 import net.minecraft.util.EnumBlockRenderType;
@@ -17,6 +19,7 @@ import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
+import net.minecraftforge.items.IItemHandler;
 
 /**
  * 花びら作業台
@@ -92,6 +95,29 @@ public class YKBlockPetalWorkbench extends BlockContainer {
 				worldIn, pos.getX(), pos.getY(), pos.getZ());
 		
     	return true;
+    }
+	
+	/**
+	 * ブロック破壊の際に内部インベントリのアイテムをばら撒く
+     * Called serverside after this block is replaced with another in Chunk, but before the Tile Entity is updated
+     */
+    @Override
+    public void breakBlock(World worldIn, BlockPos pos, IBlockState state)
+    {
+        TileEntity tile = worldIn.getTileEntity(pos);
+        if (tile != null) {
+        	IItemHandler capability = ((YKTilePetalWorkbench)tile).inventory;
+        	if (capability != null) {
+        		for (int i = 0; i < capability.getSlots(); i++) {
+        			ItemStack stack = capability.getStackInSlot(i);
+        			if (!stack.isEmpty()) {
+        				InventoryHelper.spawnItemStack(worldIn, pos.getX(), pos.getY(), pos.getZ(), stack);
+        			}
+        		}
+        		worldIn.updateComparatorOutputLevel(pos, this);
+        	}
+        }
+        super.breakBlock(worldIn, pos, state);
     }
 
 }
