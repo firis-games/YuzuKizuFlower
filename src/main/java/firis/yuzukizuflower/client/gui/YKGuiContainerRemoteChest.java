@@ -3,6 +3,7 @@ package firis.yuzukizuflower.client.gui;
 import firis.yuzukizuflower.client.gui.parts.YKGuiScrollBar;
 import firis.yuzukizuflower.common.container.YKContainerRemoteChest;
 import firis.yuzukizuflower.common.inventory.IScrollInventory;
+import firis.yuzukizuflower.common.item.YKItemRemoteChest;
 import net.minecraft.entity.player.InventoryPlayer;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
@@ -20,7 +21,7 @@ public class YKGuiContainerRemoteChest extends YKGuiContainerBaseScrollInventory
 	 * @param iinv
 	 * @param playerInv
 	 */
-	public YKGuiContainerRemoteChest(IScrollInventory iinv, InventoryPlayer playerInv) {
+	public YKGuiContainerRemoteChest(IScrollInventory iinv, InventoryPlayer playerInv, boolean keyMode) {
 		
 		super(new YKContainerRemoteChest(iinv, playerInv), iinv);
 		
@@ -29,6 +30,11 @@ public class YKGuiContainerRemoteChest extends YKGuiContainerBaseScrollInventory
 
 		String title = "";
 		ItemStack stack = playerInv.player.getHeldItemMainhand();
+		
+		if (keyMode) {
+			stack = YKItemRemoteChest.getBaublesItemStack(playerInv.player);
+		}
+		
 		if(stack.hasTagCompound()) {
         	NBTTagCompound nbt = stack.getTagCompound();
         	

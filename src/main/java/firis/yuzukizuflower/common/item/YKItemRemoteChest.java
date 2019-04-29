@@ -88,7 +88,7 @@ public class YKItemRemoteChest extends Item implements IBauble {
 		ItemStack stack = playerIn.getHeldItemMainhand();
 		
 		//条件を満たす場合にGuiを開く
-		if(YKItemRemoteChest.openGui(stack, playerIn)) {
+		if(YKItemRemoteChest.openGui(stack, playerIn, false)) {
 			return new ActionResult<ItemStack>(EnumActionResult.SUCCESS, playerIn.getHeldItem(handIn));
 		}
 		
@@ -101,7 +101,7 @@ public class YKItemRemoteChest extends Item implements IBauble {
 	 * @param player
 	 * @return
 	 */
-	public static boolean openGui(ItemStack stack, EntityPlayer player) {
+	public static boolean openGui(ItemStack stack, EntityPlayer player, boolean keyMode) {
 		
 		if(!stack.isEmpty() && stack.hasTagCompound()) {
         	NBTTagCompound nbt = stack.getTagCompound();
@@ -117,8 +117,11 @@ public class YKItemRemoteChest extends Item implements IBauble {
         	if (tile != null && !tile.isInvalid()) {
         		IItemHandler capability = tile.getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY, null);
         		if (capability != null) {
+        			int guiid = YKGuiHandler.REMOTE_CHEST;
+        			if (keyMode) guiid = YKGuiHandler.REMOTE_CHEST_KEY;
+        			
 	            	//右クリックでGUIを開く
-        			player.openGui(YuzuKizuFlower.INSTANCE, YKGuiHandler.REMOTE_CHEST,
+        			player.openGui(YuzuKizuFlower.INSTANCE, guiid,
 	        				player.getEntityWorld(), posX, posY, posZ);
         			return true;
         		}

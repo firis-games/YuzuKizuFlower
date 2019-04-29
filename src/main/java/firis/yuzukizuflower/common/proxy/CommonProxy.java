@@ -99,6 +99,7 @@ public class CommonProxy {
 				
 				//リモートチェスト
 				case YKGuiHandler.REMOTE_CHEST :
+				case YKGuiHandler.REMOTE_CHEST_KEY :
 					IScrollInventoryItemHandler cinv = new IScrollInventoryItemHandler(tile);
 					return new YKContainerRemoteChest(cinv, player.inventory);
 				

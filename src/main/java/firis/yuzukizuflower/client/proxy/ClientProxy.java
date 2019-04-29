@@ -102,7 +102,12 @@ public class ClientProxy extends CommonProxy{
 				//リモートチェスト
 				case YKGuiHandler.REMOTE_CHEST :
 					handler = new IScrollInventoryClientItemHandler(54);
-					return new YKGuiContainerRemoteChest(handler, player.inventory);
+					return new YKGuiContainerRemoteChest(handler, player.inventory, false);
+				
+				//リモートチェスト(KEY)
+				case YKGuiHandler.REMOTE_CHEST_KEY :
+					handler = new IScrollInventoryClientItemHandler(54);
+					return new YKGuiContainerRemoteChest(handler, player.inventory, true);
 				
 				//コーポリアチェスト
 				case YKGuiHandler.CORPOREA_CHEST :

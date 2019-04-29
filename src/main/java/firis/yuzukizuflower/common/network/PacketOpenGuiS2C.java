@@ -25,7 +25,7 @@ public class PacketOpenGuiS2C implements IMessageHandler<PacketOpenGuiS2C.Messag
 		ItemStack chest = YKItemRemoteChest.getBaublesItemStack(player);
 		
 		//条件を満たす場合にGUIを表示する
-		YKItemRemoteChest.openGui(chest, player);
+		YKItemRemoteChest.openGui(chest, player, true);
 		
 		return null;
 	}

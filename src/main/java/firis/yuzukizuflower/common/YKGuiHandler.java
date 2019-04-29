@@ -57,6 +57,9 @@ public class YKGuiHandler implements IGuiHandler {
 		
 	//ルーン作業台
 	public static final int TERRA_PLATE = 17;
+	
+	//リモートチェスト(キーから表示)
+	public static final int REMOTE_CHEST_KEY = 18;
 		
 		
 	@Override
