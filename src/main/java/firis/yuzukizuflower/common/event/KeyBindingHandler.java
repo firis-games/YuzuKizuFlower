@@ -2,7 +2,6 @@ package firis.yuzukizuflower.common.event;
 
 import org.lwjgl.input.Keyboard;
 
-import firis.yuzukizuflower.YuzuKizuFlower;
 import firis.yuzukizuflower.common.network.NetworkHandler;
 import firis.yuzukizuflower.common.network.PacketOpenGuiS2C;
 import net.minecraft.client.settings.KeyBinding;
@@ -22,7 +21,7 @@ import net.minecraftforge.fml.relauncher.SideOnly;
 @EventBusSubscriber
 public class KeyBindingHandler {
 
-	public static final KeyBinding openGui = new KeyBinding("key.open_gui", Keyboard.KEY_N, YuzuKizuFlower.MODID);
+	public static final KeyBinding openGui = new KeyBinding("key.open_gui", Keyboard.KEY_N, "itemGroup.tabYuzuKizuFlower");
 	
 	/**
 	 * キーバインド初期化
