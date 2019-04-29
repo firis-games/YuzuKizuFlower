@@ -18,6 +18,7 @@ import firis.yuzukizuflower.client.gui.YKGuiContainerRuneWorkbench;
 import firis.yuzukizuflower.client.gui.YKGuiContainerScrollChest;
 import firis.yuzukizuflower.client.gui.YKGuiContainerTerraPlate;
 import firis.yuzukizuflower.common.YKGuiHandler;
+import firis.yuzukizuflower.common.event.KeyBindingHandler;
 import firis.yuzukizuflower.common.inventory.IScrollInventoryClientItemHandler;
 import firis.yuzukizuflower.common.inventory.IScrollInventoryItemHandler;
 import firis.yuzukizuflower.common.inventory.PetalInventory;
@@ -125,5 +126,11 @@ public class ClientProxy extends CommonProxy{
 
 		}
 		return null;
+	}
+	
+	@Override
+	public void registerKeyBinding() {
+		//キーバインディング設定
+		KeyBindingHandler.init();
 	}
 }

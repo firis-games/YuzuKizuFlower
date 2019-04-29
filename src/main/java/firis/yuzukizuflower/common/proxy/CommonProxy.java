@@ -140,4 +140,13 @@ public class CommonProxy {
 	public Object getClientGuiElement(int ID, EntityPlayer player, World world, int x, int y, int z) {
 		return null;
 	}
+	
+	
+	/**
+	 * キー入力イベント登録
+	 */
+	public void registerKeyBinding() {
+		
+	}
+	
 }

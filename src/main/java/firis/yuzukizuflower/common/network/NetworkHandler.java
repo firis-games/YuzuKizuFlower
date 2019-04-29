@@ -22,6 +22,8 @@ public class NetworkHandler {
 		//スクロールチェスト用
 		network.registerMessage(PacketGuiScroll.class, PacketGuiScroll.MessageGuiScroll.class, idx++, Side.SERVER);
 		
+		//縁結びの輪表示処理
+		network.registerMessage(PacketOpenGuiS2C.class, PacketOpenGuiS2C.MessageOpenGui.class, idx++, Side.SERVER);
     }
 
 }

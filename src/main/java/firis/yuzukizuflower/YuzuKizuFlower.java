@@ -261,6 +261,9 @@ public class YuzuKizuFlower
     	//液体マナを生成
     	MinecraftForge.TERRAIN_GEN_BUS.register(PopulateChunkEventHandler.class);
     	
+    	//キーバインディング設定
+    	proxy.registerKeyBinding();
+    	
     }
     
     @EventHandler

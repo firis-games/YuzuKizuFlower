@@ -147,7 +147,7 @@ public class YKItemRemoteChest extends Item implements IBauble {
      * @param stack
      * @return
      */
-    private static BlockPos getNbtBlockPos(ItemStack stack) {
+    public static BlockPos getNbtBlockPos(ItemStack stack) {
     	
     	BlockPos pos = null;
     	if(stack.hasTagCompound()) {
