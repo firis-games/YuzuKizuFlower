@@ -209,8 +209,8 @@ public class IScrollInventoryItemHandler implements IScrollInventory {
 		//01.isItemValidチェック
 		boolean ret = this.getItemHandler().isItemValid(index, stack);
 		
-		//02.insertItemチェック
-		if (ret) {
+		//02.insertItemチェック(スクロールチェストの場合は判断を行わない)
+		if (ret && !this.animationFlg) {
 			//シミュレート
 			ItemStack insertStack = this.getItemHandler().insertItem(index, stack, true);
 			//すべてのアイテムを挿入、または1つ以上挿入可能の場合true

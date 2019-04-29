@@ -135,17 +135,6 @@ public abstract class IInventoryItemHandler implements IInventory {
 		//01.isItemValidチェック
 		boolean ret = capability.isItemValid(index, stack);
 		
-		//02.insertItemチェック
-		if (ret) {
-			//シミュレート
-			ItemStack insertStack = capability.insertItem(index, stack, true);
-			//すべてのアイテムを挿入、または1つ以上挿入可能の場合true
-			if (insertStack.isEmpty() || stack.getCount() != insertStack.getCount()) {
-				ret = true;
-			} else {
-				ret = false;
-			}
-		}
 		return ret;
 	}
 
