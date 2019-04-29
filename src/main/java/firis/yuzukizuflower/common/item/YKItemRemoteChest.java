@@ -87,7 +87,23 @@ public class YKItemRemoteChest extends Item implements IBauble {
 		
 		ItemStack stack = playerIn.getHeldItemMainhand();
 		
-		if(stack.hasTagCompound()) {
+		//条件を満たす場合にGuiを開く
+		if(YKItemRemoteChest.openGui(stack, playerIn)) {
+			return new ActionResult<ItemStack>(EnumActionResult.SUCCESS, playerIn.getHeldItem(handIn));
+		}
+		
+        return new ActionResult<ItemStack>(EnumActionResult.PASS, playerIn.getHeldItem(handIn));
+    }
+	
+	/**
+	 * 条件を満たす場合にGuiを表示する
+	 * @param stack
+	 * @param player
+	 * @return
+	 */
+	public static boolean openGui(ItemStack stack, EntityPlayer player) {
+		
+		if(!stack.isEmpty() && stack.hasTagCompound()) {
         	NBTTagCompound nbt = stack.getTagCompound();
         	
         	Integer posX = nbt.getInteger("BlockPosX");
@@ -96,22 +112,20 @@ public class YKItemRemoteChest extends Item implements IBauble {
         	
         	BlockPos pos = new BlockPos(posX, posY, posZ);
         	
-        	TileEntity tile = worldIn.getTileEntity(pos);
+        	TileEntity tile = player.getEntityWorld().getTileEntity(pos);
         	
         	if (tile != null && !tile.isInvalid()) {
         		IItemHandler capability = tile.getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY, null);
         		if (capability != null) {
 	            	//右クリックでGUIを開く
-	        		playerIn.openGui(YuzuKizuFlower.INSTANCE, YKGuiHandler.REMOTE_CHEST,
-	        				worldIn, posX, posY, posZ);
-
-	        		return new ActionResult<ItemStack>(EnumActionResult.SUCCESS, playerIn.getHeldItem(handIn));
+        			player.openGui(YuzuKizuFlower.INSTANCE, YKGuiHandler.REMOTE_CHEST,
+	        				player.getEntityWorld(), posX, posY, posZ);
+        			return true;
         		}
         	}
-        }
-		
-        return new ActionResult<ItemStack>(EnumActionResult.PASS, playerIn.getHeldItem(handIn));
-    }
+		}
+		return false;
+	}
 	
 	/**
      * Informationを表示する
@@ -147,7 +161,7 @@ public class YKItemRemoteChest extends Item implements IBauble {
      * @param stack
      * @return
      */
-    public static BlockPos getNbtBlockPos(ItemStack stack) {
+    private static BlockPos getNbtBlockPos(ItemStack stack) {
     	
     	BlockPos pos = null;
     	if(stack.hasTagCompound()) {
@@ -176,15 +190,9 @@ public class YKItemRemoteChest extends Item implements IBauble {
 	/******************************************************************************************/
 	
 	/**
-	 * アイテム回収イベント
-	 * @param event
+	 * Baublesスロットの縁結びの輪を取得する
 	 */
-	@SubscribeEvent
-	public static void onItemPickup(EntityItemPickupEvent event) {
-		
-		EntityPlayer player = event.getEntityPlayer();
-		if (player == null) return;
-		
+	public static ItemStack getBaublesItemStack(EntityPlayer player) {
 		//アミュレット枠
 		IBaublesItemHandler baublesHandler = BaublesApi.getBaublesHandler(player);
 		
@@ -203,10 +211,25 @@ public class YKItemRemoteChest extends Item implements IBauble {
 				}
 			}
 		}
+		return chest;
+	}
+	
+	/**
+	 * アイテム回収イベント
+	 * @param event
+	 */
+	@SubscribeEvent
+	public static void onItemPickup(EntityItemPickupEvent event) {
+		
+		EntityPlayer player = event.getEntityPlayer();
+		if (player == null) return;
+		
+		//アミュレット枠から縁結びの輪を取得する
+		ItemStack chest = YKItemRemoteChest.getBaublesItemStack(player);
 		
 		if (chest.isEmpty()) return;
 		
-		BlockPos pos = getNbtBlockPos(chest);
+		BlockPos pos = YKItemRemoteChest.getNbtBlockPos(chest);
 		World world = player.getEntityWorld();
 		IItemHandler capability = null;
 		TileEntity tile = world.getTileEntity(pos);
