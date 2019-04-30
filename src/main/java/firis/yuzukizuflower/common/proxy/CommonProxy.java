@@ -142,11 +142,17 @@ public class CommonProxy {
 		return null;
 	}
 	
-	
 	/**
 	 * キー入力イベント登録
 	 */
 	public void registerKeyBinding() {
+		
+	}
+	
+	/**
+	 * PlayerLayerを登録する
+	 */
+	public void initLayerRenderer() {
 		
 	}
 	

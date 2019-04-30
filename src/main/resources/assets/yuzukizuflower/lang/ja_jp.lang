@@ -84,3 +84,5 @@ tile.terra_plate.name=箱入りテラプレート
 gui.terra_plate.name=箱入りテラプレート
 
 key.open_gui=縁結びの輪インベントリ表示
+
+item.backpack_chest.name=背負いチェスト

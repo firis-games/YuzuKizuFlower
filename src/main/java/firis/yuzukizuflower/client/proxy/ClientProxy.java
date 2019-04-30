@@ -1,5 +1,7 @@
 package firis.yuzukizuflower.client.proxy;
 
+import java.util.Map;
+
 import firis.yuzukizuflower.client.gui.YKGuiContainerBoxedAkanerald;
 import firis.yuzukizuflower.client.gui.YKGuiContainerBoxedAkariculture;
 import firis.yuzukizuflower.client.gui.YKGuiContainerBoxedAocean;
@@ -17,6 +19,7 @@ import firis.yuzukizuflower.client.gui.YKGuiContainerRemoteChest;
 import firis.yuzukizuflower.client.gui.YKGuiContainerRuneWorkbench;
 import firis.yuzukizuflower.client.gui.YKGuiContainerScrollChest;
 import firis.yuzukizuflower.client.gui.YKGuiContainerTerraPlate;
+import firis.yuzukizuflower.client.layer.YKBackPackLayer;
 import firis.yuzukizuflower.common.YKGuiHandler;
 import firis.yuzukizuflower.common.event.KeyBindingHandler;
 import firis.yuzukizuflower.common.inventory.IScrollInventoryClientItemHandler;
@@ -24,6 +27,8 @@ import firis.yuzukizuflower.common.inventory.IScrollInventoryItemHandler;
 import firis.yuzukizuflower.common.inventory.PetalInventory;
 import firis.yuzukizuflower.common.inventory.RuneCraftInventory;
 import firis.yuzukizuflower.common.proxy.CommonProxy;
+import net.minecraft.client.Minecraft;
+import net.minecraft.client.renderer.entity.RenderPlayer;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.inventory.IInventory;
 import net.minecraft.tileentity.TileEntity;
@@ -137,5 +142,22 @@ public class ClientProxy extends CommonProxy{
 	public void registerKeyBinding() {
 		//キーバインディング設定
 		KeyBindingHandler.init();
+	}
+	
+	/**
+	 * PlayerLayerを登録する
+	 */
+	@Override
+	public void initLayerRenderer() {
+		
+		Map<String, RenderPlayer> skinMap = Minecraft.getMinecraft().getRenderManager().getSkinMap();
+		
+		RenderPlayer render;
+		render = skinMap.get("default");
+		render.addLayer(new YKBackPackLayer());
+
+		render = skinMap.get("slim");
+		render.addLayer(new YKBackPackLayer());
+		
 	}
 }

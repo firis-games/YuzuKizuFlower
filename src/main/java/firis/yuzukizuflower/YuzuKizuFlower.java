@@ -24,6 +24,7 @@ import firis.yuzukizuflower.common.block.YKBlockRuneWorkbench;
 import firis.yuzukizuflower.common.block.YKBlockScrollChest;
 import firis.yuzukizuflower.common.block.YKBlockTerraPlate;
 import firis.yuzukizuflower.common.event.PopulateChunkEventHandler;
+import firis.yuzukizuflower.common.item.YKItemBackpackChest;
 import firis.yuzukizuflower.common.item.YKItemBase;
 import firis.yuzukizuflower.common.item.YKItemRemoteChest;
 import firis.yuzukizuflower.common.network.NetworkHandler;
@@ -142,6 +143,7 @@ public class YuzuKizuFlower
     	public final static Item BOXED_AKANERALD = null;
     	public final static Item AKANERALD = null;
     	public final static Item REMOTE_CHEST = null;
+    	public final static Item BACKPACK_CHEST = null;
     }
     /**
      * ブロックインスタンス保持用
@@ -263,6 +265,9 @@ public class YuzuKizuFlower
     	
     	//キーバインディング設定
     	proxy.registerKeyBinding();
+    	
+    	//Layerを設定
+    	proxy.initLayerRenderer();
     	
     }
     
@@ -555,6 +560,11 @@ public class YuzuKizuFlower
     			.setRegistryName(MODID, "terra_plate")
     	);
     	
+    	// バックパックチェスト
+    	event.getRegistry().register(new YKItemBackpackChest()
+    			.setRegistryName(MODID, "backpack_chest")
+    			.setUnlocalizedName("backpack_chest")
+    	);
     }
     
     /**
@@ -683,6 +693,10 @@ public class YuzuKizuFlower
     	// テラプレート
     	ModelLoader.setCustomModelResourceLocation(Item.getItemFromBlock(YuzuKizuBlocks.TERRA_PLATE), 0,
     			new ModelResourceLocation(YuzuKizuBlocks.TERRA_PLATE.getRegistryName(), "inventory"));
+    	
+    	// バックパックチェスト
+    	ModelLoader.setCustomModelResourceLocation(YuzuKizuItems.BACKPACK_CHEST, 0,
+    			new ModelResourceLocation(YuzuKizuItems.BACKPACK_CHEST.getRegistryName(), "inventory"));
     	
     }
     
