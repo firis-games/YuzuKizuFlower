@@ -24,7 +24,7 @@ import firis.yuzukizuflower.client.layer.YKBackPackLayer;
 import firis.yuzukizuflower.common.YKGuiHandler;
 import firis.yuzukizuflower.common.event.KeyBindingHandler;
 import firis.yuzukizuflower.common.inventory.IScrollInventoryClientItemHandler;
-import firis.yuzukizuflower.common.inventory.IScrollInventoryItemHandler;
+import firis.yuzukizuflower.common.inventory.ITextScrollInventoryItemHandler;
 import firis.yuzukizuflower.common.inventory.InventoryItemStack;
 import firis.yuzukizuflower.common.inventory.PetalInventory;
 import firis.yuzukizuflower.common.inventory.RuneCraftInventory;
@@ -40,7 +40,7 @@ import net.minecraft.util.EnumHand;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 
-public class ClientProxy extends CommonProxy{
+public class ClientProxy extends CommonProxy {
 
 	/**
 	 * IGuiHandler.getClientGuiElement
@@ -106,7 +106,7 @@ public class ClientProxy extends CommonProxy{
 
 				//スクロールチェスト
 				case YKGuiHandler.SCROLL_CHEST :
-					IScrollInventoryItemHandler iinv = new IScrollInventoryItemHandler(tile, true);
+					ITextScrollInventoryItemHandler iinv = new ITextScrollInventoryItemHandler(tile, true);
 					return new YKGuiContainerScrollChest(iinv, player.inventory);
 				
 				//リモートチェスト

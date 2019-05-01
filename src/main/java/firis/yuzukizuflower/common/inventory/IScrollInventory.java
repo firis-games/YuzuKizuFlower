@@ -48,5 +48,7 @@ public interface IScrollInventory extends IInventory {
 	public int getOrgSizeInventory();
 	
 	public void setScrollInitInfo(int inventorySize, int scrollMaxPage);
+	
+	public void setTextChanged(String text);
 
 }

@@ -26,8 +26,12 @@ public class YKContainerScrollChest extends YKContainerBaseScrollInventory {
 		return stack;
     }
 	
-	
-	
-			
+	/**
+	 * パケットから呼ばれる用
+	 * @param search
+	 */
+	public void onTextChange(String search) {
+		this.iTeInv.setTextChanged(search);
+	}
 }
 

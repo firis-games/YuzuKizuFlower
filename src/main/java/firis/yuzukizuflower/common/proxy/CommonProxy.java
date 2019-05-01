@@ -21,6 +21,7 @@ import firis.yuzukizuflower.common.container.YKContainerTerraPlate;
 import firis.yuzukizuflower.common.container.YKInventoryContainer;
 import firis.yuzukizuflower.common.inventory.IInventoryMultiItemHandler;
 import firis.yuzukizuflower.common.inventory.IScrollInventoryItemHandler;
+import firis.yuzukizuflower.common.inventory.ITextScrollInventoryItemHandler;
 import firis.yuzukizuflower.common.inventory.InventoryItemStack;
 import firis.yuzukizuflower.common.inventory.PetalInventory;
 import firis.yuzukizuflower.common.inventory.RuneCraftInventory;
@@ -103,7 +104,7 @@ public class CommonProxy {
 				
 				//スクロールチェスト
 				case YKGuiHandler.SCROLL_CHEST :
-					IScrollInventoryItemHandler iinv = new IScrollInventoryItemHandler(tile, true);
+					ITextScrollInventoryItemHandler iinv = new ITextScrollInventoryItemHandler(tile, true);
 					return new YKContainerScrollChest(iinv, player.inventory);
 				
 				//リモートチェスト

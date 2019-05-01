@@ -312,4 +312,8 @@ public class IScrollInventoryItemHandler implements IScrollInventory {
 	public void setScrollInitInfo(int inventorySize, int scrollMaxPage) {
 		
 	}
+
+	@Override
+	public void setTextChanged(String text) {
+	}
 }

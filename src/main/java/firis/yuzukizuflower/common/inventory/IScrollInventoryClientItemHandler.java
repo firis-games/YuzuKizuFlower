@@ -252,6 +252,8 @@ public class IScrollInventoryClientItemHandler implements IScrollInventory {
 	public int getCapabilityIndex(int index) {
 		return index + this.scrollPage * this.inventoryRowCount;
 	}
-	
-	
+
+	@Override
+	public void setTextChanged(String text) {
+	}
 }

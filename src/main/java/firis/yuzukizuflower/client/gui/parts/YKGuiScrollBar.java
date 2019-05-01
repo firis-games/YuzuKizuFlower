@@ -82,6 +82,11 @@ public class YKGuiScrollBar {
 		this.scroll_page_idx = 0;
 		this.scroll_max_page = page;
 	}
+	
+	public void resetScrollPage() {
+		this.scroll_page_idx = 0;
+		this.scroll_coord_y_rate = 0;
+	}
 
 	/**
 	 * スクロールバーの描画

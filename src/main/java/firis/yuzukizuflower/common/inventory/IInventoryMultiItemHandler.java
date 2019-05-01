@@ -373,7 +373,10 @@ public class IInventoryMultiItemHandler implements IScrollInventory {
 
 	@Override
 	public void setScrollInitInfo(int inventorySize, int scrollMaxPage) {
-		// TODO 自動生成されたメソッド・スタブ
+	}
+
+	@Override
+	public void setTextChanged(String text) {
 		
 	}
 	
