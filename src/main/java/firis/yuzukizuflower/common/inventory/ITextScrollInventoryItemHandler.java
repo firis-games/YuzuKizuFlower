@@ -25,7 +25,7 @@ public class ITextScrollInventoryItemHandler extends IScrollInventoryItemHandler
 		this.setFilerList();
 	}
 	
-	protected void setFilerList() {
+	public void setFilerList() {
 		
 		if (textSearch.equals("")) {
 			//デフォルト
@@ -85,5 +85,16 @@ public class ITextScrollInventoryItemHandler extends IScrollInventoryItemHandler
 		this.textSearch = text;
 		setFilerList();
 		
+	}
+	
+	@Override
+	public void setInventorySlotContents(int index, ItemStack stack) {
+		super.setInventorySlotContents(index, stack);
+	}
+	
+	@Override
+	public ItemStack decrStackSize(int index, int count) {
+		ItemStack stack = super.decrStackSize(index, count);
+		return stack;
 	}
 }

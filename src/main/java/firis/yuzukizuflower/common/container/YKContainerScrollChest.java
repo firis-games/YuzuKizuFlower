@@ -1,9 +1,11 @@
 package firis.yuzukizuflower.common.container;
 
 import firis.yuzukizuflower.common.inventory.IScrollInventory;
+import firis.yuzukizuflower.common.inventory.ITextScrollInventoryItemHandler;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.entity.player.InventoryPlayer;
+import net.minecraft.inventory.ClickType;
 import net.minecraft.item.ItemStack;
 
 public class YKContainerScrollChest extends YKContainerBaseScrollInventory {
@@ -22,7 +24,6 @@ public class YKContainerScrollChest extends YKContainerBaseScrollInventory {
 			EntityPlayerMP playermp = (EntityPlayerMP) playerIn;
 			playermp.sendContainerToPlayer(this);
 		}
-		
 		return stack;
     }
 	
@@ -33,5 +34,13 @@ public class YKContainerScrollChest extends YKContainerBaseScrollInventory {
 	public void onTextChange(String search) {
 		this.iTeInv.setTextChanged(search);
 	}
+	
+	@Override
+	public ItemStack slotClick(int slotId, int dragType, ClickType clickTypeIn, EntityPlayer player)
+    {
+		ItemStack stack = super.slotClick(slotId, dragType, clickTypeIn, player);
+		((ITextScrollInventoryItemHandler) this.iTeInv).setFilerList();
+		return stack;
+    }
 }
 
