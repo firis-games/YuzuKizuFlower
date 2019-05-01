@@ -1,5 +1,6 @@
 package firis.yuzukizuflower.common.network;
 
+import firis.yuzukizuflower.common.item.YKItemBackpackChest;
 import firis.yuzukizuflower.common.item.YKItemRemoteChest;
 import io.netty.buffer.ByteBuf;
 import net.minecraft.entity.player.EntityPlayerMP;
@@ -21,12 +22,15 @@ public class PacketOpenGuiS2C implements IMessageHandler<PacketOpenGuiS2C.Messag
 		//指定のTileEntityのnetwork連動メソッドを呼び出す
 		EntityPlayerMP player = ctx.getServerHandler().player;
 		
-		//アミュレット枠から縁結びの輪を取得する
-		ItemStack chest = YKItemRemoteChest.getBaublesItemStack(player);
-		
-		//条件を満たす場合にGUIを表示する
-		YKItemRemoteChest.openGui(chest, player, true);
-		
+		if (message.mode == 0) {
+			//アミュレット枠から縁結びの輪を取得する
+			ItemStack chest = YKItemRemoteChest.getBaublesItemStack(player);
+			//条件を満たす場合にGUIを表示する
+			YKItemRemoteChest.openGui(chest, player, true);
+		} else if (message.mode == 1) {
+			ItemStack chest = YKItemBackpackChest.getBackpackChest(player);
+			YKItemBackpackChest.openGui(chest, player);
+		}
 		return null;
 	}
 	

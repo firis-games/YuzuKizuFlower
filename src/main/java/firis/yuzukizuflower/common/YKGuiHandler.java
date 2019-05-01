@@ -61,7 +61,12 @@ public class YKGuiHandler implements IGuiHandler {
 	//リモートチェスト(キーから表示)
 	public static final int REMOTE_CHEST_KEY = 18;
 		
-		
+	//バックパックチェスト
+	public static final int BACKPACK_CHEST = 19;
+
+	//バックパックチェスト
+	public static final int BACKPACK_CHEST_KEY = 20;
+			
 	@Override
 	public Object getServerGuiElement(int ID, EntityPlayer player, World world, int x, int y, int z) {
 		return YuzuKizuFlower.proxy.getServerGuiElement(ID, player, world, x, y, z);

@@ -19,19 +19,24 @@ import firis.yuzukizuflower.client.gui.YKGuiContainerRemoteChest;
 import firis.yuzukizuflower.client.gui.YKGuiContainerRuneWorkbench;
 import firis.yuzukizuflower.client.gui.YKGuiContainerScrollChest;
 import firis.yuzukizuflower.client.gui.YKGuiContainerTerraPlate;
+import firis.yuzukizuflower.client.gui.YKGuiInventoryContainer;
 import firis.yuzukizuflower.client.layer.YKBackPackLayer;
 import firis.yuzukizuflower.common.YKGuiHandler;
 import firis.yuzukizuflower.common.event.KeyBindingHandler;
 import firis.yuzukizuflower.common.inventory.IScrollInventoryClientItemHandler;
 import firis.yuzukizuflower.common.inventory.IScrollInventoryItemHandler;
+import firis.yuzukizuflower.common.inventory.InventoryItemStack;
 import firis.yuzukizuflower.common.inventory.PetalInventory;
 import firis.yuzukizuflower.common.inventory.RuneCraftInventory;
+import firis.yuzukizuflower.common.item.YKItemBackpackChest;
 import firis.yuzukizuflower.common.proxy.CommonProxy;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.entity.RenderPlayer;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.inventory.IInventory;
+import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.TileEntity;
+import net.minecraft.util.EnumHand;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 
@@ -133,6 +138,19 @@ public class ClientProxy extends CommonProxy{
 				case YKGuiHandler.TERRA_PLATE :
 					return new YKGuiContainerTerraPlate((IInventory) tile, player.inventory);
 
+				//バックパックチェスト
+				case YKGuiHandler.BACKPACK_CHEST :
+					//PlayerのInventoryのItemStackから取得
+					EnumHand hand = x == 1 ? EnumHand.MAIN_HAND : EnumHand.OFF_HAND;
+					ItemStack stack = player.getHeldItem(hand);
+					return new YKGuiInventoryContainer(new InventoryItemStack(stack), player.inventory, y);
+
+				//バックパックチェスト(KEY)
+				case YKGuiHandler.BACKPACK_CHEST_KEY :
+					//PlayerのInventoryのItemStackから取得
+					return new YKGuiInventoryContainer(
+							new InventoryItemStack(YKItemBackpackChest.getBackpackChest(player)), 
+							player.inventory, y);
 
 		}
 		return null;

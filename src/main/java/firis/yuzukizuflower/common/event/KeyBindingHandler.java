@@ -22,6 +22,8 @@ import net.minecraftforge.fml.relauncher.SideOnly;
 public class KeyBindingHandler {
 
 	public static final KeyBinding openGui = new KeyBinding("key.open_gui", Keyboard.KEY_N, "itemGroup.tabYuzuKizuFlower");
+
+	public static final KeyBinding openBackPackGui = new KeyBinding("key.open_backpack_gui", Keyboard.KEY_M, "itemGroup.tabYuzuKizuFlower");
 	
 	/**
 	 * キーバインド初期化
@@ -29,7 +31,7 @@ public class KeyBindingHandler {
 	public static void init() {
 		
 		ClientRegistry.registerKeyBinding(openGui);
-		
+		ClientRegistry.registerKeyBinding(openBackPackGui);
 	}
 	
 	/**
@@ -44,6 +46,11 @@ public class KeyBindingHandler {
 			//縁結びの輪のGUI表示処理
 			NetworkHandler.network.sendToServer(
 					new PacketOpenGuiS2C.MessageOpenGui(0));
+		} else if (openBackPackGui.isKeyDown()) {
+			//Server側へ処理を投げる
+			//背負いチェストのGUI表示処理
+			NetworkHandler.network.sendToServer(
+					new PacketOpenGuiS2C.MessageOpenGui(1));
 		}
 		
 	}

@@ -18,14 +18,19 @@ import firis.yuzukizuflower.common.container.YKContainerRemoteChest;
 import firis.yuzukizuflower.common.container.YKContainerRuneWorkbench;
 import firis.yuzukizuflower.common.container.YKContainerScrollChest;
 import firis.yuzukizuflower.common.container.YKContainerTerraPlate;
+import firis.yuzukizuflower.common.container.YKInventoryContainer;
 import firis.yuzukizuflower.common.inventory.IInventoryMultiItemHandler;
 import firis.yuzukizuflower.common.inventory.IScrollInventoryItemHandler;
+import firis.yuzukizuflower.common.inventory.InventoryItemStack;
 import firis.yuzukizuflower.common.inventory.PetalInventory;
 import firis.yuzukizuflower.common.inventory.RuneCraftInventory;
+import firis.yuzukizuflower.common.item.YKItemBackpackChest;
 import firis.yuzukizuflower.common.tileentity.YKTileCorporeaChest;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.inventory.IInventory;
+import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.TileEntity;
+import net.minecraft.util.EnumHand;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 
@@ -45,7 +50,11 @@ public class CommonProxy {
 	public Object getServerGuiElement(int ID, EntityPlayer player, World world, int x, int y, int z) {
 		
 		//TileEntityを取得する
-		TileEntity tile = world.getTileEntity(new BlockPos(x, y ,z));
+		TileEntity tile = null;
+		
+		if (!(ID == YKGuiHandler.BACKPACK_CHEST)) {
+			tile = world.getTileEntity(new BlockPos(x, y ,z));
+		}
 		
 		switch(ID) {
 				//箱入りピュアデイジー
@@ -124,6 +133,20 @@ public class CommonProxy {
 				//テラプレート
 				case YKGuiHandler.TERRA_PLATE :
 					return new YKContainerTerraPlate((IInventory) tile, player.inventory);
+				
+				//バックパックチェスト
+				case YKGuiHandler.BACKPACK_CHEST :
+					//PlayerのInventoryのItemStackから取得
+					EnumHand hand = x == 1 ? EnumHand.MAIN_HAND : EnumHand.OFF_HAND;
+					ItemStack stack = player.getHeldItem(hand);
+					return new YKInventoryContainer(new InventoryItemStack(stack), player.inventory, y);
+
+				//バックパックチェスト(KEY)
+				case YKGuiHandler.BACKPACK_CHEST_KEY :
+					//PlayerのInventoryのItemStackから取得
+					return new YKInventoryContainer(
+							new InventoryItemStack(YKItemBackpackChest.getBackpackChest(player)), 
+							player.inventory, y);
 		}
 		return null;
 	}
