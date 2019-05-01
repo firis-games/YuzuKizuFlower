@@ -1,0 +1,23 @@
+{
+	"type": "forge:ore_shaped",
+	"pattern": [
+		"zxz",
+		"xyx",
+		"zxz"
+	],
+	"key": {
+		"x": {
+			"item": "minecraft:stick"
+		},
+		"y": {
+			"item": "minecraft:chest"
+		},
+		"z": {
+			"item": "minecraft:wool",
+			"data": 32767
+		}
+	},
+	"result": {
+		"item": "yuzukizuflower:backpack_chest"
+	}
+}

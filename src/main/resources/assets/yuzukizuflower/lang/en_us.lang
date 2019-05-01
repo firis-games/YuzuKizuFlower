@@ -83,3 +83,6 @@ tile.terra_plate.name=Boxed Terra Plate
 gui.terra_plate.name=Boxed Terra Plate
 
 key.open_gui=Bonds Bracelet Open
+
+item.backpack_chest.name=Backpack Chest
+gui.backpack_chest.name=Backpack Chest
