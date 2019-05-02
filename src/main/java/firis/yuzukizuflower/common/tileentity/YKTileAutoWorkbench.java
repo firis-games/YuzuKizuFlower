@@ -204,18 +204,17 @@ public class YKTileAutoWorkbench extends YKTileBaseBoxedProcFlower {
 		
 		//すべて含まれている場合は調合を行う(触媒込みで判断)
 		stackList = getBlueprintRecipe(this.getStackInSlot(blueprint_slot), true);
-		
-		//stackListからルーンアイテムを除外
-		List<ItemStack> workList = new ArrayList<ItemStack>();
-		for (ItemStack work : stackList) {
-			if (!work.getItem().getRegistryName().equals(rlRune)) {
-				workList.add(work);
-			}
-		}
-		stackList = workList;
-		
+
 		if (isInventoryItemStackList(stackList)) {
-			
+		
+			//stackListからルーンアイテムを除外
+			List<ItemStack> workList = new ArrayList<ItemStack>();
+			for (ItemStack work : stackList) {
+				if (!work.getItem().getRegistryName().equals(rlRune)) {
+					workList.add(work);
+				}
+			}
+			stackList = workList;
 			
 			//inventoryからアイテムを減らす
 			this.shrinkInventoryItemStackList(stackList);
