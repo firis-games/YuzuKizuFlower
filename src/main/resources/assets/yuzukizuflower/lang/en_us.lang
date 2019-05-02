@@ -86,3 +86,9 @@ key.open_gui=Bonds Bracelet Open
 
 item.backpack_chest.name=Backpack Chest
 gui.backpack_chest.name=Backpack Chest
+
+item.blueprint.name=Blueprint
+info.blueprint.name= Blueprint
+
+tile.auto_workbench.name=Auto Workbench
+gui.auto_workbench.name=Auto Workbench

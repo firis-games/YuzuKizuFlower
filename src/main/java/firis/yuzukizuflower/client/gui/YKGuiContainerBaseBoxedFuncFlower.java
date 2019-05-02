@@ -43,6 +43,12 @@ public abstract class YKGuiContainerBaseBoxedFuncFlower extends GuiContainer {
 	protected int guiFireY = 0;
 	
 	/**
+	 * マナゲージのレイヤー位置
+	 */
+	protected int guiManaGageLayerX = 176;
+	protected int guiManaGageLayerY = 0;
+	
+	/**
 	 * GUIタイトル
 	 */
 	protected String guiTitle = "";
@@ -113,7 +119,7 @@ public abstract class YKGuiContainerBaseBoxedFuncFlower extends GuiContainer {
 	        this.mc.getTextureManager().bindTexture(guiTextures);
 	        
 	        //メモリの描画
-	        this.drawTexturedModalRect(x + 16, y + 22, 176, 0, 10, 50);
+	        this.drawTexturedModalRect(x + 16, y + 22, guiManaGageLayerX, guiManaGageLayerY, 10, 50);
         }
 
 	}

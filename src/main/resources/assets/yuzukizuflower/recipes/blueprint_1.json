@@ -1,0 +1,15 @@
+{
+	"type": "forge:ore_shapeless",
+	"ingredients": [
+	{
+		"item": "minecraft:paper"
+	},
+	{
+		"item": "botania:petal",
+		"data": 32767
+	}
+	],
+	"result": {
+		"item": "yuzukizuflower:blueprint"
+	}
+}

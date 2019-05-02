@@ -1,0 +1,71 @@
+{
+    "parent": "block/block",
+    "elements": [
+        {   "--comment" : "柱1",
+        	"from": [ 0, 0, 0 ],
+            "to": [ 3, 12, 3 ],
+            "faces": {
+                "down":  {"texture": "#base", "cullface": "down" },
+                "up":    {"texture": "#base", "cullface": "up"},
+                "north": {"texture": "#base", "cullface": "north" },
+                "south": {"texture": "#base", "cullface": "south" },
+                "west":  {"texture": "#base", "cullface": "west" },
+                "east":  {"texture": "#base", "cullface": "east" }
+            }
+        },
+        {   "--comment" : "柱2",
+        	"from": [ 13, 0, 0 ],
+            "to": [ 16, 12, 3 ],
+            "faces": {
+                "down":  {"texture": "#base", "cullface": "down" },
+                "up":    {"texture": "#base", "cullface": "up"},
+                "north": {"texture": "#base", "cullface": "north" },
+                "south": {"texture": "#base", "cullface": "south" },
+                "west":  {"texture": "#base", "cullface": "west" },
+                "east":  {"texture": "#base", "cullface": "east" }
+            }
+        },
+        {   "--comment" : "柱3",
+        	"from": [ 0, 0, 13 ],
+            "to": [ 3, 12, 16 ],
+            "faces": {
+                "down":  {"texture": "#base", "cullface": "down" },
+                "up":    {"texture": "#base", "cullface": "up"},
+                "north": {"texture": "#base", "cullface": "north" },
+                "south": {"texture": "#base", "cullface": "south" },
+                "west":  {"texture": "#base", "cullface": "west" },
+                "east":  {"texture": "#base", "cullface": "east" }
+            }
+        },
+        {   "--comment" : "柱4",
+        	"from": [ 13, 0, 13 ],
+            "to": [ 16, 12, 16 ],
+            "faces": {
+                "down":  {"texture": "#base", "cullface": "down" },
+                "up":    {"texture": "#base", "cullface": "up"},
+                "north": {"texture": "#base", "cullface": "north" },
+                "south": {"texture": "#base", "cullface": "south" },
+                "west":  {"texture": "#base", "cullface": "west" },
+                "east":  {"texture": "#base", "cullface": "east" }
+            }
+        },
+        {   "--comment" : "最上段土台",
+        	"from": [ 0, 12, 0 ],
+            "to": [ 16, 16, 16 ],
+            "faces": {
+                "down":  {"texture": "#base", "cullface": "down" },
+                "up":    {"texture": "#top", "cullface": "up"},
+                "north": {"texture": "#side", "cullface": "north" },
+                "south": {"texture": "#side", "cullface": "south" },
+                "west":  {"texture": "#side", "cullface": "west" },
+                "east":  {"texture": "#side", "cullface": "east" }
+            }
+        }
+    ],
+    "textures": {
+    	"particle":"minecraft:blocks/iron_block",
+        "base":"minecraft:blocks/iron_block",
+        "side":"yuzukizuflower:blocks/petal_workbench_side",
+        "top":"yuzukizuflower:blocks/rune_workbench_top"
+    }
+}

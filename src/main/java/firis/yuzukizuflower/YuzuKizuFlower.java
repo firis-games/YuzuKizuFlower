@@ -6,6 +6,7 @@ import firis.yuzukizuflower.client.tesr.YKTileCorporeaChestSpRenderer;
 import firis.yuzukizuflower.client.tesr.YKTileManaTankSpRenderer;
 import firis.yuzukizuflower.client.tesr.YKTileScrollChestSpRenderer;
 import firis.yuzukizuflower.common.YKGuiHandler;
+import firis.yuzukizuflower.common.block.YKBlockAutoWorkbench;
 import firis.yuzukizuflower.common.block.YKBlockBaseBoxed;
 import firis.yuzukizuflower.common.block.YKBlockBoxedAkanerald;
 import firis.yuzukizuflower.common.block.YKBlockBoxedAkariculture;
@@ -26,11 +27,13 @@ import firis.yuzukizuflower.common.block.YKBlockTerraPlate;
 import firis.yuzukizuflower.common.event.PopulateChunkEventHandler;
 import firis.yuzukizuflower.common.item.YKItemBackpackChest;
 import firis.yuzukizuflower.common.item.YKItemBase;
+import firis.yuzukizuflower.common.item.YKItemBlueprint;
 import firis.yuzukizuflower.common.item.YKItemRemoteChest;
 import firis.yuzukizuflower.common.network.NetworkHandler;
 import firis.yuzukizuflower.common.proxy.CommonProxy;
 import firis.yuzukizuflower.common.recipe.BotaniaRecipes;
 import firis.yuzukizuflower.common.recipe.RecipeBoxedFlower;
+import firis.yuzukizuflower.common.tileentity.YKTileAutoWorkbench;
 import firis.yuzukizuflower.common.tileentity.YKTileBoxedAkanerald;
 import firis.yuzukizuflower.common.tileentity.YKTileBoxedAkariculture;
 import firis.yuzukizuflower.common.tileentity.YKTileBoxedAocean;
@@ -144,6 +147,7 @@ public class YuzuKizuFlower
     	public final static Item AKANERALD = null;
     	public final static Item REMOTE_CHEST = null;
     	public final static Item BACKPACK_CHEST = null;
+    	public final static Item BLUEPRINT = null;
     }
     /**
      * ブロックインスタンス保持用
@@ -169,6 +173,7 @@ public class YuzuKizuFlower
     	public final static Block PETAL_WORKBENCH = null;
     	public final static Block RUNE_WORKBENCH = null;
     	public final static Block TERRA_PLATE = null;
+    	public final static Block AUTO_WORKBENCH = null;
     }
     
     public static class YuzuKizuFluids {
@@ -246,6 +251,10 @@ public class YuzuKizuFlower
         
         GameRegistry.registerTileEntity(YKTileTerraPlate.class, 
 				new ResourceLocation(YuzuKizuFlower.MODID, "ykte_terra_plate"));
+
+        GameRegistry.registerTileEntity(YKTileAutoWorkbench.class, 
+				new ResourceLocation(YuzuKizuFlower.MODID, "ykte_auto_workbench"));
+        
         //ネットワーク登録
         NetworkHandler.init();
         
@@ -425,6 +434,12 @@ public class YuzuKizuFlower
                 .setUnlocalizedName("terra_plate")
         );
         
+        // 自動作業台
+        event.getRegistry().register(
+                new YKBlockAutoWorkbench()
+                .setRegistryName(MODID, "auto_workbench")
+                .setUnlocalizedName("auto_workbench")
+        );
     }
     
     /**
@@ -565,6 +580,17 @@ public class YuzuKizuFlower
     			.setRegistryName(MODID, "backpack_chest")
     			.setUnlocalizedName("backpack_chest")
     	);
+    	
+    	// ブループリント
+    	event.getRegistry().register(new YKItemBlueprint()
+    			.setRegistryName(MODID, "blueprint")
+    			.setUnlocalizedName("blueprint")
+    	);
+    	
+    	// テラプレート
+    	event.getRegistry().register(new ItemBlock(YuzuKizuBlocks.AUTO_WORKBENCH)
+    			.setRegistryName(MODID, "auto_workbench")
+    	);
     }
     
     /**
@@ -697,6 +723,14 @@ public class YuzuKizuFlower
     	// バックパックチェスト
     	ModelLoader.setCustomModelResourceLocation(YuzuKizuItems.BACKPACK_CHEST, 0,
     			new ModelResourceLocation(YuzuKizuItems.BACKPACK_CHEST.getRegistryName(), "inventory"));
+    	
+    	// ブループリント
+    	ModelLoader.setCustomModelResourceLocation(YuzuKizuItems.BLUEPRINT, 0,
+    			new ModelResourceLocation(YuzuKizuItems.BLUEPRINT.getRegistryName(), "inventory"));
+    	
+    	// テラプレート
+    	ModelLoader.setCustomModelResourceLocation(Item.getItemFromBlock(YuzuKizuBlocks.AUTO_WORKBENCH), 0,
+    			new ModelResourceLocation(YuzuKizuBlocks.AUTO_WORKBENCH.getRegistryName(), "inventory"));
     	
     }
     

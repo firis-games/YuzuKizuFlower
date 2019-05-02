@@ -1,0 +1,24 @@
+{
+	"type": "forge:ore_shaped",
+	"pattern": [
+		"yyy",
+		"zxz",
+		"zzz"
+	],
+	"key": {
+		"x": {
+			"item": "botania:manaresource",
+			"data": 2
+		},
+		"y": {
+			"item": "botania:livingrock",
+			"data": 0
+		},
+		"z": {
+			"item": "minecraft:iron_ingot"
+		}
+	},
+	"result": {
+		"item": "yuzukizuflower:auto_workbench"
+	}
+}

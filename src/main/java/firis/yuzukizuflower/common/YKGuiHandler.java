@@ -66,6 +66,9 @@ public class YKGuiHandler implements IGuiHandler {
 
 	//バックパックチェスト
 	public static final int BACKPACK_CHEST_KEY = 20;
+	
+	//自動作業台
+	public static final int AUTO_WORKBENCH = 21;
 			
 	@Override
 	public Object getServerGuiElement(int ID, EntityPlayer player, World world, int x, int y, int z) {

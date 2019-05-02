@@ -2,6 +2,7 @@ package firis.yuzukizuflower.client.proxy;
 
 import java.util.Map;
 
+import firis.yuzukizuflower.client.gui.YKGuiContainerAutoWorkbench;
 import firis.yuzukizuflower.client.gui.YKGuiContainerBoxedAkanerald;
 import firis.yuzukizuflower.client.gui.YKGuiContainerBoxedAkariculture;
 import firis.yuzukizuflower.client.gui.YKGuiContainerBoxedAocean;
@@ -151,6 +152,10 @@ public class ClientProxy extends CommonProxy {
 					return new YKGuiInventoryContainer(
 							new InventoryItemStack(YKItemBackpackChest.getBackpackChest(player)), 
 							player.inventory, y);
+				//自動作業台
+				case YKGuiHandler.AUTO_WORKBENCH :
+					return new YKGuiContainerAutoWorkbench((IInventory) tile, player.inventory);
+
 
 		}
 		return null;

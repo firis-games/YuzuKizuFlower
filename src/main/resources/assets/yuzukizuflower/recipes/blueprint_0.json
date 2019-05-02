@@ -1,0 +1,11 @@
+{
+	"type": "forge:ore_shapeless",
+	"ingredients": [
+	{
+		"item": "yuzukizuflower:blueprint"
+	}
+	],
+	"result": {
+		"item": "yuzukizuflower:blueprint"
+	}
+}

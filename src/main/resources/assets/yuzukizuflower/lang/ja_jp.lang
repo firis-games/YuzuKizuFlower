@@ -87,3 +87,10 @@ key.open_gui=縁結びの輪インベントリ表示
 
 item.backpack_chest.name=背負いチェスト
 gui.backpack_chest.name=背負いチェスト
+
+item.blueprint.name=空の設計図
+info.blueprint.name=の設計図
+
+tile.auto_workbench.name=お花自動作業台
+gui.auto_workbench.name=お花自動作業台
+

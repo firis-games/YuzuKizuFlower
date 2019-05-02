@@ -1,6 +1,7 @@
 package firis.yuzukizuflower.common.proxy;
 
 import firis.yuzukizuflower.common.YKGuiHandler;
+import firis.yuzukizuflower.common.container.YKContainerAutoWorkbench;
 import firis.yuzukizuflower.common.container.YKContainerBoxedAkanerald;
 import firis.yuzukizuflower.common.container.YKContainerBoxedAkariculture;
 import firis.yuzukizuflower.common.container.YKContainerBoxedAocean;
@@ -148,6 +149,11 @@ public class CommonProxy {
 					return new YKInventoryContainer(
 							new InventoryItemStack(YKItemBackpackChest.getBackpackChest(player)), 
 							player.inventory, y);
+				
+				//自動作業台
+				case YKGuiHandler.AUTO_WORKBENCH :
+					return new YKContainerAutoWorkbench((IInventory) tile, player.inventory);
+
 		}
 		return null;
 	}
