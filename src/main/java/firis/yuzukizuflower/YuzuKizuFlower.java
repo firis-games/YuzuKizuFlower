@@ -24,10 +24,12 @@ import firis.yuzukizuflower.common.block.YKBlockPetalWorkbench;
 import firis.yuzukizuflower.common.block.YKBlockRuneWorkbench;
 import firis.yuzukizuflower.common.block.YKBlockScrollChest;
 import firis.yuzukizuflower.common.block.YKBlockTerraPlate;
+import firis.yuzukizuflower.common.dimension.DimensionHandler;
 import firis.yuzukizuflower.common.event.PopulateChunkEventHandler;
 import firis.yuzukizuflower.common.item.YKItemBackpackChest;
 import firis.yuzukizuflower.common.item.YKItemBase;
 import firis.yuzukizuflower.common.item.YKItemBlueprint;
+import firis.yuzukizuflower.common.item.YKItemDimensionKey;
 import firis.yuzukizuflower.common.item.YKItemRemoteChest;
 import firis.yuzukizuflower.common.network.NetworkHandler;
 import firis.yuzukizuflower.common.proxy.CommonProxy;
@@ -148,6 +150,7 @@ public class YuzuKizuFlower
     	public final static Item REMOTE_CHEST = null;
     	public final static Item BACKPACK_CHEST = null;
     	public final static Item BLUEPRINT = null;
+    	public final static Item DIMENSION_KEY = null;
     }
     /**
      * ブロックインスタンス保持用
@@ -257,6 +260,9 @@ public class YuzuKizuFlower
         
         //ネットワーク登録
         NetworkHandler.init();
+        
+        //ディメンション初期化
+        DimensionHandler.init();
         
     }
     
@@ -591,6 +597,12 @@ public class YuzuKizuFlower
     	event.getRegistry().register(new ItemBlock(YuzuKizuBlocks.AUTO_WORKBENCH)
     			.setRegistryName(MODID, "auto_workbench")
     	);
+    	
+    	// ディメンションキー
+    	event.getRegistry().register(new YKItemDimensionKey()
+    			.setRegistryName(MODID, "dimension_key")
+    			.setUnlocalizedName("dimension_key")
+    	);
     }
     
     /**
@@ -731,6 +743,10 @@ public class YuzuKizuFlower
     	// テラプレート
     	ModelLoader.setCustomModelResourceLocation(Item.getItemFromBlock(YuzuKizuBlocks.AUTO_WORKBENCH), 0,
     			new ModelResourceLocation(YuzuKizuBlocks.AUTO_WORKBENCH.getRegistryName(), "inventory"));
+    	
+    	// ディメンションキー
+    	ModelLoader.setCustomModelResourceLocation(YuzuKizuItems.DIMENSION_KEY, 0,
+    			new ModelResourceLocation(YuzuKizuItems.DIMENSION_KEY.getRegistryName(), "inventory"));
     	
     }
     
