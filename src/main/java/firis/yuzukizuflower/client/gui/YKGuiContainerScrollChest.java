@@ -7,6 +7,7 @@ import org.lwjgl.input.Keyboard;
 import firis.yuzukizuflower.client.gui.parts.YKGuiScrollBar;
 import firis.yuzukizuflower.common.container.YKContainerScrollChest;
 import firis.yuzukizuflower.common.inventory.IScrollInventory;
+import firis.yuzukizuflower.common.inventory.ITextScrollInventoryItemHandler;
 import firis.yuzukizuflower.common.network.NetworkHandler;
 import firis.yuzukizuflower.common.network.PacketGuiScroll;
 import net.minecraft.client.gui.GuiTextField;
@@ -113,8 +114,8 @@ public class YKGuiContainerScrollChest extends YKGuiContainerBaseScrollInventory
         this.textField.setText("");
         this.textField.setTextColor(16777215);
         
-        //this.textField.setCanLoseFocus(false);
-        //this.textField.setFocused(true);
+        //inventoryのフィルタを再設定
+        this.textField.setText(((ITextScrollInventoryItemHandler) this.iinventory).getTextSearch());
     }
 	
 	

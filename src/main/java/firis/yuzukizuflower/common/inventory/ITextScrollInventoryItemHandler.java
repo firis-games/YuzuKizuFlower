@@ -13,6 +13,9 @@ public class ITextScrollInventoryItemHandler extends IScrollInventoryItemHandler
 
 	
 	protected String textSearch;
+	public String getTextSearch() {
+		return textSearch;
+	}
 	
 	protected List<Integer> capabilityIndexList;
 	
@@ -25,6 +28,9 @@ public class ITextScrollInventoryItemHandler extends IScrollInventoryItemHandler
 		this.setFilerList();
 	}
 	
+	/**
+	 * フィルタ適応リストを生成する
+	 */
 	public void setFilerList() {
 		
 		if (textSearch.equals("")) {
@@ -90,6 +96,7 @@ public class ITextScrollInventoryItemHandler extends IScrollInventoryItemHandler
 	@Override
 	public void setInventorySlotContents(int index, ItemStack stack) {
 		super.setInventorySlotContents(index, stack);
+		setFilerList();
 	}
 	
 	@Override
