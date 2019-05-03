@@ -7,6 +7,7 @@ import java.util.Random;
 
 import firis.yuzukizuflower.YuzuKizuFlower;
 import firis.yuzukizuflower.YuzuKizuFlower.YuzuKizuBlocks;
+import firis.yuzukizuflower.common.world.generator.WorldGenBigTreeLivingWood;
 import net.minecraft.block.BlockLeaves;
 import net.minecraft.block.BlockOldLeaf;
 import net.minecraft.block.BlockPlanks;
@@ -46,6 +47,7 @@ public class BiomeManaPlains extends Biome {
 			ModBlocks.livingwood.getDefaultState(), 
 			Blocks.LEAVES.getDefaultState().withProperty(BlockOldLeaf.VARIANT, BlockPlanks.EnumType.OAK).withProperty(BlockLeaves.CHECK_DECAY,Boolean.valueOf(false)),
 			false);
+	protected WorldGenAbstractTree cstmBigTreeGen = new WorldGenBigTreeLivingWood(false);
 	
 	
 	@SuppressWarnings("deprecation")
@@ -96,8 +98,7 @@ public class BiomeManaPlains extends Biome {
 	 */
 	public WorldGenAbstractTree getRandomTreeFeature(Random rand)
     {
-        //return (WorldGenAbstractTree)(rand.nextInt(10) == 0 ? BIG_TREE_FEATURE : TREE_FEATURE);
-		return cstmTreeGen;
+        return (rand.nextInt(10) < 2 ? cstmBigTreeGen : cstmTreeGen);
     }
 	
 	
