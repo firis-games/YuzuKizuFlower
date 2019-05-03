@@ -1,4 +1,4 @@
-package firis.yuzukizuflower.common.dimension;
+package firis.yuzukizuflower.common.world.dimension;
 
 import firis.yuzukizuflower.YuzuKizuFlower.YuzuKizuBlocks;
 import net.minecraft.block.state.IBlockState;

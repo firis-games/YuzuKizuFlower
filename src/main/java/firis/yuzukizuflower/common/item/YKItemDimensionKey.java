@@ -1,8 +1,8 @@
 package firis.yuzukizuflower.common.item;
 
 import firis.yuzukizuflower.YuzuKizuFlower;
-import firis.yuzukizuflower.common.dimension.DimensionHandler;
-import firis.yuzukizuflower.common.dimension.TeleporterAlfheim;
+import firis.yuzukizuflower.common.world.dimension.DimensionHandler;
+import firis.yuzukizuflower.common.world.dimension.TeleporterAlfheim;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;

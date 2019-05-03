@@ -1,4 +1,4 @@
-package firis.yuzukizuflower.common.dimension;
+package firis.yuzukizuflower.common.world.dimension;
 
 import firis.yuzukizuflower.YuzuKizuFlower;
 import net.minecraft.util.ResourceLocation;

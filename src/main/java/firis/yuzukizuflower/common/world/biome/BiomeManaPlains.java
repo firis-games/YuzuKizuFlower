@@ -1,7 +1,7 @@
 /**
  * 
  */
-package firis.yuzukizuflower.common.dimension.biome;
+package firis.yuzukizuflower.common.world.biome;
 
 import java.util.Random;
 

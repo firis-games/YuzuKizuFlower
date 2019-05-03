@@ -1,4 +1,4 @@
-package firis.yuzukizuflower.common.dimension;
+package firis.yuzukizuflower.common.world.dimension;
 
 import net.minecraft.entity.Entity;
 import net.minecraft.init.Blocks;
