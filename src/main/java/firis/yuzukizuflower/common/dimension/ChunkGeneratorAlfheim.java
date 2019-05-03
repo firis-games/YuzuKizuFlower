@@ -22,14 +22,18 @@ public class ChunkGeneratorAlfheim extends ChunkGeneratorOverworld {
 	 * 
 	 * @param worldIn
 	 * @param seed
-	 * @param mapFeaturesEnabledIn
+	 * @param mapFeaturesEnabledIn 構造物の生成を行うかのフラグ 強制的にfalseとする
 	 * @param generatorOptions
 	 */
 	public ChunkGeneratorAlfheim(World worldIn, long seed, boolean mapFeaturesEnabledIn, String generatorOptions) {
 		
-		super(worldIn, seed, mapFeaturesEnabledIn, generatorOptions);
+		super(worldIn, seed, false, generatorOptions);
+		
 	}
 	
+	/**
+	 * マップの土台を生成する
+	 */
 	@Override
 	public void setBlocksInChunk(int x, int z, ChunkPrimer primer)
     {

@@ -7,6 +7,9 @@ import java.util.Random;
 
 import firis.yuzukizuflower.YuzuKizuFlower;
 import firis.yuzukizuflower.YuzuKizuFlower.YuzuKizuBlocks;
+import net.minecraft.block.BlockLeaves;
+import net.minecraft.block.BlockOldLeaf;
+import net.minecraft.block.BlockPlanks;
 import net.minecraft.block.BlockSand;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.state.IBlockState;
@@ -25,6 +28,8 @@ import net.minecraft.util.ResourceLocation;
 import net.minecraft.world.World;
 import net.minecraft.world.biome.Biome;
 import net.minecraft.world.chunk.ChunkPrimer;
+import net.minecraft.world.gen.feature.WorldGenAbstractTree;
+import net.minecraft.world.gen.feature.WorldGenTrees;
 import vazkii.botania.common.block.ModBlocks;
 
 /**
@@ -35,6 +40,13 @@ public class BiomeManaPlains extends Biome {
 
 	protected final IBlockState cstmSTONE = ModBlocks.livingrock.getDefaultState();
 	protected final IBlockState cstmWATER = YuzuKizuBlocks.LIQUID_MANA.getDefaultState();
+	
+	//リビングウッドの木
+	protected WorldGenAbstractTree cstmTreeGen = new WorldGenTrees(true, 4, 
+			ModBlocks.livingwood.getDefaultState(), 
+			Blocks.LEAVES.getDefaultState().withProperty(BlockOldLeaf.VARIANT, BlockPlanks.EnumType.OAK).withProperty(BlockLeaves.CHECK_DECAY,Boolean.valueOf(false)),
+			false);
+	
 	
 	@SuppressWarnings("deprecation")
 	public BiomeManaPlains() {
@@ -77,6 +89,16 @@ public class BiomeManaPlains extends Biome {
 		BiomeProperties properties = new BiomeProperties("Mana Plains");
 		return properties;
 	}
+	
+	
+	/**
+	 * 木を生成する
+	 */
+	public WorldGenAbstractTree getRandomTreeFeature(Random rand)
+    {
+        //return (WorldGenAbstractTree)(rand.nextInt(10) == 0 ? BIG_TREE_FEATURE : TREE_FEATURE);
+		return cstmTreeGen;
+    }
 	
 	
 	/**
