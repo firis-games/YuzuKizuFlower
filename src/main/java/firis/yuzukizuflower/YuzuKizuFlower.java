@@ -25,6 +25,7 @@ import firis.yuzukizuflower.common.block.YKBlockRuneWorkbench;
 import firis.yuzukizuflower.common.block.YKBlockScrollChest;
 import firis.yuzukizuflower.common.block.YKBlockTerraPlate;
 import firis.yuzukizuflower.common.dimension.DimensionHandler;
+import firis.yuzukizuflower.common.dimension.biome.BiomeManaPlains;
 import firis.yuzukizuflower.common.event.PopulateChunkEventHandler;
 import firis.yuzukizuflower.common.item.YKItemBackpackChest;
 import firis.yuzukizuflower.common.item.YKItemBase;
@@ -65,6 +66,7 @@ import net.minecraft.item.ItemBlock;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.crafting.IRecipe;
 import net.minecraft.util.ResourceLocation;
+import net.minecraft.world.biome.Biome;
 import net.minecraftforge.client.event.ModelRegistryEvent;
 import net.minecraftforge.client.model.ModelLoader;
 import net.minecraftforge.common.MinecraftForge;
@@ -748,6 +750,14 @@ public class YuzuKizuFlower
     	ModelLoader.setCustomModelResourceLocation(YuzuKizuItems.DIMENSION_KEY, 0,
     			new ModelResourceLocation(YuzuKizuItems.DIMENSION_KEY.getRegistryName(), "inventory"));
     	
+    }
+    
+    /**
+     * Biomeを登録するイベント
+     */
+    @SubscribeEvent
+    protected static void registerBiomes(RegistryEvent.Register<Biome> event) {
+    	event.getRegistry().register(new BiomeManaPlains());
     }
     
     @SubscribeEvent

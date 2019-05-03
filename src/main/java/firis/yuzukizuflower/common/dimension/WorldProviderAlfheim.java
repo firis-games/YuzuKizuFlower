@@ -1,10 +1,11 @@
 package firis.yuzukizuflower.common.dimension;
 
-import net.minecraft.init.Biomes;
+import firis.yuzukizuflower.YuzuKizuFlower;
+import net.minecraft.util.ResourceLocation;
 import net.minecraft.world.DimensionType;
 import net.minecraft.world.WorldProvider;
+import net.minecraft.world.biome.Biome;
 import net.minecraft.world.biome.BiomeProviderSingle;
-import net.minecraft.world.gen.ChunkGeneratorOverworld;
 import net.minecraft.world.gen.IChunkGenerator;
 
 /**
@@ -25,13 +26,14 @@ public class WorldProviderAlfheim extends WorldProvider {
 		this.doesWaterVaporize = false;
 		this.hasSkyLight = true;
 
-		//平原
-		this.biomeProvider = new BiomeProviderSingle(Biomes.PLAINS);
+		//マナ平原
+		Biome biome = Biome.REGISTRY.getObject(new ResourceLocation(YuzuKizuFlower.MODID, "mana_plains"));
+		this.biomeProvider = new BiomeProviderSingle(biome);
     }
 	
 	@Override
     public IChunkGenerator createChunkGenerator()
     {
-		return new ChunkGeneratorOverworld(world, world.getSeed(), world.getWorldInfo().isMapFeaturesEnabled(), "");
+		return new ChunkGeneratorAlfheim(world, world.getSeed(), world.getWorldInfo().isMapFeaturesEnabled(), "");
     }
 }
