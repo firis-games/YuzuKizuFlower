@@ -6,6 +6,7 @@ import firis.yuzukizuflower.client.tesr.YKTileCorporeaChestSpRenderer;
 import firis.yuzukizuflower.client.tesr.YKTileManaTankSpRenderer;
 import firis.yuzukizuflower.client.tesr.YKTileScrollChestSpRenderer;
 import firis.yuzukizuflower.common.YKGuiHandler;
+import firis.yuzukizuflower.common.block.YKBlockAlfheimCore;
 import firis.yuzukizuflower.common.block.YKBlockAutoWorkbench;
 import firis.yuzukizuflower.common.block.YKBlockBaseBoxed;
 import firis.yuzukizuflower.common.block.YKBlockBoxedAkanerald;
@@ -180,6 +181,7 @@ public class YuzuKizuFlower
     	public final static Block RUNE_WORKBENCH = null;
     	public final static Block TERRA_PLATE = null;
     	public final static Block AUTO_WORKBENCH = null;
+    	public final static Block ALFHEIM_CORE = null;
     }
     
     public static class YuzuKizuFluids {
@@ -452,6 +454,13 @@ public class YuzuKizuFlower
                 .setRegistryName(MODID, "auto_workbench")
                 .setUnlocalizedName("auto_workbench")
         );
+        
+        // アルフヘイム
+        event.getRegistry().register(
+                new YKBlockAlfheimCore()
+                .setRegistryName(MODID, "alfheim_core")
+                .setUnlocalizedName("alfheim_core")
+        );
     }
     
     /**
@@ -609,6 +618,11 @@ public class YuzuKizuFlower
     			.setRegistryName(MODID, "dimension_key")
     			.setUnlocalizedName("dimension_key")
     	);
+    	
+    	// アルフヘイムコア
+    	event.getRegistry().register(new ItemBlock(YuzuKizuBlocks.ALFHEIM_CORE)
+    			.setRegistryName(MODID, "alfheim_core")
+    	);
     }
     
     /**
@@ -753,6 +767,10 @@ public class YuzuKizuFlower
     	// ディメンションキー
     	ModelLoader.setCustomModelResourceLocation(YuzuKizuItems.DIMENSION_KEY, 0,
     			new ModelResourceLocation(YuzuKizuItems.DIMENSION_KEY.getRegistryName(), "inventory"));
+
+    	// アルフヘイムコア
+    	ModelLoader.setCustomModelResourceLocation(Item.getItemFromBlock(YuzuKizuBlocks.ALFHEIM_CORE), 0,
+    			new ModelResourceLocation(YuzuKizuBlocks.ALFHEIM_CORE.getRegistryName(), "inventory"));
     	
     }
     
