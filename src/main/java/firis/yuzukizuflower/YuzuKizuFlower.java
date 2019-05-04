@@ -21,6 +21,7 @@ import firis.yuzukizuflower.common.block.YKBlockBoxedRannuncarpus;
 import firis.yuzukizuflower.common.block.YKBlockBoxedYuquarry;
 import firis.yuzukizuflower.common.block.YKBlockCorporeaChest;
 import firis.yuzukizuflower.common.block.YKBlockManaTank;
+import firis.yuzukizuflower.common.block.YKBlockOre;
 import firis.yuzukizuflower.common.block.YKBlockPetalWorkbench;
 import firis.yuzukizuflower.common.block.YKBlockRuneWorkbench;
 import firis.yuzukizuflower.common.block.YKBlockScrollChest;
@@ -182,6 +183,11 @@ public class YuzuKizuFlower
     	public final static Block TERRA_PLATE = null;
     	public final static Block AUTO_WORKBENCH = null;
     	public final static Block ALFHEIM_CORE = null;
+    	public final static Block PIXIE_ORE = null;
+    	public final static Block ELEVN_ORE = null;
+    	public final static Block ELEMENTIUM_ORE = null;
+    	public final static Block DRAGON_ORE = null;
+    	public final static Block GAIA_ORE = null;
     }
     
     public static class YuzuKizuFluids {
@@ -455,11 +461,46 @@ public class YuzuKizuFlower
                 .setUnlocalizedName("auto_workbench")
         );
         
-        // アルフヘイム
+        // アルフヘイムコア
         event.getRegistry().register(
                 new YKBlockAlfheimCore()
                 .setRegistryName(MODID, "alfheim_core")
                 .setUnlocalizedName("alfheim_core")
+        );
+        
+        // ピクシィ鉱石
+        event.getRegistry().register(
+                new YKBlockOre(YKBlockOre.OreType.PIXIE)
+                .setRegistryName(MODID, "pixie_ore")
+                .setUnlocalizedName("pixie_ore")
+        );
+        
+        // エレブン鉱石
+        event.getRegistry().register(
+                new YKBlockOre(YKBlockOre.OreType.ELVEN)
+                .setRegistryName(MODID, "elevn_ore")
+                .setUnlocalizedName("elevn_ore")
+        );
+        
+        // エレメンチウム鉱石
+        event.getRegistry().register(
+                new YKBlockOre(YKBlockOre.OreType.ELEMENTIUM)
+                .setRegistryName(MODID, "elementium_ore")
+                .setUnlocalizedName("elementium_ore")
+        );
+        
+        // ドラゴン鉱石
+        event.getRegistry().register(
+                new YKBlockOre(YKBlockOre.OreType.DRAGON)
+                .setRegistryName(MODID, "dragon_ore")
+                .setUnlocalizedName("dragon_ore")
+        );
+        
+        // ガイア鉱石
+        event.getRegistry().register(
+                new YKBlockOre(YKBlockOre.OreType.GAIA)
+                .setRegistryName(MODID, "gaia_ore")
+                .setUnlocalizedName("gaia_ore")
         );
     }
     
@@ -623,6 +664,31 @@ public class YuzuKizuFlower
     	event.getRegistry().register(new ItemBlock(YuzuKizuBlocks.ALFHEIM_CORE)
     			.setRegistryName(MODID, "alfheim_core")
     	);
+    	
+    	//ピクシィ鉱石
+    	event.getRegistry().register(new ItemBlock(YuzuKizuBlocks.PIXIE_ORE)
+    			.setRegistryName(MODID, "pixie_ore")
+    	);
+    	
+    	//ピクシィ鉱石
+    	event.getRegistry().register(new ItemBlock(YuzuKizuBlocks.ELEVN_ORE)
+    			.setRegistryName(MODID, "elevn_ore")
+    	);
+    	
+    	//エレメンチウム鉱石
+    	event.getRegistry().register(new ItemBlock(YuzuKizuBlocks.ELEMENTIUM_ORE)
+    			.setRegistryName(MODID, "elementium_ore")
+    	);
+    	
+    	//ドラゴン鉱石
+    	event.getRegistry().register(new ItemBlock(YuzuKizuBlocks.DRAGON_ORE)
+    			.setRegistryName(MODID, "dragon_ore")
+    	);
+    	
+    	//ガイア鉱石
+    	event.getRegistry().register(new ItemBlock(YuzuKizuBlocks.GAIA_ORE)
+    			.setRegistryName(MODID, "gaia_ore")
+    	);
     }
     
     /**
@@ -771,6 +837,26 @@ public class YuzuKizuFlower
     	// アルフヘイムコア
     	ModelLoader.setCustomModelResourceLocation(Item.getItemFromBlock(YuzuKizuBlocks.ALFHEIM_CORE), 0,
     			new ModelResourceLocation(YuzuKizuBlocks.ALFHEIM_CORE.getRegistryName(), "inventory"));
+    	
+    	// ピクシィ鉱石
+    	ModelLoader.setCustomModelResourceLocation(Item.getItemFromBlock(YuzuKizuBlocks.PIXIE_ORE), 0,
+    			new ModelResourceLocation(YuzuKizuBlocks.PIXIE_ORE.getRegistryName(), "inventory"));
+    	
+    	// エレブン鉱石
+    	ModelLoader.setCustomModelResourceLocation(Item.getItemFromBlock(YuzuKizuBlocks.ELEVN_ORE), 0,
+    			new ModelResourceLocation(YuzuKizuBlocks.ELEVN_ORE.getRegistryName(), "inventory"));
+    	
+    	// エレメンチウム鉱石
+    	ModelLoader.setCustomModelResourceLocation(Item.getItemFromBlock(YuzuKizuBlocks.ELEMENTIUM_ORE), 0,
+    			new ModelResourceLocation(YuzuKizuBlocks.ELEMENTIUM_ORE.getRegistryName(), "inventory"));
+    
+    	// ドラゴン鉱石
+    	ModelLoader.setCustomModelResourceLocation(Item.getItemFromBlock(YuzuKizuBlocks.DRAGON_ORE), 0,
+    			new ModelResourceLocation(YuzuKizuBlocks.DRAGON_ORE.getRegistryName(), "inventory"));
+
+    	// ガイア鉱石
+    	ModelLoader.setCustomModelResourceLocation(Item.getItemFromBlock(YuzuKizuBlocks.GAIA_ORE), 0,
+    			new ModelResourceLocation(YuzuKizuBlocks.GAIA_ORE.getRegistryName(), "inventory"));
     	
     }
     
