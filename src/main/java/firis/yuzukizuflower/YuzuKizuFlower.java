@@ -92,6 +92,7 @@ import net.minecraftforge.fml.common.registry.GameRegistry;
 import net.minecraftforge.fml.common.registry.GameRegistry.ObjectHolder;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
+import vazkii.botania.common.item.ModItems;
 
 @Mod(
 		modid = YuzuKizuFlower.MODID, 
@@ -297,6 +298,10 @@ public class YuzuKizuFlower
     	
     	//鉱石生成イベント
     	MinecraftForge.ORE_GEN_BUS.register(OreGenHandler.class);
+    	
+    	//エレメンチウムインゴット
+    	GameRegistry.addSmelting(YuzuKizuBlocks.ELEMENTIUM_ORE, 
+    			new ItemStack(ModItems.manaResource, 1, 7), 0.7f);
     	
     }
     
