@@ -21,5 +21,4 @@ public class DimensionHandler {
 		
 		DimensionManager.registerDimension(dimensionAlfheim.getId(), dimensionAlfheim);
 	}
-
 }
