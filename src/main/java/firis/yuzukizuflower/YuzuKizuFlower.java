@@ -24,6 +24,7 @@ import firis.yuzukizuflower.common.block.YKBlockPetalWorkbench;
 import firis.yuzukizuflower.common.block.YKBlockRuneWorkbench;
 import firis.yuzukizuflower.common.block.YKBlockScrollChest;
 import firis.yuzukizuflower.common.block.YKBlockTerraPlate;
+import firis.yuzukizuflower.common.event.OreGenHandler;
 import firis.yuzukizuflower.common.event.PopulateChunkEventHandler;
 import firis.yuzukizuflower.common.item.YKItemBackpackChest;
 import firis.yuzukizuflower.common.item.YKItemBase;
@@ -285,6 +286,9 @@ public class YuzuKizuFlower
     	
     	//Layerを設定
     	proxy.initLayerRenderer();
+    	
+    	//鉱石生成イベント
+    	MinecraftForge.ORE_GEN_BUS.register(OreGenHandler.class);
     	
     }
     

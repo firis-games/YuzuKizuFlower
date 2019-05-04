@@ -24,7 +24,6 @@ import net.minecraftforge.fml.common.eventhandler.EventPriority;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import vazkii.botania.api.state.BotaniaStateProps;
 import vazkii.botania.api.state.enums.AltGrassVariant;
-import vazkii.botania.api.state.enums.LivingRockVariant;
 import vazkii.botania.common.block.ModBlocks;
 
 /**
@@ -167,6 +166,17 @@ public class PopulateChunkEventHandler {
 			
 			//基準点
 			BlockPos basePos = event.getWorld().getTopSolidOrLiquidBlock(new BlockPos(0, 0, 0)).down();
+			
+			//上のブロックが液体の場合は処理しない(高さ128まで計算)
+			basePos = basePos.up();
+			while (basePos.getY() < 128) {
+				IBlockState state = event.getWorld().getBlockState(basePos);
+				if(!state.getMaterial().isLiquid()) {
+					break;
+				}
+				basePos = basePos.up();
+			}
+			basePos = basePos.down();
 			
 			//一定空間を空にする
 			int range = 13;
