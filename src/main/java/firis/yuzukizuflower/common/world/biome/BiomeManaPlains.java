@@ -44,7 +44,7 @@ public class BiomeManaPlains extends Biome {
 	
 	//リビングウッドの木
 	protected WorldGenAbstractTree cstmTreeGen = new WorldGenTrees(true, 4, 
-			ModBlocks.livingwood.getDefaultState(), 
+			ModBlocks.dreamwood.getDefaultState(), 
 			Blocks.LEAVES.getDefaultState().withProperty(BlockOldLeaf.VARIANT, BlockPlanks.EnumType.OAK).withProperty(BlockLeaves.CHECK_DECAY,Boolean.valueOf(false)),
 			false);
 	protected WorldGenAbstractTree cstmBigTreeGen = new WorldGenBigTreeLivingWood(false);

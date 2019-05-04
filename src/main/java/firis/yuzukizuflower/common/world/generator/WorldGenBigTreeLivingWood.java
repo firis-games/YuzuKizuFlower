@@ -17,7 +17,7 @@ import vazkii.botania.common.block.ModBlocks;
 
 public class WorldGenBigTreeLivingWood extends WorldGenAbstractTree {
 	
-	private Block blockLog = ModBlocks.livingwood;
+	private Block blockLog = ModBlocks.dreamwood;
 	private Block blockLeaves = Blocks.LEAVES;
 	
 	

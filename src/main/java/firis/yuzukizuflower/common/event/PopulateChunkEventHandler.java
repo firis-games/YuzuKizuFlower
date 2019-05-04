@@ -5,6 +5,8 @@ import java.util.List;
 
 import firis.yuzukizuflower.YuzuKizuFlower.YuzuKizuBlocks;
 import firis.yuzukizuflower.common.YKConfig;
+import firis.yuzukizuflower.common.world.dimension.DimensionHandler;
+import firis.yuzukizuflower.common.world.generator.WorldGenAlfheimPortal;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.init.Blocks;
 import net.minecraft.util.EnumFacing;
@@ -13,12 +15,17 @@ import net.minecraft.util.math.ChunkPos;
 import net.minecraft.world.WorldType;
 import net.minecraft.world.chunk.Chunk;
 import net.minecraft.world.gen.feature.WorldGenLakes;
+import net.minecraft.world.gen.feature.WorldGenerator;
 import net.minecraftforge.event.terraingen.PopulateChunkEvent;
 import net.minecraftforge.event.terraingen.PopulateChunkEvent.Populate;
 import net.minecraftforge.fml.common.Mod.EventBusSubscriber;
 import net.minecraftforge.fml.common.eventhandler.Event.Result;
 import net.minecraftforge.fml.common.eventhandler.EventPriority;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
+import vazkii.botania.api.state.BotaniaStateProps;
+import vazkii.botania.api.state.enums.AltGrassVariant;
+import vazkii.botania.api.state.enums.LivingRockVariant;
+import vazkii.botania.common.block.ModBlocks;
 
 /**
  * net.minecraft.world.gen.ChunkGeneratorOverworld
@@ -135,5 +142,78 @@ public class PopulateChunkEventHandler {
 			}			
 		}
 		
+	}
+	
+	
+	/**
+	 * アルフヘイムの基点構造物を生成する
+	 * @param event
+	 */
+	@SubscribeEvent(priority = EventPriority.LOWEST)
+	public static void onPopulateChunkEventPost(PopulateChunkEvent.Post event) {
+		
+		//アルフヘイム以外は処理を行わない
+		if (event.getWorld().provider.getDimension() != DimensionHandler.dimensionAlfheim.getId()) {
+			return;
+		}
+		if (event.getResult() != Result.ALLOW && event.getResult() != Result.DEFAULT) {
+			return;
+		}
+		
+		//座標を確認
+		Chunk chunk = event.getWorld().getChunkFromChunkCoords(event.getChunkX(), event.getChunkZ());
+		//x座標z座標が基点
+		if (chunk.x == 0 && chunk.z == 0) {
+			
+			//基準点
+			BlockPos basePos = event.getWorld().getTopSolidOrLiquidBlock(new BlockPos(0, 0, 0)).down();
+			
+			//一定空間を空にする
+			int range = 13;
+			for (BlockPos pos : BlockPos.getAllInBox(
+					basePos.north(range).west(range).up(range),
+					basePos.south(range).east(range).up())) {
+				event.getWorld().setBlockState(pos, Blocks.AIR.getDefaultState(), 2);
+			}
+			
+			IBlockState baseState;
+			
+			//土を変更
+			baseState = ModBlocks.altGrass.getDefaultState().withProperty(BotaniaStateProps.ALTGRASS_VARIANT, AltGrassVariant.INFUSED);
+			for (BlockPos pos : BlockPos.getAllInBox(
+					basePos.north(range).west(range),
+					basePos.south(range).east(range))) {
+				if (event.getWorld().getBlockState(pos).getBlock() == Blocks.DIRT) {
+					event.getWorld().setBlockState(pos, Blocks.AIR.getDefaultState(), 2);
+				}
+			}
+			
+			//一定空間に土台をつくる
+			range = 8;
+			baseState = ModBlocks.enchantedSoil.getDefaultState();
+			for (BlockPos pos : BlockPos.getAllInBox(
+					basePos.north(range).west(range),
+					basePos.south(range).east(range))) {
+				event.getWorld().setBlockState(pos, baseState, 2);
+			}
+			//土
+			baseState = Blocks.DIRT.getDefaultState();
+			for (BlockPos pos : BlockPos.getAllInBox(
+					basePos.north(range).west(range).down(1),
+					basePos.south(range).east(range).down(4))) {
+				event.getWorld().setBlockState(pos, baseState, 2);
+			}
+			//リビングロック
+			baseState = ModBlocks.livingrock.getDefaultState();
+			for (BlockPos pos : BlockPos.getAllInBox(
+					basePos.north(range).west(range).down(5),
+					basePos.south(range).east(range).down(10))) {
+				event.getWorld().setBlockState(pos, baseState, 2);
+			}
+
+			//アルフヘイムポータル
+			WorldGenerator alfheimPortal = new WorldGenAlfheimPortal();
+			alfheimPortal.generate(event.getWorld(), event.getWorld().rand, basePos);			
+		}
 	}
 }

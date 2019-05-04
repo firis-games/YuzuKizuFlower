@@ -3,6 +3,7 @@ package firis.yuzukizuflower.common.item;
 import firis.yuzukizuflower.YuzuKizuFlower;
 import firis.yuzukizuflower.common.world.dimension.DimensionHandler;
 import firis.yuzukizuflower.common.world.dimension.TeleporterAlfheim;
+import firis.yuzukizuflower.common.world.generator.WorldGenHouse;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
@@ -38,6 +39,14 @@ public class YKItemDimensionKey extends Item {
 	@Override
     public EnumActionResult onItemUse(EntityPlayer player, World worldIn, BlockPos pos, EnumHand hand, EnumFacing facing, float hitX, float hitY, float hitZ)
     {
+		if (worldIn.isRemote) return EnumActionResult.SUCCESS;
+
+		//Playerの向いてる方向
+		EnumFacing playerFacing = player.getHorizontalFacing();
+		
+		WorldGenHouse gen = new WorldGenHouse(playerFacing);
+		gen.generate(worldIn, worldIn.rand, pos);
+
         return EnumActionResult.SUCCESS;
     }
     
