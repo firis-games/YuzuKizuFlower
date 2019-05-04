@@ -13,9 +13,18 @@ import vazkii.botania.common.block.ModBlocks;
 
 public class WorldGenMinableAlfheim extends WorldGenMinable {
 
-	public WorldGenMinableAlfheim(IBlockState state, int blockCount) {
-		super(state, blockCount, new AlfheimPredicate());
+	public WorldGenMinableAlfheim(IBlockState state, int bloxkSize, int blockCount, int minHeight, int maxHeight) {
+		super(state, bloxkSize, new AlfheimPredicate());
+		
+		this.blockCount = blockCount;
+		this.minHeight = minHeight;
+		this.maxHeight = maxHeight;
 	}
+	
+	protected int blockCount = 0;
+	protected int minHeight = 0;
+	protected int maxHeight = 0;
+	
 	
 	/**
 	 * 鉱石を生成する
@@ -25,8 +34,8 @@ public class WorldGenMinableAlfheim extends WorldGenMinable {
 	 * @param minHeight
 	 * @param maxHeight
 	 */
-	public void generatorOre(World world, BlockPos pos, int blockCount, int minHeight, int maxHeight) {
-		this.genStandardOre1(world, pos, world.rand, blockCount, this, minHeight, maxHeight);
+	public void generatorOre(World world, BlockPos pos) {
+		this.genStandardOre1(world, pos, world.rand, this.blockCount, this, this.minHeight, this.maxHeight);
 	}
 	
 	/**
