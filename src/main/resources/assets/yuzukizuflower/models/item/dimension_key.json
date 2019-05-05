@@ -1,6 +1,7 @@
 {
-    "parent": "item/generated",
-    "textures": {
-        "layer0": "yuzukizuflower:items/dimension_key"
+    "parent": "minecraft:item/generated",
+    "textures": 
+    {
+        "layer0": "botania:items/gaia_ingot"
     }
 }

@@ -93,6 +93,9 @@ info.blueprint.name= Blueprint
 tile.auto_workbench.name=Auto Workbench
 gui.auto_workbench.name=Auto Workbench
 
+item.dimension_key.name=Alfheim Key
+info.dimension_key=Stabilization Alfheim Portal
+
 tile.pixie_ore.name=Pixie Ore
 tile.elevn_ore.name=Elevn Ore
 tile.elementium_ore.name=Elementium Ore

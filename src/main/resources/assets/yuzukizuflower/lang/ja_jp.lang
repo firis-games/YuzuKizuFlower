@@ -94,6 +94,9 @@ info.blueprint.name=の設計図
 tile.auto_workbench.name=お花自動作業台
 gui.auto_workbench.name=お花自動作業台
 
+item.dimension_key.name=アルフヘイムの鍵
+info.dimension_key=一時的なポータル安定化
+
 tile.pixie_ore.name=ピクシィ鉱石
 tile.elevn_ore.name=エレブン鉱石
 tile.elementium_ore.name=エレメンチウム鉱石

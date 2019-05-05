@@ -45,6 +45,8 @@ public class BotaniaRecipes {
 		//ペタルアポセカリー変換レシピ
 		BotaniaRecipes.addRecipesPetalApothecary();
 		
+		//ルーンの祭壇変換レシピ
+		BotaniaRecipes.addRecipesRuneAltar();
 		
 	}
 	
@@ -148,7 +150,31 @@ public class BotaniaRecipes {
 				RUNE[3],
 				new ItemStack(Blocks.EMERALD_BLOCK),
 				new ItemStack(Item.getByNameOrId("botania:storage"), 1, 3));
+		
+		//育ちすぎた種
+		BotaniaAPI.registerPetalRecipe(
+				new ItemStack(Item.getByNameOrId("botania:overgrowthseed"), 2), 
+				new ItemStack(Item.getByNameOrId("botania:overgrowthseed")), 
+				new ItemStack(Item.getByNameOrId("botania:manaresource"), 1, 5),
+				new ItemStack(Item.getByNameOrId("botania:fertilizer")));
 	}
 	
+	/**
+	 * ルーンの祭壇のレシピを追加する
+	 */
+	protected static void addRecipesRuneAltar() {
+		
+		//アルフヘイムキー
+		BotaniaAPI.registerRuneAltarRecipe(
+				new ItemStack(YuzuKizuItems.DIMENSION_KEY, 1),
+				100000, 
+				new ItemStack(Item.getByNameOrId("botania:manaresource"), 1, 5),
+				new ItemStack(Item.getByNameOrId("botania:manaresource"), 1, 18),
+				new ItemStack(Item.getByNameOrId("botania:manaresource"), 1, 18),
+				new ItemStack(Item.getByNameOrId("botania:manaresource"), 1, 18),
+				new ItemStack(Item.getByNameOrId("botania:manaresource"), 1, 18),
+				new ItemStack(Item.getByNameOrId("botania:manaresource"), 1, 7));
+		
+	}
 
 }
