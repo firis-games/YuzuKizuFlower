@@ -101,3 +101,5 @@ tile.elevn_ore.name=Elevn Ore
 tile.elementium_ore.name=Elementium Ore
 tile.dragon_ore.name=Dragon Ore
 tile.gaia_ore.name=Gaia Ore
+
+item.instant_house.name=Instant House

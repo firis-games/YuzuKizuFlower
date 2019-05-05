@@ -32,6 +32,7 @@ import firis.yuzukizuflower.common.item.YKItemBackpackChest;
 import firis.yuzukizuflower.common.item.YKItemBase;
 import firis.yuzukizuflower.common.item.YKItemBlueprint;
 import firis.yuzukizuflower.common.item.YKItemDimensionKey;
+import firis.yuzukizuflower.common.item.YKItemInstantHouse;
 import firis.yuzukizuflower.common.item.YKItemRemoteChest;
 import firis.yuzukizuflower.common.network.NetworkHandler;
 import firis.yuzukizuflower.common.proxy.CommonProxy;
@@ -157,6 +158,7 @@ public class YuzuKizuFlower
     	public final static Item BACKPACK_CHEST = null;
     	public final static Item BLUEPRINT = null;
     	public final static Item DIMENSION_KEY = null;
+    	public final static Item INSTANT_HOUSE = null;
     }
     /**
      * ブロックインスタンス保持用
@@ -694,6 +696,12 @@ public class YuzuKizuFlower
     	event.getRegistry().register(new ItemBlock(YuzuKizuBlocks.GAIA_ORE)
     			.setRegistryName(MODID, "gaia_ore")
     	);
+    	
+    	//インスタントハウス
+    	event.getRegistry().register(new YKItemInstantHouse()
+    			.setRegistryName(MODID, "instant_house")
+    			.setUnlocalizedName("instant_house")
+    	);
     }
     
     /**
@@ -862,6 +870,10 @@ public class YuzuKizuFlower
     	// ガイア鉱石
     	ModelLoader.setCustomModelResourceLocation(Item.getItemFromBlock(YuzuKizuBlocks.GAIA_ORE), 0,
     			new ModelResourceLocation(YuzuKizuBlocks.GAIA_ORE.getRegistryName(), "inventory"));
+    	
+    	// インスタントハウス
+    	ModelLoader.setCustomModelResourceLocation(YuzuKizuItems.INSTANT_HOUSE, 0,
+    			new ModelResourceLocation(YuzuKizuItems.INSTANT_HOUSE.getRegistryName(), "inventory"));
     	
     }
     
