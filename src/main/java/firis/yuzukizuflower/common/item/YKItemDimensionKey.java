@@ -19,6 +19,7 @@ import net.minecraft.util.EnumFacing;
 import net.minecraft.util.EnumHand;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.text.TextFormatting;
+import net.minecraft.world.DimensionType;
 import net.minecraft.world.World;
 import net.minecraft.world.WorldServer;
 import net.minecraftforge.fml.relauncher.Side;
@@ -73,6 +74,8 @@ public class YKItemDimensionKey extends Item {
 
 		World world = player.getEntityWorld();
 		
+		if (world.provider.getDimension() != DimensionType.OVERWORLD.getId()) return false;
+		
 		//playerの足元3×3を取得
 		BlockPos basePos = player.getPosition().down();
 		for (BlockPos pos : BlockPos.getAllInBox(basePos.north(1).east(1), basePos.south(1).west(1))) {
@@ -86,7 +89,8 @@ public class YKItemDimensionKey extends Item {
 			}
 		}
 		
-		if (!ret) return ret;
+		//クリエイティブモードの場合は条件を無視する
+		if (!ret && !player.isCreative()) return ret;
 		
 		//クリエイティブ判定
 		if (!player.isCreative()) {

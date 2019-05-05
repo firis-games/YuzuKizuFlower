@@ -22,9 +22,6 @@ import net.minecraftforge.fml.common.Mod.EventBusSubscriber;
 import net.minecraftforge.fml.common.eventhandler.Event.Result;
 import net.minecraftforge.fml.common.eventhandler.EventPriority;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
-import vazkii.botania.api.state.BotaniaStateProps;
-import vazkii.botania.api.state.enums.AltGrassVariant;
-import vazkii.botania.common.block.ModBlocks;
 
 /**
  * net.minecraft.world.gen.ChunkGeneratorOverworld
@@ -166,60 +163,6 @@ public class PopulateChunkEventHandler {
 			
 			//基準点
 			BlockPos basePos = event.getWorld().getTopSolidOrLiquidBlock(new BlockPos(0, 0, 0)).down();
-			
-			//上のブロックが液体の場合は処理しない(高さ128まで計算)
-			basePos = basePos.up();
-			while (basePos.getY() < 128) {
-				IBlockState state = event.getWorld().getBlockState(basePos);
-				if(!state.getMaterial().isLiquid()) {
-					break;
-				}
-				basePos = basePos.up();
-			}
-			basePos = basePos.down();
-			
-			//一定空間を空にする
-			int range = 13;
-			for (BlockPos pos : BlockPos.getAllInBox(
-					basePos.north(range).west(range).up(range),
-					basePos.south(range).east(range).up())) {
-				event.getWorld().setBlockState(pos, Blocks.AIR.getDefaultState(), 2);
-			}
-			
-			IBlockState baseState;
-			
-			//土を変更
-			baseState = ModBlocks.altGrass.getDefaultState().withProperty(BotaniaStateProps.ALTGRASS_VARIANT, AltGrassVariant.INFUSED);
-			for (BlockPos pos : BlockPos.getAllInBox(
-					basePos.north(range).west(range),
-					basePos.south(range).east(range))) {
-				if (event.getWorld().getBlockState(pos).getBlock() == Blocks.DIRT) {
-					event.getWorld().setBlockState(pos, Blocks.AIR.getDefaultState(), 2);
-				}
-			}
-			
-			//一定空間に土台をつくる
-			range = 8;
-			baseState = ModBlocks.enchantedSoil.getDefaultState();
-			for (BlockPos pos : BlockPos.getAllInBox(
-					basePos.north(range).west(range),
-					basePos.south(range).east(range))) {
-				event.getWorld().setBlockState(pos, baseState, 2);
-			}
-			//土
-			baseState = Blocks.DIRT.getDefaultState();
-			for (BlockPos pos : BlockPos.getAllInBox(
-					basePos.north(range).west(range).down(1),
-					basePos.south(range).east(range).down(4))) {
-				event.getWorld().setBlockState(pos, baseState, 2);
-			}
-			//リビングロック
-			baseState = ModBlocks.livingrock.getDefaultState();
-			for (BlockPos pos : BlockPos.getAllInBox(
-					basePos.north(range).west(range).down(5),
-					basePos.south(range).east(range).down(10))) {
-				event.getWorld().setBlockState(pos, baseState, 2);
-			}
 
 			//アルフヘイムポータル
 			WorldGenerator alfheimPortal = new WorldGenAlfheimPortal();
