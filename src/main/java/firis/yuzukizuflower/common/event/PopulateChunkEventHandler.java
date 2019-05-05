@@ -12,6 +12,7 @@ import net.minecraft.init.Blocks;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.ChunkPos;
+import net.minecraft.world.DimensionType;
 import net.minecraft.world.WorldType;
 import net.minecraft.world.chunk.Chunk;
 import net.minecraft.world.gen.feature.WorldGenLakes;
@@ -50,11 +51,18 @@ public class PopulateChunkEventHandler {
 		if((event.getResult() == Result.ALLOW || event.getResult() == Result.DEFAULT) 
 				&& event.getType() == Populate.EventType.LAKE) {
 			
+			boolean alfFlg = false;
+			if (event.getWorld().provider.getDimension() == DimensionHandler.dimensionAlfheim.getId()) {
+				alfFlg = true;
+			}
+			
+			//アルフヘイムの場合は強制で100%
 			//池生成を差し替える
 			//Configで生成率を制御
-			if (YKConfig.GEN_RATE_MANA_LAKE == 0 ||
-					event.getRand().nextInt(1000) > YKConfig.GEN_RATE_MANA_LAKE) return;
-			
+			if (!alfFlg) {
+				if (YKConfig.GEN_RATE_MANA_LAKE == 0 ||
+						event.getRand().nextInt(1000) > YKConfig.GEN_RATE_MANA_LAKE) return;
+			}
 			ChunkPos chunkPos = new ChunkPos(event.getChunkX(), event.getChunkZ());
 			chunkPos.getBlock(0, 0, 0);
 			BlockPos blockPos = chunkPos.getBlock(0, 0, 0);
@@ -79,7 +87,7 @@ public class PopulateChunkEventHandler {
 				
 		//ワールドタイプFLAT・オーバーワールド以外は生成を行わない
 		if (event.getWorld().getWorldType() == WorldType.FLAT
-				|| !(event.getWorld().provider.getDimension() == 0)) {
+				|| !(event.getWorld().provider.getDimension() == DimensionType.OVERWORLD.getId())) {
 			return;
 		}
 		
