@@ -1,0 +1,16 @@
+{
+	"__comment": "minecraft:chests/spawn_bonus_chest add custom pools",
+	"pools": [
+		{
+			"name": "main",
+			"rolls": 1,
+			"entries": [
+				{
+				"type": "item",
+				"name": "yuzukizuflower:instant_house",
+				"weight": 1
+				}
+			]
+		}
+	]
+}
