@@ -1,0 +1,26 @@
+{
+    "display": {
+        "icon": {
+            "item": "yuzukizuflower:mana_tank"
+        },
+        "title": {
+            "translate": "advancements.mana_tank.title"
+        },
+        "description": {
+            "translate": "advancements.mana_tank.description"
+        }
+    },
+    "parent": "yuzukizuflower:root",
+    "criteria": {
+        "mana_tank": {
+            "trigger": "minecraft:inventory_changed",
+            "conditions": {
+                "items": [
+                    {
+                        "item": "yuzukizuflower:mana_tank"
+                    }
+                ]
+            }
+        }
+    }
+}

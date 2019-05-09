@@ -1,0 +1,26 @@
+{
+    "display": {
+        "icon": {
+            "item": "yuzukizuflower:auto_workbench"
+        },
+        "title": {
+            "translate": "advancements.auto_workbench.title"
+        },
+        "description": {
+            "translate": "advancements.auto_workbench.description"
+        }
+    },
+    "parent": "yuzukizuflower:rune_workbench",
+    "criteria": {
+        "auto_workbench": {
+            "trigger": "minecraft:inventory_changed",
+            "conditions": {
+                "items": [
+                    {
+                        "item": "yuzukizuflower:auto_workbench"
+                    }
+                ]
+            }
+        }
+    }
+}

@@ -1,0 +1,29 @@
+{
+    "display": {
+        "icon": {
+            "item": "yuzukizuflower:flower_box"
+        },
+        "title": {
+            "translate": "advancements.root.title"
+        },
+        "description": {
+            "translate": "advancements.root.description"
+        },
+        "background": "minecraft:textures/gui/advancements/backgrounds/stone.png",
+        "show_toast": false,
+        "announce_to_chat": false,
+        "hidden": false
+    },
+    "criteria": {
+        "ykf_root": {
+            "trigger": "minecraft:inventory_changed",
+            "conditions": {
+                "items": [
+                    {
+                        "item": "botania:altar"
+                    }
+                ]
+            }
+        }
+    }
+}

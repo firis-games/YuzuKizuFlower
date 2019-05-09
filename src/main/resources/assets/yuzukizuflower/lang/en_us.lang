@@ -103,3 +103,32 @@ tile.dragon_ore.name=Dragon Ore
 tile.gaia_ore.name=Gaia Ore
 
 item.instant_house.name=Instant House
+
+advancements.root.title=YuzuKizuFlower
+advancements.root.description=botania addon
+
+advancements.flower_box.title=Flower Box
+advancements.flower_box.description=Craft Flower Box
+
+advancements.boxed_yuquarry.title=Boxed Yuquarry
+advancements.boxed_yuquarry.description=Craft Boxed Yuquarry
+advancements.boxed_akariculture.title=Boxed Akariculture
+advancements.boxed_akariculture.description=Craft Boxed Akariculture
+advancements.boxed_akanerald.title=Boxed Akanerald
+advancements.boxed_akanerald.description=Craft Boxed Akanerald
+advancements.boxed_aocean.title=Boxed Aocean
+advancements.boxed_aocean.description=Craft Boxed Aocean
+
+advancements.mana_tank.title=Mana Tank
+advancements.mana_tank.description=Craft Mana Tank
+advancements.petal_workbench.title=Petal Workbench
+advancements.petal_workbench.description=Craft Petal Workbench
+advancements.rune_workbench.title=Rune Workbench
+advancements.rune_workbench.description=Craft Rune Workbench
+advancements.terra_plate.title=Terra Plate
+advancements.terra_plate.description=Craft Terra Plate
+
+advancements.auto_workbench.title=Auto Workbench
+advancements.auto_workbench.description=Craft Auto Workbench
+advancements.blueprint.title=Blueprint
+advancements.blueprint.description=Craft Blueprint

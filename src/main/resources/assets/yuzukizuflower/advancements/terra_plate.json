@@ -1,0 +1,26 @@
+{
+    "display": {
+        "icon": {
+            "item": "yuzukizuflower:terra_plate"
+        },
+        "title": {
+            "translate": "advancements.terra_plate.title"
+        },
+        "description": {
+            "translate": "advancements.terra_plate.description"
+        }
+    },
+    "parent": "yuzukizuflower:rune_workbench",
+    "criteria": {
+        "terra_plate": {
+            "trigger": "minecraft:inventory_changed",
+            "conditions": {
+                "items": [
+                    {
+                        "item": "yuzukizuflower:terra_plate"
+                    }
+                ]
+            }
+        }
+    }
+}

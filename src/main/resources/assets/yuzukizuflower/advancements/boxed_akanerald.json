@@ -1,0 +1,26 @@
+{
+    "display": {
+        "icon": {
+            "item": "yuzukizuflower:boxed_akanerald"
+        },
+        "title": {
+            "translate": "advancements.boxed_akanerald.title"
+        },
+        "description": {
+            "translate": "advancements.boxed_akanerald.description"
+        }
+    },
+    "parent": "yuzukizuflower:flower_box",
+    "criteria": {
+        "boxed_akanerald": {
+            "trigger": "minecraft:inventory_changed",
+            "conditions": {
+                "items": [
+                    {
+                        "item": "yuzukizuflower:boxed_akanerald"
+                    }
+                ]
+            }
+        }
+    }
+}

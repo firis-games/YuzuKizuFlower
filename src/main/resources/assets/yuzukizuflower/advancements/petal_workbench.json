@@ -1,0 +1,26 @@
+{
+    "display": {
+        "icon": {
+            "item": "yuzukizuflower:petal_workbench"
+        },
+        "title": {
+            "translate": "advancements.petal_workbench.title"
+        },
+        "description": {
+            "translate": "advancements.petal_workbench.description"
+        }
+    },
+    "parent": "yuzukizuflower:mana_tank",
+    "criteria": {
+        "petal_workbench": {
+            "trigger": "minecraft:inventory_changed",
+            "conditions": {
+                "items": [
+                    {
+                        "item": "yuzukizuflower:petal_workbench"
+                    }
+                ]
+            }
+        }
+    }
+}

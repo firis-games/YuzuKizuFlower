@@ -1,0 +1,26 @@
+{
+    "display": {
+        "icon": {
+            "item": "yuzukizuflower:flower_box"
+        },
+        "title": {
+            "translate": "advancements.flower_box.title"
+        },
+        "description": {
+            "translate": "advancements.flower_box.description"
+        }
+    },
+    "parent": "yuzukizuflower:root",
+    "criteria": {
+        "flower_box": {
+            "trigger": "minecraft:inventory_changed",
+            "conditions": {
+                "items": [
+                    {
+                        "item": "yuzukizuflower:flower_box"
+                    }
+                ]
+            }
+        }
+    }
+}
