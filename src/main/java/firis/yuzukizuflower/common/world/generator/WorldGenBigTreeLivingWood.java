@@ -5,6 +5,7 @@ import java.util.Random;
 
 import com.google.common.collect.Lists;
 
+import firis.yuzukizuflower.YuzuKizuFlower.YuzuKizuBlocks;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockLeaves;
 import net.minecraft.block.state.IBlockState;
@@ -18,7 +19,7 @@ import vazkii.botania.common.block.ModBlocks;
 public class WorldGenBigTreeLivingWood extends WorldGenAbstractTree {
 	
 	private Block blockLog = ModBlocks.dreamwood;
-	private Block blockLeaves = Blocks.LEAVES;
+	private Block blockLeaves = YuzuKizuBlocks.DREAM_LEAF;
 	
 	
 	private Random rand;

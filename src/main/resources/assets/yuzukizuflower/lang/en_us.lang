@@ -132,3 +132,6 @@ advancements.auto_workbench.title=Auto Workbench
 advancements.auto_workbench.description=Craft Auto Workbench
 advancements.blueprint.title=Blueprint
 advancements.blueprint.description=Craft Blueprint
+
+tile.dream_leaf.name=Dream Wood Leaf
+tile.dream_sapling.name=Dream Wood Sapling

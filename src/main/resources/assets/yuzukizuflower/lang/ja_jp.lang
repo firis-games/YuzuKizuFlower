@@ -133,3 +133,6 @@ advancements.auto_workbench.title=リビング作業台
 advancements.auto_workbench.description=お花自動作業台を作成する
 advancements.blueprint.title=自動化のための設計図
 advancements.blueprint.description=空の設計図を作成する
+
+tile.dream_leaf.name=ドリームウッドの葉
+tile.dream_sapling.name=ドリームウッドの苗木

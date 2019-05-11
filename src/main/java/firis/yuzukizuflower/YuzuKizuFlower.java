@@ -20,6 +20,8 @@ import firis.yuzukizuflower.common.block.YKBlockBoxedPureDaisy;
 import firis.yuzukizuflower.common.block.YKBlockBoxedRannuncarpus;
 import firis.yuzukizuflower.common.block.YKBlockBoxedYuquarry;
 import firis.yuzukizuflower.common.block.YKBlockCorporeaChest;
+import firis.yuzukizuflower.common.block.YKBlockDreamSapling;
+import firis.yuzukizuflower.common.block.YKBlockDreamLeaf;
 import firis.yuzukizuflower.common.block.YKBlockManaTank;
 import firis.yuzukizuflower.common.block.YKBlockOre;
 import firis.yuzukizuflower.common.block.YKBlockPetalWorkbench;
@@ -191,6 +193,8 @@ public class YuzuKizuFlower
     	public final static Block ELEMENTIUM_ORE = null;
     	public final static Block DRAGON_ORE = null;
     	public final static Block GAIA_ORE = null;
+    	public final static Block DREAM_LEAF = null;
+    	public final static Block DREAM_SAPLING = null;
     }
     
     public static class YuzuKizuFluids {
@@ -509,6 +513,20 @@ public class YuzuKizuFlower
                 .setRegistryName(MODID, "gaia_ore")
                 .setUnlocalizedName("gaia_ore")
         );
+        
+        // ドリームリーフ
+        event.getRegistry().register(
+                new YKBlockDreamLeaf()
+                .setRegistryName(MODID, "dream_leaf")
+                .setUnlocalizedName("dream_leaf")
+        );
+        
+        // ドリームウッドの苗木
+        event.getRegistry().register(
+                new YKBlockDreamSapling()
+                .setRegistryName(MODID, "dream_sapling")
+                .setUnlocalizedName("dream_sapling")
+        );
     }
     
     /**
@@ -702,6 +720,16 @@ public class YuzuKizuFlower
     			.setRegistryName(MODID, "instant_house")
     			.setUnlocalizedName("instant_house")
     	);
+    	
+    	//ドリームリーフ
+    	event.getRegistry().register(new ItemBlock(YuzuKizuBlocks.DREAM_LEAF)
+    			.setRegistryName(MODID, "dream_leaf")
+    	);
+    	
+    	//ドリームウッドの苗木
+    	event.getRegistry().register(new ItemBlock(YuzuKizuBlocks.DREAM_SAPLING)
+    			.setRegistryName(MODID, "dream_sapling")
+    	);
     }
     
     /**
@@ -875,6 +903,13 @@ public class YuzuKizuFlower
     	ModelLoader.setCustomModelResourceLocation(YuzuKizuItems.INSTANT_HOUSE, 0,
     			new ModelResourceLocation(YuzuKizuItems.INSTANT_HOUSE.getRegistryName(), "inventory"));
     	
+    	// ドリームリーフ
+    	ModelLoader.setCustomModelResourceLocation(Item.getItemFromBlock(YuzuKizuBlocks.DREAM_LEAF), 0,
+    			new ModelResourceLocation(YuzuKizuBlocks.DREAM_LEAF.getRegistryName(), "inventory"));
+    	
+    	// ドリームウッドの苗木
+    	ModelLoader.setCustomModelResourceLocation(Item.getItemFromBlock(YuzuKizuBlocks.DREAM_SAPLING), 0,
+    			new ModelResourceLocation(YuzuKizuBlocks.DREAM_SAPLING.getRegistryName(), "inventory"));
     }
     
     /**
