@@ -7,6 +7,7 @@ import firis.yuzukizuflower.YuzuKizuFlower.YuzuKizuBlocks;
 import firis.yuzukizuflower.common.YKConfig;
 import firis.yuzukizuflower.common.world.dimension.DimensionHandler;
 import firis.yuzukizuflower.common.world.generator.WorldGenAlfheimPortal;
+import firis.yuzukizuflower.common.world.generator.WorldGenAlfheimTreasureChest;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.init.Blocks;
 import net.minecraft.util.EnumFacing;
@@ -174,7 +175,25 @@ public class PopulateChunkEventHandler {
 
 			//アルフヘイムポータル
 			WorldGenerator alfheimPortal = new WorldGenAlfheimPortal();
-			alfheimPortal.generate(event.getWorld(), event.getWorld().rand, basePos);			
+			alfheimPortal.generate(event.getWorld(), event.getWorld().rand, basePos);
+		
+		//ポータルから最低3チャンク以上離れている
+		} else if (Math.abs(chunk.x) > 3 && Math.abs(chunk.z) > 3){
+			
+			//一定確率ごとに生成する
+			if (event.getRand().nextInt(300) != 0)return;
+			
+			//5から10の間でランダムに座標を取得
+			int x = chunk.getPos().getXStart() + event.getRand().nextInt(10) + 5;
+			int z = chunk.getPos().getZStart() + event.getRand().nextInt(10) + 5;
+			
+			//基準点
+			BlockPos basePos = event.getWorld().getTopSolidOrLiquidBlock(new BlockPos(x, 0, z)).down();
+
+			//宝箱を生成
+			WorldGenerator generator = new WorldGenAlfheimTreasureChest();
+			generator.generate(event.getWorld(), event.getWorld().rand, basePos);
+			
 		}
 	}
 }

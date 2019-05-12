@@ -1,0 +1,400 @@
+{
+    "pools": [
+        {
+            "name": "spawnermover",
+            "rolls": 1,
+            "entries": [
+                {
+                    "entryName": "spawnermover",
+                    "type": "item",
+                    "name": "botania:spawnermover",
+                    "weight": 1
+                }
+            ]
+        },
+        {
+            "name": "rune",
+            "rolls": {
+                "min": 0,
+                "max": 6
+            },
+            "entries": [
+                {
+                    "entryName": "rune_1",
+                    "type": "item",
+                    "name": "botania:rune",
+                    "weight": 40,
+                    "functions": [
+                        {
+                            "function": "set_data",
+                            "data": {
+                            	"min": 0,
+                            	"max": 3
+                            }
+                        },
+                        {
+                            "function": "set_count",
+                            "count": {
+                                "min": 1,
+                                "max": 3
+                            }
+                        }
+                    ]
+                },
+                {
+                    "entryName": "rune_2",
+                    "type": "item",
+                    "name": "botania:rune",
+                    "weight": 70,
+                    "functions": [
+                    	{
+                            "function": "set_data",
+                            "data": {
+                            	"min": 4,
+                            	"max": 8
+                            }
+                        },
+                        {
+                            "function": "set_count",
+                            "count": {
+                                "min": 1,
+                                "max": 3
+                            }
+                        }
+                    ]
+                },
+                {
+                    "entryName": "rune_3",
+                    "type": "item",
+                    "name": "botania:rune",
+                    "weight": 100,
+                    "functions": [
+                    	{
+                            "function": "set_data",
+                            "data": {
+                            	"min": 9,
+                            	"max": 15
+                            }
+                        },
+                        {
+                            "function": "set_count",
+                            "count": {
+                                "min": 1,
+                                "max": 2
+                            }
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "name": "manaresource",
+            "rolls": {
+                "min": 0,
+                "max": 4
+            },
+            "entries": [
+                {
+                    "entryName": "elementium_ingot",
+                    "type": "item",
+                    "name": "botania:manaresource",
+                    "weight": 60,
+                    "functions": [
+                        {
+                            "function": "set_data",
+                            "data": 7
+                        },
+                        {
+                            "function": "set_count",
+                            "count": {
+                                "min": 1,
+                                "max": 5
+                            }
+                        }
+                    ]
+                },
+                {
+                    "entryName": "elementium_nugget",
+                    "type": "item",
+                    "name": "botania:manaresource",
+                    "weight": 50,
+                    "functions": [
+                        {
+                            "function": "set_data",
+                            "data": 19
+                        },
+                        {
+                            "function": "set_count",
+                            "count": {
+                                "min": 3,
+                                "max": 9
+                            }
+                        }
+                    ]
+                },
+                {
+                    "entryName": "pixie_dust",
+                    "type": "item",
+                    "name": "botania:manaresource",
+                    "weight": 50,
+                    "functions": [
+                        {
+                            "function": "set_data",
+                            "data": 8
+                        },
+                        {
+                            "function": "set_count",
+                            "count": {
+                                "min": 3,
+                                "max": 9
+                            }
+                        }
+                    ]
+                },
+                {
+                    "entryName": "dragon_stone",
+                    "type": "item",
+                    "name": "botania:manaresource",
+                    "weight": 80,
+                    "functions": [
+                        {
+                            "function": "set_data",
+                            "data": 9
+                        },
+                        {
+                            "function": "set_count",
+                            "count": {
+                                "min": 1,
+                                "max": 5
+                            }
+                        }
+                    ]
+                },
+                {
+                    "entryName": "gaia_spirit",
+                    "type": "item",
+                    "name": "botania:manaresource",
+                    "weight": 80,
+                    "functions": [
+                        {
+                            "function": "set_data",
+                            "data": 5
+                        },
+                        {
+                            "function": "set_count",
+                            "count": {
+                                "min": 1,
+                                "max": 5
+                            }
+                        }
+                    ]
+                },
+                {
+                    "entryName": "gaia_ingot",
+                    "type": "item",
+                    "name": "botania:manaresource",
+                    "weight": 100,
+                    "functions": [
+                        {
+                            "function": "set_data",
+                            "data": 14
+                        },
+                        {
+                            "function": "set_count",
+                            "count": {
+                                "min": 1,
+                                "max": 2
+                            }
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "name": "tools",
+            "rolls": {
+                "min": 0,
+                "max": 5
+            },
+            "entries": [
+                {
+                    "entryName": "dirtrod",
+                    "type": "item",
+                    "name": "botania:dirtrod",
+                    "weight": 100
+                },
+                {
+                    "entryName": "skydirtrod",
+                    "type": "item",
+                    "name": "botania:skydirtrod",
+                    "weight": 100
+                },
+                {
+                    "entryName": "cobblerod",
+                    "type": "item",
+                    "name": "botania:cobblerod",
+                    "weight": 100
+                },
+                {
+                    "entryName": "waterrod",
+                    "type": "item",
+                    "name": "botania:waterrod",
+                    "weight": 100
+                },
+                {
+                    "entryName": "firerod",
+                    "type": "item",
+                    "name": "botania:firerod",
+                    "weight": 100
+                },
+                {
+                    "entryName": "rainbowrod",
+                    "type": "item",
+                    "name": "botania:rainbowrod",
+                    "weight": 100
+                },
+                {
+                    "entryName": "missilerod",
+                    "type": "item",
+                    "name": "botania:missilerod",
+                    "weight": 100
+                },
+                {
+                    "entryName": "tornadorod",
+                    "type": "item",
+                    "name": "botania:tornadorod",
+                    "weight": 100
+                },
+                {
+                    "entryName": "slingshot",
+                    "type": "item",
+                    "name": "botania:slingshot",
+                    "weight": 100
+                },
+                {
+                    "entryName": "elementiumpick",
+                    "type": "item",
+                    "name": "botania:elementiumpick",
+                    "weight": 100
+                },
+                {
+                    "entryName": "elementiumshovel",
+                    "type": "item",
+                    "name": "botania:elementiumshovel",
+                    "weight": 100
+                },
+                {
+                    "entryName": "elementiumaxe",
+                    "type": "item",
+                    "name": "botania:elementiumaxe",
+                    "weight": 100
+                },
+                {
+                    "entryName": "elementiumshears",
+                    "type": "item",
+                    "name": "botania:elementiumshears",
+                    "weight": 100
+                },
+                {
+                    "entryName": "elementiumsword",
+                    "type": "item",
+                    "name": "botania:elementiumsword",
+                    "weight": 100
+                },
+                {
+                    "entryName": "elementiumhelm",
+                    "type": "item",
+                    "name": "botania:elementiumhelm",
+                    "weight": 100
+                },
+                {
+                    "entryName": "elementiumchest",
+                    "type": "item",
+                    "name": "botania:elementiumchest",
+                    "weight": 100
+                },
+                {
+                    "entryName": "elementiumlegs",
+                    "type": "item",
+                    "name": "botania:elementiumlegs",
+                    "weight": 100
+                },
+                {
+                    "entryName": "elementiumboots",
+                    "type": "item",
+                    "name": "botania:elementiumboots",
+                    "weight": 100
+                },
+                {
+                    "entryName": "astrolabe",
+                    "type": "item",
+                    "name": "botania:astrolabe",
+                    "weight": 100
+                },
+                {
+                    "entryName": "blackholetalisman",
+                    "type": "item",
+                    "name": "botania:blackholetalisman",
+                    "weight": 100
+                },
+                {
+                    "entryName": "flighttiara",
+                    "type": "item",
+                    "name": "botania:flighttiara",
+                    "weight": 100
+                }
+            ]
+        },
+        {
+            "name": "rare",
+            "rolls": 5,
+            "entries": [
+                {
+                    "entryName": "overgrowthseed",
+                    "type": "item",
+                    "name": "botania:overgrowthseed",
+                    "weight": 5
+                },
+                {
+                    "entryName": "ancientwill",
+                    "type": "item",
+                    "name": "botania:ancientwill",
+                    "weight": 20,
+                    "functions": [
+                        {
+                            "function": "set_data",
+                            "data": {
+                            	"min": 0,
+                            	"max": 5
+                            }
+                        }
+                    ]
+                },
+                {
+                    "entryName": "pinkinator",
+                    "type": "item",
+                    "name": "botania:pinkinator",
+                    "weight": 5
+                },
+                {
+                    "entryName": "recordgaia1",
+                    "type": "item",
+                    "name": "botania:recordgaia1",
+                    "weight": 5
+                },
+                {
+                    "entryName": "recordgaia2",
+                    "type": "item",
+                    "name": "botania:recordgaia2",
+                    "weight": 5
+                },
+                {
+                    "entryName": "empty",
+                    "type": "item",
+                    "name": "minecraft:air",
+                    "weight": 200
+                }
+            ]
+        }
+    ]
+}

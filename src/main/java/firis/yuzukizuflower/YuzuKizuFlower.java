@@ -74,6 +74,7 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.item.crafting.IRecipe;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.world.biome.Biome;
+import net.minecraft.world.storage.loot.LootTableList;
 import net.minecraftforge.client.event.ModelRegistryEvent;
 import net.minecraftforge.client.model.ModelLoader;
 import net.minecraftforge.common.MinecraftForge;
@@ -284,6 +285,9 @@ public class YuzuKizuFlower
         
         //ディメンション初期化
         DimensionHandler.init();
+        
+        //LootTable追加
+        LootTableList.register(new ResourceLocation(YuzuKizuFlower.MODID, "chests/alfheim_chest"));
         
     }
     
