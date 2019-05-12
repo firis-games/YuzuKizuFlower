@@ -27,7 +27,7 @@ public class OreGenHandler {
 	
 	//鉄鉱石
 	public static WorldGenMinableAlfheim ironGen = new WorldGenMinableAlfheim(
-			Blocks.IRON_ORE.getDefaultState(), 9, 20, 1, 64);
+			Blocks.IRON_ORE.getDefaultState(), 9, 8, 1, 64);
 
 	//金鉱石
 	public static WorldGenMinableAlfheim goldGen = new WorldGenMinableAlfheim(
@@ -35,11 +35,11 @@ public class OreGenHandler {
 	
 	//レッドストーン鉱石
 	public static WorldGenMinableAlfheim redStoneGen = new WorldGenMinableAlfheim(
-			Blocks.GOLD_ORE.getDefaultState(), 8, 8, 1, 16);
+			Blocks.REDSTONE_ORE.getDefaultState(), 8, 2, 1, 16);
 
 	//ダイヤモンド鉱石
 	public static WorldGenMinableAlfheim diamondGen = new WorldGenMinableAlfheim(
-			Blocks.DIAMOND_ORE.getDefaultState(), 8, 1, 1, 16);
+			Blocks.DIAMOND_ORE.getDefaultState(), 4, 1, 1, 16);
 	
 	//ピクシィ鉱石（鉄鉱石と同じ）
 	public static WorldGenMinableAlfheim pixieGen = new WorldGenMinableAlfheim(
