@@ -17,9 +17,9 @@ public class OreGenHandler {
 	public static WorldGenMinableAlfheim gravelGen = new WorldGenMinableAlfheim(
 			Blocks.GRAVEL.getDefaultState(), 30, 3, 1, 256);
 	
-	//砂（独自）
+	//アルフ砂
 	public static WorldGenMinableAlfheim sandGen = new WorldGenMinableAlfheim(
-			Blocks.SAND.getDefaultState(), 30, 3, 1, 80);
+			YuzuKizuBlocks.ALF_SAND.getDefaultState(), 33, 5, 1, 80);
 
 	//粘土（独自）
 	public static WorldGenMinableAlfheim clayGen = new WorldGenMinableAlfheim(

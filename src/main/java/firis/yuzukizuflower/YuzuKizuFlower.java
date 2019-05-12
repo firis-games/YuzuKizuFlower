@@ -6,6 +6,7 @@ import firis.yuzukizuflower.client.tesr.YKTileCorporeaChestSpRenderer;
 import firis.yuzukizuflower.client.tesr.YKTileManaTankSpRenderer;
 import firis.yuzukizuflower.client.tesr.YKTileScrollChestSpRenderer;
 import firis.yuzukizuflower.common.YKGuiHandler;
+import firis.yuzukizuflower.common.block.YKBlockAlfSand;
 import firis.yuzukizuflower.common.block.YKBlockAlfheimCore;
 import firis.yuzukizuflower.common.block.YKBlockAutoWorkbench;
 import firis.yuzukizuflower.common.block.YKBlockBaseBoxed;
@@ -95,6 +96,7 @@ import net.minecraftforge.fml.common.registry.GameRegistry;
 import net.minecraftforge.fml.common.registry.GameRegistry.ObjectHolder;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
+import vazkii.botania.common.block.ModBlocks;
 import vazkii.botania.common.item.ModItems;
 
 @Mod(
@@ -195,6 +197,7 @@ public class YuzuKizuFlower
     	public final static Block GAIA_ORE = null;
     	public final static Block DREAM_LEAF = null;
     	public final static Block DREAM_SAPLING = null;
+    	public final static Block ALF_SAND = null;
     }
     
     public static class YuzuKizuFluids {
@@ -308,6 +311,10 @@ public class YuzuKizuFlower
     	//エレメンチウムインゴット
     	GameRegistry.addSmelting(YuzuKizuBlocks.ELEMENTIUM_ORE, 
     			new ItemStack(ModItems.manaResource, 1, 7), 0.7f);
+    	
+    	//アルフガラス
+    	GameRegistry.addSmelting(YuzuKizuBlocks.ALF_SAND, 
+    			new ItemStack(ModBlocks.elfGlass, 1), 0.0f);
     	
     }
     
@@ -527,6 +534,13 @@ public class YuzuKizuFlower
                 .setRegistryName(MODID, "dream_sapling")
                 .setUnlocalizedName("dream_sapling")
         );
+        
+        // アルフサンド
+        event.getRegistry().register(
+                new YKBlockAlfSand()
+                .setRegistryName(MODID, "alf_sand")
+                .setUnlocalizedName("alf_sand")
+        );
     }
     
     /**
@@ -730,6 +744,11 @@ public class YuzuKizuFlower
     	event.getRegistry().register(new ItemBlock(YuzuKizuBlocks.DREAM_SAPLING)
     			.setRegistryName(MODID, "dream_sapling")
     	);
+    	
+    	//アルフサンド
+    	event.getRegistry().register(new ItemBlock(YuzuKizuBlocks.ALF_SAND)
+    			.setRegistryName(MODID, "alf_sand")
+    	);
     }
     
     /**
@@ -910,6 +929,10 @@ public class YuzuKizuFlower
     	// ドリームウッドの苗木
     	ModelLoader.setCustomModelResourceLocation(Item.getItemFromBlock(YuzuKizuBlocks.DREAM_SAPLING), 0,
     			new ModelResourceLocation(YuzuKizuBlocks.DREAM_SAPLING.getRegistryName(), "inventory"));
+    	
+    	// アルフサンド
+    	ModelLoader.setCustomModelResourceLocation(Item.getItemFromBlock(YuzuKizuBlocks.ALF_SAND), 0,
+    			new ModelResourceLocation(YuzuKizuBlocks.ALF_SAND.getRegistryName(), "inventory"));
     }
     
     /**
