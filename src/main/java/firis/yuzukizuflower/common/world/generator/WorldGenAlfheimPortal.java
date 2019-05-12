@@ -27,6 +27,9 @@ public class WorldGenAlfheimPortal extends WorldGenerator {
 	@Override
 	public boolean generate(World world, Random rand, BlockPos position) {
 		
+		//基準座標を計算
+		position = this.getBaseBlockPos(world, position);
+		
 		//土台部分を生成
 		this.generateBase(world, rand, position);
 		
@@ -50,13 +53,12 @@ public class WorldGenAlfheimPortal extends WorldGenerator {
 	}
 	
 	/**
-	 * 構造物の土台を生成する
-	 * @param world
-	 * @param rand
+	 * 基準座標を計算
 	 * @param basePos
+	 * @return
 	 */
-	public void generateBase(World world, Random rand, BlockPos basePos) {
-		
+	public BlockPos getBaseBlockPos(World world, BlockPos basePos) {
+	
 		//上のブロックが液体の場合は処理しない(高さ128まで計算)
 		basePos = basePos.up();
 		while (basePos.getY() < 128) {
@@ -67,6 +69,17 @@ public class WorldGenAlfheimPortal extends WorldGenerator {
 			basePos = basePos.up();
 		}
 		basePos = basePos.down();
+		
+		return basePos;
+	}
+	
+	/**
+	 * 構造物の土台を生成する
+	 * @param world
+	 * @param rand
+	 * @param basePos
+	 */
+	public void generateBase(World world, Random rand, BlockPos basePos) {
 		
 		//一定空間を空にする
 		int range = 13;
@@ -81,7 +94,7 @@ public class WorldGenAlfheimPortal extends WorldGenerator {
 		//土を変更
 		baseState = ModBlocks.altGrass.getDefaultState().withProperty(BotaniaStateProps.ALTGRASS_VARIANT, AltGrassVariant.INFUSED);
 		for (BlockPos pos : BlockPos.getAllInBox(
-				basePos.north(range).west(range),
+				basePos.north(range).west(range).down(),
 				basePos.south(range).east(range))) {
 			if (world.getBlockState(pos).getBlock() == Blocks.DIRT) {
 				world.setBlockState(pos, Blocks.AIR.getDefaultState(), 2);
