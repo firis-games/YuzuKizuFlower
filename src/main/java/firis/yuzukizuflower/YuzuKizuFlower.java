@@ -142,22 +142,9 @@ public class YuzuKizuFlower
      */
     @ObjectHolder(YuzuKizuFlower.MODID)
     public static class YuzuKizuItems{
-    	public final static Item FLOWER_BOX = null;
-    	public final static Item BOXED_PURE_DAISY = null;
-    	public final static Item BOXED_ENDOFLAME = null;
-    	public final static Item MANA_TANK = null;
-    	public final static Item BOXED_RANNUNCARPUS = null;
-    	public final static Item BOXED_JADED_AMARANTHUS = null;
-    	public final static Item MANASTEEL_BOXED_ENDOFLAME = null;
-    	public final static Item BOXED_ORECHID = null;
-    	public final static Item BOXED_GOURMARYLLIS = null;
-    	public final static Item BOXED_AKARICULTURE = null;
     	public final static Item AKARICULTURE = null;
-    	public final static Item BOXED_YUQUARRY = null;
     	public final static Item YUQUARRY = null;
-    	public final static Item BOXED_AOCEAN = null;
     	public final static Item AOCEAN = null;
-    	public final static Item BOXED_AKANERALD = null;
     	public final static Item AKANERALD = null;
     	public final static Item REMOTE_CHEST = null;
     	public final static Item BACKPACK_CHEST = null;
@@ -763,28 +750,28 @@ public class YuzuKizuFlower
     protected static void registerModels(ModelRegistryEvent event)
     {
     	// フワラーボックス
-    	ModelLoader.setCustomModelResourceLocation(YuzuKizuItems.FLOWER_BOX, 0,
-    			new ModelResourceLocation(YuzuKizuItems.FLOWER_BOX.getRegistryName(), "inventory"));
+    	ModelLoader.setCustomModelResourceLocation(Item.getItemFromBlock(YuzuKizuBlocks.FLOWER_BOX), 0,
+    			new ModelResourceLocation(YuzuKizuBlocks.FLOWER_BOX.getRegistryName(), "inventory"));
     	
     	// 箱入りピュアデイジー
-    	ModelLoader.setCustomModelResourceLocation(YuzuKizuItems.BOXED_PURE_DAISY, 0,
-    			new ModelResourceLocation(YuzuKizuItems.BOXED_PURE_DAISY.getRegistryName(), "inventory"));
+    	ModelLoader.setCustomModelResourceLocation(Item.getItemFromBlock(YuzuKizuBlocks.BOXED_PURE_DAISY), 0,
+    			new ModelResourceLocation(YuzuKizuBlocks.BOXED_PURE_DAISY.getRegistryName(), "inventory"));
 
     	// 箱入りエンドフレイム
-    	ModelLoader.setCustomModelResourceLocation(YuzuKizuItems.BOXED_ENDOFLAME, 0,
-    			new ModelResourceLocation(YuzuKizuItems.BOXED_ENDOFLAME.getRegistryName(), "inventory"));
+    	ModelLoader.setCustomModelResourceLocation(Item.getItemFromBlock(YuzuKizuBlocks.BOXED_ENDOFLAME), 0,
+    			new ModelResourceLocation(YuzuKizuBlocks.BOXED_ENDOFLAME.getRegistryName(), "inventory"));
     	
     	// マナタンク
-    	ModelLoader.setCustomModelResourceLocation(YuzuKizuItems.MANA_TANK, 0,
-    			new ModelResourceLocation(YuzuKizuItems.MANA_TANK.getRegistryName(), "inventory"));
+    	ModelLoader.setCustomModelResourceLocation(Item.getItemFromBlock(YuzuKizuBlocks.MANA_TANK), 0,
+    			new ModelResourceLocation(YuzuKizuBlocks.MANA_TANK.getRegistryName(), "inventory"));
     	
     	// 箱入りラナンカーパス
-    	ModelLoader.setCustomModelResourceLocation(YuzuKizuItems.BOXED_RANNUNCARPUS, 0,
-    			new ModelResourceLocation(YuzuKizuItems.BOXED_RANNUNCARPUS.getRegistryName(), "inventory"));
+    	ModelLoader.setCustomModelResourceLocation(Item.getItemFromBlock(YuzuKizuBlocks.BOXED_RANNUNCARPUS), 0,
+    			new ModelResourceLocation(YuzuKizuBlocks.BOXED_RANNUNCARPUS.getRegistryName(), "inventory"));
     	
     	// 箱入りジェイディッド・アマランサス
-    	ModelLoader.setCustomModelResourceLocation(YuzuKizuItems.BOXED_JADED_AMARANTHUS, 0,
-    			new ModelResourceLocation(YuzuKizuItems.BOXED_JADED_AMARANTHUS.getRegistryName(), "inventory"));
+    	ModelLoader.setCustomModelResourceLocation(Item.getItemFromBlock(YuzuKizuBlocks.BOXED_JADED_AMARANTHUS), 0,
+    			new ModelResourceLocation(YuzuKizuBlocks.BOXED_JADED_AMARANTHUS.getRegistryName(), "inventory"));
     	
     	/*
     	// 箱入りエンドフレイム
@@ -793,40 +780,40 @@ public class YuzuKizuFlower
 		*/
     	
     	// 箱入りオアキド
-    	ModelLoader.setCustomModelResourceLocation(YuzuKizuItems.BOXED_ORECHID, 0,
-    			new ModelResourceLocation(YuzuKizuItems.BOXED_ORECHID.getRegistryName(), "inventory"));
+    	ModelLoader.setCustomModelResourceLocation(Item.getItemFromBlock(YuzuKizuBlocks.BOXED_ORECHID), 0,
+    			new ModelResourceLocation(YuzuKizuBlocks.BOXED_ORECHID.getRegistryName(), "inventory"));
     	
     	// 箱入りガーマリリス
-    	ModelLoader.setCustomModelResourceLocation(YuzuKizuItems.BOXED_GOURMARYLLIS, 0,
-    			new ModelResourceLocation(YuzuKizuItems.BOXED_GOURMARYLLIS.getRegistryName(), "inventory"));
+    	ModelLoader.setCustomModelResourceLocation(Item.getItemFromBlock(YuzuKizuBlocks.BOXED_GOURMARYLLIS), 0,
+    			new ModelResourceLocation(YuzuKizuBlocks.BOXED_GOURMARYLLIS.getRegistryName(), "inventory"));
     	
     	// 箱入りアカリカルチャー
-    	ModelLoader.setCustomModelResourceLocation(YuzuKizuItems.BOXED_AKARICULTURE, 0,
-    			new ModelResourceLocation(YuzuKizuItems.BOXED_AKARICULTURE.getRegistryName(), "inventory"));
+    	ModelLoader.setCustomModelResourceLocation(Item.getItemFromBlock(YuzuKizuBlocks.BOXED_AKARICULTURE), 0,
+    			new ModelResourceLocation(YuzuKizuBlocks.BOXED_AKARICULTURE.getRegistryName(), "inventory"));
     	
     	// アカリカルチャー
     	ModelLoader.setCustomModelResourceLocation(YuzuKizuItems.AKARICULTURE, 0,
     			new ModelResourceLocation(YuzuKizuItems.AKARICULTURE.getRegistryName(), "inventory"));
     	
     	// 箱入りユクァーリー
-    	ModelLoader.setCustomModelResourceLocation(YuzuKizuItems.BOXED_YUQUARRY, 0,
-    			new ModelResourceLocation(YuzuKizuItems.BOXED_YUQUARRY.getRegistryName(), "inventory"));
+    	ModelLoader.setCustomModelResourceLocation(Item.getItemFromBlock(YuzuKizuBlocks.BOXED_YUQUARRY), 0,
+    			new ModelResourceLocation(YuzuKizuBlocks.BOXED_YUQUARRY.getRegistryName(), "inventory"));
     	
     	// ユクァーリー
     	ModelLoader.setCustomModelResourceLocation(YuzuKizuItems.YUQUARRY, 0,
     			new ModelResourceLocation(YuzuKizuItems.YUQUARRY.getRegistryName(), "inventory"));
     	
     	// 箱入りアオーシャン
-    	ModelLoader.setCustomModelResourceLocation(YuzuKizuItems.BOXED_AOCEAN, 0,
-    			new ModelResourceLocation(YuzuKizuItems.BOXED_AOCEAN.getRegistryName(), "inventory"));
+    	ModelLoader.setCustomModelResourceLocation(Item.getItemFromBlock(YuzuKizuBlocks.BOXED_AOCEAN), 0,
+    			new ModelResourceLocation(YuzuKizuBlocks.BOXED_AOCEAN.getRegistryName(), "inventory"));
     	
     	// アオーシャン
     	ModelLoader.setCustomModelResourceLocation(YuzuKizuItems.AOCEAN, 0,
     			new ModelResourceLocation(YuzuKizuItems.AOCEAN.getRegistryName(), "inventory"));
     	
     	// 箱入りアカネラルド
-    	ModelLoader.setCustomModelResourceLocation(YuzuKizuItems.BOXED_AKANERALD, 0,
-    			new ModelResourceLocation(YuzuKizuItems.BOXED_AKANERALD.getRegistryName(), "inventory"));
+    	ModelLoader.setCustomModelResourceLocation(Item.getItemFromBlock(YuzuKizuBlocks.BOXED_AKANERALD), 0,
+    			new ModelResourceLocation(YuzuKizuBlocks.BOXED_AKANERALD.getRegistryName(), "inventory"));
     	
     	// アカネラルド
     	ModelLoader.setCustomModelResourceLocation(YuzuKizuItems.AKANERALD, 0,
