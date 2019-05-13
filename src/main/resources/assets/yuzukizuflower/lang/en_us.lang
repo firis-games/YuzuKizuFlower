@@ -136,3 +136,7 @@ advancements.blueprint.description=Craft Blueprint
 tile.dream_leaf.name=Dream Wood Leaf
 tile.dream_sapling.name=Dream Wood Sapling
 tile.alf_sand.name=Alf Sand
+
+tile.boxed_kekimurus.name=Boxed Kekimurus
+gui.boxed_kekimurus.name=Boxed Kekimurus
+

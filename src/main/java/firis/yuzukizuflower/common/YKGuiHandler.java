@@ -16,7 +16,7 @@ public class YKGuiHandler implements IGuiHandler {
 	//マナタンク
 	public static final int MANA_TANK = 3;
 	
-	//箱入り・ラナンカーパス
+	//箱入りラナンカーパス
 	public static final int BOXED_RANNUNCARPUS = 4;
 	
 	//箱入りジェイディッド・アマランサス
@@ -69,6 +69,9 @@ public class YKGuiHandler implements IGuiHandler {
 	
 	//自動作業台
 	public static final int AUTO_WORKBENCH = 21;
+	
+	//箱入りケキムラス
+	public static final int BOXED_KEKIMURUS = 22;
 			
 	@Override
 	public Object getServerGuiElement(int ID, EntityPlayer player, World world, int x, int y, int z) {

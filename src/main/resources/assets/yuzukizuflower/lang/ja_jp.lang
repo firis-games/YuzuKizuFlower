@@ -137,3 +137,7 @@ advancements.blueprint.description=空の設計図を作成する
 tile.dream_leaf.name=ドリームウッドの葉
 tile.dream_sapling.name=ドリームウッドの苗木
 tile.alf_sand.name=アルフ砂
+
+tile.boxed_kekimurus.name=箱入りケキムラス
+gui.boxed_kekimurus.name=箱入りケキムラス
+
