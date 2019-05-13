@@ -82,22 +82,30 @@ public class WorldGenAlfheimPortal extends WorldGenerator {
 	public void generateBase(World world, Random rand, BlockPos basePos) {
 		
 		//一定空間を空にする
-		int range = 13;
+		int range = 8;
+		for (BlockPos pos : BlockPos.getAllInBox(
+				basePos.north(range).west(range),
+				basePos.south(range).east(range).up())) {
+			world.setBlockState(pos, Blocks.AIR.getDefaultState(), 2);
+		}
+		range = 11;
 		for (BlockPos pos : BlockPos.getAllInBox(
 				basePos.north(range).west(range).up(range),
-				basePos.south(range).east(range).up())) {
+				basePos.south(range).east(range).up(2))) {
 			world.setBlockState(pos, Blocks.AIR.getDefaultState(), 2);
 		}
 		
 		IBlockState baseState;
 		
-		//土を変更
+		//土を変更マナ土に変更
+		range = 15;
 		baseState = ModBlocks.altGrass.getDefaultState().withProperty(BotaniaStateProps.ALTGRASS_VARIANT, AltGrassVariant.INFUSED);
 		for (BlockPos pos : BlockPos.getAllInBox(
-				basePos.north(range).west(range).down(),
-				basePos.south(range).east(range))) {
-			if (world.getBlockState(pos).getBlock() == Blocks.DIRT) {
-				world.setBlockState(pos, Blocks.AIR.getDefaultState(), 2);
+				basePos.north(range).west(range).down(3),
+				basePos.south(range).east(range).up(3))) {
+			if (world.getBlockState(pos).getBlock() == Blocks.DIRT
+					&& world.getBlockState(pos.up()).getBlock() == Blocks.AIR) {
+				world.setBlockState(pos, baseState, 2);
 			}
 		}
 		
@@ -120,8 +128,17 @@ public class WorldGenAlfheimPortal extends WorldGenerator {
 		baseState = ModBlocks.livingrock.getDefaultState();
 		for (BlockPos pos : BlockPos.getAllInBox(
 				basePos.north(range).west(range).down(5),
-				basePos.south(range).east(range).down(10))) {
+				basePos.south(range).east(range).down(15))) {
 			world.setBlockState(pos, baseState, 2);
+		}
+		//土をランダムに設置する
+		baseState = Blocks.DIRT.getDefaultState();
+		for (BlockPos pos : BlockPos.getAllInBox(
+				basePos.north(range).west(range).down(5),
+				basePos.south(range).east(range).down(15))) {
+			if (rand.nextInt(6) == 0) {
+				world.setBlockState(pos, baseState, 2);
+			}
 		}
 	}
 }
