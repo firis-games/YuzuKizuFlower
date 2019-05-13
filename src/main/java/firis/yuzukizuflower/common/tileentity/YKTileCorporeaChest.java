@@ -156,7 +156,7 @@ public class YKTileCorporeaChest extends TileEntity implements ITickable {
 	 * サーバー->クライアントのデータ同期用
 	 * サーバーからクライアントへデータを送信する
 	 */
-	protected void playerServerSendPacket() {
+	public void playerServerSendPacket() {
 		//Server Side
 		if (!this.getWorld().isRemote) {
 			

@@ -1,6 +1,7 @@
 package firis.yuzukizuflower.common.network;
 
 import firis.yuzukizuflower.client.gui.parts.YKGuiScrollBar.IYKGuiScrollBarChanged;
+import firis.yuzukizuflower.common.container.YKContainerCorporeaChest;
 import firis.yuzukizuflower.common.container.YKContainerScrollChest;
 import io.netty.buffer.ByteBuf;
 import net.minecraft.entity.player.EntityPlayerMP;
@@ -37,6 +38,10 @@ public class PacketGuiScroll implements IMessageHandler<PacketGuiScroll.MessageG
 			if (container instanceof YKContainerScrollChest) {
 				//ページを設定
 				YKContainerScrollChest inf = (YKContainerScrollChest) container;
+				inf.onTextChange(message.text);
+			} else if (container instanceof YKContainerCorporeaChest) {
+				//ページを設定
+				YKContainerCorporeaChest inf = (YKContainerCorporeaChest) container;
 				inf.onTextChange(message.text);
 			}
 		}

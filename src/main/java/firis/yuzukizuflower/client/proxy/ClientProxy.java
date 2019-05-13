@@ -122,7 +122,7 @@ public class ClientProxy extends CommonProxy {
 				
 				//コーポリアチェスト
 				case YKGuiHandler.CORPOREA_CHEST :
-					handler = new IScrollInventoryClientItemHandler(54);
+					handler = new IScrollInventoryClientItemHandler(54, tile);
 					return new YKGuiContainerCorporeaChest(handler, player.inventory);
 					
 				//花びら作業台

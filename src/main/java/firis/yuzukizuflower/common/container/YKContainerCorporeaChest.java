@@ -1,5 +1,6 @@
 package firis.yuzukizuflower.common.container;
 
+import firis.yuzukizuflower.common.inventory.IInventoryMultiItemHandler;
 import firis.yuzukizuflower.common.inventory.IScrollInventory;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.EntityPlayerMP;
@@ -46,12 +47,56 @@ public class YKContainerCorporeaChest extends YKContainerBaseScrollInventory {
 		ItemStack retStack = super.slotClick(slotId, dragType, clickTypeIn, player);
 		
 		//Clientと同期する
-		this.detectAndSendChanges();
 		if (player instanceof EntityPlayerMP) {
+						
 			EntityPlayerMP playermp = (EntityPlayerMP) player;
 			playermp.sendContainerToPlayer(this);
+			
+			//Text更新
+			IInventoryMultiItemHandler serverInv = ((IInventoryMultiItemHandler) this.iTeInv);
+			if (!"".equals(serverInv.getTextSearch())) {
+				serverInv.resetTextChanged();
+				this.allSendChanges();
+				for (int j = 0; j < this.listeners.size(); ++j)
+		        {
+					this.listeners.get(j).sendAllWindowProperties(this, this.iTeInv);
+		        }
+			}
 		}
 				
 		return retStack;
     }
+	
+	/**
+	 * パケットから呼ばれる用
+	 * @param search
+	 */
+	public void onTextChange(String search) {
+		this.iTeInv.setTextChanged(search);
+		//Clientと同期する
+		this.allSendChanges();
+		for (int j = 0; j < this.listeners.size(); ++j)
+        {
+			this.listeners.get(j).sendAllWindowProperties(this, this.iTeInv);
+        }
+	}
+	
+	/**
+     * Looks for changes made in the container, sends them to every listener.
+     */
+    public void allSendChanges()
+    {
+        for (int i = 0; i < this.iTeInv.getSizeInventory(); ++i)
+        {
+            ItemStack itemstack = this.iTeInv.getStackInSlot(i);
+            ItemStack itemstack1 = itemstack.isEmpty() ? ItemStack.EMPTY : itemstack.copy();
+            
+            for (int j = 0; j < this.listeners.size(); ++j)
+            {
+                ((IContainerListener)this.listeners.get(j)).sendSlotContents(this, i, itemstack1);
+            }
+        }
+    }
+
+	
 }

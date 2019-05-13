@@ -77,9 +77,7 @@ public class IInventoryMultiItemHandler implements IScrollInventory {
 	protected void createCapability() {
 		
 		itemHandlerList = new ArrayList<IItemHandler>();
-
-		int invSlots = 0;
-		
+	
 		for (BlockPos pos : this.getPosList()) {
 			TileEntity tile = this.getWorld().getTileEntity(pos);
 			if (tile == null) continue;
@@ -88,7 +86,6 @@ public class IInventoryMultiItemHandler implements IScrollInventory {
 			if (capability == null) continue;
 			
 			itemHandlerList.add(capability);
-			invSlots += capability.getSlots();
 		}
 		
 		
@@ -97,13 +94,26 @@ public class IInventoryMultiItemHandler implements IScrollInventory {
 		for (int capaNo = 0; capaNo < itemHandlerList.size(); capaNo++) {
 			IItemHandler handler = itemHandlerList.get(capaNo);
 			for (int idx = 0; idx < handler.getSlots(); idx++) {
-				multiCapabilityList.add(new MultiCapability(capaNo, idx));
+				
+				//テキスト判断を行う
+				if ("".equals(this.textSearch)) {
+					multiCapabilityList.add(new MultiCapability(capaNo, idx));					
+				} else {
+					ItemStack stack = handler.getStackInSlot(idx);
+					if (stack.getDisplayName().indexOf(textSearch) != -1
+							|| stack.getItem().getRegistryName().toString().indexOf(textSearch) != -1 ) {
+						multiCapabilityList.add(new MultiCapability(capaNo, idx));
+					}
+				}
+
 			}
 		}
 		this.multiCapabilityList = multiCapabilityList;
 		
 		//MaxPageを計算する
-		float calPage = invSlots - this.inventoryCount;
+		this.page = 0;
+		this.maxPage = 0;
+		float calPage = this.multiCapabilityList.size() - this.inventoryCount;
 		if (calPage > 0) {
 			this.maxPage = (int) Math.ceil(calPage / (float)this.inventoryRowCount);
 		}
@@ -294,6 +304,8 @@ public class IInventoryMultiItemHandler implements IScrollInventory {
 			return this.multiCapabilityList.size();
 		} else if (id == 1) {
 			return this.maxPage;
+		} else if (id == 2) {
+			return this.page;
 		}
 		return 0;
 	}
@@ -304,7 +316,7 @@ public class IInventoryMultiItemHandler implements IScrollInventory {
 
 	@Override
 	public int getFieldCount() {
-		return 2;
+		return 3;
 	}
 
 	@Override
@@ -377,7 +389,19 @@ public class IInventoryMultiItemHandler implements IScrollInventory {
 
 	@Override
 	public void setTextChanged(String text) {
-		
+		this.textSearch = text;
+		this.createCapability();
+		this.tile.playerServerSendPacket();
+	}
+	
+	protected String textSearch = "";
+	public String getTextSearch() {
+		return textSearch;
+	}
+	
+	public void resetTextChanged() {
+		this.createCapability();
+		this.tile.playerServerSendPacket();
 	}
 	
 }

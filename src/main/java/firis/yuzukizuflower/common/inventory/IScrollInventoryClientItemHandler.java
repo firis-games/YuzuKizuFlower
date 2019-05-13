@@ -1,8 +1,10 @@
 package firis.yuzukizuflower.common.inventory;
 
+import firis.yuzukizuflower.common.tileentity.YKTileCorporeaChest;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.inventory.ItemStackHelper;
 import net.minecraft.item.ItemStack;
+import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.NonNullList;
 import net.minecraft.util.text.ITextComponent;
 
@@ -13,6 +15,12 @@ public class IScrollInventoryClientItemHandler implements IScrollInventory {
 	 */
 	protected NonNullList<ItemStack> inventorySlotItemStack;
 	
+	protected TileEntity tile = null;
+	
+	public IScrollInventoryClientItemHandler(int invSize, TileEntity tile) {
+		this.inventorySlotItemStack = NonNullList.<ItemStack>withSize(invSize, ItemStack.EMPTY);
+		this.tile = tile;
+	}
 	
 	public IScrollInventoryClientItemHandler(int invSize) {
 		this.inventorySlotItemStack = NonNullList.<ItemStack>withSize(invSize, ItemStack.EMPTY);
@@ -114,21 +122,21 @@ public class IScrollInventoryClientItemHandler implements IScrollInventory {
 		return true;
 	}
 
-	/**
-	 * Inventoryを開く際の処理
-	 */
 	@Override
 	public void openInventory(EntityPlayer player) {
-		this.markDirty();
+		
+		if(this.tile != null && this.tile instanceof YKTileCorporeaChest) {
+			((YKTileCorporeaChest) this.tile).animationController.openInventory(player);
+		}
 	}
 
-	/**
-	 * Inventoryを閉じる際の処理
-	 */
 	@Override
 	public void closeInventory(EntityPlayer player) {
-		this.markDirty();
+		if(this.tile != null && this.tile instanceof YKTileCorporeaChest) {
+			((YKTileCorporeaChest) this.tile).animationController.closeInventory(player);
+		}
 	}
+
 
 	/**
 	 * 対象スロットの許可不許可チェック
@@ -155,12 +163,14 @@ public class IScrollInventoryClientItemHandler implements IScrollInventory {
 			this.inventorySize = value;
 		} else if (id == 1) {
 			this.scrollMaxPage = value;
+		} else if (id == 2) {
+			this.scrollPage = value;
 		}
 	}
 
 	@Override
 	public int getFieldCount() {
-		return 2;
+		return 3;
 	}
 
 	@Override
@@ -255,5 +265,11 @@ public class IScrollInventoryClientItemHandler implements IScrollInventory {
 
 	@Override
 	public void setTextChanged(String text) {
+		textSearch = text;
+	}
+	
+	protected String textSearch = "";
+	public String getTextSearch() {
+		return textSearch;
 	}
 }
