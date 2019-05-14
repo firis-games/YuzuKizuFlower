@@ -14,6 +14,7 @@ import firis.yuzukizuflower.common.block.YKBlockBoxedAkanerald;
 import firis.yuzukizuflower.common.block.YKBlockBoxedAkariculture;
 import firis.yuzukizuflower.common.block.YKBlockBoxedAocean;
 import firis.yuzukizuflower.common.block.YKBlockBoxedEndoflame;
+import firis.yuzukizuflower.common.block.YKBlockBoxedEntropinnyum;
 import firis.yuzukizuflower.common.block.YKBlockBoxedGourmaryllis;
 import firis.yuzukizuflower.common.block.YKBlockBoxedJadedAmaranthus;
 import firis.yuzukizuflower.common.block.YKBlockBoxedKekimurus;
@@ -47,6 +48,7 @@ import firis.yuzukizuflower.common.tileentity.YKTileBoxedAkanerald;
 import firis.yuzukizuflower.common.tileentity.YKTileBoxedAkariculture;
 import firis.yuzukizuflower.common.tileentity.YKTileBoxedAocean;
 import firis.yuzukizuflower.common.tileentity.YKTileBoxedEndoflame;
+import firis.yuzukizuflower.common.tileentity.YKTileBoxedEntropinnyum;
 import firis.yuzukizuflower.common.tileentity.YKTileBoxedGourmaryllis;
 import firis.yuzukizuflower.common.tileentity.YKTileBoxedJadedAmaranthus;
 import firis.yuzukizuflower.common.tileentity.YKTileBoxedKekimurus;
@@ -189,6 +191,7 @@ public class YuzuKizuFlower
     	public final static Block DREAM_SAPLING = null;
     	public final static Block ALF_SAND = null;
     	public final static Block BOXED_KEKIMURUS = null;    	
+    	public final static Block BOXED_ENTROPINNYUM = null;    	
     }
     
     public static class YuzuKizuFluids {
@@ -272,6 +275,9 @@ public class YuzuKizuFlower
         
         GameRegistry.registerTileEntity(YKTileBoxedKekimurus.class, 
 				new ResourceLocation(YuzuKizuFlower.MODID, "ykte_boxed_kekimurus"));
+        
+        GameRegistry.registerTileEntity(YKTileBoxedEntropinnyum.class, 
+				new ResourceLocation(YuzuKizuFlower.MODID, "ykte_boxed_entropinnyum"));
         
         //ネットワーク登録
         NetworkHandler.init();
@@ -545,6 +551,13 @@ public class YuzuKizuFlower
                 .setRegistryName(MODID, "boxed_kekimurus")
                 .setUnlocalizedName("boxed_kekimurus")
         );
+        
+        // 箱入りエントロピウム
+        event.getRegistry().register(
+                new YKBlockBoxedEntropinnyum()
+                .setRegistryName(MODID, "boxed_entropinnyum")
+                .setUnlocalizedName("boxed_entropinnyum")
+        );
     }
     
     /**
@@ -758,6 +771,11 @@ public class YuzuKizuFlower
     	event.getRegistry().register(new ItemBlock(YuzuKizuBlocks.BOXED_KEKIMURUS)
     			.setRegistryName(MODID, "boxed_kekimurus")
     	);
+    	
+    	// 箱入りエントロピウム
+    	event.getRegistry().register(new ItemBlock(YuzuKizuBlocks.BOXED_ENTROPINNYUM)
+    			.setRegistryName(MODID, "boxed_entropinnyum")
+    	);
     }
     
     /**
@@ -946,6 +964,10 @@ public class YuzuKizuFlower
     	// 箱入りケキムラス
     	ModelLoader.setCustomModelResourceLocation(Item.getItemFromBlock(YuzuKizuBlocks.BOXED_KEKIMURUS), 0,
     			new ModelResourceLocation(YuzuKizuBlocks.BOXED_KEKIMURUS.getRegistryName(), "inventory"));
+    	
+    	// 箱入りエントロピウム
+    	ModelLoader.setCustomModelResourceLocation(Item.getItemFromBlock(YuzuKizuBlocks.BOXED_ENTROPINNYUM), 0,
+    			new ModelResourceLocation(YuzuKizuBlocks.BOXED_ENTROPINNYUM.getRegistryName(), "inventory"));
     	
     }
     

@@ -6,6 +6,7 @@ import firis.yuzukizuflower.common.container.YKContainerBoxedAkanerald;
 import firis.yuzukizuflower.common.container.YKContainerBoxedAkariculture;
 import firis.yuzukizuflower.common.container.YKContainerBoxedAocean;
 import firis.yuzukizuflower.common.container.YKContainerBoxedEndoflame;
+import firis.yuzukizuflower.common.container.YKContainerBoxedEntropinnyum;
 import firis.yuzukizuflower.common.container.YKContainerBoxedGourmaryllis;
 import firis.yuzukizuflower.common.container.YKContainerBoxedJadedAmaranthus;
 import firis.yuzukizuflower.common.container.YKContainerBoxedKekimurus;
@@ -158,7 +159,10 @@ public class CommonProxy {
 				//箱入りケキムラス
 				case YKGuiHandler.BOXED_KEKIMURUS :
 					return new YKContainerBoxedKekimurus((IInventory) tile, player.inventory);
-
+				
+				//箱入りエントロピウム
+				case YKGuiHandler.BOXED_ENTROPINNYUM :
+					return new YKContainerBoxedEntropinnyum((IInventory) tile, player.inventory);
 
 		}
 		return null;

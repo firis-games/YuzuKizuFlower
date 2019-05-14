@@ -54,6 +54,11 @@ public class BotaniaHelper {
 	public static IManaGenerator recipesKekimurus = new GeneratorKekimurus();
 	
 	/**
+	 * エントロピウムの発電レシピ
+	 */
+	public static IManaGenerator recipesEntropinnyum = new GeneratorEntropinnyum();
+	
+	/**
 	 * 花びら調合所のレシピ
 	 */
 	public static RecipesPetal recipesPetal = new RecipesPetal();
