@@ -1,5 +1,6 @@
 package firis.yuzukizuflower.common.botania;
 
+import java.util.Collections;
 import java.util.List;
 import java.util.Random;
 
@@ -59,6 +60,8 @@ public class RecipesAocean implements IManaRecipes {
 				.getLootTableFromLocation(LootTableList.GAMEPLAY_FISHING);
 		
 		List<ItemStack> resultList = loottable.generateLootForPools(rand, ctxBuild.build());
+		
+		Collections.shuffle(resultList);
 		
 		ItemStack result = ItemStack.EMPTY.copy();
 		for(ItemStack stack : resultList) {
