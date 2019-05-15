@@ -11,6 +11,7 @@ import firis.yuzukizuflower.common.container.YKContainerBoxedEntropinnyum;
 import firis.yuzukizuflower.common.container.YKContainerBoxedGourmaryllis;
 import firis.yuzukizuflower.common.container.YKContainerBoxedJadedAmaranthus;
 import firis.yuzukizuflower.common.container.YKContainerBoxedKekimurus;
+import firis.yuzukizuflower.common.container.YKContainerBoxedLoonium;
 import firis.yuzukizuflower.common.container.YKContainerBoxedOrechid;
 import firis.yuzukizuflower.common.container.YKContainerBoxedPureDaisy;
 import firis.yuzukizuflower.common.container.YKContainerBoxedRannuncarpus;
@@ -168,6 +169,10 @@ public class CommonProxy {
 				//箱入りクレイコニア
 				case YKGuiHandler.BOXED_CLAYCONIA :
 					return new YKContainerBoxedClayconia((IInventory) tile, player.inventory);
+				
+				//箱入りルーニウム
+				case YKGuiHandler.BOXED_LOONIUM :
+					return new YKContainerBoxedLoonium((IInventory) tile, player.inventory);
 
 		}
 		return null;

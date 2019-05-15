@@ -19,6 +19,7 @@ import firis.yuzukizuflower.common.block.YKBlockBoxedEntropinnyum;
 import firis.yuzukizuflower.common.block.YKBlockBoxedGourmaryllis;
 import firis.yuzukizuflower.common.block.YKBlockBoxedJadedAmaranthus;
 import firis.yuzukizuflower.common.block.YKBlockBoxedKekimurus;
+import firis.yuzukizuflower.common.block.YKBlockBoxedLoonium;
 import firis.yuzukizuflower.common.block.YKBlockBoxedOrechid;
 import firis.yuzukizuflower.common.block.YKBlockBoxedPureDaisy;
 import firis.yuzukizuflower.common.block.YKBlockBoxedRannuncarpus;
@@ -54,6 +55,7 @@ import firis.yuzukizuflower.common.tileentity.YKTileBoxedEntropinnyum;
 import firis.yuzukizuflower.common.tileentity.YKTileBoxedGourmaryllis;
 import firis.yuzukizuflower.common.tileentity.YKTileBoxedJadedAmaranthus;
 import firis.yuzukizuflower.common.tileentity.YKTileBoxedKekimurus;
+import firis.yuzukizuflower.common.tileentity.YKTileBoxedLoonium;
 import firis.yuzukizuflower.common.tileentity.YKTileBoxedOrechid;
 import firis.yuzukizuflower.common.tileentity.YKTileBoxedPureDaisy;
 import firis.yuzukizuflower.common.tileentity.YKTileBoxedRannuncarpus;
@@ -195,6 +197,7 @@ public class YuzuKizuFlower
     	public final static Block BOXED_KEKIMURUS = null;
     	public final static Block BOXED_ENTROPINNYUM = null;
     	public final static Block BOXED_CLAYCONIA = null;
+    	public final static Block BOXED_LOONIUM = null;
     }
     
     public static class YuzuKizuFluids {
@@ -284,6 +287,9 @@ public class YuzuKizuFlower
         
         GameRegistry.registerTileEntity(YKTileBoxedClayconia.class, 
 				new ResourceLocation(YuzuKizuFlower.MODID, "ykte_boxed_clayconia"));
+        
+        GameRegistry.registerTileEntity(YKTileBoxedLoonium.class, 
+				new ResourceLocation(YuzuKizuFlower.MODID, "ykte_boxed_loonium"));
         
         //ネットワーク登録
         NetworkHandler.init();
@@ -571,6 +577,13 @@ public class YuzuKizuFlower
                 .setRegistryName(MODID, "boxed_clayconia")
                 .setUnlocalizedName("boxed_clayconia")
         );
+        
+        // 箱入りルーニウム
+        event.getRegistry().register(
+                new YKBlockBoxedLoonium()
+                .setRegistryName(MODID, "boxed_loonium")
+                .setUnlocalizedName("boxed_loonium")
+        );
     }
     
     /**
@@ -794,6 +807,11 @@ public class YuzuKizuFlower
     	event.getRegistry().register(new ItemBlock(YuzuKizuBlocks.BOXED_CLAYCONIA)
     			.setRegistryName(MODID, "boxed_clayconia")
     	);
+    	
+    	// 箱入りルーニウム
+    	event.getRegistry().register(new ItemBlock(YuzuKizuBlocks.BOXED_LOONIUM)
+    			.setRegistryName(MODID, "boxed_roonium")
+    	);
     }
     
     /**
@@ -990,6 +1008,10 @@ public class YuzuKizuFlower
     	// 箱入りクレイコニア
     	ModelLoader.setCustomModelResourceLocation(Item.getItemFromBlock(YuzuKizuBlocks.BOXED_CLAYCONIA), 0,
     			new ModelResourceLocation(YuzuKizuBlocks.BOXED_CLAYCONIA.getRegistryName(), "inventory"));
+    	
+    	// 箱入りクレイコニア
+    	ModelLoader.setCustomModelResourceLocation(Item.getItemFromBlock(YuzuKizuBlocks.BOXED_LOONIUM), 0,
+    			new ModelResourceLocation(YuzuKizuBlocks.BOXED_LOONIUM.getRegistryName(), "inventory"));
     	
     }
     

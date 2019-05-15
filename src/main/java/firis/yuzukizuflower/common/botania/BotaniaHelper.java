@@ -28,6 +28,12 @@ public class BotaniaHelper {
 	public static IManaRecipes recipesOrechid = new RecipesOrechid();
 	
 	/**
+	 * ルーニウム変換レシピ
+	 */
+	public static IManaRecipes recipesLoonium = new RecipesLoonium();
+	
+	
+	/**
 	 * アオーシャン変換レシピ
 	 */
 	public static IManaRecipes recipesAocean = new RecipesAocean();
