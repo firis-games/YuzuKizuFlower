@@ -37,6 +37,11 @@ public class BotaniaHelper {
 	 */
 	public static IManaRecipes recipesAkanerald = new RecipesAkanerald();
 	
+	/**
+	 * クレイコニア変換レシピ
+	 * Clayconia
+	 */
+	public static IManaRecipes recipesClayconia = new RecipesClayconia();
 	
 	/**
 	 * エンドフレイムの発電レシピ

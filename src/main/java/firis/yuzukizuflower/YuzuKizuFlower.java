@@ -13,6 +13,7 @@ import firis.yuzukizuflower.common.block.YKBlockBaseBoxed;
 import firis.yuzukizuflower.common.block.YKBlockBoxedAkanerald;
 import firis.yuzukizuflower.common.block.YKBlockBoxedAkariculture;
 import firis.yuzukizuflower.common.block.YKBlockBoxedAocean;
+import firis.yuzukizuflower.common.block.YKBlockBoxedClayconia;
 import firis.yuzukizuflower.common.block.YKBlockBoxedEndoflame;
 import firis.yuzukizuflower.common.block.YKBlockBoxedEntropinnyum;
 import firis.yuzukizuflower.common.block.YKBlockBoxedGourmaryllis;
@@ -23,8 +24,8 @@ import firis.yuzukizuflower.common.block.YKBlockBoxedPureDaisy;
 import firis.yuzukizuflower.common.block.YKBlockBoxedRannuncarpus;
 import firis.yuzukizuflower.common.block.YKBlockBoxedYuquarry;
 import firis.yuzukizuflower.common.block.YKBlockCorporeaChest;
-import firis.yuzukizuflower.common.block.YKBlockDreamSapling;
 import firis.yuzukizuflower.common.block.YKBlockDreamLeaf;
+import firis.yuzukizuflower.common.block.YKBlockDreamSapling;
 import firis.yuzukizuflower.common.block.YKBlockManaTank;
 import firis.yuzukizuflower.common.block.YKBlockOre;
 import firis.yuzukizuflower.common.block.YKBlockPetalWorkbench;
@@ -47,6 +48,7 @@ import firis.yuzukizuflower.common.tileentity.YKTileAutoWorkbench;
 import firis.yuzukizuflower.common.tileentity.YKTileBoxedAkanerald;
 import firis.yuzukizuflower.common.tileentity.YKTileBoxedAkariculture;
 import firis.yuzukizuflower.common.tileentity.YKTileBoxedAocean;
+import firis.yuzukizuflower.common.tileentity.YKTileBoxedClayconia;
 import firis.yuzukizuflower.common.tileentity.YKTileBoxedEndoflame;
 import firis.yuzukizuflower.common.tileentity.YKTileBoxedEntropinnyum;
 import firis.yuzukizuflower.common.tileentity.YKTileBoxedGourmaryllis;
@@ -190,8 +192,9 @@ public class YuzuKizuFlower
     	public final static Block DREAM_LEAF = null;
     	public final static Block DREAM_SAPLING = null;
     	public final static Block ALF_SAND = null;
-    	public final static Block BOXED_KEKIMURUS = null;    	
-    	public final static Block BOXED_ENTROPINNYUM = null;    	
+    	public final static Block BOXED_KEKIMURUS = null;
+    	public final static Block BOXED_ENTROPINNYUM = null;
+    	public final static Block BOXED_CLAYCONIA = null;
     }
     
     public static class YuzuKizuFluids {
@@ -278,6 +281,9 @@ public class YuzuKizuFlower
         
         GameRegistry.registerTileEntity(YKTileBoxedEntropinnyum.class, 
 				new ResourceLocation(YuzuKizuFlower.MODID, "ykte_boxed_entropinnyum"));
+        
+        GameRegistry.registerTileEntity(YKTileBoxedClayconia.class, 
+				new ResourceLocation(YuzuKizuFlower.MODID, "ykte_boxed_clayconia"));
         
         //ネットワーク登録
         NetworkHandler.init();
@@ -558,6 +564,13 @@ public class YuzuKizuFlower
                 .setRegistryName(MODID, "boxed_entropinnyum")
                 .setUnlocalizedName("boxed_entropinnyum")
         );
+        
+        // 箱入りクレイコニア
+        event.getRegistry().register(
+                new YKBlockBoxedClayconia()
+                .setRegistryName(MODID, "boxed_clayconia")
+                .setUnlocalizedName("boxed_clayconia")
+        );
     }
     
     /**
@@ -776,6 +789,11 @@ public class YuzuKizuFlower
     	event.getRegistry().register(new ItemBlock(YuzuKizuBlocks.BOXED_ENTROPINNYUM)
     			.setRegistryName(MODID, "boxed_entropinnyum")
     	);
+    	
+    	// 箱入りクレイコニア
+    	event.getRegistry().register(new ItemBlock(YuzuKizuBlocks.BOXED_CLAYCONIA)
+    			.setRegistryName(MODID, "boxed_clayconia")
+    	);
     }
     
     /**
@@ -968,6 +986,10 @@ public class YuzuKizuFlower
     	// 箱入りエントロピウム
     	ModelLoader.setCustomModelResourceLocation(Item.getItemFromBlock(YuzuKizuBlocks.BOXED_ENTROPINNYUM), 0,
     			new ModelResourceLocation(YuzuKizuBlocks.BOXED_ENTROPINNYUM.getRegistryName(), "inventory"));
+    	
+    	// 箱入りクレイコニア
+    	ModelLoader.setCustomModelResourceLocation(Item.getItemFromBlock(YuzuKizuBlocks.BOXED_CLAYCONIA), 0,
+    			new ModelResourceLocation(YuzuKizuBlocks.BOXED_CLAYCONIA.getRegistryName(), "inventory"));
     	
     }
     
