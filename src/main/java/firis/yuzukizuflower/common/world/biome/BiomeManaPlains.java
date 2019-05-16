@@ -7,6 +7,7 @@ import java.util.Random;
 
 import firis.yuzukizuflower.YuzuKizuFlower;
 import firis.yuzukizuflower.YuzuKizuFlower.YuzuKizuBlocks;
+import firis.yuzukizuflower.common.helpler.YKColorHelper;
 import firis.yuzukizuflower.common.world.generator.WorldGenBigTreeLivingWood;
 import firis.yuzukizuflower.common.world.generator.WorldGenTreeLivingWood;
 import net.minecraft.block.BlockSand;
@@ -28,6 +29,8 @@ import net.minecraft.world.World;
 import net.minecraft.world.biome.Biome;
 import net.minecraft.world.chunk.ChunkPrimer;
 import net.minecraft.world.gen.feature.WorldGenAbstractTree;
+import net.minecraftforge.fml.relauncher.Side;
+import net.minecraftforge.fml.relauncher.SideOnly;
 import vazkii.botania.common.block.ModBlocks;
 
 /**
@@ -181,5 +184,16 @@ public class BiomeManaPlains extends Biome {
                 }
             }
         }
+    }
+	
+    /**
+     * takes temperature, returns color
+     */
+    @SideOnly(Side.CLIENT)
+    public int getSkyColorByTemp(float currentTemperature)
+    {
+        //return YKColorHelper.getColorInt(167, 87, 168, 1f);
+        //return YKColorHelper.getColorInt(144, 254, 255, 1f);
+    	return YKColorHelper.getColorInt(162, 127, 163, 1f);
     }
 }
