@@ -121,7 +121,7 @@ public class YKBlockManaTank extends YKBlockBaseManaPool {
 	@Override
     public int getMetaFromState(IBlockState state)
     {
-        return (int) state.getProperties().get(TIER);
+		return state.getValue(TIER);
     }
 	
 	@Override
