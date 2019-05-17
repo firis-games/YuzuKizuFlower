@@ -1,0 +1,11 @@
+{
+    "parent": "yuzukizuflower:block/mana_tank",
+    "textures": {
+    	"particle":"yuzukizuflower:blocks/purple_iron",
+        "base":"yuzukizuflower:blocks/purple_iron",
+        "grass":"minecraft:blocks/grass_top",
+        "cover":"minecraft:blocks/glass",
+        "cover1":"minecraft:blocks/glass",
+        "cross":"yuzukizuflower:blocks/purple_iron"
+    }
+}

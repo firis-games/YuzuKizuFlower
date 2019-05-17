@@ -58,8 +58,10 @@ public class YKGuiContainerManaTank extends GuiContainer{
 		//GUIテクスチャ
 		this.guiTextures = new ResourceLocation("yuzukizuflower", "textures/gui/mana_tank.png");
 		
+		Integer metadata = tileEntity.getBlockMetadata();
+		
 		//GUIタイトル
-		this.guiTitle = "gui.mana_tank.name";		
+		this.guiTitle = "gui.mana_tank_" + metadata.toString() +  ".name";		
 	}
 	
 	

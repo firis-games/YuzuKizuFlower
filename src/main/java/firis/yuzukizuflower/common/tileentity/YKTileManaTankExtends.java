@@ -23,6 +23,10 @@ import net.minecraftforge.fluids.capability.IFluidTankProperties;
  */
 public class YKTileManaTankExtends extends YKTileManaTank implements IFluidHandler, IFluidTankProperties {
 	
+	public YKTileManaTankExtends(int meta) {
+		super(meta);
+	}
+	
 	/************************************************
 	 * 液体管理用
 	 *************************************************/

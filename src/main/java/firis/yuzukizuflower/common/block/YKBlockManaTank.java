@@ -8,12 +8,17 @@ import javax.annotation.Nullable;
 import firis.yuzukizuflower.common.YKGuiHandler;
 import firis.yuzukizuflower.common.tileentity.YKTileManaTank;
 import firis.yuzukizuflower.common.tileentity.YKTileManaTankExtends;
+import net.minecraft.block.properties.IProperty;
+import net.minecraft.block.properties.PropertyInteger;
+import net.minecraft.block.state.BlockStateContainer;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.client.util.ITooltipFlag;
+import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.tileentity.TileEntity;
+import net.minecraft.util.NonNullList;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 import net.minecraftforge.fml.relauncher.Side;
@@ -21,6 +26,8 @@ import net.minecraftforge.fml.relauncher.SideOnly;
 
 public class YKBlockManaTank extends YKBlockBaseManaPool {
 
+	public static final PropertyInteger TIER = PropertyInteger.create("tier", 0, 3);
+	
 	/**
 	 * コンストラクタ
 	 */
@@ -28,6 +35,9 @@ public class YKBlockManaTank extends YKBlockBaseManaPool {
 		super();
 		//GUIのIDを設定
 		this.GUI_ID = YKGuiHandler.MANA_TANK;
+		
+		this.setDefaultState(this.blockState.getBaseState()
+        		.withProperty(TIER, Integer.valueOf(0)));
 	}
 	
 	/**
@@ -35,7 +45,7 @@ public class YKBlockManaTank extends YKBlockBaseManaPool {
 	 */
 	@Override
 	public TileEntity createNewTileEntity(World worldIn, int meta) {
-		return new YKTileManaTankExtends();
+		return new YKTileManaTankExtends(meta);
 	}
 	
     /**
@@ -49,8 +59,8 @@ public class YKBlockManaTank extends YKBlockBaseManaPool {
     	if (tileentity instanceof YKTileManaTank)
         {
     		YKTileManaTank tileManaTank = (YKTileManaTank) tileentity;
-        	
-        	ItemStack stack = new ItemStack(Item.getItemFromBlock(this));
+        	int meta = tileManaTank.getMetadata();
+        	ItemStack stack = new ItemStack(Item.getItemFromBlock(this), 1, meta);
         	
         	if (tileManaTank.getMana() > 0) {
         		NBTTagCompound nbt = new NBTTagCompound();
@@ -86,5 +96,39 @@ public class YKBlockManaTank extends YKBlockBaseManaPool {
         	Integer mana = nbt.getInteger("mana");
         	tooltip.add(NumberFormat.getNumberInstance().format(mana) + " Mana");
         }        
+    }
+    
+    /** メタデータ対応 */
+    /************************************************************************/
+    @Override
+	protected BlockStateContainer createBlockState()
+    {
+        return new BlockStateContainer(this, new IProperty[] {TIER});
+    }
+    
+    /**
+     * Convert the given metadata into a BlockState for this Block
+     */
+	@Override
+    public IBlockState getStateFromMeta(int meta)
+    {
+        return this.getDefaultState().withProperty(TIER, Integer.valueOf(meta));
+    }
+
+    /**
+     * Convert the BlockState into the correct metadata value
+     */
+	@Override
+    public int getMetaFromState(IBlockState state)
+    {
+        return (int) state.getProperties().get(TIER);
+    }
+	
+	@Override
+    public void getSubBlocks(CreativeTabs itemIn, NonNullList<ItemStack> items)
+    {
+		for (int i = 0; i < TIER.getAllowedValues().size(); i++) {
+			items.add(new ItemStack(this, 1, i));
+		}
     }
 }

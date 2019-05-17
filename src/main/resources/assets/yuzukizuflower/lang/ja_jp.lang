@@ -8,8 +8,14 @@ gui.boxed_pure_daisy.name=箱入りピュアデイジー
 tile.boxed_endoflame.name=箱入りエンドフレイム
 gui.boxed_endoflame.name=箱入りエンドフレイム
 
-tile.mana_tank.name=マナタンク
-gui.mana_tank.name=マナタンク
+tile.mana_tank_0.name=マナタンク
+gui.mana_tank_0.name=マナタンク
+tile.mana_tank_1.name=マナスチールタンク
+gui.mana_tank_1.name=マナスチールタンク
+tile.mana_tank_2.name=テラスチールタンク
+gui.mana_tank_2.name=テラスチールタンク
+tile.mana_tank_3.name=マナタンク改
+gui.mana_tank_3.name=マナタンク改
 
 tile.boxed_rannuncarpus.name=箱入りラナンカーパス
 gui.boxed_rannuncarpus.name=箱入りラナンカーパス

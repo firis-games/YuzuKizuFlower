@@ -7,19 +7,20 @@
 	],
 	"key": {
 		"x": {
-			"item": "minecraft:iron_ingot",
-			"data": 0
+			"item": "botania:manaresource",
+			"data": 17
 		},
 		"y": {
-			"item": "minecraft:glass",
+			"item": "botania:managlass",
 			"data": 0
 		},
 		"z": {
-			"item": "botania:pool",
+			"item": "yuzukizuflower:mana_tank",
 			"data": 0
 		}
 	},
 	"result": {
-		"item": "yuzukizuflower:mana_tank"
+		"item": "yuzukizuflower:mana_tank",
+		"data": 1
 	}
 }

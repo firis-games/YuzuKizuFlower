@@ -7,6 +7,7 @@ import java.util.List;
 import firis.yuzukizuflower.common.botania.BotaniaHelper;
 import firis.yuzukizuflower.common.botania.ManaRecipe;
 import net.minecraft.item.ItemStack;
+import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.ResourceLocation;
 import vazkii.botania.api.mana.IManaItem;
 import vazkii.botania.api.mana.IManaUsingItem;
@@ -37,6 +38,66 @@ public class YKTileManaTank extends YKTileBaseBoxedProcFlower {
 		this.setCycleTick(10);
 		
 	}
+	
+	/** メタデータ対応 */
+	/*************************************************************************/
+	/**
+	 * メタデータ対応
+	 * @param meta
+	 */
+	public YKTileManaTank(int meta) {
+		
+		this();
+		this.metadata = meta;
+		setMaxManaToMetadata(meta);
+	}
+	
+	public Integer getMetadata() {
+		return this.metadata;
+	}
+	protected int metadata = 0;
+	protected void setMaxManaToMetadata(int meta) {
+		switch(meta) {
+		case 0:
+			this.maxMana = 1000000;
+			break;
+		case 1:
+			this.maxMana = 2000000;
+			break;
+		case 2:
+			this.maxMana = 5000000;
+			break;
+		case 3:
+			this.maxMana = 10000000;
+			break;
+		}
+	}
+	
+	/**
+	 * NBTを読み込みクラスへ反映する処理
+	 */
+	@Override
+	public void readFromNBT(NBTTagCompound compound)
+    {
+		super.readFromNBT(compound);
+		
+        this.metadata = compound.getInteger("metadata");
+        this.setMaxManaToMetadata(this.metadata);
+    }
+	
+	/**
+	 * クラスの情報をNBTへ反映する処理
+	 */
+	@Override
+	public NBTTagCompound writeToNBT(NBTTagCompound compound)
+    {
+        compound = super.writeToNBT(compound);
+        
+        compound.setInteger("metadata", this.metadata);
+        
+        return compound;
+    }
+	/*************************************************************************/
 	
 	/**
 	 * catalystスロットのindex

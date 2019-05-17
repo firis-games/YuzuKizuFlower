@@ -1,0 +1,26 @@
+{
+	"type": "forge:ore_shaped",
+	"pattern": [
+		"xxx",
+		"yzy",
+		"xxx"
+	],
+	"key": {
+		"x": {
+			"item": "botania:manaresource",
+			"data": 19
+		},
+		"y": {
+			"item": "botania:manaresource",
+			"data": 5
+		},
+		"z": {
+			"item": "yuzukizuflower:mana_tank",
+			"data": 2
+		}
+	},
+	"result": {
+		"item": "yuzukizuflower:mana_tank",
+		"data": 3
+	}
+}

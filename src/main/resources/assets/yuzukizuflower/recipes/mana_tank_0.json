@@ -1,0 +1,26 @@
+{
+	"type": "forge:ore_shaped",
+	"pattern": [
+		"xxx",
+		"yzy",
+		"xxx"
+	],
+	"key": {
+		"x": {
+			"item": "minecraft:iron_ingot",
+			"data": 0
+		},
+		"y": {
+			"item": "minecraft:glass",
+			"data": 0
+		},
+		"z": {
+			"item": "botania:pool",
+			"data": 0
+		}
+	},
+	"result": {
+		"item": "yuzukizuflower:mana_tank",
+		"data": 0
+	}
+}

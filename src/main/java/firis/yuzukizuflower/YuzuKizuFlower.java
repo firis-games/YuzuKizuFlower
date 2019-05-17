@@ -598,8 +598,20 @@ public class YuzuKizuFlower
     	);
     	
     	// 箱入りマナタンク
-    	event.getRegistry().register(new ItemBlock(YuzuKizuBlocks.MANA_TANK)
-    			.setRegistryName(MODID, "mana_tank")
+    	event.getRegistry().register(new ItemBlock(YuzuKizuBlocks.MANA_TANK) {
+	    		@Override
+	    		public int getMetadata(int damage)
+	    	    {
+	    	        return damage;
+	    	    }
+	    		@Override
+	    		public String getUnlocalizedName(ItemStack stack) {
+	    			Integer meta = stack.getMetadata();;
+	    			return this.getUnlocalizedName() + "_" + meta.toString();
+	    		}
+	    	}
+			.setRegistryName(MODID, "mana_tank")
+            .setHasSubtypes(true)
     	);
     	
     	// 箱入りピュアデイジー
@@ -834,8 +846,10 @@ public class YuzuKizuFlower
     			new ModelResourceLocation(YuzuKizuBlocks.BOXED_ENDOFLAME.getRegistryName(), "inventory"));
     	
     	// マナタンク
-    	ModelLoader.setCustomModelResourceLocation(Item.getItemFromBlock(YuzuKizuBlocks.MANA_TANK), 0,
-    			new ModelResourceLocation(YuzuKizuBlocks.MANA_TANK.getRegistryName(), "inventory"));
+    	for (Integer i = 0; i < YKBlockManaTank.TIER.getAllowedValues().size(); i++) {
+        	ModelLoader.setCustomModelResourceLocation(Item.getItemFromBlock(YuzuKizuBlocks.MANA_TANK), i,
+        			new ModelResourceLocation(YuzuKizuBlocks.MANA_TANK.getRegistryName() + "_" + i.toString(), "inventory"));    		
+    	}
     	
     	// 箱入りラナンカーパス
     	ModelLoader.setCustomModelResourceLocation(Item.getItemFromBlock(YuzuKizuBlocks.BOXED_RANNUNCARPUS), 0,

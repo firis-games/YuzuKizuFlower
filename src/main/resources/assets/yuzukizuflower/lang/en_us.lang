@@ -8,8 +8,14 @@ gui.boxed_pure_daisy.name=Boxed PureDaisy
 tile.boxed_endoflame.name=Boxed Endoflame
 gui.boxed_endoflame.name=Boxed Endoflame
 
-tile.mana_tank.name=Mana Tank
-gui.mana_tank.name=Mana Tank
+tile.mana_tank_0.name=Mana Tank
+gui.mana_tank_0.name=Mana Tank
+tile.mana_tank_1.name=Manasteel Tank
+gui.mana_tank_1.name=Manasteel Tank
+tile.mana_tank_2.name=Terrasteel Tank
+gui.mana_tank_2.name=Terrasteel Tank
+tile.mana_tank_3.name=Mana Tank Mk2
+gui.mana_tank_3.name=Mana Tank Mk2
 
 tile.boxed_rannuncarpus.name=Boxed Rannuncarpus
 gui.boxed_rannuncarpus.name=Boxed Rannuncarpus
