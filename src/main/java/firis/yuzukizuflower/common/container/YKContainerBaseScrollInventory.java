@@ -114,24 +114,12 @@ public abstract class YKContainerBaseScrollInventory extends Container implement
 		
 		//ページ切り替えが発生していない場合は更新しない
 		if (nowPage == page) return;
-		
-		int pageRowCount = iTeInv.getScrollSlotRowCount();
+
 		int pageCount = iTeInv.getScrollSlotPageCount();
 		
-		int rowCount = pageCount / pageRowCount;
-		
-		//1ページ次へ
 		List<Integer> slotList;
-		if (nowPage + 1 == page) {
-			slotList = IntStream.range(pageRowCount * (rowCount - 1), pageCount).boxed().collect(Collectors.toList());			
-		}
-		//1ページ前へ
-		else if (nowPage - 1 == page) {
-			slotList = IntStream.range(0, pageRowCount).boxed().collect(Collectors.toList());
-		//全ページ更新
-		} else {
-			slotList = IntStream.range(0, pageCount).boxed().collect(Collectors.toList());
-		}
+		//常に全ページ更新
+		slotList = IntStream.range(0, pageCount).boxed().collect(Collectors.toList());
 		
 		//最終行のみ更新
 		for (Integer idx : slotList) {

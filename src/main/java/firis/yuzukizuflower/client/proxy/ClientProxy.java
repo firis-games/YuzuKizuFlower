@@ -29,7 +29,6 @@ import firis.yuzukizuflower.client.layer.YKBackPackLayer;
 import firis.yuzukizuflower.common.YKGuiHandler;
 import firis.yuzukizuflower.common.event.KeyBindingHandler;
 import firis.yuzukizuflower.common.inventory.IScrollInventoryClientItemHandler;
-import firis.yuzukizuflower.common.inventory.ITextScrollInventoryItemHandler;
 import firis.yuzukizuflower.common.inventory.InventoryItemStack;
 import firis.yuzukizuflower.common.inventory.PetalInventory;
 import firis.yuzukizuflower.common.inventory.RuneCraftInventory;
@@ -111,8 +110,9 @@ public class ClientProxy extends CommonProxy {
 
 				//スクロールチェスト
 				case YKGuiHandler.SCROLL_CHEST :
-					ITextScrollInventoryItemHandler iinv = new ITextScrollInventoryItemHandler(tile, true);
-					return new YKGuiContainerScrollChest(iinv, player.inventory);
+					handler = new IScrollInventoryClientItemHandler(54, tile);
+					//ITextScrollInventoryItemHandler iinv = new ITextScrollInventoryItemHandler(tile, true);
+					return new YKGuiContainerScrollChest(handler, player.inventory);
 				
 				//リモートチェスト
 				case YKGuiHandler.REMOTE_CHEST :

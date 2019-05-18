@@ -96,12 +96,36 @@ public class ITextScrollInventoryItemHandler extends IScrollInventoryItemHandler
 	@Override
 	public void setInventorySlotContents(int index, ItemStack stack) {
 		super.setInventorySlotContents(index, stack);
-		setFilerList();
+		
+		if (!"".equals(this.textSearch)) {
+			setFilerList();			
+		}
 	}
 	
 	@Override
 	public ItemStack decrStackSize(int index, int count) {
 		ItemStack stack = super.decrStackSize(index, count);
 		return stack;
+	}
+	
+	@Override
+	public int getField(int id) {
+		if (id == 0) {
+			return this.capabilityIndexList.size();
+		} else if (id == 1) {
+			return this.getScrollMaxPage();
+		} else if (id == 2) {
+			return this.getScrollPage();
+		}
+		return 0;
+	}
+
+	@Override
+	public void setField(int id, int value) {
+	}
+
+	@Override
+	public int getFieldCount() {
+		return 3;
 	}
 }

@@ -1,6 +1,7 @@
 package firis.yuzukizuflower.common.inventory;
 
 import firis.yuzukizuflower.common.tileentity.YKTileCorporeaChest;
+import firis.yuzukizuflower.common.tileentity.YKTileScrollChest;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.inventory.ItemStackHelper;
 import net.minecraft.item.ItemStack;
@@ -127,6 +128,8 @@ public class IScrollInventoryClientItemHandler implements IScrollInventory {
 		
 		if(this.tile != null && this.tile instanceof YKTileCorporeaChest) {
 			((YKTileCorporeaChest) this.tile).animationController.openInventory(player);
+		} else if(this.tile != null && this.tile instanceof YKTileScrollChest) {
+			((YKTileScrollChest) this.tile).animationController.openInventory(player);
 		}
 	}
 
@@ -134,6 +137,8 @@ public class IScrollInventoryClientItemHandler implements IScrollInventory {
 	public void closeInventory(EntityPlayer player) {
 		if(this.tile != null && this.tile instanceof YKTileCorporeaChest) {
 			((YKTileCorporeaChest) this.tile).animationController.closeInventory(player);
+		} else if(this.tile != null && this.tile instanceof YKTileScrollChest) {
+			((YKTileScrollChest) this.tile).animationController.closeInventory(player);
 		}
 	}
 

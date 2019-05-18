@@ -7,7 +7,7 @@ import org.lwjgl.input.Keyboard;
 import firis.yuzukizuflower.client.gui.parts.YKGuiScrollBar;
 import firis.yuzukizuflower.common.container.YKContainerScrollChest;
 import firis.yuzukizuflower.common.inventory.IScrollInventory;
-import firis.yuzukizuflower.common.inventory.ITextScrollInventoryItemHandler;
+import firis.yuzukizuflower.common.inventory.IScrollInventoryClientItemHandler;
 import firis.yuzukizuflower.common.network.NetworkHandler;
 import firis.yuzukizuflower.common.network.PacketGuiScroll;
 import net.minecraft.client.gui.GuiTextField;
@@ -115,13 +115,15 @@ public class YKGuiContainerScrollChest extends YKGuiContainerBaseScrollInventory
         this.textField.setTextColor(16777215);
         
         //inventoryのフィルタを再設定
-        this.textField.setText(((ITextScrollInventoryItemHandler) this.iinventory).getTextSearch());
+        //this.textField.setText(((ITextScrollInventoryItemHandler) this.iinventory).getTextSearch());
+        this.textField.setText(((IScrollInventoryClientItemHandler) this.iinventory).getTextSearch());
     }
 	
 	
 	/**
 	 * スクロール変更時の処理を追加、テキストも同時に送信する
 	 */
+	/*
 	@Override
 	public void onScrollChanged(int page) {
 				
@@ -132,6 +134,7 @@ public class YKGuiContainerScrollChest extends YKGuiContainerBaseScrollInventory
 		NetworkHandler.network.sendToServer(
 				new PacketGuiScroll.MessageGuiScroll(page, ""));
 	}
+	*/
 	
 	/**
 	 * テキスト情報を含む情報を送信
