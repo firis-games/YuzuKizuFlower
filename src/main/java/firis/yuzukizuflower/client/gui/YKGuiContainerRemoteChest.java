@@ -26,7 +26,7 @@ public class YKGuiContainerRemoteChest extends YKGuiContainerBaseScrollInventory
 		super(new YKContainerRemoteChest(iinv, playerInv, keyMode), iinv);
 		
 		// GUIテクスチャ
-		this.guiTextures = new ResourceLocation("yuzukizuflower", "textures/gui/scroll_chest.png");
+		this.guiTextures = new ResourceLocation("yuzukizuflower", "textures/gui/remote_chest.png");
 
 		String title = "";
 		ItemStack stack = playerInv.player.getHeldItemMainhand();

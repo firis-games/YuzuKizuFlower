@@ -34,7 +34,7 @@ public class YKGuiContainerCorporeaChest extends YKGuiContainerBaseScrollInvento
 		super(new YKContainerCorporeaChest(iinv, playerInv), iinv);
 		
 		// GUIテクスチャ
-		this.guiTextures = new ResourceLocation("yuzukizuflower", "textures/gui/scroll_chest.png");
+		this.guiTextures = new ResourceLocation("yuzukizuflower", "textures/gui/corporea_chest.png");
 
 		// GUIタイトル
 		this.guiTitle = "gui.corporea_chest.name";
