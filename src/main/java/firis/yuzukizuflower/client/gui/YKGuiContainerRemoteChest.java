@@ -23,7 +23,7 @@ public class YKGuiContainerRemoteChest extends YKGuiContainerBaseScrollInventory
 	 */
 	public YKGuiContainerRemoteChest(IScrollInventory iinv, InventoryPlayer playerInv, boolean keyMode) {
 		
-		super(new YKContainerRemoteChest(iinv, playerInv), iinv);
+		super(new YKContainerRemoteChest(iinv, playerInv, keyMode), iinv);
 		
 		// GUIテクスチャ
 		this.guiTextures = new ResourceLocation("yuzukizuflower", "textures/gui/scroll_chest.png");
