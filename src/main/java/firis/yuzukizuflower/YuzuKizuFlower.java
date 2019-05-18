@@ -597,6 +597,31 @@ public class YuzuKizuFlower
     			.setRegistryName(MODID, "flower_box")
     	);
     	
+    	// ユクァーリー
+    	event.getRegistry().register(new YKItemBase()
+    			.setRegistryName(MODID, "yuquarry")
+    			.setUnlocalizedName("yuquarry")
+    	);
+    	
+    	// アカリカルチャー
+    	event.getRegistry().register(new YKItemBase()
+    			.setRegistryName(MODID, "akariculture")
+    			.setUnlocalizedName("akariculture")
+    	);
+    	
+    	// アオーシャン
+    	event.getRegistry().register(new YKItemBase()
+    			.setRegistryName(MODID, "aocean")
+    			.setUnlocalizedName("aocean")
+    	);
+    	
+    	// アカネラルド
+    	event.getRegistry().register(new YKItemBase()
+    			.setRegistryName(MODID, "akanerald")
+    			.setUnlocalizedName("akanerald")
+    	);
+    	
+    	
     	// 箱入りマナタンク
     	event.getRegistry().register(new ItemBlock(YuzuKizuBlocks.MANA_TANK) {
 	    		@Override
@@ -614,108 +639,6 @@ public class YuzuKizuFlower
             .setHasSubtypes(true)
     	);
     	
-    	// 箱入りピュアデイジー
-    	event.getRegistry().register(new ItemBlock(YuzuKizuBlocks.BOXED_PURE_DAISY)
-    			.setRegistryName(MODID, "boxed_pure_daisy")
-    	);
-    	
-    	// 箱入りエンドフレイム
-    	event.getRegistry().register(new ItemBlock(YuzuKizuBlocks.BOXED_ENDOFLAME)
-    			.setRegistryName(MODID, "boxed_endoflame")
-    	);
-    	
-    	// 箱入りラナンカーパス
-    	event.getRegistry().register(new ItemBlock(YuzuKizuBlocks.BOXED_RANNUNCARPUS)
-    			.setRegistryName(MODID, "boxed_rannuncarpus")
-    	);
-    	
-    	// 箱入りジェイディッド・アマランサス
-    	event.getRegistry().register(new ItemBlock(YuzuKizuBlocks.BOXED_JADED_AMARANTHUS)
-    			.setRegistryName(MODID, "boxed_jaded_amaranthus")
-    	);
-    	
-    	/*
-    	// 箱入りエンドフレイム
-    	event.getRegistry().register(new ItemBlock(YuzuKizuBlocks.MANASTEEL_BOXED_ENDOFLAME)
-    			.setRegistryName(MODID, "manasteel_boxed_endoflame")
-    	);
-    	*/
-    	
-    	// 箱入りオアキド
-    	event.getRegistry().register(new ItemBlock(YuzuKizuBlocks.BOXED_ORECHID)
-    			.setRegistryName(MODID, "boxed_orechid")
-    	);
-    	
-    	// 箱入りガーマリリス
-    	event.getRegistry().register(new ItemBlock(YuzuKizuBlocks.BOXED_GOURMARYLLIS)
-    			.setRegistryName(MODID, "boxed_gourmaryllis")
-    	);
-    	
-    	// アカリカルチャー
-    	event.getRegistry().register(new YKItemBase()
-    			.setRegistryName(MODID, "akariculture")
-    			.setUnlocalizedName("akariculture")
-    	);
-    	
-    	// 箱入りアカリカルチャー
-    	event.getRegistry().register(new ItemBlock(YuzuKizuBlocks.BOXED_AKARICULTURE)
-    			.setRegistryName(MODID, "boxed_akariculture")
-    	);
-    	
-    	// ユクァーリー
-    	event.getRegistry().register(new YKItemBase()
-    			.setRegistryName(MODID, "yuquarry")
-    			.setUnlocalizedName("yuquarry")
-    	);
-    	
-    	// 箱入りユクァーリー
-    	event.getRegistry().register(new ItemBlock(YuzuKizuBlocks.BOXED_YUQUARRY)
-    			.setRegistryName(MODID, "boxed_yuquarry")
-    	);
-    	
-    	// アオーシャン
-    	event.getRegistry().register(new YKItemBase()
-    			.setRegistryName(MODID, "aocean")
-    			.setUnlocalizedName("aocean")
-    	);
-    	
-    	// 箱入りアオーシャン
-    	event.getRegistry().register(new ItemBlock(YuzuKizuBlocks.BOXED_AOCEAN)
-    			.setRegistryName(MODID, "boxed_aocean")
-    	);
-    	
-    	// アカネラルド
-    	event.getRegistry().register(new YKItemBase()
-    			.setRegistryName(MODID, "akanerald")
-    			.setUnlocalizedName("akanerald")
-    	);
-    	
-    	// 箱入りアカネラルド
-    	event.getRegistry().register(new ItemBlock(YuzuKizuBlocks.BOXED_AKANERALD)
-    			.setRegistryName(MODID, "boxed_akanerald")
-    	);
-    	
-    	// 液体マナ
-    	event.getRegistry().register(new ItemBlock(YuzuKizuBlocks.LIQUID_MANA)
-    			.setRegistryName(MODID, "liquid_mana")
-    	);
-
-    	// コーポリアチェスト
-    	event.getRegistry().register(new ItemBlock(YuzuKizuBlocks.CORPOREA_CHEST)
-    			.setRegistryName(MODID, "corporea_chest")
-    	);
-    	
-    	// スクロールチェスト
-    	event.getRegistry().register(new ItemBlock(YuzuKizuBlocks.SCROLL_CHEST)
-    			.setRegistryName(MODID, "scroll_chest")
-    	);
-    	
-    	// リモートチェスト
-    	event.getRegistry().register(new YKItemRemoteChest()
-    			.setRegistryName(MODID, "remote_chest")
-    			.setUnlocalizedName("remote_chest")
-    	);
-    	
     	// 花びら作業台
     	event.getRegistry().register(new ItemBlock(YuzuKizuBlocks.PETAL_WORKBENCH)
     			.setRegistryName(MODID, "petal_workbench")
@@ -731,10 +654,9 @@ public class YuzuKizuFlower
     			.setRegistryName(MODID, "terra_plate")
     	);
     	
-    	// バックパックチェスト
-    	event.getRegistry().register(new YKItemBackpackChest()
-    			.setRegistryName(MODID, "backpack_chest")
-    			.setUnlocalizedName("backpack_chest")
+    	// 自動作業台
+    	event.getRegistry().register(new ItemBlock(YuzuKizuBlocks.AUTO_WORKBENCH)
+    			.setRegistryName(MODID, "auto_workbench")
     	);
     	
     	// ブループリント
@@ -743,9 +665,93 @@ public class YuzuKizuFlower
     			.setUnlocalizedName("blueprint")
     	);
     	
-    	// テラプレート
-    	event.getRegistry().register(new ItemBlock(YuzuKizuBlocks.AUTO_WORKBENCH)
-    			.setRegistryName(MODID, "auto_workbench")
+    	// 箱入りピュアデイジー
+    	event.getRegistry().register(new ItemBlock(YuzuKizuBlocks.BOXED_PURE_DAISY)
+    			.setRegistryName(MODID, "boxed_pure_daisy")
+    	);
+    	
+    	// 箱入りエンドフレイム
+    	event.getRegistry().register(new ItemBlock(YuzuKizuBlocks.BOXED_ENDOFLAME)
+    			.setRegistryName(MODID, "boxed_endoflame")
+    	);
+    	
+    	/*
+    	// 箱入りエンドフレイム
+    	event.getRegistry().register(new ItemBlock(YuzuKizuBlocks.MANASTEEL_BOXED_ENDOFLAME)
+    			.setRegistryName(MODID, "manasteel_boxed_endoflame")
+    	);
+    	*/
+    	
+    	// 箱入りガーマリリス
+    	event.getRegistry().register(new ItemBlock(YuzuKizuBlocks.BOXED_GOURMARYLLIS)
+    			.setRegistryName(MODID, "boxed_gourmaryllis")
+    	);
+    	
+    	// 箱入りケキムラス
+    	event.getRegistry().register(new ItemBlock(YuzuKizuBlocks.BOXED_KEKIMURUS)
+    			.setRegistryName(MODID, "boxed_kekimurus")
+    	);
+    	
+    	// 箱入りエントロピウム
+    	event.getRegistry().register(new ItemBlock(YuzuKizuBlocks.BOXED_ENTROPINNYUM)
+    			.setRegistryName(MODID, "boxed_entropinnyum")
+    	);
+    	
+    	// 箱入りラナンカーパス
+    	event.getRegistry().register(new ItemBlock(YuzuKizuBlocks.BOXED_RANNUNCARPUS)
+    			.setRegistryName(MODID, "boxed_rannuncarpus")
+    	);
+    	
+    	// 箱入りクレイコニア
+    	event.getRegistry().register(new ItemBlock(YuzuKizuBlocks.BOXED_CLAYCONIA)
+    			.setRegistryName(MODID, "boxed_clayconia")
+    	);
+    	
+    	// 箱入りジェイディッド・アマランサス
+    	event.getRegistry().register(new ItemBlock(YuzuKizuBlocks.BOXED_JADED_AMARANTHUS)
+    			.setRegistryName(MODID, "boxed_jaded_amaranthus")
+    	);
+    	
+    	// 箱入りオアキド
+    	event.getRegistry().register(new ItemBlock(YuzuKizuBlocks.BOXED_ORECHID)
+    			.setRegistryName(MODID, "boxed_orechid")
+    	);
+    	
+    	// 箱入りルーニウム
+    	event.getRegistry().register(new ItemBlock(YuzuKizuBlocks.BOXED_LOONIUM)
+    			.setRegistryName(MODID, "boxed_roonium")
+    	);
+    	
+    	// 箱入りユクァーリー
+    	event.getRegistry().register(new ItemBlock(YuzuKizuBlocks.BOXED_YUQUARRY)
+    			.setRegistryName(MODID, "boxed_yuquarry")
+    	);
+    	
+    	// 箱入りアカリカルチャー
+    	event.getRegistry().register(new ItemBlock(YuzuKizuBlocks.BOXED_AKARICULTURE)
+    			.setRegistryName(MODID, "boxed_akariculture")
+    	);
+    	
+    	// 箱入りアカネラルド
+    	event.getRegistry().register(new ItemBlock(YuzuKizuBlocks.BOXED_AKANERALD)
+    			.setRegistryName(MODID, "boxed_akanerald")
+    	);
+    	
+    	// 箱入りアオーシャン
+    	event.getRegistry().register(new ItemBlock(YuzuKizuBlocks.BOXED_AOCEAN)
+    			.setRegistryName(MODID, "boxed_aocean")
+    	);
+    	
+    	/*
+    	// 液体マナ
+    	event.getRegistry().register(new ItemBlock(YuzuKizuBlocks.LIQUID_MANA)
+    			.setRegistryName(MODID, "liquid_mana")
+    	);
+    	*/
+
+    	// コーポリアチェスト
+    	event.getRegistry().register(new ItemBlock(YuzuKizuBlocks.CORPOREA_CHEST)
+    			.setRegistryName(MODID, "corporea_chest")
     	);
     	
     	// ディメンションキー
@@ -754,17 +760,41 @@ public class YuzuKizuFlower
     			.setUnlocalizedName("dimension_key")
     	);
     	
-    	// アルフヘイムコア
-    	event.getRegistry().register(new ItemBlock(YuzuKizuBlocks.ALFHEIM_CORE)
-    			.setRegistryName(MODID, "alfheim_core")
+    	// バックパックチェスト
+    	event.getRegistry().register(new YKItemBackpackChest()
+    			.setRegistryName(MODID, "backpack_chest")
+    			.setUnlocalizedName("backpack_chest")
     	);
+    	
+    	//インスタントハウス
+    	event.getRegistry().register(new YKItemInstantHouse()
+    			.setRegistryName(MODID, "instant_house")
+    			.setUnlocalizedName("instant_house")
+    	);
+
+    	// スクロールチェスト
+    	event.getRegistry().register(new ItemBlock(YuzuKizuBlocks.SCROLL_CHEST)
+    			.setRegistryName(MODID, "scroll_chest")
+    	);
+    	
+    	// リモートチェスト
+    	event.getRegistry().register(new YKItemRemoteChest()
+    			.setRegistryName(MODID, "remote_chest")
+    			.setUnlocalizedName("remote_chest")
+    	);
+    	
+    	//アルフサンド
+    	event.getRegistry().register(new ItemBlock(YuzuKizuBlocks.ALF_SAND)
+    			.setRegistryName(MODID, "alf_sand")
+    	);
+    	
     	
     	//ピクシィ鉱石
     	event.getRegistry().register(new ItemBlock(YuzuKizuBlocks.PIXIE_ORE)
     			.setRegistryName(MODID, "pixie_ore")
     	);
     	
-    	//ピクシィ鉱石
+    	//エレブン鉱石
     	event.getRegistry().register(new ItemBlock(YuzuKizuBlocks.ELEVN_ORE)
     			.setRegistryName(MODID, "elevn_ore")
     	);
@@ -783,13 +813,7 @@ public class YuzuKizuFlower
     	event.getRegistry().register(new ItemBlock(YuzuKizuBlocks.GAIA_ORE)
     			.setRegistryName(MODID, "gaia_ore")
     	);
-    	
-    	//インスタントハウス
-    	event.getRegistry().register(new YKItemInstantHouse()
-    			.setRegistryName(MODID, "instant_house")
-    			.setUnlocalizedName("instant_house")
-    	);
-    	
+    	    	
     	//ドリームリーフ
     	event.getRegistry().register(new ItemBlock(YuzuKizuBlocks.DREAM_LEAF)
     			.setRegistryName(MODID, "dream_leaf")
@@ -800,30 +824,11 @@ public class YuzuKizuFlower
     			.setRegistryName(MODID, "dream_sapling")
     	);
     	
-    	//アルフサンド
-    	event.getRegistry().register(new ItemBlock(YuzuKizuBlocks.ALF_SAND)
-    			.setRegistryName(MODID, "alf_sand")
+    	// アルフヘイムコア
+    	event.getRegistry().register(new ItemBlock(YuzuKizuBlocks.ALFHEIM_CORE)
+    			.setRegistryName(MODID, "alfheim_core")
     	);
-    	
-    	// 箱入りケキムラス
-    	event.getRegistry().register(new ItemBlock(YuzuKizuBlocks.BOXED_KEKIMURUS)
-    			.setRegistryName(MODID, "boxed_kekimurus")
-    	);
-    	
-    	// 箱入りエントロピウム
-    	event.getRegistry().register(new ItemBlock(YuzuKizuBlocks.BOXED_ENTROPINNYUM)
-    			.setRegistryName(MODID, "boxed_entropinnyum")
-    	);
-    	
-    	// 箱入りクレイコニア
-    	event.getRegistry().register(new ItemBlock(YuzuKizuBlocks.BOXED_CLAYCONIA)
-    			.setRegistryName(MODID, "boxed_clayconia")
-    	);
-    	
-    	// 箱入りルーニウム
-    	event.getRegistry().register(new ItemBlock(YuzuKizuBlocks.BOXED_LOONIUM)
-    			.setRegistryName(MODID, "boxed_roonium")
-    	);
+
     }
     
     /**
