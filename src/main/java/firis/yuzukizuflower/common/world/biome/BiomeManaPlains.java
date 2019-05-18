@@ -17,6 +17,8 @@ import net.minecraft.entity.passive.EntityChicken;
 import net.minecraft.entity.passive.EntityCow;
 import net.minecraft.entity.passive.EntityDonkey;
 import net.minecraft.entity.passive.EntityHorse;
+import net.minecraft.entity.passive.EntityLlama;
+import net.minecraft.entity.passive.EntityMooshroom;
 import net.minecraft.entity.passive.EntityOcelot;
 import net.minecraft.entity.passive.EntityParrot;
 import net.minecraft.entity.passive.EntityPig;
@@ -78,7 +80,10 @@ public class BiomeManaPlains extends Biome {
         this.spawnableCreatureList.add(new Biome.SpawnListEntry(EntityParrot.class, 4, 4, 4));
         this.spawnableCreatureList.add(new Biome.SpawnListEntry(EntityWolf.class, 4, 1, 4));
         this.spawnableCreatureList.add(new Biome.SpawnListEntry(EntityHorse.class, 5, 2, 6));
-        this.spawnableCreatureList.add(new Biome.SpawnListEntry(EntityDonkey.class, 1, 1, 3));
+        this.spawnableCreatureList.add(new Biome.SpawnListEntry(EntityDonkey.class, 1, 1, 1));
+        this.spawnableCreatureList.add(new Biome.SpawnListEntry(EntityMooshroom.class, 4, 4, 4));
+        this.spawnableCreatureList.add(new Biome.SpawnListEntry(EntityLlama.class, 4, 4, 6));
+        
 	}
 	/**
 	 * Biome初期設定
