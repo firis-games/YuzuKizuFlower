@@ -1,9 +1,14 @@
 package firis.yuzukizuflower.common.inventory;
 
+import java.util.Arrays;
+import java.util.List;
+
+import firis.yuzukizuflower.common.YKConfig;
 import firis.yuzukizuflower.common.tileentity.YKTileScrollChest;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.TileEntity;
+import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.text.ITextComponent;
 import net.minecraft.world.World;
 import net.minecraftforge.items.CapabilityItemHandler;
@@ -25,7 +30,19 @@ public class IScrollInventoryItemHandler implements IScrollInventory {
 		if (calPage > 0) {
 			this.maxPage = (int) Math.ceil(calPage / (float)this.inventoryRowCount);
 		}
+		
+		//リモートチェストの判断処理
+		List<String> config = Arrays.asList(YKConfig.REMOTE_CHEST_WHITE_LIST);
+    	ResourceLocation remoteBlockId = tile.getWorld().getBlockState(tile.getPos()).getBlock().getRegistryName();
+    	int configIdx = config.indexOf(remoteBlockId.toString());
+    	if (configIdx != -1 ) {
+    		isTransferStackInSlot = true;
+    	}
+		
 	}
+	
+	//ホワイトリスト判断
+	protected boolean isTransferStackInSlot = false;
 	
 	public IScrollInventoryItemHandler(TileEntity tile, boolean animation) {
 		this(tile);
@@ -205,6 +222,9 @@ public class IScrollInventoryItemHandler implements IScrollInventory {
 		IItemHandler handler = getItemHandler();
 		index = getCapabilityIndex(index);
 		if (handler == null || handler.getSlots() <= index) return false;
+		
+		//ホワイトリスト対象の場合はチェック処理をスキップする
+		if (isTransferStackInSlot) return true;
 		
 		//01.isItemValidチェック
 		boolean ret = this.getItemHandler().isItemValid(index, stack);
