@@ -169,7 +169,7 @@ public class YKTileBoxedYuquarry extends YKTileBaseBoxedProcFlower implements IY
 		if (this.world.isRemote) {
 			//パーティクル判定
 			if(!isRedStonePower()
-					&& !(this.mana < this.procMana)
+					&& !(this.mana < this.getProcMana())
 					&& 0 < this.workY) {
 				clientSpawnParticle();
 			}
@@ -189,7 +189,15 @@ public class YKTileBoxedYuquarry extends YKTileBaseBoxedProcFlower implements IY
 	/**
 	 * 1回の動作に必要なマナ
 	 */
-	protected final int procMana = 100;
+	protected int getProcMana() {
+		//デフォルト
+		int procMana = 100;
+		//シルクタッチの場合
+		if (this.silkTouch) {
+			procMana += 50;
+		}
+		return procMana;
+	}
 	
 	/**
 	 * 指定tickごとに処理を行う
@@ -208,7 +216,7 @@ public class YKTileBoxedYuquarry extends YKTileBaseBoxedProcFlower implements IY
 		}
 		
 		//最低マナより少ない場合は処理を行わない
-		if (this.mana < this.procMana) {
+		if (this.mana < this.getProcMana()) {
 			return;
 		}
 		
@@ -279,7 +287,7 @@ public class YKTileBoxedYuquarry extends YKTileBaseBoxedProcFlower implements IY
 							posStart.north().west().up(), 
 							posEnd.south().east());
 					//マナを消費して処理を終了
-					this.recieveMana(-this.procMana);
+					this.recieveMana(-this.getProcMana());
 					return;
 				}
 				
@@ -323,7 +331,7 @@ public class YKTileBoxedYuquarry extends YKTileBaseBoxedProcFlower implements IY
 						Block.spawnAsEntity(this.getWorld(), this.getPos().up(), drop);
 					}
 				}
-				this.recieveMana(-this.procMana);
+				this.recieveMana(-this.getProcMana());
 				serverSpawnParticle(pos);
 				flg = true;
 				break;
