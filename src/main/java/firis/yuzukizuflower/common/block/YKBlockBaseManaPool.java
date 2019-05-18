@@ -9,6 +9,7 @@ import net.minecraft.block.material.Material;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.ScaledResolution;
+import net.minecraft.client.resources.I18n;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.inventory.IInventory;
 import net.minecraft.inventory.InventoryHelper;
@@ -220,8 +221,10 @@ public abstract class YKBlockBaseManaPool extends BlockContainer implements IWan
 		
 		
 		//ブロック名
+		ItemStack item = new ItemStack(this, 1, 
+				this.getMetaFromState(world.getBlockState(pos)));
 		//String name = I18n.format("tile." + this.getRegistryName() + ".name");
-		String name = this.getLocalizedName();
+		String name = I18n.format(item.getUnlocalizedName() + ".name");
 		int color = 0x4444FF;
 		HUDHandler.drawSimpleManaHUD(color, tileEntity.getMana(), tileEntity.getMaxMana(), name, res);
 		
