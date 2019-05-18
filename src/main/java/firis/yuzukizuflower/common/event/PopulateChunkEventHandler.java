@@ -178,10 +178,12 @@ public class PopulateChunkEventHandler {
 			alfheimPortal.generate(event.getWorld(), event.getWorld().rand, basePos);
 		
 		//ポータルから最低3チャンク以上離れている
-		} else if (Math.abs(chunk.x) > 3 && Math.abs(chunk.z) > 3){
+		//xとz座標がともに3の倍数のchunkであること
+		} else if (Math.abs(chunk.x) > 3 && Math.abs(chunk.z) > 3
+				&& Math.abs(chunk.x) % 3 == 0 && Math.abs(chunk.z) % 3 == 0){
 			
 			//一定確率ごとに生成する
-			if (event.getRand().nextInt(300) != 0)return;
+			if (event.getRand().nextInt(50) != 0)return;
 			
 			//5から10の間でランダムに座標を取得
 			int x = chunk.getPos().getXStart() + event.getRand().nextInt(10) + 5;
