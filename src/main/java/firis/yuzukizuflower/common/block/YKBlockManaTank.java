@@ -131,4 +131,13 @@ public class YKBlockManaTank extends YKBlockBaseManaPool {
 			items.add(new ItemStack(this, 1, i));
 		}
     }
+	
+	/**
+	 * ドロップ制御
+	 */
+	@Override
+    public int damageDropped(IBlockState state)
+    {
+		return getMetaFromState(state);
+    }
 }
