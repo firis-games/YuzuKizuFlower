@@ -8,11 +8,13 @@ import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
+import net.minecraft.nbt.NBTTagList;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.EnumHand;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
+import net.minecraftforge.common.util.Constants;
 
 public class YKBlockScrollChest extends YKBlockBaseChest {
 
@@ -51,11 +53,21 @@ public class YKBlockScrollChest extends YKBlockBaseChest {
     	if (tileentity instanceof YKTileScrollChest)
         {
     		YKTileScrollChest tile = (YKTileScrollChest) tileentity;
-        	
+    		
         	ItemStack stack = new ItemStack(Item.getItemFromBlock(this));
         	
         	NBTTagCompound nbt = tile.serializeNBT();
-        	stack.setTagInfo("BlockEntityTag", nbt);
+        	
+        	//座標情報をクリア
+        	nbt.removeTag("x");
+        	nbt.removeTag("y");
+        	nbt.removeTag("z");
+        	
+        	//空の場合はNBTタグを付与しない
+        	NBTTagList items = nbt.getTagList("Items", Constants.NBT.TAG_COMPOUND);
+        	if (items.tagCount() != 0) {
+        		stack.setTagInfo("BlockEntityTag", nbt);
+        	}
         	spawnAsEntity(worldIn, pos, stack);
         }
     	
