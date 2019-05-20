@@ -31,14 +31,15 @@ public class GeneratorEntropinnyum implements IManaGenerator {
 		
 		//エントロピウムは1回6500マナ
 		//本来はクールタイムなし
-		//5sに1回稼動するようにする
+
+		//1秒に1回650マナ生産する(合計10回)
 		
 		//5秒
-		int time = 20 * 5;
+		int time = 20 * 10;
 		
-		int cycle = time;
+		int cycle = time / 10;
 		
-		int mana = 6500;
+		int mana = 6500 / 10;
 		
 		ItemStack fuel = stack.copy();
 		fuel.setCount(1);
