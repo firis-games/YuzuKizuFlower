@@ -1,0 +1,7 @@
+{
+    "parent": "item/generated",
+    "textures": {
+        "layer0": "minecraft:blocks/diamond_block",
+        "layer1": "minecraft:items/iron_sword"
+    }
+}

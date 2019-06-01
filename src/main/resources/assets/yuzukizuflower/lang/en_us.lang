@@ -155,3 +155,6 @@ gui.boxed_clayconia.name=Boxed Clayconia
 tile.boxed_loonium.name=Boxed Loonium
 gui.boxed_loonium.name=Boxed Loonium
 
+item.amulet_sword.name=Amulet Sword
+item.amulet_armor.name=Amulet Armor
+

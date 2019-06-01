@@ -37,6 +37,8 @@ import firis.yuzukizuflower.common.event.OreGenHandler;
 import firis.yuzukizuflower.common.event.PopulateChunkEventHandler;
 import firis.yuzukizuflower.common.item.YKItemBackpackChest;
 import firis.yuzukizuflower.common.item.YKItemBase;
+import firis.yuzukizuflower.common.item.YKItemBaubleAmuletArmor;
+import firis.yuzukizuflower.common.item.YKItemBaubleAmuletSword;
 import firis.yuzukizuflower.common.item.YKItemBlueprint;
 import firis.yuzukizuflower.common.item.YKItemDimensionKey;
 import firis.yuzukizuflower.common.item.YKItemInstantHouse;
@@ -159,6 +161,8 @@ public class YuzuKizuFlower
     	public final static Item BLUEPRINT = null;
     	public final static Item DIMENSION_KEY = null;
     	public final static Item INSTANT_HOUSE = null;
+    	public final static Item AMULET_SWORD = null;
+    	public final static Item AMULET_ARMOR = null;
     }
     /**
      * ブロックインスタンス保持用
@@ -828,6 +832,18 @@ public class YuzuKizuFlower
     	event.getRegistry().register(new ItemBlock(YuzuKizuBlocks.ALFHEIM_CORE)
     			.setRegistryName(MODID, "alfheim_core")
     	);
+    	
+    	// 剣のお守り
+    	event.getRegistry().register(new YKItemBaubleAmuletSword()
+    			.setRegistryName(MODID, "amulet_sword")
+    			.setUnlocalizedName("amulet_sword")
+    	);
+
+    	// 剣のお守り
+    	event.getRegistry().register(new YKItemBaubleAmuletArmor()
+    			.setRegistryName(MODID, "amulet_armor")
+    			.setUnlocalizedName("amulet_armor")
+    	);
 
     }
     
@@ -1031,6 +1047,14 @@ public class YuzuKizuFlower
     	// 箱入りクレイコニア
     	ModelLoader.setCustomModelResourceLocation(Item.getItemFromBlock(YuzuKizuBlocks.BOXED_LOONIUM), 0,
     			new ModelResourceLocation(YuzuKizuBlocks.BOXED_LOONIUM.getRegistryName(), "inventory"));
+    
+    	// 剣のお守り
+    	ModelLoader.setCustomModelResourceLocation(YuzuKizuItems.AMULET_SWORD, 0,
+    			new ModelResourceLocation(YuzuKizuItems.AMULET_SWORD.getRegistryName(), "inventory"));
+
+    	// 鎧のお守り
+    	ModelLoader.setCustomModelResourceLocation(YuzuKizuItems.AMULET_ARMOR, 0,
+    			new ModelResourceLocation(YuzuKizuItems.AMULET_ARMOR.getRegistryName(), "inventory"));
     	
     }
     

@@ -1,0 +1,14 @@
+{
+	"type": "forge:ore_shapeless",
+	"ingredients": [
+	{
+		"item": "minecraft:iron_sword"
+	},
+	{
+		"item": "minecraft:diamond"
+	}
+	],
+	"result": {
+		"item": "yuzukizuflower:amulet_sword"
+	}
+}
