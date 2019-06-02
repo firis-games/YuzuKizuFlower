@@ -24,6 +24,10 @@ public class GeneratorEndoflame implements IManaGenerator {
 		
 		ItemStack stack = stackList.get(0);
 		
+		if (stack.getItem().hasContainerItem(stack)) {
+			return generator;
+		}
+		
 		//かまどを検索
 		int burnTime = TileEntityFurnace.getItemBurnTime(stack);
 		if (burnTime == 0) {
@@ -50,7 +54,8 @@ public class GeneratorEndoflame implements IManaGenerator {
 	 * スロットのチェック処理
 	 */
 	public boolean isMatchesItemStackSlot(@Nonnull ItemStack stack) {
-		if(TileEntityFurnace.getItemBurnTime(stack) <= 0) {
+		if(TileEntityFurnace.getItemBurnTime(stack) <= 0
+				|| stack.getItem().hasContainerItem(stack)) {
 			return false;
 		}
 		return true;
