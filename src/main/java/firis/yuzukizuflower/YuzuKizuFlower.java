@@ -24,6 +24,7 @@ import firis.yuzukizuflower.common.block.YKBlockBoxedLoonium;
 import firis.yuzukizuflower.common.block.YKBlockBoxedOrechid;
 import firis.yuzukizuflower.common.block.YKBlockBoxedPureDaisy;
 import firis.yuzukizuflower.common.block.YKBlockBoxedRannuncarpus;
+import firis.yuzukizuflower.common.block.YKBlockBoxedThermalily;
 import firis.yuzukizuflower.common.block.YKBlockBoxedYuquarry;
 import firis.yuzukizuflower.common.block.YKBlockCorporeaChest;
 import firis.yuzukizuflower.common.block.YKBlockDreamLeaf;
@@ -62,6 +63,7 @@ import firis.yuzukizuflower.common.tileentity.YKTileBoxedLoonium;
 import firis.yuzukizuflower.common.tileentity.YKTileBoxedOrechid;
 import firis.yuzukizuflower.common.tileentity.YKTileBoxedPureDaisy;
 import firis.yuzukizuflower.common.tileentity.YKTileBoxedRannuncarpus;
+import firis.yuzukizuflower.common.tileentity.YKTileBoxedThermalily;
 import firis.yuzukizuflower.common.tileentity.YKTileBoxedYuquarry;
 import firis.yuzukizuflower.common.tileentity.YKTileCorporeaChest;
 import firis.yuzukizuflower.common.tileentity.YKTileInstantHouse;
@@ -205,6 +207,7 @@ public class YuzuKizuFlower
     	public final static Block BOXED_CLAYCONIA = null;
     	public final static Block BOXED_LOONIUM = null;
     	public final static Block INSTANT_HOUSE = null;
+    	public final static Block BOXED_THERMALILY = null;
     }
     
     public static class YuzuKizuFluids {
@@ -300,6 +303,9 @@ public class YuzuKizuFlower
         
         GameRegistry.registerTileEntity(YKTileInstantHouse.class, 
 				new ResourceLocation(YuzuKizuFlower.MODID, "ykte_instant_house"));
+        
+        GameRegistry.registerTileEntity(YKTileBoxedThermalily.class, 
+				new ResourceLocation(YuzuKizuFlower.MODID, "ykte_boxed_thermalily"));
         
         
         
@@ -603,6 +609,13 @@ public class YuzuKizuFlower
                 .setRegistryName(MODID, "instant_house")
                 .setUnlocalizedName("instant_house")
         );
+        
+        // 箱入りサーマリリー
+        event.getRegistry().register(
+                new YKBlockBoxedThermalily()
+                .setRegistryName(MODID, "boxed_thermalily")
+                .setUnlocalizedName("boxed_thermalily")
+        );
     }
     
     /**
@@ -714,6 +727,11 @@ public class YuzuKizuFlower
     	// 箱入りエントロピウム
     	event.getRegistry().register(new ItemBlock(YuzuKizuBlocks.BOXED_ENTROPINNYUM)
     			.setRegistryName(MODID, "boxed_entropinnyum")
+    	);
+    	
+    	// 箱入りサーマリリー
+    	event.getRegistry().register(new ItemBlock(YuzuKizuBlocks.BOXED_THERMALILY)
+    			.setRegistryName(MODID, "boxed_thermalily")
     	);
     	
     	// 箱入りラナンカーパス
@@ -1082,6 +1100,10 @@ public class YuzuKizuFlower
     	// 鎧のお守り
     	ModelLoader.setCustomModelResourceLocation(YuzuKizuItems.AMULET_ARMOR, 0,
     			new ModelResourceLocation(YuzuKizuItems.AMULET_ARMOR.getRegistryName(), "inventory"));
+    	
+    	// 箱入りサーマリリー
+    	ModelLoader.setCustomModelResourceLocation(Item.getItemFromBlock(YuzuKizuBlocks.BOXED_THERMALILY), 0,
+    			new ModelResourceLocation(YuzuKizuBlocks.BOXED_THERMALILY.getRegistryName(), "inventory"));
     	
     }
     

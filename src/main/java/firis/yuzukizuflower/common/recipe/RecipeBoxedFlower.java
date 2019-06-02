@@ -34,6 +34,7 @@ public class RecipeBoxedFlower extends IForgeRegistryEntry.Impl<IRecipe> impleme
 			put("entropinnyum", YuzuKizuFlower.YuzuKizuBlocks.BOXED_ENTROPINNYUM);
 			put("clayconia", YuzuKizuFlower.YuzuKizuBlocks.BOXED_CLAYCONIA);
 			put("loonium", YuzuKizuFlower.YuzuKizuBlocks.BOXED_LOONIUM);
+			put("thermalily", YuzuKizuFlower.YuzuKizuBlocks.BOXED_THERMALILY);
 		}
 	};
 	

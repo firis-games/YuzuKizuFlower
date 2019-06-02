@@ -121,20 +121,8 @@ public abstract class YKTileBaseBoxedGenFlower extends YKTileBaseManaPool implem
 		//実行状態の確認
 		if (this.timer == 0) {
 			
-			List<ItemStack> stackList = getStackInputSlotList();
-			
-			//レシピの確認
-			ManaGenerator recipe = genFlowerRecipes.getMatchesRecipe(stackList);
-			if (recipe == null) {
-				return;
-			}
-			
-			//燃料消費して準備
-			this.decrStackSizeInputSlot(1);
-			
-			this.maxTimer = recipe.getTime();
-			this.genMana = recipe.getMana();
-			this.genCycle = recipe.getCycle();
+			//燃料処理の判断
+			if(!this.isCheckGenerator()) return;
 			
 			//同期
 			syncFlg = true;
@@ -183,6 +171,30 @@ public abstract class YKTileBaseBoxedGenFlower extends YKTileBaseManaPool implem
 		}
 		
 	}
+	
+	/**
+	 * 燃料の判断処理
+	 */
+	public boolean isCheckGenerator() {
+		
+		List<ItemStack> stackList = getStackInputSlotList();
+		
+		//レシピの確認
+		ManaGenerator recipe = genFlowerRecipes.getMatchesRecipe(stackList);
+		if (recipe == null) {
+			return false;
+		}
+		
+		//燃料消費して準備
+		this.decrStackSizeInputSlot(1);
+		
+		this.maxTimer = recipe.getTime();
+		this.genMana = recipe.getMana();
+		this.genCycle = recipe.getCycle();
+
+		return true;
+	}
+	
 	
 	/**
 	 * マナタンクが直結されている場合マナを移動する

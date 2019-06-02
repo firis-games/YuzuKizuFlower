@@ -160,3 +160,6 @@ gui.boxed_loonium.name=箱入りルーニウム
 item.amulet_sword.name=剣のお守り
 item.amulet_armor.name=鎧のお守り
 
+tile.boxed_thermalily.name=箱入りサーマリリー
+gui.boxed_thermalily.name=箱入りサーマリリー
+

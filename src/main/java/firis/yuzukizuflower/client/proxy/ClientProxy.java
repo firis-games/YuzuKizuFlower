@@ -16,6 +16,7 @@ import firis.yuzukizuflower.client.gui.YKGuiContainerBoxedLoonium;
 import firis.yuzukizuflower.client.gui.YKGuiContainerBoxedOrechid;
 import firis.yuzukizuflower.client.gui.YKGuiContainerBoxedPureDaisy;
 import firis.yuzukizuflower.client.gui.YKGuiContainerBoxedRannuncarpus;
+import firis.yuzukizuflower.client.gui.YKGuiContainerBoxedThermalily;
 import firis.yuzukizuflower.client.gui.YKGuiContainerBoxedYuquarry;
 import firis.yuzukizuflower.client.gui.YKGuiContainerCorporeaChest;
 import firis.yuzukizuflower.client.gui.YKGuiContainerManaTank;
@@ -175,6 +176,10 @@ public class ClientProxy extends CommonProxy {
 				//箱入りルーニウム
 				case YKGuiHandler.BOXED_LOONIUM :
 					return new YKGuiContainerBoxedLoonium((IInventory) tile, player.inventory);
+
+					//箱入りルーニウム
+				case YKGuiHandler.BOXED_THERMALILY :
+					return new YKGuiContainerBoxedThermalily((IInventory) tile, player.inventory);
 
 		}
 		return null;
