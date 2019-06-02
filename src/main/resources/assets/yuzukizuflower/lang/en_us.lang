@@ -109,6 +109,7 @@ tile.dragon_ore.name=Dragon Ore
 tile.gaia_ore.name=Gaia Ore
 
 item.instant_house.name=Instant House
+tile.instant_house.name=Instant House
 
 advancements.root.title=YuzuKizuFlower
 advancements.root.description=botania addon

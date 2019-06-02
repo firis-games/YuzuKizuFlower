@@ -110,6 +110,7 @@ tile.dragon_ore.name=ドラゴン鉱石
 tile.gaia_ore.name=ガイア鉱石
 
 item.instant_house.name=インスタントハウス
+tile.instant_house.name=インスタントハウス
 
 advancements.root.title=ゆづきずフラワー
 advancements.root.description=botaniaのアドオンのようなもの

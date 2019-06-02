@@ -3,6 +3,7 @@ package firis.yuzukizuflower;
 import org.apache.logging.log4j.Logger;
 
 import firis.yuzukizuflower.client.tesr.YKTileCorporeaChestSpRenderer;
+import firis.yuzukizuflower.client.tesr.YKTileInstantHouseSpRenderer;
 import firis.yuzukizuflower.client.tesr.YKTileManaTankSpRenderer;
 import firis.yuzukizuflower.client.tesr.YKTileScrollChestSpRenderer;
 import firis.yuzukizuflower.common.YKGuiHandler;
@@ -27,6 +28,7 @@ import firis.yuzukizuflower.common.block.YKBlockBoxedYuquarry;
 import firis.yuzukizuflower.common.block.YKBlockCorporeaChest;
 import firis.yuzukizuflower.common.block.YKBlockDreamLeaf;
 import firis.yuzukizuflower.common.block.YKBlockDreamSapling;
+import firis.yuzukizuflower.common.block.YKBlockInstantHouse;
 import firis.yuzukizuflower.common.block.YKBlockManaTank;
 import firis.yuzukizuflower.common.block.YKBlockOre;
 import firis.yuzukizuflower.common.block.YKBlockPetalWorkbench;
@@ -41,7 +43,6 @@ import firis.yuzukizuflower.common.item.YKItemBaubleAmuletArmor;
 import firis.yuzukizuflower.common.item.YKItemBaubleAmuletSword;
 import firis.yuzukizuflower.common.item.YKItemBlueprint;
 import firis.yuzukizuflower.common.item.YKItemDimensionKey;
-import firis.yuzukizuflower.common.item.YKItemInstantHouse;
 import firis.yuzukizuflower.common.item.YKItemRemoteChest;
 import firis.yuzukizuflower.common.network.NetworkHandler;
 import firis.yuzukizuflower.common.proxy.CommonProxy;
@@ -63,6 +64,7 @@ import firis.yuzukizuflower.common.tileentity.YKTileBoxedPureDaisy;
 import firis.yuzukizuflower.common.tileentity.YKTileBoxedRannuncarpus;
 import firis.yuzukizuflower.common.tileentity.YKTileBoxedYuquarry;
 import firis.yuzukizuflower.common.tileentity.YKTileCorporeaChest;
+import firis.yuzukizuflower.common.tileentity.YKTileInstantHouse;
 import firis.yuzukizuflower.common.tileentity.YKTileManaTank;
 import firis.yuzukizuflower.common.tileentity.YKTileManaTankExtends;
 import firis.yuzukizuflower.common.tileentity.YKTilePetalWorkbench;
@@ -160,7 +162,7 @@ public class YuzuKizuFlower
     	public final static Item BACKPACK_CHEST = null;
     	public final static Item BLUEPRINT = null;
     	public final static Item DIMENSION_KEY = null;
-    	public final static Item INSTANT_HOUSE = null;
+    	//public final static Item INSTANT_HOUSE = null;
     	public final static Item AMULET_SWORD = null;
     	public final static Item AMULET_ARMOR = null;
     }
@@ -202,6 +204,7 @@ public class YuzuKizuFlower
     	public final static Block BOXED_ENTROPINNYUM = null;
     	public final static Block BOXED_CLAYCONIA = null;
     	public final static Block BOXED_LOONIUM = null;
+    	public final static Block INSTANT_HOUSE = null;
     }
     
     public static class YuzuKizuFluids {
@@ -294,6 +297,11 @@ public class YuzuKizuFlower
         
         GameRegistry.registerTileEntity(YKTileBoxedLoonium.class, 
 				new ResourceLocation(YuzuKizuFlower.MODID, "ykte_boxed_loonium"));
+        
+        GameRegistry.registerTileEntity(YKTileInstantHouse.class, 
+				new ResourceLocation(YuzuKizuFlower.MODID, "ykte_instant_house"));
+        
+        
         
         //ネットワーク登録
         NetworkHandler.init();
@@ -588,6 +596,13 @@ public class YuzuKizuFlower
                 .setRegistryName(MODID, "boxed_loonium")
                 .setUnlocalizedName("boxed_loonium")
         );
+        
+        // インスタントハウス
+        event.getRegistry().register(
+                new YKBlockInstantHouse()
+                .setRegistryName(MODID, "instant_house")
+                .setUnlocalizedName("instant_house")
+        );
     }
     
     /**
@@ -771,9 +786,14 @@ public class YuzuKizuFlower
     	);
     	
     	//インスタントハウス
+    	/*
     	event.getRegistry().register(new YKItemInstantHouse()
     			.setRegistryName(MODID, "instant_house")
     			.setUnlocalizedName("instant_house")
+    	);
+    	*/
+    	event.getRegistry().register(new ItemBlock(YuzuKizuBlocks.INSTANT_HOUSE)
+    			.setRegistryName(MODID, "instant_house")
     	);
 
     	// スクロールチェスト
@@ -1017,9 +1037,16 @@ public class YuzuKizuFlower
     			new ModelResourceLocation(YuzuKizuBlocks.GAIA_ORE.getRegistryName(), "inventory"));
     	
     	// インスタントハウス
+    	/*
     	ModelLoader.setCustomModelResourceLocation(YuzuKizuItems.INSTANT_HOUSE, 0,
     			new ModelResourceLocation(YuzuKizuItems.INSTANT_HOUSE.getRegistryName(), "inventory"));
+		*/
+    	ModelLoader.setCustomModelResourceLocation(Item.getItemFromBlock(YuzuKizuBlocks.INSTANT_HOUSE), 0,
+    			new ModelResourceLocation(YuzuKizuBlocks.INSTANT_HOUSE.getRegistryName(), "inventory"));
     	
+    	ClientRegistry.bindTileEntitySpecialRenderer(YKTileInstantHouse.class, new YKTileInstantHouseSpRenderer());
+    	
+
     	// ドリームリーフ
     	ModelLoader.setCustomModelResourceLocation(Item.getItemFromBlock(YuzuKizuBlocks.DREAM_LEAF), 0,
     			new ModelResourceLocation(YuzuKizuBlocks.DREAM_LEAF.getRegistryName(), "inventory"));
