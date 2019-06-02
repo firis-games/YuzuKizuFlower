@@ -1,7 +1,7 @@
 {
     "variants": {
         "check_decay=true,decayable=true": { "model": "yuzukizuflower:dream_leaf"},
-        "check_decay=true,decayable=false,": { "model": "yuzukizuflower:dream_leaf"},
+        "check_decay=true,decayable=false": { "model": "yuzukizuflower:dream_leaf"},
         "check_decay=false,decayable=true": { "model": "yuzukizuflower:dream_leaf"},
         "check_decay=false,decayable=false": { "model": "yuzukizuflower:dream_leaf"}
     }
