@@ -27,6 +27,7 @@ import net.minecraft.world.gen.structure.template.PlacementSettings;
 import net.minecraft.world.gen.structure.template.Template;
 import net.minecraftforge.fml.common.FMLCommonHandler;
 import vazkii.botania.client.core.handler.ClientTickHandler;
+import vazkii.botania.client.core.helper.ShaderHelper;
 
 public class YKTileInstantHouseSpRenderer extends TileEntitySpecialRenderer<YKTileInstantHouse> {
 
@@ -164,7 +165,7 @@ public class YKTileInstantHouseSpRenderer extends TileEntitySpecialRenderer<YKTi
 			return;
 		}
 
-		int shader = 24;
+		int shader = ShaderHelper.alpha;
 
 		GlStateManager.disableLighting();
 		

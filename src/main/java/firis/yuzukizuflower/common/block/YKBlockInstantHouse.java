@@ -33,6 +33,12 @@ public class YKBlockInstantHouse extends BlockContainer {
         return true;
     }
 	
+	@Override
+	public boolean isOpaqueCube(IBlockState state)
+    {
+        return false;
+    }
+	
 	
 	@Override
 	public EnumBlockRenderType getRenderType(IBlockState state)
