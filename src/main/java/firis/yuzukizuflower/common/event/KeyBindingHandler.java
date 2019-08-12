@@ -6,7 +6,6 @@ import firis.yuzukizuflower.common.network.NetworkHandler;
 import firis.yuzukizuflower.common.network.PacketOpenGuiS2C;
 import net.minecraft.client.settings.KeyBinding;
 import net.minecraftforge.fml.client.registry.ClientRegistry;
-import net.minecraftforge.fml.common.Mod.EventBusSubscriber;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.minecraftforge.fml.common.gameevent.InputEvent.KeyInputEvent;
 import net.minecraftforge.fml.relauncher.Side;
@@ -18,7 +17,6 @@ import net.minecraftforge.fml.relauncher.SideOnly;
  *
  */
 @SideOnly(Side.CLIENT)
-@EventBusSubscriber
 public class KeyBindingHandler {
 
 	public static final KeyBinding openGui = new KeyBinding("key.open_gui", Keyboard.KEY_N, "itemGroup.tabYuzuKizuFlower");
@@ -39,7 +37,7 @@ public class KeyBindingHandler {
 	 * @param event
 	 */
 	@SubscribeEvent
-	public static void onKeyInputEvent(KeyInputEvent event) {
+	public void onKeyInputEvent(KeyInputEvent event) {
 	
 		if (openGui.isKeyDown()) {
 			//Server側へ処理を投げる

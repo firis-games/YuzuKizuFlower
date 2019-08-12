@@ -44,6 +44,7 @@ import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.EnumHand;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
+import net.minecraftforge.common.MinecraftForge;
 
 public class ClientProxy extends CommonProxy {
 
@@ -189,6 +190,8 @@ public class ClientProxy extends CommonProxy {
 	public void registerKeyBinding() {
 		//キーバインディング設定
 		KeyBindingHandler.init();
+		
+		MinecraftForge.EVENT_BUS.register(new KeyBindingHandler());
 	}
 	
 	/**
