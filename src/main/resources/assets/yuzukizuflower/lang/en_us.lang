@@ -162,3 +162,5 @@ item.amulet_armor.name=Amulet Armor
 tile.boxed_thermalily.name=Boxed Thermalily
 gui.boxed_thermalily.name=Boxed Thermalily
 
+key.open_backpack_gui=Backpack Chest Open
+

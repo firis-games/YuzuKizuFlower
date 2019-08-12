@@ -163,3 +163,5 @@ item.amulet_armor.name=鎧のお守り
 tile.boxed_thermalily.name=箱入りサーマリリー
 gui.boxed_thermalily.name=箱入りサーマリリー
 
+key.open_backpack_gui=背負いチェストインベントリ表示
+
