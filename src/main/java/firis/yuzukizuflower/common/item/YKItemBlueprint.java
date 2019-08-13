@@ -8,7 +8,6 @@ import firis.yuzukizuflower.common.botania.BotaniaHelper;
 import firis.yuzukizuflower.common.botania.ManaRecipe;
 import firis.yuzukizuflower.common.tileentity.YKTilePetalWorkbench;
 import firis.yuzukizuflower.common.tileentity.YKTileRuneWorkbench;
-import net.minecraft.client.resources.I18n;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
@@ -135,7 +134,7 @@ public class YKItemBlueprint extends Item {
 		
 		//表示用
 		NBTTagCompound nameTag= new NBTTagCompound();
-		nameTag.setString("Name", resultStack.getDisplayName() + I18n.format("info.blueprint.name"));
+		nameTag.setString("Name", resultStack.getDisplayName() + " Blueprint");
 		recipeNbt.setTag("display", nameTag);
 		return recipeNbt;
 		
@@ -198,10 +197,8 @@ public class YKItemBlueprint extends Item {
 		
 		//表示用
 		NBTTagCompound nameTag= new NBTTagCompound();
-		nameTag.setString("Name", resultRecipe.getOutputItemStack().getDisplayName() + "の設計図" );
+		nameTag.setString("Name", resultRecipe.getOutputItemStack().getDisplayName() + " Blueprint" );
 		recipeNbt.setTag("display", nameTag);
 		return recipeNbt;
-		
 	}
-	
 }
