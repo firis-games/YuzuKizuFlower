@@ -126,7 +126,7 @@ public class YuzuKizuFlower
 {
     public static final String MODID = "yuzukizuflower";
     public static final String NAME = "YuzuKizu Flower";
-    public static final String VERSION = "1.1";
+    public static final String VERSION = "1.2";
     public static final String MOD_DEPENDENCIES = "required-after:forge@[1.12.2-14.23.5.2768,);required-after:baubles@[1.5.2,);required-after:botania@[r1.10,);after:jei@[1.12.2-4.13.1.220,)";
     public static final String MOD_ACCEPTED_MINECRAFT_VERSIONS = "[1.12.2]";
 
