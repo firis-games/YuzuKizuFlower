@@ -168,3 +168,6 @@ key.open_backpack_gui=背負いチェストインベントリ表示
 tile.boxed_brewery.name=箱入り醸造台
 gui.boxed_brewery.name=箱入り醸造台
 
+advancements.boxed_brewery.title=お手軽にお薬
+advancements.boxed_brewery.description=箱入り醸造台を作成する
+

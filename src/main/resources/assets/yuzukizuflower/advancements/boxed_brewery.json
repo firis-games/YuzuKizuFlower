@@ -1,0 +1,26 @@
+{
+    "display": {
+        "icon": {
+            "item": "yuzukizuflower:boxed_brewery"
+        },
+        "title": {
+            "translate": "advancements.boxed_brewery.title"
+        },
+        "description": {
+            "translate": "advancements.boxed_brewery.description"
+        }
+    },
+    "parent": "yuzukizuflower:auto_workbench",
+    "criteria": {
+        "blueprint": {
+            "trigger": "minecraft:inventory_changed",
+            "conditions": {
+                "items": [
+                    {
+                        "item": "yuzukizuflower:boxed_brewery"
+                    }
+                ]
+            }
+        }
+    }
+}

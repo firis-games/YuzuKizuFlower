@@ -1,0 +1,14 @@
+{
+	"type": "forge:ore_shapeless",
+	"ingredients": [
+	{
+		"item": "yuzukizuflower:flower_box"
+	},
+	{
+		"item": "botania:brewery"
+	}
+	],
+	"result": {
+		"item": "yuzukizuflower:boxed_brewery"
+	}
+}
