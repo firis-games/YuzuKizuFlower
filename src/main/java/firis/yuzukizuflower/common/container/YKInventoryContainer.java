@@ -1,15 +1,52 @@
 package firis.yuzukizuflower.common.container;
 
+import java.util.List;
+import java.util.Map;
+
+import com.google.common.collect.Maps;
+
 import firis.yuzukizuflower.common.container.slot.YKSlotInventory;
+import invtweaks.api.container.ChestContainer;
+import invtweaks.api.container.ContainerSection;
+import invtweaks.api.container.ContainerSectionCallback;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.InventoryPlayer;
 import net.minecraft.inventory.Container;
 import net.minecraft.inventory.IInventory;
 import net.minecraft.inventory.Slot;
 import net.minecraft.item.ItemStack;
+import net.minecraftforge.fml.common.Optional;
 
+@ChestContainer
 public class YKInventoryContainer extends Container {
 
+	@Optional.Method(modid = "inventorytweaks")
+	@ContainerSectionCallback
+	public Map<ContainerSection, List<Slot>> ContainerSectionCallback() {
+		Map<ContainerSection, List<Slot>> map = Maps.newHashMap();
+		int invSize = 27;
+		map.put(ContainerSection.CHEST, inventorySlots.subList(0, invSize));
+		map.put(ContainerSection.INVENTORY_NOT_HOTBAR, inventorySlots.subList(invSize, invSize + 27));
+		map.put(ContainerSection.INVENTORY_HOTBAR, inventorySlots.subList(invSize + 27, invSize + 27 + 9));
+		map.put(ContainerSection.INVENTORY, inventorySlots.subList(invSize, invSize + 27 + 9));
+		
+		/*
+		//ロックスロットを除外する
+		int lockSlotIdx = this.lockSlotIndex;
+		List<Slot> lockList; 
+		lockList = map.get(ContainerSection.INVENTORY_HOTBAR);
+		lockList.remove(lockSlotIdx);
+		map.put(ContainerSection.INVENTORY_HOTBAR, lockList);
+		
+		lockSlotIdx = this.lockSlotIndex + invSize;
+		lockList = map.get(ContainerSection.INVENTORY);
+		lockList.remove(lockSlotIdx);
+		map.put(ContainerSection.INVENTORY, lockList);
+		*/
+		
+		return map;
+	}
+	
 	protected final IInventory inventory;
 
 	protected final int startIndexPlayerSlot;
@@ -101,6 +138,10 @@ public class YKInventoryContainer extends Container {
             	    {
             	        return false;
             	    }
+            		@Override
+            		public boolean getHasStack() {
+            			return false;
+            		}
             	});
         	} else {
         		this.addSlotToContainer(new Slot(playerInv, slotIndex, xPos, yPos));

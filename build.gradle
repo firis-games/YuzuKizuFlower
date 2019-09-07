@@ -67,6 +67,7 @@ dependencies {
     compile "mezz.jei:jei_1.12.2:4.10.0.198"
 	compile "baubles:Baubles:1.12:1.5.2"
 	compile fileTree(dir: 'D:/MinecraftMod/Botania-R1.10.358/build/libs', include: '*-develop.jar')
+    compile fileTree(dir: 'D:/MinecraftMod/YuzuKizuFlower/mods', include: '*.jar')
 }
 
 processResources {
