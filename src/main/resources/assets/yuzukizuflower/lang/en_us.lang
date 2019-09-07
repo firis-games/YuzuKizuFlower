@@ -164,3 +164,6 @@ gui.boxed_thermalily.name=Boxed Thermalily
 
 key.open_backpack_gui=Backpack Chest Open
 
+tile.boxed_brewery.name=Boxed Brewery
+gui.boxed_brewery.name=Boxed Brewery
+

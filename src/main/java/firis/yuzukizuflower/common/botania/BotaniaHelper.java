@@ -78,7 +78,12 @@ public class BotaniaHelper {
 	 * ルーンの祭壇のレシピ
 	 */
 	public static RecipesRuneAltar recipesRuneAltar = new RecipesRuneAltar();
-		
+	
+	/**
+	 * ボタニア醸造台のレシピ
+	 */
+	public static RecipesBrewery recipesBrewery = new RecipesBrewery();
+	
 	/**
 	 * 対象アイテムがbotania:specialFlowerかチェックする
 	 * @param stack

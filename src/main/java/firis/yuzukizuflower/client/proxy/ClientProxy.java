@@ -6,6 +6,7 @@ import firis.yuzukizuflower.client.gui.YKGuiContainerAutoWorkbench;
 import firis.yuzukizuflower.client.gui.YKGuiContainerBoxedAkanerald;
 import firis.yuzukizuflower.client.gui.YKGuiContainerBoxedAkariculture;
 import firis.yuzukizuflower.client.gui.YKGuiContainerBoxedAocean;
+import firis.yuzukizuflower.client.gui.YKGuiContainerBoxedBrewery;
 import firis.yuzukizuflower.client.gui.YKGuiContainerBoxedClayconia;
 import firis.yuzukizuflower.client.gui.YKGuiContainerBoxedEndoflame;
 import firis.yuzukizuflower.client.gui.YKGuiContainerBoxedEntropinnyum;
@@ -29,6 +30,7 @@ import firis.yuzukizuflower.client.gui.YKGuiInventoryContainer;
 import firis.yuzukizuflower.client.layer.YKBackPackLayer;
 import firis.yuzukizuflower.common.YKGuiHandler;
 import firis.yuzukizuflower.common.event.KeyBindingHandler;
+import firis.yuzukizuflower.common.inventory.BreweryInventory;
 import firis.yuzukizuflower.common.inventory.IScrollInventoryClientItemHandler;
 import firis.yuzukizuflower.common.inventory.InventoryItemStack;
 import firis.yuzukizuflower.common.inventory.PetalInventory;
@@ -181,6 +183,12 @@ public class ClientProxy extends CommonProxy {
 					//箱入りルーニウム
 				case YKGuiHandler.BOXED_THERMALILY :
 					return new YKGuiContainerBoxedThermalily((IInventory) tile, player.inventory);
+					
+				//箱入り醸造台
+				case YKGuiHandler.BOXED_BREWERY :
+					return new YKGuiContainerBoxedBrewery(
+							new BreweryInventory(tile), 
+							player.inventory);
 
 		}
 		return null;

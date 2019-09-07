@@ -165,3 +165,6 @@ gui.boxed_thermalily.name=箱入りサーマリリー
 
 key.open_backpack_gui=背負いチェストインベントリ表示
 
+tile.boxed_brewery.name=箱入り醸造台
+gui.boxed_brewery.name=箱入り醸造台
+
