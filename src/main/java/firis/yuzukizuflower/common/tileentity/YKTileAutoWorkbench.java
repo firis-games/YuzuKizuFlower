@@ -22,6 +22,7 @@ public class YKTileAutoWorkbench extends YKTileBaseBoxedProcFlower {
 	//アイテム確認用ID
 	ResourceLocation rlPetalWorkbench = new ResourceLocation("yuzukizuflower", "petal_workbench");
 	ResourceLocation rlRuneWorkbench = new ResourceLocation("yuzukizuflower", "rune_workbench");
+	ResourceLocation rlBoxedBrewery = new ResourceLocation("yuzukizuflower", "boxed_brewery");
 	ResourceLocation rlBlueprint = new ResourceLocation("yuzukizuflower", "blueprint");
 	ResourceLocation rlRune = new ResourceLocation("botania", "rune");
 	
@@ -61,6 +62,10 @@ public class YKTileAutoWorkbench extends YKTileBaseBoxedProcFlower {
 			
 		case 2:
 			updateProccessingRune();
+			break;
+			
+		case 3:
+			updateProccessingBrewery();
 			break;
 		
 		}
@@ -228,9 +233,60 @@ public class YKTileAutoWorkbench extends YKTileBaseBoxedProcFlower {
 	}
 	
 	/**
+	 * 箱入り醸造台のレシピチェック処理
+	 */
+	protected void updateProccessingBrewery() {
+		
+		ItemStack blueprint = this.getStackInSlot(blueprint_slot);
+		
+		//設計図からレシピ情報を取得する
+		List<ItemStack> stackList;
+		stackList = getBlueprintRecipe(blueprint, false);
+		if (stackList.size() == 0) return;
+		
+		//触媒を取得
+		NBTTagCompound itemTag = (NBTTagCompound) blueprint.getTagCompound().getTag("catalyst");
+		ItemStack catalystStack = new ItemStack(itemTag);
+		
+		//レシピの整合性をチェックする
+		ManaRecipe resultRecipe = BotaniaHelper.recipesBrewery.getMatchesRecipe(stackList, catalystStack);
+		if (resultRecipe == null) return;
+		
+		//outputスロットに出力できるかを確認する
+		if (this.isFillOutputSlotStack(resultRecipe.getOutputItemStack())) return;
+		
+		//マナが足りているか確認する
+		int useMana = resultRecipe.getMana();
+		if (this.getMana() < useMana) return;
+		
+		//すべて含まれている場合は調合を行う(触媒込みで判断)
+		stackList = getBlueprintRecipe(this.getStackInSlot(blueprint_slot), true);
+
+		if (isInventoryItemStackList(stackList)) {
+		
+			//stackListからルーンアイテムを除外
+			List<ItemStack> workList = new ArrayList<ItemStack>();
+			for (ItemStack work : stackList) {
+				workList.add(work);
+			}
+			stackList = workList;
+			
+			//inventoryからアイテムを減らす
+			this.shrinkInventoryItemStackList(stackList);
+			
+			//マナを消費
+			this.recieveMana(-useMana);
+			
+			//結果をセット
+			this.insertOutputSlotItemStack(resultRecipe.getOutputItemStack().copy());
+		}
+	}
+	
+	/**
 	 * 自動処理が稼動可能かを判断する
 	 * 1:花びら作業台
 	 * 2:ルーンの作業台
+	 * 3:箱入り醸造台
 	 * @return
 	 */
 	public int isActiveMode() {
@@ -256,6 +312,13 @@ public class YKTileAutoWorkbench extends YKTileBaseBoxedProcFlower {
 			if (!workbench.isEmpty() 
 					&& workbench.getItem().getRegistryName().equals(rlRuneWorkbench)) {
 				procMode = 2;
+			}
+		}
+		
+		if ("brewery".equals(blueprintMode)) {
+			if (!workbench.isEmpty() 
+					&& workbench.getItem().getRegistryName().equals(rlBoxedBrewery)) {
+				procMode = 3;
 			}
 		}
 		
@@ -356,7 +419,8 @@ public class YKTileAutoWorkbench extends YKTileBaseBoxedProcFlower {
 			ret = false;
 			if (!stack.isEmpty() 
 					&& (stack.getItem().getRegistryName().equals(rlPetalWorkbench) 
-							|| stack.getItem().getRegistryName().equals(rlRuneWorkbench))) {
+							|| stack.getItem().getRegistryName().equals(rlRuneWorkbench)
+							|| stack.getItem().getRegistryName().equals(rlBoxedBrewery))) {
 				ret = true;
 			}
 		} else if (index == blueprint_slot) {

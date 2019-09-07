@@ -6,6 +6,7 @@ import java.util.List;
 import firis.yuzukizuflower.YuzuKizuFlower;
 import firis.yuzukizuflower.common.botania.BotaniaHelper;
 import firis.yuzukizuflower.common.botania.ManaRecipe;
+import firis.yuzukizuflower.common.tileentity.YKTileBoxedBrewery;
 import firis.yuzukizuflower.common.tileentity.YKTilePetalWorkbench;
 import firis.yuzukizuflower.common.tileentity.YKTileRuneWorkbench;
 import net.minecraft.entity.player.EntityPlayer;
@@ -66,6 +67,10 @@ public class YKItemBlueprint extends Item {
 		//ルーンの作業台の場合
 		else if (tile instanceof YKTileRuneWorkbench) {
 			blueprint = createNbtRuneBluprint((YKTileRuneWorkbench) tile);
+		}
+		//箱入り醸造台の場合
+		else if (tile instanceof YKTileBoxedBrewery) {
+			blueprint = createNbtBreweryBluprint((YKTileBoxedBrewery) tile);
 		}
 		
 		if (blueprint != null) {
@@ -194,6 +199,68 @@ public class YKItemBlueprint extends Item {
 		
 		//レシピのタイプ
 		recipeNbt.setString("recipetype", "rune");
+		
+		//表示用
+		NBTTagCompound nameTag= new NBTTagCompound();
+		nameTag.setString("Name", resultRecipe.getOutputItemStack().getDisplayName() + " Blueprint" );
+		recipeNbt.setTag("display", nameTag);
+		return recipeNbt;
+	}
+	
+	/**
+	 * 箱入り醸造台を参照してレシピを取得する
+	 * @param tile
+	 */
+	protected NBTTagCompound createNbtBreweryBluprint(YKTileBoxedBrewery tile) {
+		
+		ItemStackHandler handler = tile.inventory;
+		NBTTagCompound recipeNbt = null;
+		
+		//触媒を参照する
+		ItemStack cataylst = handler.getStackInSlot(16);
+		if (!BotaniaHelper.recipesBrewery.isCatalyst(cataylst)) {
+			return recipeNbt;
+		}
+
+		//レシピを参照する
+		List<ItemStack> recipeList = new ArrayList<ItemStack>();
+		for (int slot = 0; slot < 16; slot++) {
+			if (!handler.getStackInSlot(slot).isEmpty()) {
+				recipeList.add(handler.getStackInSlot(slot));
+			}
+		}
+		//レシピが有効の場合
+		ManaRecipe resultRecipe = BotaniaHelper.recipesBrewery.getMatchesRecipe(recipeList, cataylst);
+		if (resultRecipe == null) {
+			return recipeNbt;
+		}
+		
+		//結果を元に検索すると複数当たるパターンとかを考慮しないといけないので
+		//素材の一覧を保存する
+		//レシピ保存用のNBTを生成する
+		recipeNbt = new NBTTagCompound();
+		
+		NBTTagList recipeNbtTagList = new NBTTagList();
+		//レシピ
+		for (int i = 0; i < recipeList.size(); i++) {
+			ItemStack stack = recipeList.get(i).copy();
+			stack.setCount(1);
+			NBTTagCompound itemTag = new NBTTagCompound();
+			stack.writeToNBT(itemTag);
+			itemTag.setInteger("Slot", i);
+			recipeNbtTagList.appendTag(itemTag);
+		}
+		recipeNbt.setTag("recipe", recipeNbtTagList);
+		
+		//触媒も追加する
+		NBTTagCompound itemTag = new NBTTagCompound();
+		ItemStack stack = cataylst.copy();
+		stack.setCount(1);
+		stack.writeToNBT(itemTag);
+		recipeNbt.setTag("catalyst", itemTag);
+		
+		//レシピのタイプ
+		recipeNbt.setString("recipetype", "brewery");
 		
 		//表示用
 		NBTTagCompound nameTag= new NBTTagCompound();
