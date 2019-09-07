@@ -10,16 +10,26 @@ import firis.yuzukizuflower.common.inventory.IScrollInventory;
 import firis.yuzukizuflower.common.inventory.IScrollInventoryClientItemHandler;
 import firis.yuzukizuflower.common.network.NetworkHandler;
 import firis.yuzukizuflower.common.network.PacketGuiScroll;
+import net.minecraft.client.gui.GuiButton;
 import net.minecraft.client.gui.GuiTextField;
 import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.entity.player.InventoryPlayer;
 import net.minecraft.util.ResourceLocation;
+import net.minecraftforge.fml.common.Optional;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
+import vazkii.quark.api.IChestButtonCallback;
 
+@Optional.Interface(modid="quark", iface="vazkii.quark.api.IChestButtonCallback")
 @SideOnly(Side.CLIENT)
-public class YKGuiContainerScrollChest extends YKGuiContainerBaseScrollInventory {
+public class YKGuiContainerScrollChest extends YKGuiContainerBaseScrollInventory implements IChestButtonCallback {
 
+	@Optional.Method(modid="quark")
+	@Override
+	public boolean onAddChestButton(GuiButton button, int buttonType) {
+		return true;
+	}
+	
 	private GuiTextField textField;
 	
 	/**
@@ -149,6 +159,5 @@ public class YKGuiContainerScrollChest extends YKGuiContainerBaseScrollInventory
 		//Serverへパケット送信
 		NetworkHandler.network.sendToServer(
 				new PacketGuiScroll.MessageGuiScroll(-1, this.textField.getText()));
-	}
-	
+	}	
 }

@@ -1,18 +1,28 @@
 package firis.yuzukizuflower.client.gui;
 
 import firis.yuzukizuflower.common.container.YKInventoryContainer;
+import net.minecraft.client.gui.GuiButton;
 import net.minecraft.client.gui.inventory.GuiContainer;
 import net.minecraft.client.renderer.RenderHelper;
 import net.minecraft.entity.player.InventoryPlayer;
 import net.minecraft.inventory.IInventory;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.text.TextComponentTranslation;
+import net.minecraftforge.fml.common.Optional;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
+import vazkii.quark.api.IChestButtonCallback;
 
+@Optional.Interface(modid="quark", iface="vazkii.quark.api.IChestButtonCallback")
 @SideOnly(Side.CLIENT)
-public class YKGuiInventoryContainer extends GuiContainer {
+public class YKGuiInventoryContainer extends GuiContainer implements IChestButtonCallback {
 
+	@Optional.Method(modid="quark")
+	@Override
+	public boolean onAddChestButton(GuiButton button, int buttonType) {
+		return true;
+	}
+	
 	/**
 	 * GUIテクスチャ
 	 */
