@@ -34,10 +34,11 @@ public class YKContainerScrollChest extends YKContainerBaseScrollInventory {
 	@ContainerSectionCallback
 	public Map<ContainerSection, List<Slot>> ContainerSectionCallback() {
 		Map<ContainerSection, List<Slot>> map = Maps.newHashMap();
-		map.put(ContainerSection.CHEST, inventorySlots.subList(0, 53));
-		map.put(ContainerSection.INVENTORY, inventorySlots.subList(54, 89));
-		map.put(ContainerSection.INVENTORY_NOT_HOTBAR, inventorySlots.subList(54, 80));
-		map.put(ContainerSection.INVENTORY_HOTBAR, inventorySlots.subList(81, 89));
+		int invSize = 54;
+		map.put(ContainerSection.CHEST, inventorySlots.subList(0, invSize));
+		map.put(ContainerSection.INVENTORY_NOT_HOTBAR, inventorySlots.subList(invSize, invSize + 27));
+		map.put(ContainerSection.INVENTORY_HOTBAR, inventorySlots.subList(invSize + 27, invSize + 27 + 9));
+		map.put(ContainerSection.INVENTORY, inventorySlots.subList(invSize, invSize + 27 + 9));
 		return map;
 	}
 	

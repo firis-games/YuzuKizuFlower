@@ -29,21 +29,6 @@ public class YKInventoryContainer extends Container {
 		map.put(ContainerSection.INVENTORY_NOT_HOTBAR, inventorySlots.subList(invSize, invSize + 27));
 		map.put(ContainerSection.INVENTORY_HOTBAR, inventorySlots.subList(invSize + 27, invSize + 27 + 9));
 		map.put(ContainerSection.INVENTORY, inventorySlots.subList(invSize, invSize + 27 + 9));
-		
-		/*
-		//ロックスロットを除外する
-		int lockSlotIdx = this.lockSlotIndex;
-		List<Slot> lockList; 
-		lockList = map.get(ContainerSection.INVENTORY_HOTBAR);
-		lockList.remove(lockSlotIdx);
-		map.put(ContainerSection.INVENTORY_HOTBAR, lockList);
-		
-		lockSlotIdx = this.lockSlotIndex + invSize;
-		lockList = map.get(ContainerSection.INVENTORY);
-		lockList.remove(lockSlotIdx);
-		map.put(ContainerSection.INVENTORY, lockList);
-		*/
-		
 		return map;
 	}
 	
