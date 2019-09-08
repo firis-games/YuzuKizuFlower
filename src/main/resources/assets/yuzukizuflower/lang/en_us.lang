@@ -170,3 +170,7 @@ gui.boxed_brewery.name=Boxed Brewery
 advancements.boxed_brewery.title=Boxed Brewery
 advancements.boxed_brewery.description=Craft Boxed Brewery
 
+tile.mana_enchanter.name=Mana Enchanter
+gui.mana_enchanter.name=Mana Enchanter
+msg.mana_enchanter.error=Place Mana Pylon on the Mana Enchanter.
+

@@ -87,6 +87,9 @@ public class YKGuiHandler implements IGuiHandler {
 	
 	//箱入り醸造台
 	public static final int BOXED_BREWERY = 27;
+	
+	//マナエンチャンター
+	public static final int MANA_ENCHANTER = 28;
 			
 	@Override
 	public Object getServerGuiElement(int ID, EntityPlayer player, World world, int x, int y, int z) {

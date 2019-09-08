@@ -85,6 +85,11 @@ public class BotaniaHelper {
 	public static RecipesBrewery recipesBrewery = new RecipesBrewery();
 	
 	/**
+	 * ボタニアエンチャンターのレシピ
+	 */
+	public static RecipesManaEnchanter recipesManaEnchanter = new RecipesManaEnchanter();
+	
+	/**
 	 * 対象アイテムがbotania:specialFlowerかチェックする
 	 * @param stack
 	 * @param type

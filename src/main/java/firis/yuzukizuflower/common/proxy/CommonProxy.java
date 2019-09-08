@@ -19,6 +19,7 @@ import firis.yuzukizuflower.common.container.YKContainerBoxedRannuncarpus;
 import firis.yuzukizuflower.common.container.YKContainerBoxedThermalily;
 import firis.yuzukizuflower.common.container.YKContainerBoxedYuquarry;
 import firis.yuzukizuflower.common.container.YKContainerCorporeaChest;
+import firis.yuzukizuflower.common.container.YKContainerManaEnchanter;
 import firis.yuzukizuflower.common.container.YKContainerManaTank;
 import firis.yuzukizuflower.common.container.YKContainerPetalWorkbench;
 import firis.yuzukizuflower.common.container.YKContainerRemoteChest;
@@ -31,6 +32,7 @@ import firis.yuzukizuflower.common.inventory.IInventoryMultiItemHandler;
 import firis.yuzukizuflower.common.inventory.IScrollInventoryItemHandler;
 import firis.yuzukizuflower.common.inventory.ITextScrollInventoryItemHandler;
 import firis.yuzukizuflower.common.inventory.InventoryItemStack;
+import firis.yuzukizuflower.common.inventory.ManaEnchanterInventory;
 import firis.yuzukizuflower.common.inventory.PetalInventory;
 import firis.yuzukizuflower.common.inventory.RuneCraftInventory;
 import firis.yuzukizuflower.common.item.YKItemBackpackChest;
@@ -189,6 +191,12 @@ public class CommonProxy {
 				case YKGuiHandler.BOXED_BREWERY :
 					return new YKContainerBoxedBrewery(
 							new BreweryInventory(tile), 
+							player.inventory);
+					
+				//マナエンチャンター
+				case YKGuiHandler.MANA_ENCHANTER :
+					return new YKContainerManaEnchanter(
+							new ManaEnchanterInventory(tile), 
 							player.inventory);
 
 		}

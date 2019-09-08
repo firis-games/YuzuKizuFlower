@@ -50,4 +50,10 @@ public class YKConfig {
 			"minecraft:black_shulker_box",
 			"yuzukizuflower:scroll_chest"
 	};
+	
+	/**
+	 * マナのエンチャント台で重複エンチャントを許可する設定
+	 */
+	@Comment({"Allow duplicate enchantment of ManaEnchanter", "default:false"})
+	public static boolean DUPLICATE_ENCHANTMENT = false;
 }

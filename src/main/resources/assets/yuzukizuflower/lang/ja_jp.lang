@@ -171,3 +171,8 @@ gui.boxed_brewery.name=箱入り醸造台
 advancements.boxed_brewery.title=お手軽にお薬
 advancements.boxed_brewery.description=箱入り醸造台を作成する
 
+tile.mana_enchanter.name=マナのエンチャント台
+gui.mana_enchanter.name=マナのエンチャント台
+msg.mana_enchanter.error=マナのエンチャント台の上にマナの支柱を設置して下さい。
+
+

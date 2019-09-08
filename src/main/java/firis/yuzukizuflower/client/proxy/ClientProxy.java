@@ -20,6 +20,7 @@ import firis.yuzukizuflower.client.gui.YKGuiContainerBoxedRannuncarpus;
 import firis.yuzukizuflower.client.gui.YKGuiContainerBoxedThermalily;
 import firis.yuzukizuflower.client.gui.YKGuiContainerBoxedYuquarry;
 import firis.yuzukizuflower.client.gui.YKGuiContainerCorporeaChest;
+import firis.yuzukizuflower.client.gui.YKGuiContainerManaEnchanter;
 import firis.yuzukizuflower.client.gui.YKGuiContainerManaTank;
 import firis.yuzukizuflower.client.gui.YKGuiContainerPetalWorkbench;
 import firis.yuzukizuflower.client.gui.YKGuiContainerRemoteChest;
@@ -33,6 +34,7 @@ import firis.yuzukizuflower.common.event.KeyBindingHandler;
 import firis.yuzukizuflower.common.inventory.BreweryInventory;
 import firis.yuzukizuflower.common.inventory.IScrollInventoryClientItemHandler;
 import firis.yuzukizuflower.common.inventory.InventoryItemStack;
+import firis.yuzukizuflower.common.inventory.ManaEnchanterInventory;
 import firis.yuzukizuflower.common.inventory.PetalInventory;
 import firis.yuzukizuflower.common.inventory.RuneCraftInventory;
 import firis.yuzukizuflower.common.item.YKItemBackpackChest;
@@ -180,7 +182,7 @@ public class ClientProxy extends CommonProxy {
 				case YKGuiHandler.BOXED_LOONIUM :
 					return new YKGuiContainerBoxedLoonium((IInventory) tile, player.inventory);
 
-					//箱入りルーニウム
+				//箱入りルーニウム
 				case YKGuiHandler.BOXED_THERMALILY :
 					return new YKGuiContainerBoxedThermalily((IInventory) tile, player.inventory);
 					
@@ -188,6 +190,12 @@ public class ClientProxy extends CommonProxy {
 				case YKGuiHandler.BOXED_BREWERY :
 					return new YKGuiContainerBoxedBrewery(
 							new BreweryInventory(tile), 
+							player.inventory);
+					
+				//マナエンチャンター
+				case YKGuiHandler.MANA_ENCHANTER :
+					return new YKGuiContainerManaEnchanter(
+							new ManaEnchanterInventory(tile), 
 							player.inventory);
 
 		}

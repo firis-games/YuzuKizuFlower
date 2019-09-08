@@ -31,6 +31,7 @@ import firis.yuzukizuflower.common.block.YKBlockCorporeaChest;
 import firis.yuzukizuflower.common.block.YKBlockDreamLeaf;
 import firis.yuzukizuflower.common.block.YKBlockDreamSapling;
 import firis.yuzukizuflower.common.block.YKBlockInstantHouse;
+import firis.yuzukizuflower.common.block.YKBlockManaEnchanter;
 import firis.yuzukizuflower.common.block.YKBlockManaTank;
 import firis.yuzukizuflower.common.block.YKBlockOre;
 import firis.yuzukizuflower.common.block.YKBlockPetalWorkbench;
@@ -69,6 +70,7 @@ import firis.yuzukizuflower.common.tileentity.YKTileBoxedThermalily;
 import firis.yuzukizuflower.common.tileentity.YKTileBoxedYuquarry;
 import firis.yuzukizuflower.common.tileentity.YKTileCorporeaChest;
 import firis.yuzukizuflower.common.tileentity.YKTileInstantHouse;
+import firis.yuzukizuflower.common.tileentity.YKTileManaEnchanter;
 import firis.yuzukizuflower.common.tileentity.YKTileManaTank;
 import firis.yuzukizuflower.common.tileentity.YKTileManaTankExtends;
 import firis.yuzukizuflower.common.tileentity.YKTilePetalWorkbench;
@@ -211,6 +213,7 @@ public class YuzuKizuFlower
     	public final static Block INSTANT_HOUSE = null;
     	public final static Block BOXED_THERMALILY = null;
     	public final static Block BOXED_BREWERY = null;
+    	public final static Block MANA_ENCHANTER = null;
     }
     
     public static class YuzuKizuFluids {
@@ -312,6 +315,9 @@ public class YuzuKizuFlower
         
         GameRegistry.registerTileEntity(YKTileBoxedBrewery.class, 
 				new ResourceLocation(YuzuKizuFlower.MODID, "ykte_boxed_brewery"));
+        
+        GameRegistry.registerTileEntity(YKTileManaEnchanter.class, 
+				new ResourceLocation(YuzuKizuFlower.MODID, "ykte_mana_enchanter"));
         
         //ネットワーク登録
         NetworkHandler.init();
@@ -627,6 +633,13 @@ public class YuzuKizuFlower
                 .setRegistryName(MODID, "boxed_brewery")
                 .setUnlocalizedName("boxed_brewery")
         );
+        
+        // マナエンチャンター
+        event.getRegistry().register(
+                new YKBlockManaEnchanter()
+                .setRegistryName(MODID, "mana_enchanter")
+                .setUnlocalizedName("mana_enchanter")
+        );
     }
     
     /**
@@ -898,6 +911,11 @@ public class YuzuKizuFlower
     	event.getRegistry().register(new ItemBlock(YuzuKizuBlocks.BOXED_BREWERY)
     			.setRegistryName(MODID, "boxed_brewery")
     	);
+    	
+    	// マナエンチャンター
+    	event.getRegistry().register(new ItemBlock(YuzuKizuBlocks.MANA_ENCHANTER)
+    			.setRegistryName(MODID, "mana_enchanter")
+    	);
 
     }
     
@@ -1002,7 +1020,6 @@ public class YuzuKizuFlower
         // スクロールチェスト
     	ModelLoader.setCustomModelResourceLocation(Item.getItemFromBlock(YuzuKizuBlocks.SCROLL_CHEST), 0,
     			new ModelResourceLocation(YuzuKizuBlocks.SCROLL_CHEST.getRegistryName(), "inventory"));
-    	
     	
     	// リモートチェスト
     	ModelLoader.setCustomModelResourceLocation(YuzuKizuItems.REMOTE_CHEST, 0,
@@ -1124,6 +1141,10 @@ public class YuzuKizuFlower
     	// 箱入り醸造台
     	ModelLoader.setCustomModelResourceLocation(Item.getItemFromBlock(YuzuKizuBlocks.BOXED_BREWERY), 0,
     			new ModelResourceLocation(YuzuKizuBlocks.BOXED_BREWERY.getRegistryName(), "inventory"));
+    	
+    	// マナエンチャンター
+    	ModelLoader.setCustomModelResourceLocation(Item.getItemFromBlock(YuzuKizuBlocks.MANA_ENCHANTER), 0,
+    			new ModelResourceLocation(YuzuKizuBlocks.MANA_ENCHANTER.getRegistryName(), "inventory"));
     }
     
     /**
