@@ -4,7 +4,6 @@ import java.util.List;
 
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.NonNullList;
-import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.items.IItemHandler;
 import net.minecraftforge.items.ItemStackHandler;
 import vazkii.botania.api.BotaniaAPI;
@@ -78,24 +77,6 @@ public class RecipesBrewery {
 				&& brew != BotaniaAPI.fallbackBrew) {
 			ret = true;
 		}		
-		return ret;
-	}
-	
-	private ResourceLocation rl_rune = new ResourceLocation("botania", "rune");
-	
-	/**
-	 * 消費しないアイテムをチェックする
-	 * @param stack
-	 * @return
-	 */
-	public boolean isNoShrink(ItemStack stack) {
-		boolean ret = false;
-		
-		if (!stack.isEmpty() 
-				&& stack.getItem().getRegistryName().equals(rl_rune)) {
-			ret = true;
-		}
-		
 		return ret;
 	}
 	
