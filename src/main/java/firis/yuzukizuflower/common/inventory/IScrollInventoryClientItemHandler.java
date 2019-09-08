@@ -277,4 +277,8 @@ public class IScrollInventoryClientItemHandler implements IScrollInventory {
 	public String getTextSearch() {
 		return textSearch;
 	}
+	
+	@Override
+	public void sortInventory() {}
+
 }

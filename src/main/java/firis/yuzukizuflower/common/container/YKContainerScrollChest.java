@@ -83,6 +83,16 @@ public class YKContainerScrollChest extends YKContainerBaseScrollInventory {
 		this.allSendChanges();
 	}
 	
+	/**
+	 * ソート処理を行う
+	 */
+	public void onSort() {
+		this.iTeInv.sortInventory();
+		this.iTeInv.setTextChanged("");
+		//Clientと同期する
+		this.allSendChanges();
+	}
+	
 	@Override
 	public ItemStack slotClick(int slotId, int dragType, ClickType clickTypeIn, EntityPlayer player)
     {

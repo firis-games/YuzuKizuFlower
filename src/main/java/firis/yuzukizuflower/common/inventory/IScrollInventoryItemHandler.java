@@ -1,7 +1,10 @@
 package firis.yuzukizuflower.common.inventory;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Map;
+import java.util.TreeMap;
 
 import firis.yuzukizuflower.common.YKConfig;
 import firis.yuzukizuflower.common.tileentity.YKTileScrollChest;
@@ -13,6 +16,7 @@ import net.minecraft.util.text.ITextComponent;
 import net.minecraft.world.World;
 import net.minecraftforge.items.CapabilityItemHandler;
 import net.minecraftforge.items.IItemHandler;
+import net.minecraftforge.items.ItemStackHandler;
 
 public class IScrollInventoryItemHandler implements IScrollInventory {
 	
@@ -336,4 +340,47 @@ public class IScrollInventoryItemHandler implements IScrollInventory {
 	@Override
 	public void setTextChanged(String text) {
 	}
+	
+	@Override
+	public void sortInventory() {
+		
+		//Sort処理を行う
+		ItemStackHandler inventory = (ItemStackHandler) this.getItemHandler();
+		Map<String, List<ItemStack>> sortMap = new TreeMap<>();
+		
+		for (int i = 0; i < inventory.getSlots(); i++) {
+			ItemStack invStack = inventory.getStackInSlot(i);
+			if (invStack.isEmpty()) continue;
+			
+			String itemId = invStack.getItem().getRegistryName().toString();
+			itemId += "_" + Integer.toString(invStack.getMetadata());
+			
+			List<ItemStack> mapIteemList = new ArrayList<>();
+			if (sortMap.containsKey(itemId)) {
+				mapIteemList = sortMap.get(itemId);
+			}
+			mapIteemList.add(invStack.copy());
+			sortMap.put(itemId, mapIteemList);
+		}
+		
+		//inventoryの中身を消去
+		for (int i = 0; i < inventory.getSlots(); i++) {
+			inventory.setStackInSlot(i, ItemStack.EMPTY);
+		}
+		
+		//アイテムの統合と挿入
+		for (List<ItemStack> valueList : sortMap.values()) {
+			//1件ごとにアイテムを挿入していく
+			for (ItemStack stack : valueList) {
+				for (int i = 0; i < inventory.getSlots(); i++) {
+					stack = inventory.insertItem(i, stack, false);
+					if (stack.isEmpty()) {
+						break;
+					}
+				}
+			}
+		}
+		sortMap = null;
+	}
+
 }

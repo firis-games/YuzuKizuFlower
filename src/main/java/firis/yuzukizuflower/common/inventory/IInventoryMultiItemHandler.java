@@ -403,5 +403,8 @@ public class IInventoryMultiItemHandler implements IScrollInventory {
 		this.createCapability();
 		this.tile.playerServerSendPacket();
 	}
+
+	@Override
+	public void sortInventory() {}
 	
 }

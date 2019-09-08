@@ -27,12 +27,19 @@ public class PacketGuiScroll implements IMessageHandler<PacketGuiScroll.MessageG
 		Container container = player.openContainer;
 		
 		//ページの場合
-		if (message.page != -1) {
+		if (message.page > -1) {
 			if (container instanceof IYKGuiScrollBarChanged) {
 				//ページを設定
 				IYKGuiScrollBarChanged inf = (IYKGuiScrollBarChanged) container;
 				inf.onScrollChanged(message.page);
 			}
+		} else if (message.page == -9) {
+				if (container instanceof IYKGuiScrollBarChanged) {
+					//ページを設定
+					YKContainerScrollChest inf = (YKContainerScrollChest) container;
+					inf.onSort();
+					inf.onScrollChanged(0);
+				}
 		} else {
 			//テキストの場合
 			if (container instanceof YKContainerScrollChest) {

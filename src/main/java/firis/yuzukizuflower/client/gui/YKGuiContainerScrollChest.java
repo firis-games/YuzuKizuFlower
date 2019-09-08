@@ -4,6 +4,7 @@ import java.io.IOException;
 
 import org.lwjgl.input.Keyboard;
 
+import firis.yuzukizuflower.client.gui.parts.YKGuiItemIconButton;
 import firis.yuzukizuflower.client.gui.parts.YKGuiScrollBar;
 import firis.yuzukizuflower.common.container.YKContainerScrollChest;
 import firis.yuzukizuflower.common.inventory.IScrollInventory;
@@ -127,25 +128,13 @@ public class YKGuiContainerScrollChest extends YKGuiContainerBaseScrollInventory
         //inventoryのフィルタを再設定
         //this.textField.setText(((ITextScrollInventoryItemHandler) this.iinventory).getTextSearch());
         this.textField.setText(((IScrollInventoryClientItemHandler) this.iinventory).getTextSearch());
+        
+        
+        //ボタンの定義
+        this.buttonList.add(new YKGuiItemIconButton(0, x + 169 , y + 139, "yuzukizuflower:items/backpack_chest"));
+        
     }
-	
-	
-	/**
-	 * スクロール変更時の処理を追加、テキストも同時に送信する
-	 */
-	/*
-	@Override
-	public void onScrollChanged(int page) {
-				
-		//ページ設定
-		iinventory.setScrollPage(page);
 		
-		//Serverへパケット送信
-		NetworkHandler.network.sendToServer(
-				new PacketGuiScroll.MessageGuiScroll(page, ""));
-	}
-	*/
-	
 	/**
 	 * テキスト情報を含む情報を送信
 	 */
@@ -159,5 +148,26 @@ public class YKGuiContainerScrollChest extends YKGuiContainerBaseScrollInventory
 		//Serverへパケット送信
 		NetworkHandler.network.sendToServer(
 				new PacketGuiScroll.MessageGuiScroll(-1, this.textField.getText()));
-	}	
+	}
+	
+	
+	/**
+     * ボタンクリック時の制御
+     */
+	@Override
+    protected void actionPerformed(GuiButton button) throws IOException
+    {
+    	super.actionPerformed(button);
+    	if (button.id == 0) {
+    		
+    		this.textField.setText("");
+    		iinventory.setTextChanged("");
+    		this.scrollBar.setScrollMaxPage(iinventory.getScrollMaxPage());
+    		this.scrollBar.resetScrollPage();
+    		
+    		//ソートボタン
+    		NetworkHandler.network.sendToServer(
+    				new PacketGuiScroll.MessageGuiScroll(-9, ""));
+        }
+    }
 }
