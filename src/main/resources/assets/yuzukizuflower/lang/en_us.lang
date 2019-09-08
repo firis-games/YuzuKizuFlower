@@ -58,6 +58,7 @@ gui.boxed_yuquarry.mode4.name=Powerd Flower
 gui.boxed_yuquarry.silk_touch.name=Silktouch
 gui.boxed_yuquarry.mode.name=Mode
 gui.boxed_yuquarry.range.name=Range
+
 tile.boxed_aocean.name=Boxed Aocean
 gui.boxed_aocean.name=Boxed Aocean
 
@@ -173,4 +174,7 @@ advancements.boxed_brewery.description=Craft Boxed Brewery
 tile.mana_enchanter.name=Mana Enchanter
 gui.mana_enchanter.name=Mana Enchanter
 msg.mana_enchanter.error=Place Mana Pylon on the Mana Enchanter.
+
+advancements.mana_enchanter.title=Mana Enchanter
+advancements.mana_enchanter.description=Craft Mana Enchanter
 

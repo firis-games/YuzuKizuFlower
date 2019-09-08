@@ -1,0 +1,24 @@
+{
+	"type": "forge:ore_shaped",
+	"pattern": [
+		"yzy",
+		"zxz",
+		"yzy"
+	],
+	"key": {
+		"x": {
+			"item": "minecraft:enchanting_table"
+		},
+		"y": {
+			"item": "botania:flower",
+			"data": 32767
+		},
+		"z": {
+			"item": "botania:pylon",
+			"data": 0
+		}
+	},
+	"result": {
+		"item": "yuzukizuflower:mana_enchanter"
+	}
+}
