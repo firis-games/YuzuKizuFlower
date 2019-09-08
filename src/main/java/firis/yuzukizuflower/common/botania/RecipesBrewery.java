@@ -31,7 +31,7 @@ public class RecipesBrewery {
 			//一致する場合
 			if(recipe.matches(inv)) {
 				
-				int manaCost = 1000;
+				int manaCost = recipe.getManaUsage();
 				
 				if (!catalystStack.isEmpty() && catalystStack.getItem() instanceof IBrewContainer) {
 					IBrewContainer container = (IBrewContainer) catalystStack.getItem();
