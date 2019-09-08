@@ -112,6 +112,7 @@ public class YKContainerRuneWorkbench extends Container {
 		
         ItemStack itemstack = ItemStack.EMPTY;
         Slot slot = this.inventorySlots.get(index);
+        boolean isResultMove = false;
         
         //プレイヤーインベントリの開始index
         int playerInventoryIndex = this.startIndexPlayerSlot;
@@ -123,6 +124,7 @@ public class YKContainerRuneWorkbench extends Container {
             
             if (index < playerInventoryIndex) {
             	//コンテナーインベントリ -> プレイヤーインベントリ
+            	isResultMove = true;
             	if (!this.mergeItemStack(itemstack1, playerInventoryIndex, this.inventorySlots.size(), false))
                 {
                     return ItemStack.EMPTY;
@@ -139,7 +141,7 @@ public class YKContainerRuneWorkbench extends Container {
             if (itemstack1.isEmpty())
             {
                 slot.putStack(ItemStack.EMPTY);
-                if (slot.getSlotIndex() == 17) {
+                if (slot.getSlotIndex() == 17 && isResultMove) {
                 	//CraftingResult更新
                     inventory.slotChangedCraftingResult();
                 } else {
