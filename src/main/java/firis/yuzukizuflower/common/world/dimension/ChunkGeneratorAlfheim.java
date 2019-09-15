@@ -1,8 +1,14 @@
 package firis.yuzukizuflower.common.world.dimension;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import firis.yuzukizuflower.YuzuKizuFlower.YuzuKizuBlocks;
 import net.minecraft.block.state.IBlockState;
+import net.minecraft.entity.EnumCreatureType;
+import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
+import net.minecraft.world.biome.Biome;
 import net.minecraft.world.chunk.ChunkPrimer;
 import net.minecraft.world.gen.ChunkGeneratorOverworld;
 import vazkii.botania.common.block.ModBlocks;
@@ -101,4 +107,17 @@ public class ChunkGeneratorAlfheim extends ChunkGeneratorOverworld {
         }
     }
 
+	
+	@Override
+	public List<Biome.SpawnListEntry> getPossibleCreatures(EnumCreatureType creatureType, BlockPos pos)
+    {
+        Biome biome = this.world.getBiome(pos);
+
+        //Monsterはスポーンさせない
+        if (EnumCreatureType.MONSTER == creatureType) {
+        	return new ArrayList<>();
+        }
+        
+        return biome.getSpawnableList(creatureType);
+    }
 }
