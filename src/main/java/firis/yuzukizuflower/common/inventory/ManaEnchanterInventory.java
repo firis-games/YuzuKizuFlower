@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.ListIterator;
 
+import firis.yuzukizuflower.common.YKConfig;
 import firis.yuzukizuflower.common.botania.BotaniaHelper;
 import firis.yuzukizuflower.common.botania.ManaRecipe;
 import firis.yuzukizuflower.common.botania.RecipesManaEnchanter;
@@ -159,40 +160,45 @@ public class ManaEnchanterInventory extends IInventoryItemHandler {
 		List<EnchantmentData> encRetDataList = RecipesManaEnchanter.getEnchantmentDataList(this.saveRecipe.getOutputItemStack());
 		
 		//CraftingGridからアイテムを減らす
-		for (int slot = 0 ; slot < 17; slot++) {
-			
-			//エンチャント本したかどうかは関係なく
-			//同じエンチャントを含む本は一括で減らす
-			if (!capability.getStackInSlot(slot).isEmpty()
-					&& capability.getStackInSlot(slot).getItem() == Items.ENCHANTED_BOOK) {
+		if (YKConfig.CONSUME_ENCHANTMENT_BOOK) {
+			for (int slot = 0 ; slot < 17; slot++) {
 				
-				//対象エンチャントがすべて削除済みの場合はスキップ
-				if (encRetDataList.size() == 0) {
-					continue;
-				}
-				
-				//エンチャント本のエンチャントリスト
-				List<EnchantmentData> encBookDataList = RecipesManaEnchanter.getEnchantmentDataList(capability.getStackInSlot(slot));
-				boolean deleteBook = false;
-				for (EnchantmentData encBook : encBookDataList) {
-					ListIterator<EnchantmentData> retIterator = encRetDataList.listIterator();
-					while (retIterator.hasNext()) {
-						EnchantmentData encRetData = retIterator.next();
-						//エンチャントとレベルが一致する場合は削除
-						if (encBook.enchantment == encRetData.enchantment
-								&& encBook.enchantment == encRetData.enchantment) {
-							deleteBook = true;
-							retIterator.remove();
+				//エンチャント本したかどうかは関係なく
+				//同じエンチャントを含む本は一括で減らす
+				if (!capability.getStackInSlot(slot).isEmpty()
+						&& capability.getStackInSlot(slot).getItem() == Items.ENCHANTED_BOOK) {
+					
+					//対象エンチャントがすべて削除済みの場合はスキップ
+					if (encRetDataList.size() == 0) {
+						continue;
+					}
+					
+					//エンチャント本のエンチャントリスト
+					List<EnchantmentData> encBookDataList = RecipesManaEnchanter.getEnchantmentDataList(capability.getStackInSlot(slot));
+					boolean deleteBook = false;
+					for (EnchantmentData encBook : encBookDataList) {
+						ListIterator<EnchantmentData> retIterator = encRetDataList.listIterator();
+						while (retIterator.hasNext()) {
+							EnchantmentData encRetData = retIterator.next();
+							//エンチャントとレベルが一致する場合は削除
+							if (encBook.enchantment == encRetData.enchantment
+									&& encBook.enchantment == encRetData.enchantment) {
+								deleteBook = true;
+								retIterator.remove();
+							}
 						}
 					}
-				}
-				//エンチャントブック削除
-				if (deleteBook) {
+					//エンチャントブック削除
+					if (deleteBook) {
+						capability.getStackInSlot(slot).shrink(1);
+					}
+				} else {
 					capability.getStackInSlot(slot).shrink(1);
 				}
-			} else {
-				capability.getStackInSlot(slot).shrink(1);
 			}
+		} else {
+			//武器スロットのみ消費する
+			capability.getStackInSlot(16).shrink(1);
 		}
 		
 		//マナを減らす

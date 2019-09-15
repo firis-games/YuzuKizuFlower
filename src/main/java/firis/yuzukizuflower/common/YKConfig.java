@@ -56,4 +56,10 @@ public class YKConfig {
 	 */
 	@Comment({"Allow duplicate enchantment of ManaEnchanter", "default:false"})
 	public static boolean DUPLICATE_ENCHANTMENT = false;
+	
+	/**
+	 * マナのエンチャント台でエンチャントブックを消費する設定
+	 */
+	@Comment({"Consume a Enchanted Book on an enchantment of ManaEnchanter", "default:false"})
+	public static boolean CONSUME_ENCHANTMENT_BOOK = false;
 }
