@@ -9,13 +9,14 @@ import net.minecraft.world.DimensionType;
 import net.minecraft.world.WorldServer;
 import net.minecraftforge.event.entity.player.PlayerInteractEvent;
 import net.minecraftforge.fml.common.Mod.EventBusSubscriber;
+import net.minecraftforge.fml.common.eventhandler.EventPriority;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import vazkii.botania.common.block.ModBlocks;
 
 @EventBusSubscriber
 public class PlayerInteractEventHandler {
 
-	@SubscribeEvent
+	@SubscribeEvent(priority=EventPriority.HIGHEST)
 	public static void onPlayerInteractEvent(PlayerInteractEvent.RightClickBlock event) {
 		
 		if (event.getWorld().isRemote) return;
