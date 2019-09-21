@@ -3,6 +3,7 @@ package firis.yuzukizuflower.common.event;
 import firis.yuzukizuflower.common.world.dimension.DimensionHandler;
 import firis.yuzukizuflower.common.world.dimension.TeleporterAlfheim;
 import net.minecraft.block.state.IBlockState;
+import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.DimensionType;
@@ -32,24 +33,36 @@ public class PlayerInteractEventHandler {
 		//パイロン系のブロックであること
 		if (state.getBlock() != ModBlocks.pylon) return;
 		
+		//オーバーワールドへテレポート
+		overWorldTeleport(event.getEntityPlayer());
 		
-		EntityPlayerMP player = (EntityPlayerMP) event.getEntityPlayer();
+	}
+	
+	/**
+	 * オーバーワールドへのテレポート処理
+	 * @param player
+	 */
+	public static void overWorldTeleport(EntityPlayer player) {
+
+		if (player == null || player.getEntityWorld().isRemote) return;
+
+		EntityPlayerMP playerMp = (EntityPlayerMP) player;
 		
 		//オーバーワールドへ戻る
-		WorldServer wolrd = player.getServer().getWorld(DimensionType.OVERWORLD.getId());
+		WorldServer wolrd = playerMp.getServer().getWorld(DimensionType.OVERWORLD.getId());
 		
 		//移動する
-		player.changeDimension(DimensionType.OVERWORLD.getId(), new TeleporterAlfheim(wolrd));
+		playerMp.changeDimension(DimensionType.OVERWORLD.getId(), new TeleporterAlfheim(wolrd));
 		
 		//移動後に座標移動
-		BlockPos movePos = player.getBedLocation(DimensionType.OVERWORLD.getId());
+		BlockPos movePos = playerMp.getBedLocation(DimensionType.OVERWORLD.getId());
 		if (movePos == null) {
 			movePos = wolrd.provider.getRandomizedSpawnPoint();
 		}
 		
 		//位置調整
-		player.connection.setPlayerLocation(movePos.getX(), movePos.getY(), movePos.getZ(), player.rotationYaw, player.rotationPitch);
-		
+		playerMp.connection.setPlayerLocation(movePos.getX(), movePos.getY(), movePos.getZ(), 
+				playerMp.rotationYaw, playerMp.rotationPitch);
 	}
 	
 }

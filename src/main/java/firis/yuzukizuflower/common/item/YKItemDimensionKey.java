@@ -5,6 +5,7 @@ import java.util.List;
 import javax.annotation.Nullable;
 
 import firis.yuzukizuflower.YuzuKizuFlower;
+import firis.yuzukizuflower.common.event.PlayerInteractEventHandler;
 import firis.yuzukizuflower.common.world.dimension.DimensionHandler;
 import firis.yuzukizuflower.common.world.dimension.TeleporterAlfheim;
 import net.minecraft.block.state.IBlockState;
@@ -61,20 +62,46 @@ public class YKItemDimensionKey extends Item {
 	@Override
     public ActionResult<ItemStack> onItemRightClick(World worldIn, EntityPlayer playerIn, EnumHand handIn)
     {
-		boolean ret = alfheimTeleport(playerIn, handIn);
+		boolean ret = dimensionKeyTeleport(playerIn, handIn);
 		if (!ret) {
 			return new ActionResult<ItemStack>(EnumActionResult.PASS, playerIn.getHeldItem(handIn));
     	}
 		return new ActionResult<ItemStack>(EnumActionResult.SUCCESS, playerIn.getHeldItem(handIn));
     }
 	
+	/**
+	 * アルフヘイムキーのテレポート処理
+	 * @param player
+	 * @param hand
+	 * @return
+	 */
+	protected boolean dimensionKeyTeleport(EntityPlayer player, EnumHand hand) {
+
+		boolean ret = false;
+		World world = player.getEntityWorld();
+		if (world.provider.getDimension() == DimensionType.OVERWORLD.getId()) {
+			//オーバーワールド -> アルフヘイム
+			this.alfheimTeleport(player, hand);
+		} else if (world.provider.getDimension() != DimensionType.OVERWORLD.getId()) {
+			//アルフヘイム -> オーバーワールド
+			this.overWorldTeleport(player, hand);
+		}
+		
+		return ret;
+	}
+	
+	
+	/**
+	 * アルフヘイムへのテレポート判定処理
+	 * @param player
+	 * @param hand
+	 * @return
+	 */
 	protected boolean alfheimTeleport(EntityPlayer player, EnumHand hand) {
 		
 		boolean ret = false;
 
 		World world = player.getEntityWorld();
-		
-		if (world.provider.getDimension() != DimensionType.OVERWORLD.getId()) return false;
 		
 		//playerの足元3×3を取得
 		BlockPos basePos = player.getPosition().down();
@@ -105,6 +132,33 @@ public class YKItemDimensionKey extends Item {
 		WorldServer server;
 		server = player.getServer().getWorld(DimensionHandler.dimensionAlfheim.getId());
 		player.changeDimension(DimensionHandler.dimensionAlfheim.getId(), new TeleporterAlfheim(server));
+		return ret;
+	}
+	
+	/**
+	 * アルフヘイムへのテレポート判定処理
+	 * @param player
+	 * @param hand
+	 * @return
+	 */
+	protected boolean overWorldTeleport(EntityPlayer player, EnumHand hand) {
+		
+		boolean ret = false;
+		
+		//ゲート付近のみとしようとしたが
+		//Server側とclient側のプレイヤー座標のずれが発生するため
+		//簡単にアルフヘイムディメンションで使った場合にテレポートするように変更
+		
+		//クリエイティブ判定
+		if (!player.isCreative()) {
+			ItemStack stack = player.getHeldItem(hand);
+			stack.shrink(1);
+		}
+		
+		//オーバーワールドへ戻る
+		PlayerInteractEventHandler.overWorldTeleport(player);
+		ret = true;
+		
 		return ret;
 	}
 	
