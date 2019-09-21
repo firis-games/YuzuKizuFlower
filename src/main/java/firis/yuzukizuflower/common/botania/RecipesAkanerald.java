@@ -9,12 +9,14 @@ import javax.annotation.Nonnull;
 import net.minecraft.entity.passive.EntityVillager;
 import net.minecraft.init.Items;
 import net.minecraft.item.ItemStack;
+import net.minecraft.util.ResourceLocation;
+import net.minecraft.util.registry.RegistryNamespaced;
 import net.minecraft.village.MerchantRecipe;
 import net.minecraft.village.MerchantRecipeList;
 import net.minecraft.world.World;
 import net.minecraftforge.fml.common.FMLCommonHandler;
-import net.minecraftforge.fml.common.registry.VillagerRegistry;
 import net.minecraftforge.fml.common.registry.VillagerRegistry.VillagerProfession;
+import net.minecraftforge.registries.GameData;
 
 /**
  * アカネラルドのレシピ
@@ -24,6 +26,9 @@ import net.minecraftforge.fml.common.registry.VillagerRegistry.VillagerProfessio
 public class RecipesAkanerald implements IManaRecipes {
 	
 	private static Random rand = new Random();
+	
+	//村人職業Registry
+	private static RegistryNamespaced<ResourceLocation, VillagerProfession> VillagerProfessionRegistry = GameData.getWrapper(VillagerProfession.class);
 	
 	/**
 	 * 一致するレシピを検索する
@@ -61,19 +66,17 @@ public class RecipesAkanerald implements IManaRecipes {
 	/**
 	 * 村人のトレードアイテムを生成する
 	 */
-	@SuppressWarnings("deprecation")
 	private List<ItemStack> populateBuyingList() {
 		
 		//村人のトレードアイテムリスト
 		MerchantRecipeList buyingList = new MerchantRecipeList();
 		
-		//職業をランダムで取得
-		int careerId = VillagerRegistry.FARMER.getRandomCareer(rand);
-		
 		//全レベルの交換アイテムを取得する
 		List<EntityVillager.ITradeList> trades = new ArrayList<EntityVillager.ITradeList>();
-		//村人タイプ
-		VillagerProfession prof = VillagerRegistry.getById(careerId);
+		
+		//職業をランダムで取得
+		VillagerProfession prof = VillagerProfessionRegistry.getRandomObject(rand);
+		
 		//村人タイプの種類
 		int profCareer = prof.getRandomCareer(rand);
 		int level = 0;
