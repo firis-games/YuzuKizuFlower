@@ -171,6 +171,7 @@ public class YuzuKizuFlower
     	//public final static Item INSTANT_HOUSE = null;
     	public final static Item AMULET_SWORD = null;
     	public final static Item AMULET_ARMOR = null;
+    	public final static Item IMMORTAL_DIMENSION_KEY = null;
     }
     /**
      * ブロックインスタンス保持用
@@ -816,11 +817,17 @@ public class YuzuKizuFlower
     	);
     	
     	// ディメンションキー
-    	event.getRegistry().register(new YKItemDimensionKey()
+    	event.getRegistry().register(new YKItemDimensionKey(0)
     			.setRegistryName(MODID, "dimension_key")
     			.setUnlocalizedName("dimension_key")
     	);
     	
+    	//不滅のディメンションキー
+    	event.getRegistry().register(new YKItemDimensionKey(1)
+    			.setRegistryName(MODID, "immortal_dimension_key")
+    			.setUnlocalizedName("immortal_dimension_key")
+    	);
+
     	// バックパックチェスト
     	event.getRegistry().register(new YKItemBackpackChest()
     			.setRegistryName(MODID, "backpack_chest")
@@ -1063,6 +1070,10 @@ public class YuzuKizuFlower
     	ModelLoader.setCustomModelResourceLocation(YuzuKizuItems.DIMENSION_KEY, 0,
     			new ModelResourceLocation(YuzuKizuItems.DIMENSION_KEY.getRegistryName(), "inventory"));
 
+    	// イモータルディメンションキー
+    	ModelLoader.setCustomModelResourceLocation(YuzuKizuItems.IMMORTAL_DIMENSION_KEY, 0,
+    			new ModelResourceLocation(YuzuKizuItems.IMMORTAL_DIMENSION_KEY.getRegistryName(), "inventory"));
+    	
     	// アルフヘイムコア
     	ModelLoader.setCustomModelResourceLocation(Item.getItemFromBlock(YuzuKizuBlocks.ALFHEIM_CORE), 0,
     			new ModelResourceLocation(YuzuKizuBlocks.ALFHEIM_CORE.getRegistryName(), "inventory"));

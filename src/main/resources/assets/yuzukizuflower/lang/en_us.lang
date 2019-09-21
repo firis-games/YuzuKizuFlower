@@ -178,3 +178,6 @@ msg.mana_enchanter.error=Place Mana Pylon on the Mana Enchanter.
 advancements.mana_enchanter.title=Mana Enchanter
 advancements.mana_enchanter.description=Craft Mana Enchanter
 
+item.immortal_dimension_key.name=Immortal Alfheim Key
+info.immortal_dimension_key=Unnecessary Alfheim Portal
+

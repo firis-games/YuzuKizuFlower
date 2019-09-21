@@ -5,6 +5,7 @@ import java.util.List;
 import javax.annotation.Nullable;
 
 import firis.yuzukizuflower.YuzuKizuFlower;
+import firis.yuzukizuflower.YuzuKizuFlower.YuzuKizuItems;
 import firis.yuzukizuflower.common.event.PlayerInteractEventHandler;
 import firis.yuzukizuflower.common.world.dimension.DimensionHandler;
 import firis.yuzukizuflower.common.world.dimension.TeleporterAlfheim;
@@ -31,16 +32,27 @@ import vazkii.botania.common.block.ModBlocks;
 
 public class YKItemDimensionKey extends Item {
 
+	//Dimensionキーの扱い(0:通常　1:不滅)
+	//別アイテム扱いにするためコンストラクタで擬似的なmetadataを渡して判断する
+	private final int metadata;
+	
 	/**
 	 * コンストラクタ
 	 */
-	public YKItemDimensionKey() {
+	public YKItemDimensionKey(int metadata) {
 
 		super();
 		
+		this.metadata = metadata;
+		
 		//初期化
 		this.setCreativeTab(YuzuKizuFlower.YuzuKizuCreativeTab);
-		this.setMaxStackSize(64);
+		
+		if (this.metadata == 0) {
+			this.setMaxStackSize(64);
+		} else if (this.metadata == 1) {
+			this.setMaxStackSize(1);
+		}		
 	}
 	
 	/**
@@ -81,10 +93,21 @@ public class YKItemDimensionKey extends Item {
 		World world = player.getEntityWorld();
 		if (world.provider.getDimension() == DimensionType.OVERWORLD.getId()) {
 			//オーバーワールド -> アルフヘイム
-			this.alfheimTeleport(player, hand);
+			ret = this.alfheimTeleport(player, hand);
 		} else if (world.provider.getDimension() != DimensionType.OVERWORLD.getId()) {
 			//アルフヘイム -> オーバーワールド
-			this.overWorldTeleport(player, hand);
+			ret = this.overWorldTeleport(player, hand);
+		}
+		
+		//テレポート成功時
+		//クリエイティブ判定
+		if (ret && !player.isCreative() && this.metadata == 0) {
+			ItemStack stack = player.getHeldItem(hand);
+			stack.shrink(1);
+		}
+		//イモータルディメンションキー
+		else if (ret && !player.isCreative() && this.metadata == 1) {
+			player.getCooldownTracker().setCooldown(YuzuKizuItems.IMMORTAL_DIMENSION_KEY, 1200);
 		}
 		
 		return ret;
@@ -104,26 +127,27 @@ public class YKItemDimensionKey extends Item {
 		World world = player.getEntityWorld();
 		
 		//playerの足元3×3を取得
-		BlockPos basePos = player.getPosition().down();
-		for (BlockPos pos : BlockPos.getAllInBox(basePos.north(1).east(1), basePos.south(1).west(1))) {
-			IBlockState state = world.getBlockState(pos);
-			if (state.getBlock() == ModBlocks.alfPortal) {
-				if (state.getProperties().get(BotaniaStateProps.ALFPORTAL_STATE) == AlfPortalState.ON_X
-						|| state.getProperties().get(BotaniaStateProps.ALFPORTAL_STATE) == AlfPortalState.ON_Z) {
-					ret = true;
-					break;
+		if (this.metadata == 0) {
+			BlockPos basePos = player.getPosition().down();
+			for (BlockPos pos : BlockPos.getAllInBox(basePos.north(1).east(1), basePos.south(1).west(1))) {
+				IBlockState state = world.getBlockState(pos);
+				if (state.getBlock() == ModBlocks.alfPortal) {
+					if (state.getProperties().get(BotaniaStateProps.ALFPORTAL_STATE) == AlfPortalState.ON_X
+							|| state.getProperties().get(BotaniaStateProps.ALFPORTAL_STATE) == AlfPortalState.ON_Z) {
+						ret = true;
+						break;
+					}
 				}
 			}
+		} else {
+			//イモータルの場合は条件無視
+			ret = true;
 		}
 		
 		//クリエイティブモードの場合は条件を無視する
 		if (!ret && !player.isCreative()) return ret;
 		
-		//クリエイティブ判定
-		if (!player.isCreative()) {
-			ItemStack stack = player.getHeldItem(hand);
-			stack.shrink(1);
-		}
+		ret = true;
 
 		//成功時テレポートを行う
 		if(world.isRemote) return ret;
@@ -149,12 +173,6 @@ public class YKItemDimensionKey extends Item {
 		//Server側とclient側のプレイヤー座標のずれが発生するため
 		//簡単にアルフヘイムディメンションで使った場合にテレポートするように変更
 		
-		//クリエイティブ判定
-		if (!player.isCreative()) {
-			ItemStack stack = player.getHeldItem(hand);
-			stack.shrink(1);
-		}
-		
 		//オーバーワールドへ戻る
 		PlayerInteractEventHandler.overWorldTeleport(player);
 		ret = true;
@@ -174,7 +192,11 @@ public class YKItemDimensionKey extends Item {
     public void addInformation(ItemStack stack, @Nullable World worldIn, List<String> tooltip, ITooltipFlag flagIn)
     {
 		if (flagIn.isAdvanced()) {
-			tooltip.add(TextFormatting.DARK_PURPLE + I18n.format("info.dimension_key"));			
+			String info = "info.dimension_key";
+			if (this.metadata == 1) {
+				info = "info.immortal_dimension_key";
+			}
+			tooltip.add(TextFormatting.DARK_PURPLE + I18n.format(info));			
 		}
     }
 	
