@@ -7,6 +7,8 @@ import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import vazkii.botania.api.BotaniaAPI;
 import vazkii.botania.api.recipe.RecipeManaInfusion;
+import vazkii.botania.common.block.ModBlocks;
+import vazkii.botania.common.item.ModItems;
 
 public class BotaniaRecipes {
 	
@@ -176,6 +178,26 @@ public class BotaniaRecipes {
 				new ItemStack(Item.getByNameOrId("botania:manaresource"), 1, 7),
 				new ItemStack(Item.getByNameOrId("botania:manaresource"), 1, 9));
 		
+		//イモータルアルフヘイムキー
+		BotaniaAPI.registerRuneAltarRecipe(
+				new ItemStack(YuzuKizuItems.IMMORTAL_DIMENSION_KEY),
+				1000000,
+				new ItemStack(YuzuKizuItems.DIMENSION_KEY),
+				new ItemStack(ModItems.dice),
+				new ItemStack(ModBlocks.alfPortal),
+				new ItemStack(Item.getByNameOrId("botania:storage"), 1, 1),
+				new ItemStack(Item.getByNameOrId("botania:storage"), 1, 4),
+				new ItemStack(Item.getByNameOrId("botania:manaresource"), 1, 14),
+				new ItemStack(ModBlocks.terraPlate),
+				new ItemStack(ModBlocks.alchemyCatalyst),
+				new ItemStack(ModBlocks.conjurationCatalyst),
+				RUNE[9],
+				RUNE[10],
+				RUNE[11],
+				RUNE[12],
+				RUNE[13],
+				RUNE[14],
+				RUNE[15]);
 	}
 
 }
