@@ -32,7 +32,7 @@ public class YKTileAutoWorkbench extends YKTileBaseBoxedProcFlower {
 	
 	public YKTileAutoWorkbench() {
 		
-		this.maxMana = 100000;
+		this.maxMana = 1000000;
 		
 		//inputスロット
 		this.inputSlotIndex = IntStream.range(0, 22).boxed().collect(Collectors.toList());

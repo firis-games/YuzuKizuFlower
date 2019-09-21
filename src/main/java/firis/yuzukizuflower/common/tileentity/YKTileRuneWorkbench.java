@@ -17,7 +17,7 @@ public class YKTileRuneWorkbench extends YKTileBaseBoxedProcFlower {
 		//Inventory初期化
 		this.inventory = new ItemStackHandler(18);
 		
-		this.maxMana = 100000;
+		this.maxMana = 1000000;
 		
 		//tick周期
 		this.setCycleTick(1);

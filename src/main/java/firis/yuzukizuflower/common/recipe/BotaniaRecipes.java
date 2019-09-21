@@ -166,14 +166,15 @@ public class BotaniaRecipes {
 		
 		//アルフヘイムキー
 		BotaniaAPI.registerRuneAltarRecipe(
-				new ItemStack(YuzuKizuItems.DIMENSION_KEY, 1),
-				100000, 
+				new ItemStack(YuzuKizuItems.DIMENSION_KEY, 2),
+				150000,
 				new ItemStack(Item.getByNameOrId("botania:manaresource"), 1, 5),
 				new ItemStack(Item.getByNameOrId("botania:manaresource"), 1, 18),
 				new ItemStack(Item.getByNameOrId("botania:manaresource"), 1, 18),
 				new ItemStack(Item.getByNameOrId("botania:manaresource"), 1, 18),
 				new ItemStack(Item.getByNameOrId("botania:manaresource"), 1, 18),
-				new ItemStack(Item.getByNameOrId("botania:manaresource"), 1, 7));
+				new ItemStack(Item.getByNameOrId("botania:manaresource"), 1, 7),
+				new ItemStack(Item.getByNameOrId("botania:manaresource"), 1, 9));
 		
 	}
 

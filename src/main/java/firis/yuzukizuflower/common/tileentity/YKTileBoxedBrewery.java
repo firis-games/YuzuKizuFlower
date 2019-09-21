@@ -17,7 +17,7 @@ public class YKTileBoxedBrewery extends YKTileBaseBoxedProcFlower {
 		//Inventory初期化
 		this.inventory = new ItemStackHandler(18);
 		
-		this.maxMana = 500000;
+		this.maxMana = 1000000;
 		
 		//tick周期
 		this.setCycleTick(1);
