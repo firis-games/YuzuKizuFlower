@@ -1,0 +1,22 @@
+{
+    "display": {
+        "icon": {
+            "item": "botania:enchantedsoil"
+        },
+        "title": {
+            "translate": "advancements.alfheim.title"
+        },
+        "description": {
+            "translate": "advancements.alfheim.description"
+        }
+    },
+    "parent": "yuzukizuflower:dimension_key",
+    "criteria": {
+        "dimension_key": {
+            "trigger": "minecraft:changed_dimension",
+            "conditions": {
+                "to": "Alfheim Dimension"
+            }
+        }
+    }
+}

@@ -178,6 +178,15 @@ msg.mana_enchanter.error=マナのエンチャント台の上にマナの支柱�
 advancements.mana_enchanter.title=お花のエンチャント
 advancements.mana_enchanter.description=マナのエンチャント台を作成する
 
-item.immortal_dimension_key.name=アルフヘイムの宝鍵
+item.immortal_dimension_key.name=月と星の鍵
 info.immortal_dimension_key=世界を結ぶ紲の欠片
+
+advancements.dimension_key.title=そうだアルフヘイムへ行こう
+advancements.dimension_key.description=アルフヘイムの鍵を作成する
+
+advancements.alfheim.title=おいでませアルフヘイム
+advancements.alfheim.description=アルフヘイムへ到達する
+
+advancements.immortal_dimension_key.title=世界を渡るゆづきず
+advancements.immortal_dimension_key.description=月と星の鍵を作成する
 

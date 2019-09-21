@@ -181,3 +181,12 @@ advancements.mana_enchanter.description=Craft Mana Enchanter
 item.immortal_dimension_key.name=Immortal Alfheim Key
 info.immortal_dimension_key=Unnecessary Alfheim Portal
 
+advancements.dimension_key.title=Alfheim Key
+advancements.dimension_key.description=Craft Alfheim Key
+
+advancements.alfheim.title=Alfheim
+advancements.alfheim.description=Go to Alfheim
+
+advancements.immortal_dimension_key.title=Immortal Alfheim Key
+advancements.immortal_dimension_key.description=Craft Immortal Alfheim Key
+
