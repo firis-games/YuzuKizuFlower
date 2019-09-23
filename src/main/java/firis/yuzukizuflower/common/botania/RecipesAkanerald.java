@@ -7,6 +7,7 @@ import java.util.Random;
 import javax.annotation.Nonnull;
 
 import net.minecraft.entity.passive.EntityVillager;
+import net.minecraft.init.Blocks;
 import net.minecraft.init.Items;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.ResourceLocation;
@@ -79,13 +80,12 @@ public class RecipesAkanerald implements IManaRecipes {
 		
 		//村人タイプの種類
 		int profCareer = prof.getRandomCareer(rand);
-		int level = 0;
-		while (true) {
+		for (int level = 0; level < 100; level++) {
 			List<EntityVillager.ITradeList> work = prof.getCareer(profCareer).getTrades(level);
-			if (work != null) {
+			if (work != null && work.size() > 0) {
 				trades.addAll(work);
-				level += 1;
 			} else {
+				//レベル上限と判断
 				break;
 			}
 		}
@@ -104,11 +104,10 @@ public class RecipesAkanerald implements IManaRecipes {
 			}
 		}
 		
-		//再帰処理
+		//生成失敗時ははずれを設定
 		if (result.size() == 0) {
-			result = populateBuyingList();
+			result.add(new ItemStack(Blocks.COBBLESTONE));
 		}
-		
 		return result;
 	}
 	
