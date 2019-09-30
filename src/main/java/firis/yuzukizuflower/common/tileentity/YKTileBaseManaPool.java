@@ -598,6 +598,10 @@ public abstract class YKTileBaseManaPool extends YKTileBaseInventory
 	protected int lastSyncMana = 0;
 	protected int syncTick = 0;
 	protected void syncMana() {
+		
+		//Serverサイドのみ
+		if (this.world.isRemote) return;
+		
 		this.syncTick++;
 		
 		//10tickに1回同期する
