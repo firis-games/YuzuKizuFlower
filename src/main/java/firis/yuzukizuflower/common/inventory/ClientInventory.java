@@ -1,5 +1,6 @@
 package firis.yuzukizuflower.common.inventory;
 
+import firis.yuzukizuflower.common.tileentity.YKTileBaseManaPool;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.inventory.IInventory;
 import net.minecraft.inventory.ItemStackHelper;
@@ -121,6 +122,14 @@ public class ClientInventory implements IInventory {
 
 	@Override
 	public int getField(int id) {
+		//マルチ対策
+		//マルチの場合sendWindowPropertyがintからshortへ切り捨てられるため
+		//数値の大きなmanaとmaxmanaはTileEntityから取得するように変更
+		if (id == BoxedFieldConst.MANA) {
+			return ((YKTileBaseManaPool) this.iinventory).getMana();
+		} else if(id == BoxedFieldConst.MAX_MANA) {
+			return ((YKTileBaseManaPool) this.iinventory).getMaxMana();
+		}
 		return this.fieldList.get(id);
 	}
 
