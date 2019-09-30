@@ -8,6 +8,8 @@ import javax.annotation.Nullable;
 
 import com.google.common.base.Predicates;
 
+import firis.yuzukizuflower.common.network.NetworkHandler;
+import firis.yuzukizuflower.common.network.PacketManaPoolS2C;
 import net.minecraft.block.Block;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.player.EntityPlayer;
@@ -414,6 +416,9 @@ public abstract class YKTileBaseManaPool extends YKTileBaseInventory
 		//マナプール管理へ追加する
 		if(autoManaLink() && !ManaNetworkHandler.instance.isPoolIn(this) && !isInvalid())
 			ManaNetworkEvent.addPool(this);
+		
+		//マナプールの同期
+		this.syncMana();
 	}
 	
 	/**
@@ -585,6 +590,42 @@ public abstract class YKTileBaseManaPool extends YKTileBaseInventory
 	 */
 	public BlockPos getBinding() {
 		return null;
+	}
+	
+	//******************************************************************************************
+	// Mana同期用
+	//******************************************************************************************
+	protected int lastSyncMana = 0;
+	protected int syncTick = 0;
+	protected void syncMana() {
+		this.syncTick++;
+		
+		//10tickに1回同期する
+		if (syncTick % 10 == 0) {
+			
+			//マナに変動がある場合同期する
+			if (this.lastSyncMana != this.mana) {
+				//低頻度高回転のマナ生産系を考慮
+				//10以下のマナは同期しない
+				if (this.mana > 10 || this.lastSyncMana > 10) {
+					this.lastSyncMana = this.mana;
+					NetworkHandler.network.sendToAll(
+							new PacketManaPoolS2C.MessageManaPool(pos, this.mana));
+				}
+				
+			}
+			
+			this.syncTick = 0;
+		}
+		
+	}
+	
+	/**
+	 * パケットからマナを設定する
+	 * @param mana
+	 */
+	public void setClientMana(int mana) {
+		this.mana = mana;
 	}
 
 }

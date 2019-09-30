@@ -28,6 +28,9 @@ public class NetworkHandler {
 		//汎用送信処理
 		network.registerMessage(PacketTileEntityS2C.class, PacketTileEntityS2C.MessageTileEntity.class, idx++, Side.CLIENT);
 		
+		//マナプール同期用
+		network.registerMessage(PacketManaPoolS2C.class, PacketManaPoolS2C.MessageManaPool.class, idx++, Side.CLIENT);
+		
     }
 
 }
