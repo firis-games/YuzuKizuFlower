@@ -6,15 +6,15 @@ import java.util.List;
 
 import firis.yuzukizuflower.client.gui.parts.YKGuiItemIconButton;
 import firis.yuzukizuflower.common.container.YKContainerBoxedRannuncarpus;
+import firis.yuzukizuflower.common.inventory.BoxedFieldConst;
+import firis.yuzukizuflower.common.inventory.ClientInventory;
 import firis.yuzukizuflower.common.network.NetworkHandler;
 import firis.yuzukizuflower.common.network.PacketTileBoxedFlower;
-import firis.yuzukizuflower.common.tileentity.IYKTileGuiBoxedFlower;
-import firis.yuzukizuflower.common.tileentity.YKTileBoxedRannuncarpus;
+import firis.yuzukizuflower.common.tileentity.YKTileBoxedRannuncarpus.FlowerMode;
 import net.minecraft.client.gui.GuiButton;
 import net.minecraft.client.renderer.RenderHelper;
 import net.minecraft.client.resources.I18n;
 import net.minecraft.inventory.IInventory;
-import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.math.BlockPos;
 import net.minecraftforge.fml.relauncher.Side;
@@ -32,7 +32,7 @@ public class YKGuiContainerBoxedRannuncarpus extends YKGuiContainerBaseBoxedFunc
 		
 		super(new YKContainerBoxedRannuncarpus(iTeInv, playerInv));
 		
-		this.tileEntity = (IYKTileGuiBoxedFlower) iTeInv;
+		this.tileEntity = iTeInv;
 		
 		//GUIテクスチャ
 		this.guiTextures = new ResourceLocation("yuzukizuflower", "textures/gui/boxed_rannuncarpus.png");
@@ -83,11 +83,12 @@ public class YKGuiContainerBoxedRannuncarpus extends YKGuiContainerBaseBoxedFunc
             	if (guibutton.id == 0) {
             		int xAxis = (mouseX - (width - this.guiWidth) / 2);
             		int yAxis = (mouseY - (height - this.guiHeight) / 2);
-            		YKTileBoxedRannuncarpus tile = ((YKTileBoxedRannuncarpus)this.tileEntity);
             		
-            		String modeName = tile.getFlowerMode().getName();
-            		Integer width = tile.getFlowerMode().getRange();
-            		Integer height = tile.getFlowerMode().getHeight();
+            		FlowerMode flowerMode = FlowerMode.getById(this.tileEntity.getField(BoxedFieldConst.MODE));
+            		
+            		String modeName = flowerMode.getName();
+            		Integer width = flowerMode.getRange();
+            		Integer height = flowerMode.getHeight();
             		
             		List<String> message = new ArrayList<String>();
             		message.add(modeName 
@@ -114,7 +115,7 @@ public class YKGuiContainerBoxedRannuncarpus extends YKGuiContainerBaseBoxedFunc
     	super.actionPerformed(button);
     	if (button.id == 0)
         {
-    		BlockPos pos = ((TileEntity)tileEntity).getPos();
+    		BlockPos pos = ((ClientInventory)tileEntity).getPos();
     		//ネットワーク新方式
     		NetworkHandler.network.sendToServer(
     				new PacketTileBoxedFlower.MessageTileBoxedFlower(pos, 0));

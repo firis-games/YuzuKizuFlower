@@ -24,6 +24,10 @@ public class NetworkHandler {
 		
 		//縁結びの輪表示処理
 		network.registerMessage(PacketOpenGuiS2C.class, PacketOpenGuiS2C.MessageOpenGui.class, idx++, Side.SERVER);
+		
+		//汎用送信処理
+		network.registerMessage(PacketTileEntityS2C.class, PacketTileEntityS2C.MessageTileEntity.class, idx++, Side.CLIENT);
+		
     }
 
 }

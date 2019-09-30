@@ -2,13 +2,14 @@ package firis.yuzukizuflower.client.gui;
 
 import java.text.NumberFormat;
 
-import firis.yuzukizuflower.common.tileentity.IYKTileGuiBoxedFlower;
+import firis.yuzukizuflower.common.inventory.BoxedFieldConst;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.inventory.GuiContainer;
 import net.minecraft.client.renderer.RenderHelper;
 import net.minecraft.client.renderer.texture.TextureAtlasSprite;
 import net.minecraft.client.renderer.texture.TextureMap;
 import net.minecraft.inventory.Container;
+import net.minecraft.inventory.IInventory;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.text.TextComponentTranslation;
 
@@ -73,7 +74,7 @@ public abstract class YKGuiContainerBaseBoxedFuncFlower extends GuiContainer {
 	 * IYKTileGuiBoxedFlower
 	 * @param inventorySlotsIn
 	 */
-	protected IYKTileGuiBoxedFlower tileEntity = null;
+	protected IInventory tileEntity = null;
 	
 	public YKGuiContainerBaseBoxedFuncFlower(Container inventorySlotsIn) {
 		super(inventorySlotsIn);
@@ -131,9 +132,8 @@ public abstract class YKGuiContainerBaseBoxedFuncFlower extends GuiContainer {
 	 */
 	private int getProgressScaled(int pixels)
     {
-
-        int i = this.tileEntity.getTimer();
-        int j = this.tileEntity.getMaxTimer();
+        int i = this.tileEntity.getField(BoxedFieldConst.TIMER);
+        int j = this.tileEntity.getField(BoxedFieldConst.MAX_TIMER);
         
         return j != 0 && i != 0 ? i * pixels / j : 0;
     }
@@ -145,9 +145,9 @@ public abstract class YKGuiContainerBaseBoxedFuncFlower extends GuiContainer {
 	 */
 	private int getBurnLeftScaled(int pixels)
     {
-		int i = this.tileEntity.getTimer();
-        int j = this.tileEntity.getMaxTimer();
-        
+        int i = this.tileEntity.getField(BoxedFieldConst.TIMER);
+        int j = this.tileEntity.getField(BoxedFieldConst.MAX_TIMER);
+
         if (i == 0) {
         	return 0;
         }
@@ -163,8 +163,9 @@ public abstract class YKGuiContainerBaseBoxedFuncFlower extends GuiContainer {
 	public void drawManaGage(int x, int y) {
 		
         //マナゲージを描く
-        int mana = this.tileEntity.getMana();
-        int maxMana = this.tileEntity.getMaxMana();
+        int mana = this.tileEntity.getField(BoxedFieldConst.MANA);
+        int maxMana = this.tileEntity.getField(BoxedFieldConst.MAX_MANA);
+
 		
 		//マナのテクスチャバインド
         this.mc.getTextureManager().bindTexture(TextureMap.LOCATION_BLOCKS_TEXTURE);
@@ -239,7 +240,7 @@ public abstract class YKGuiContainerBaseBoxedFuncFlower extends GuiContainer {
 	        //72 * 26
 	        if (tip_x <= mouseX && mouseX <= tip_x + 16
 	        		&& tip_y <= mouseY && mouseY <= tip_y + 50) {
-	        	Integer mana = this.tileEntity.getMana();
+	        	Integer mana = this.tileEntity.getField(BoxedFieldConst.MANA);
 	
 	        	//GUIの左上からの位置
 	            int xAxis = (mouseX - (width - xSize) / 2);

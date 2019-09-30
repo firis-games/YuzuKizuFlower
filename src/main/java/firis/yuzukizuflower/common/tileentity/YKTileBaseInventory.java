@@ -1,21 +1,16 @@
 package firis.yuzukizuflower.common.tileentity;
 
-import java.util.List;
-
 import javax.annotation.Nullable;
 
 import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.inventory.ISidedInventory;
 import net.minecraft.inventory.ItemStackHelper;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
-import net.minecraft.network.Packet;
 import net.minecraft.network.play.server.SPacketUpdateTileEntity;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.NonNullList;
-import net.minecraft.world.World;
 
 /**
  * Inventory基本ロジックのベース
@@ -289,31 +284,4 @@ public abstract class YKTileBaseInventory extends TileEntity implements ISidedIn
     {
 		this.readFromNBT(pkt.getNbtCompound());
     }
-	
-	/**
-	 * 追加処理分
-	 *********************************************************************************/
-	
-	/**
-	 * サーバー->クライアントのデータ同期用
-	 * サーバーからクライアントへデータを送信する
-	 */
-	protected void playerServerSendPacket() {
-		//player listを取得
-		World world = this.getWorld();
-		
-		//サーバの場合のみ
-		if (!world.isRemote) {
-			this.markDirty();
-			List<EntityPlayer> list = world.playerEntities;
-			Packet<?> pkt = this.getUpdatePacket();
-			if (pkt != null) {
-				for (EntityPlayer player : list) {
-					EntityPlayerMP mpPlayer = (EntityPlayerMP) player;
-					mpPlayer.connection.sendPacket(pkt);
-				}
-			}
-		}
-	}
-
 }

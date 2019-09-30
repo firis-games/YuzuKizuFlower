@@ -5,6 +5,7 @@ import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 
 import firis.yuzukizuflower.common.helpler.YKBlockHelper;
+import firis.yuzukizuflower.common.inventory.BoxedFieldConst;
 import firis.yuzukizuflower.common.network.NetworkHandler;
 import firis.yuzukizuflower.common.network.PacketTileParticle;
 import net.minecraft.block.Block;
@@ -341,7 +342,6 @@ public class YKTileBoxedYuquarry extends YKTileBaseBoxedProcFlower implements IY
 			}
 			//基準点を一段下げる
 			workY = workY - 1;
-			this.playerServerSendPacket();
 			startY = true;
 		}
 	}
@@ -455,7 +455,6 @@ public class YKTileBoxedYuquarry extends YKTileBaseBoxedProcFlower implements IY
 						}
 					}
 					flg = true;
-					this.playerServerSendPacket();
 					break;
 				}
 				
@@ -562,7 +561,6 @@ public class YKTileBoxedYuquarry extends YKTileBaseBoxedProcFlower implements IY
 			changeFlowerMode();			
 		} else if(mode == 1) {
 			this.silkTouch = !this.silkTouch;
-			this.playerServerSendPacket();
 		}
 	}
 	
@@ -575,8 +573,6 @@ public class YKTileBoxedYuquarry extends YKTileBaseBoxedProcFlower implements IY
 		
 		//モード変更された場合最初からやり直す
 		this.workY = this.getPos().down().getY();
-		
-		this.playerServerSendPacket();
 	}
 	
 	//******************************************************************************************
@@ -608,8 +604,6 @@ public class YKTileBoxedYuquarry extends YKTileBaseBoxedProcFlower implements IY
 		
 		//処理座標を初期化
 		this.workY = -1;
-		
-		this.playerServerSendPacket();
 	}
 	
 	/**
@@ -633,4 +627,27 @@ public class YKTileBoxedYuquarry extends YKTileBaseBoxedProcFlower implements IY
 		return new BoxedSubTileEntity(viewPos, this.getFlowerRange());
 	}
 	
+	/**
+	 * GUIパラメータ同期用
+	 */
+	@Override
+	public int getField(int id) {
+		
+		if (id == BoxedFieldConst.SILK_TOUCH) {
+			return this.getSilkTouch() ? 1 : 0;
+		} else if (id == BoxedFieldConst.MODE) {
+			return this.getFlowerMode().getId();
+		} else {
+			return super.getField(id);
+		}
+
+	}
+
+	/**
+	 * GUIパラメータ同期用
+	 */
+	@Override
+	public int getFieldCount() {
+		return 9;
+	}
 }

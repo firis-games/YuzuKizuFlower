@@ -2,12 +2,18 @@ package firis.yuzukizuflower.common.container;
 
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.inventory.Container;
+import net.minecraft.inventory.IContainerListener;
 import net.minecraft.inventory.IInventory;
 import net.minecraft.inventory.Slot;
 import net.minecraft.item.ItemStack;
+import net.minecraft.util.NonNullList;
+import net.minecraftforge.fml.relauncher.Side;
+import net.minecraftforge.fml.relauncher.SideOnly;
 
 public abstract class YKContainerBaseBoxedFuncFlower extends Container {
 
+	protected IInventory iinventory;
+	
 	/**
 	 * コンストラクタ
 	 * @param iTeInv
@@ -19,6 +25,11 @@ public abstract class YKContainerBaseBoxedFuncFlower extends Container {
 		this.initTileEntitySlot(iTeInv);
 		
 		this.initPlayerSlot(playerInv);
+		
+		this.iinventory = iTeInv;
+		
+		//負荷軽減用
+		this.lastFieldList = NonNullList.<Integer>withSize(iTeInv.getFieldCount(), 0);
 		
 	}
 	
@@ -119,4 +130,42 @@ public abstract class YKContainerBaseBoxedFuncFlower extends Container {
         return itemstack;
     }
 
+	/**
+	 * ゲージ系の数値をGUIを開いているときのみ同期する
+	 */
+	@Override
+	public void addListener(IContainerListener listener)
+    {
+        super.addListener(listener);
+        listener.sendAllWindowProperties(this, this.iinventory);
+    }
+	
+	@Override
+	@SideOnly(Side.CLIENT)
+    public void updateProgressBar(int id, int data)
+    {
+		this.iinventory.setField(id, data);
+    }
+	
+	/**
+	 * 負荷軽減用
+	 * 最後に送信した数値を保存する
+	 */
+	protected final NonNullList<Integer> lastFieldList;
+	
+	@Override
+	public void detectAndSendChanges() {
+		super.detectAndSendChanges();
+		for (IContainerListener listener : listeners) {
+			//数値系を同期する
+			for (int i = 0; i < iinventory.getFieldCount(); i++) {
+				//変更された場合のみパケットを送信する
+				int newValue = iinventory.getField(i);
+				if (newValue != lastFieldList.get(i)) {
+					lastFieldList.set(i, newValue);
+					listener.sendWindowProperty(this, i, newValue);
+				}
+			}
+		}
+	}
 }

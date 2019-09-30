@@ -6,6 +6,7 @@ import java.util.List;
 
 import firis.yuzukizuflower.common.botania.BotaniaHelper;
 import firis.yuzukizuflower.common.botania.ManaRecipe;
+import firis.yuzukizuflower.common.inventory.BoxedFieldConst;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.ResourceLocation;
@@ -119,13 +120,7 @@ public class YKTileManaTank extends YKTileBaseBoxedProcFlower {
 	
 	@Override
 	public void update() {
-		
 		super.update();
-		
-		//同期処理
-		if(!this.getWorld().isRemote) {
-			playerServerSendPacketOnce();
-		}
 	}
 	
 	/**
@@ -202,11 +197,7 @@ public class YKTileManaTank extends YKTileBaseBoxedProcFlower {
 			}
 			this.setInventorySlotContents(this.outputSlotIndex.get(0), outputSlot);
 			
-			//同期
-			this.playerServerSendPacket();
-			
 			ret = true;
-			
 		}
 		
 		return ret;
@@ -245,7 +236,6 @@ public class YKTileManaTank extends YKTileBaseBoxedProcFlower {
 		
 		manaItem.addMana(stack, -reciveMana);
 		this.recieveMana(reciveMana);
-		this.playerServerSendPacket();
 		
 		//マナタンクが最大値の場合は処理を終了する
 		//マナアイテムの中身が空っぽの場合もおわる
@@ -253,8 +243,6 @@ public class YKTileManaTank extends YKTileBaseBoxedProcFlower {
 			//outputへ移動する
 			this.setInventorySlotContents(1, stack.copy());
 			this.setInventorySlotContents(0, ItemStack.EMPTY);
-			//同期
-			this.playerServerSendPacket();
 			return true;
 		}
 		
@@ -322,13 +310,8 @@ public class YKTileManaTank extends YKTileBaseBoxedProcFlower {
 				}				
 			}	
 		}
-		
-		if (ret) {
-			//同期処理
-			this.playerServerSendPacket();
-		}
-		
-		return true;
+				
+		return ret;
 	}
 	
 	/**
@@ -360,15 +343,12 @@ public class YKTileManaTank extends YKTileBaseBoxedProcFlower {
 					
 					this.recieveMana(mana);
 					stack.shrink(1);
-					//同期
-					this.playerServerSendPacket();
 					ret = true;
 				}
 				//満タンの場合はアイテムを移動する
 				if (this.isFull()) {
 					this.setInventorySlotContents(this.outputSlotIndex.get(0), stack.copy());
 					this.setInventorySlotContents(this.inputSlotIndex.get(0), ItemStack.EMPTY);
-					this.playerServerSendPacket();
 					ret = true;
 				}
 			}
@@ -382,27 +362,32 @@ public class YKTileManaTank extends YKTileBaseBoxedProcFlower {
 	//******************************************************************************************
 	boolean playerServerSendPacketFlg = false;
 	
-	@Override
-	public void playerServerSendPacket() {
-		this.playerServerSendPacketFlg = true;
-	}
-	
-	/**
-	 * 1tick 1回だけ呼ばれる
-	 */
-	public void playerServerSendPacketOnce() {
-		if (playerServerSendPacketFlg) {
-			super.playerServerSendPacket();
-		}
-		this.playerServerSendPacketFlg = false;
-	}
-
 	//******************************************************************************************
 	// SubTile設定
 	//******************************************************************************************
 	@Override
 	public int getFlowerRange() {
 		return 0;
+	}
+	
+	/**
+	 * GUIパラメータ同期用
+	 */
+	@Override
+	public int getField(int id) {
+		if (id == BoxedFieldConst.TIER) {
+			return this.metadata;
+		} else {
+			return super.getField(id);
+		}
+	}
+
+	/**
+	 * GUIパラメータ同期用
+	 */
+	@Override
+	public int getFieldCount() {
+		return 7;
 	}
 	
 }

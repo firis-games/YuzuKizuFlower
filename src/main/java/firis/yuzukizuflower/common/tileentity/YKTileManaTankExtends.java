@@ -266,10 +266,7 @@ public class YKTileManaTankExtends extends YKTileManaTank implements IFluidHandl
 			//アイテムの移動処理
 			slotStack.shrink(1); //input
 			this.insertOutputSlotItemStack(stack); //output
-			
-			//同期処理
-			this.playerServerSendPacket();
-			
+						
 			return true;
 		}
 		return false;

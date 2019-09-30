@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
+import firis.yuzukizuflower.common.inventory.BoxedFieldConst;
 import net.minecraft.block.Block;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.client.resources.I18n;
@@ -148,14 +149,8 @@ public class YKTileBoxedRannuncarpus extends YKTileBaseBoxedProcFlower implement
 	public void update() {
 		super.update();
 		
-		if (this.world.isRemote) {
-			//パーティクル判定
-			if(!isRedStonePower()
-					&& !this.getStackInputSlotFirst().isEmpty()) {
-				clientSpawnParticle();
-			}
-			return;
-		}
+		//パーティクルスポーン判定
+		checkSpawnParticle();
 	}
 	
 	/**
@@ -273,7 +268,6 @@ public class YKTileBoxedRannuncarpus extends YKTileBaseBoxedProcFlower implement
 	 */
 	public void changeFlowerMode() {
 		this.flowerMode = FlowerMode.nextMode(flowerMode);
-		this.playerServerSendPacket();
 	}
 	
 	/**
@@ -293,5 +287,27 @@ public class YKTileBoxedRannuncarpus extends YKTileBaseBoxedProcFlower implement
 	@Override
 	public int getFlowerRange() {
 		return this.flowerMode.getRange();
+	}
+	
+	/**
+	 * GUIパラメータ同期用
+	 */
+	@Override
+	public int getField(int id) {
+		
+		if (id == BoxedFieldConst.MODE) {
+			return this.getFlowerMode().getId();
+		} else {
+			return super.getField(id);
+		}
+
+	}
+
+	/**
+	 * GUIパラメータ同期用
+	 */
+	@Override
+	public int getFieldCount() {
+		return 9;
 	}
 }

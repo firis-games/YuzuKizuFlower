@@ -4,6 +4,10 @@ import java.awt.Color;
 
 import firis.yuzukizuflower.common.botania.IManaRecipes;
 import firis.yuzukizuflower.common.botania.ManaRecipe;
+import firis.yuzukizuflower.common.inventory.BoxedFieldConst;
+import firis.yuzukizuflower.common.network.ITileEntityPacketReceive;
+import firis.yuzukizuflower.common.network.NetworkHandler;
+import firis.yuzukizuflower.common.network.PacketTileEntityS2C;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.tileentity.TileEntity;
@@ -16,7 +20,8 @@ import vazkii.botania.common.Botania;
  * @author computer
  *
  */
-public abstract class YKTileBaseBoxedFuncFlower extends YKTileBaseManaPool implements IYKTileGuiBoxedFlower {
+public abstract class YKTileBaseBoxedFuncFlower extends YKTileBaseManaPool 
+										implements IYKTileGuiBoxedFlower, ITileEntityPacketReceive {
 	
 	/**
 	 * 機能系のお花との自動リンク
@@ -77,20 +82,45 @@ public abstract class YKTileBaseBoxedFuncFlower extends YKTileBaseManaPool imple
     }
 	
 	
+	/**
+	 * パーティクル制御用変数
+	 */
+	protected boolean isParticle = false;
+	protected int particleDelayTime = 0;
+	
 	
 	@Override
 	public void update() {
 		
 		super.update();
 		
-		//クライアントは処理をしない
-		if (this.getWorld().isRemote
-				&& isActive()) {
-			
-			//パーティクル判定
-			this.clientSpawnParticle();
-			
+		//Clientはパーティクル制御のみ行う
+		if (this.getWorld().isRemote) {
+			if (isParticle) {
+				this.clientSpawnParticle();
+			}
 			return;
+		}
+		
+		//パーティクル制御処理
+		boolean active = isActive();
+		particleDelayTime = Math.max(0, particleDelayTime - 1);
+		
+		//Active状態が変更された場合
+		if (active != isParticle && particleDelayTime == 0) {
+			
+			this.isParticle = active;
+			
+			int mode = this.isParticle ? 1 : 0;
+			
+			//活性の場合はそのままパケットを送る
+			//クライアントへ送信
+			NetworkHandler.network.sendToAll(
+					new PacketTileEntityS2C.MessageTileEntity(pos, mode));
+			
+			//Packet負荷を抑えるために20tickのディレイ
+			particleDelayTime = 20;
+			
 		}
 		
 		//レッドストーン入力がある場合は停止する
@@ -115,7 +145,6 @@ public abstract class YKTileBaseBoxedFuncFlower extends YKTileBaseManaPool imple
 			if (randomRecipe && this.isFillOutputSlot()) {
 				if (this.timer != 0) {
 					this.timer = 0;
-					this.playerServerSendPacket();
 				}
 				return;
 			}
@@ -135,9 +164,7 @@ public abstract class YKTileBaseBoxedFuncFlower extends YKTileBaseManaPool imple
 			this.maxTimer = recipe.getTime();
 
 			//入力とworkスロットを制御する
-			this.shrinkStackInputSlotToWorkSlot(recipe);
-			this.playerServerSendPacket();
-			
+			this.shrinkStackInputSlotToWorkSlot(recipe);			
 		}
 		//例外処理
 		if (this.maxTimer == 0) {
@@ -154,10 +181,6 @@ public abstract class YKTileBaseBoxedFuncFlower extends YKTileBaseManaPool imple
 		this.timer += 1;
 		this.recieveMana(-mana);
 		
-		if (mana == 0) {
-			this.playerServerSendPacket();
-		}
-		
 		//規定値であれば何もしない
 		if (this.timer < this.maxTimer) {
 			return;
@@ -169,10 +192,6 @@ public abstract class YKTileBaseBoxedFuncFlower extends YKTileBaseManaPool imple
 		
 		//処理状態を初期化
 		clearRecipeWork();
-		
-		//同期をとる
-		this.playerServerSendPacket();
-		
 	}
 	
 	/**
@@ -364,5 +383,48 @@ public abstract class YKTileBaseBoxedFuncFlower extends YKTileBaseManaPool imple
 			return false;
 		}		
 		return true;
+	}
+	
+	
+	/**
+	 * GUIパラメータ同期用
+	 */
+	@Override
+	public int getField(int id) {
+		if (id == BoxedFieldConst.MANA) {
+			return this.mana;
+		} else if (id == BoxedFieldConst.MAX_MANA) {
+			return this.maxMana;
+		} else if (id == BoxedFieldConst.TIMER) {
+			return this.timer;
+		} else if (id == BoxedFieldConst.MAX_TIMER) {
+			return this.maxTimer;
+		}
+		return 0;
+	}
+
+	@Override
+	public void setField(int id, int value) {
+	}
+	
+	/**
+	 * GUIパラメータ同期用
+	 */
+	@Override
+	public int getFieldCount() {
+		return 4;
+	}
+	
+	/**
+	 * Client受信用
+	 */
+	@Override
+	public void receivePacket(int value) {
+		
+		if (value == 1) {
+			this.isParticle = true;
+		} else {
+			this.isParticle = false;
+		}
 	}
 }

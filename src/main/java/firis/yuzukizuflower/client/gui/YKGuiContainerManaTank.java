@@ -3,7 +3,7 @@ package firis.yuzukizuflower.client.gui;
 import java.text.NumberFormat;
 
 import firis.yuzukizuflower.common.container.YKContainerManaTank;
-import firis.yuzukizuflower.common.tileentity.YKTileBaseManaPool;
+import firis.yuzukizuflower.common.inventory.BoxedFieldConst;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.inventory.GuiContainer;
 import net.minecraft.client.renderer.texture.TextureAtlasSprite;
@@ -15,7 +15,7 @@ import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
 @SideOnly(Side.CLIENT)
-public class YKGuiContainerManaTank extends GuiContainer{
+public class YKGuiContainerManaTank extends GuiContainer {
 
 	/**
 	 * GUIテクスチャ
@@ -42,7 +42,7 @@ public class YKGuiContainerManaTank extends GuiContainer{
 	 * YKTileBaseManaPool
 	 * @param inventorySlotsIn
 	 */
-	protected YKTileBaseManaPool tileEntity = null;
+	protected IInventory tileEntity = null;
 
 	/**
 	 * コンストラクタ
@@ -53,12 +53,12 @@ public class YKGuiContainerManaTank extends GuiContainer{
 		
 		super(new YKContainerManaTank(iTeInv, playerInv));
 		
-		tileEntity = (YKTileBaseManaPool) iTeInv;
+		tileEntity = iTeInv;
 		
 		//GUIテクスチャ
 		this.guiTextures = new ResourceLocation("yuzukizuflower", "textures/gui/mana_tank.png");
 		
-		Integer metadata = tileEntity.getBlockMetadata();
+		Integer metadata = tileEntity.getField(BoxedFieldConst.TIER);
 		
 		//GUIタイトル
 		this.guiTitle = "gui.mana_tank_" + metadata.toString() +  ".name";		
@@ -98,8 +98,8 @@ public class YKGuiContainerManaTank extends GuiContainer{
 	public void drawManaGage(int x, int y) {
 		
 		//マナゲージを描く
-        int mana = this.tileEntity.getMana();
-        int maxMana = this.tileEntity.getMaxMana();
+        int mana = this.tileEntity.getField(BoxedFieldConst.MANA);
+        int maxMana = this.tileEntity.getField(BoxedFieldConst.MAX_MANA);
         
 		//マナのテクスチャバインド
         this.mc.getTextureManager().bindTexture(TextureMap.LOCATION_BLOCKS_TEXTURE);
@@ -171,7 +171,7 @@ public class YKGuiContainerManaTank extends GuiContainer{
         //72 * 26
         if (tip_x <= mouseX && mouseX <= tip_x + 32
         		&& tip_y <= mouseY && mouseY <= tip_y + 50) {
-        	Integer mana = this.tileEntity.getMana();
+        	Integer mana = this.tileEntity.getField(BoxedFieldConst.MANA);
 
         	//GUIの左上からの位置
             int xAxis = (mouseX - (width - xSize) / 2);

@@ -1,7 +1,6 @@
 package firis.yuzukizuflower.client.gui;
 
 import firis.yuzukizuflower.common.container.YKContainerBoxedGourmaryllis;
-import firis.yuzukizuflower.common.tileentity.IYKTileGuiBoxedFlower;
 import net.minecraft.inventory.IInventory;
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.fml.relauncher.Side;
@@ -19,7 +18,7 @@ public class YKGuiContainerBoxedGourmaryllis extends YKGuiContainerBaseBoxedFunc
 		
 		super(new YKContainerBoxedGourmaryllis(iTeInv, playerInv));
 		
-		this.tileEntity = (IYKTileGuiBoxedFlower) iTeInv;
+		this.tileEntity = iTeInv;
 		
 		//GUIテクスチャ
 		this.guiTextures = new ResourceLocation("yuzukizuflower", "textures/gui/boxed_gourmaryllis.png");

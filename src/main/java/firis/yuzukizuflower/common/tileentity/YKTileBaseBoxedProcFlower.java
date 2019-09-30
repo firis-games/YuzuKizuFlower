@@ -2,6 +2,10 @@ package firis.yuzukizuflower.common.tileentity;
 
 import java.awt.Color;
 
+import firis.yuzukizuflower.common.inventory.BoxedFieldConst;
+import firis.yuzukizuflower.common.network.ITileEntityPacketReceive;
+import firis.yuzukizuflower.common.network.NetworkHandler;
+import firis.yuzukizuflower.common.network.PacketTileEntityS2C;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.TileEntity;
@@ -18,7 +22,8 @@ import vazkii.botania.common.Botania;
  * @author computer
  *
  */
-public abstract class YKTileBaseBoxedProcFlower extends YKTileBaseManaPool implements IYKTileGuiBoxedFlower{
+public abstract class YKTileBaseBoxedProcFlower extends YKTileBaseManaPool 
+										implements IYKTileGuiBoxedFlower, ITileEntityPacketReceive {
 	
 	/**
 	 * 機能系のお花との自動リンク
@@ -55,10 +60,7 @@ public abstract class YKTileBaseBoxedProcFlower extends YKTileBaseManaPool imple
 		//レッドストーン入力がある場合は停止する
 		if(!isRedStonePower()) {
 			//マナ移動処理
-			if(moveMana()) {
-				//同期処理
-				this.playerServerSendPacket();
-			}
+			moveMana();
 		}
 				
 		//一定周期ごとに処理を行う
@@ -244,7 +246,91 @@ public abstract class YKTileBaseBoxedProcFlower extends YKTileBaseManaPool imple
 	}
 	
 	//******************************************************************************************
-	// アイテムの入出力の制御
+	// GUIパラメータ同期用
 	//******************************************************************************************
+	
+	/**
+	 * GUIパラメータ同期用
+	 */
+	@Override
+	public int getField(int id) {
+		if (id == BoxedFieldConst.MANA) {
+			return this.mana;
+		} else if (id == BoxedFieldConst.MAX_MANA) {
+			return this.maxMana;
+		}
+		return 0;
+	}
+
+	@Override
+	public void setField(int id, int value) {
+	}
+	
+	/**
+	 * GUIパラメータ同期用
+	 */
+	@Override
+	public int getFieldCount() {
+		return 2;
+	}
+	
+	/**
+	 * パーティクル制御用変数
+	 */
+	protected boolean isParticle = false;
+	protected int particleDelayTime = 0;
+	
+	/**
+	 * Client受信用
+	 */
+	@Override
+	public void receivePacket(int value) {
+		
+		if (value == 1) {
+			this.isParticle = true;
+		} else {
+			this.isParticle = false;
+		}
+	}
+	
+	/**
+	 * パーティクルのチェック処理
+	 */
+	public void checkSpawnParticle() {
+		
+		//Clientはパーティクル制御のみ行う
+		if (this.getWorld().isRemote) {
+			if (isParticle) {
+				this.clientSpawnParticle();
+			}
+			return;
+		}
+		
+		//パーティクル制御処理
+		boolean active = false;
+		if(!isRedStonePower()
+				&& !this.getStackInputSlotFirst().isEmpty()) {
+			active = true;
+		}
+		
+		particleDelayTime = Math.max(0, particleDelayTime - 1);
+		
+		//Active状態が変更された場合
+		if (active != isParticle && particleDelayTime == 0) {
+			
+			this.isParticle = active;
+			
+			int mode = this.isParticle ? 1 : 0;
+			
+			//活性の場合はそのままパケットを送る
+			//クライアントへ送信
+			NetworkHandler.network.sendToAll(
+					new PacketTileEntityS2C.MessageTileEntity(pos, mode));
+			
+			//Packet負荷を抑えるために20tickのディレイ
+			particleDelayTime = 20;
+			
+		}
+	}
 	
 }

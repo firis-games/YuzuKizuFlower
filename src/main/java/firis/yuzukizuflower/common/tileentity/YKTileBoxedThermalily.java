@@ -6,6 +6,7 @@ import java.util.Arrays;
 import javax.annotation.Nullable;
 
 import firis.yuzukizuflower.common.botania.BotaniaHelper;
+import firis.yuzukizuflower.common.inventory.BoxedFieldConst;
 import firis.yuzukizuflower.common.tileentity.handler.YKLavaFluidHandler;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
@@ -15,7 +16,7 @@ import net.minecraftforge.fluids.FluidUtil;
 import net.minecraftforge.fluids.capability.CapabilityFluidHandler;
 import net.minecraftforge.fluids.capability.IFluidHandlerItem;
 
-public class YKTileBoxedThermalily extends YKTileBaseBoxedGenFlower implements IYKPlayerServerSendPacket {
+public class YKTileBoxedThermalily extends YKTileBaseBoxedGenFlower {
 
 	public YKLavaFluidHandler fluidHandler;
 	
@@ -206,15 +207,30 @@ public class YKTileBoxedThermalily extends YKTileBaseBoxedGenFlower implements I
 			//アイテムの移動処理
 			slotStack.shrink(1); //input
 			this.insertOutputSlotItemStack(stack); //output
-			
-			//同期処理
-			this.playerServerSendPacket();
-			
 		}
 	}
 	
+	/**
+	 * GUIパラメータ同期用
+	 */
 	@Override
-	public void playerServerSendPacket() {
-		super.playerServerSendPacket();
+	public int getField(int id) {
+		
+		if (id == BoxedFieldConst.FLUID) {
+			return this.fluidHandler.getLiquid();
+		} else if (id == BoxedFieldConst.MAX_FLUID) {
+			return this.fluidHandler.getMaxLiquid();
+		} else {
+			return super.getField(id);
+		}
+
+	}
+
+	/**
+	 * GUIパラメータ同期用
+	 */
+	@Override
+	public int getFieldCount() {
+		return 6;
 	}
 }

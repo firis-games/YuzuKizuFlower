@@ -6,15 +6,15 @@ import java.util.List;
 
 import firis.yuzukizuflower.client.gui.parts.YKGuiItemIconButton;
 import firis.yuzukizuflower.common.container.YKContainerBoxedYuquarry;
+import firis.yuzukizuflower.common.inventory.BoxedFieldConst;
+import firis.yuzukizuflower.common.inventory.ClientInventory;
 import firis.yuzukizuflower.common.network.NetworkHandler;
 import firis.yuzukizuflower.common.network.PacketTileBoxedFlower;
-import firis.yuzukizuflower.common.tileentity.IYKTileGuiBoxedFlower;
-import firis.yuzukizuflower.common.tileentity.YKTileBoxedYuquarry;
+import firis.yuzukizuflower.common.tileentity.YKTileBoxedYuquarry.FlowerMode;
 import net.minecraft.client.gui.GuiButton;
 import net.minecraft.client.renderer.RenderHelper;
 import net.minecraft.client.resources.I18n;
 import net.minecraft.inventory.IInventory;
-import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.math.BlockPos;
 import net.minecraftforge.fml.relauncher.Side;
@@ -32,7 +32,7 @@ public class YKGuiContainerBoxedYuquarry extends YKGuiContainerBaseBoxedFuncFlow
 		
 		super(new YKContainerBoxedYuquarry(iTeInv, playerInv));
 		
-		this.tileEntity = (IYKTileGuiBoxedFlower) iTeInv;
+		this.tileEntity = iTeInv;
 		
 		//GUIテクスチャ
 		this.guiTextures = new ResourceLocation("yuzukizuflower", "textures/gui/boxed_yuquarry.png");
@@ -62,8 +62,8 @@ public class YKGuiContainerBoxedYuquarry extends YKGuiContainerBaseBoxedFuncFlow
         
         //シルクタッチボタン
         this.buttonList.add(new YKGuiItemIconButton(1, x + 142 , y + 42, "minecraft:items/diamond_pickaxe"));
-        YKTileBoxedYuquarry tile = (YKTileBoxedYuquarry)this.tileEntity;
-		((YKGuiItemIconButton)this.buttonList.get(1)).setSelected(tile.getSilkTouch());
+        boolean isSilk = this.tileEntity.getField(BoxedFieldConst.SILK_TOUCH) == 1 ? true : false;
+		((YKGuiItemIconButton)this.buttonList.get(1)).setSelected(isSilk);
     }	
 	
     /**
@@ -86,10 +86,11 @@ public class YKGuiContainerBoxedYuquarry extends YKGuiContainerBaseBoxedFuncFlow
             	if (guibutton.id == 0) {
             		int xAxis = (mouseX - (width - this.guiWidth) / 2);
             		int yAxis = (mouseY - (height - this.guiHeight) / 2);
-            		YKTileBoxedYuquarry tile = ((YKTileBoxedYuquarry)this.tileEntity);
             		
-            		String modeName = tile.getFlowerMode().getName();
-            		Integer width = tile.getFlowerMode().getRange();
+            		FlowerMode flowerMode = FlowerMode.getById(this.tileEntity.getField(BoxedFieldConst.MODE));
+            		
+            		String modeName = flowerMode.getName();
+            		Integer width = flowerMode.getRange();
             		
             		List<String> message = new ArrayList<String>();
             		message.add(modeName + "" + I18n.format("gui.boxed_yuquarry.mode.name"));
@@ -100,9 +101,8 @@ public class YKGuiContainerBoxedYuquarry extends YKGuiContainerBaseBoxedFuncFlow
             	} else if (guibutton.id == 1) {
             		int xAxis = (mouseX - (width - this.guiWidth) / 2);
             		int yAxis = (mouseY - (height - this.guiHeight) / 2);
-            		YKTileBoxedYuquarry tile = ((YKTileBoxedYuquarry)this.tileEntity);
             		
-            		boolean silkTouch = tile.getSilkTouch();
+            		boolean silkTouch = this.tileEntity.getField(BoxedFieldConst.SILK_TOUCH) == 1 ? true : false;
             		
             		List<String> message = new ArrayList<String>();
             		message.add(I18n.format("gui.boxed_yuquarry.silk_touch.name") 
@@ -123,7 +123,7 @@ public class YKGuiContainerBoxedYuquarry extends YKGuiContainerBaseBoxedFuncFlow
     {
     	super.actionPerformed(button);
     	
-    	BlockPos pos = ((TileEntity)tileEntity).getPos();
+    	BlockPos pos = ((ClientInventory)tileEntity).getPos();
     	
     	if (button.id == 0) {
     		//FlowerModeのトグル
@@ -148,8 +148,8 @@ public class YKGuiContainerBoxedYuquarry extends YKGuiContainerBaseBoxedFuncFlow
         {
 			if (guibutton.id == 1) {
 				//シルクタッチボタン
-				YKTileBoxedYuquarry tile = (YKTileBoxedYuquarry)this.tileEntity;
-				((YKGuiItemIconButton)guibutton).setSelected(tile.getSilkTouch());
+				boolean isSilk = this.tileEntity.getField(BoxedFieldConst.SILK_TOUCH) == 1 ? true : false;
+				((YKGuiItemIconButton)guibutton).setSelected(isSilk);
 			}
         }
 	}

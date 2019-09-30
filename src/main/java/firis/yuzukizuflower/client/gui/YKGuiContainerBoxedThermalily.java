@@ -3,9 +3,7 @@ package firis.yuzukizuflower.client.gui;
 import java.text.NumberFormat;
 
 import firis.yuzukizuflower.common.container.YKContainerBoxedThermalily;
-import firis.yuzukizuflower.common.tileentity.IYKTileGuiBoxedFlower;
-import firis.yuzukizuflower.common.tileentity.YKTileBoxedThermalily;
-import firis.yuzukizuflower.common.tileentity.handler.YKLavaFluidHandler;
+import firis.yuzukizuflower.common.inventory.BoxedFieldConst;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.RenderHelper;
 import net.minecraft.client.renderer.texture.TextureAtlasSprite;
@@ -29,7 +27,7 @@ public class YKGuiContainerBoxedThermalily extends YKGuiContainerBaseBoxedFuncFl
 		
 		super(new YKContainerBoxedThermalily(iTeInv, playerInv));
 		
-		this.tileEntity = (IYKTileGuiBoxedFlower) iTeInv;
+		this.tileEntity = iTeInv;
 		
 		//GUIテクスチャ
 		this.guiTextures = new ResourceLocation("yuzukizuflower", "textures/gui/boxed_thermalily.png");
@@ -90,9 +88,8 @@ public class YKGuiContainerBoxedThermalily extends YKGuiContainerBaseBoxedFuncFl
 		}
 		
         //ゲージを描く
-		YKLavaFluidHandler fluidHandler = (YKLavaFluidHandler) ((YKTileBoxedThermalily)this.tileEntity).fluidHandler;
-        int mana = fluidHandler.getLiquid();
-        int maxMana = fluidHandler.getMaxLiquid();
+        int mana = this.tileEntity.getField(BoxedFieldConst.FLUID);
+        int maxMana = this.tileEntity.getField(BoxedFieldConst.MAX_FLUID);
 
 		
 		//テクスチャバインド
@@ -165,8 +162,7 @@ public class YKGuiContainerBoxedThermalily extends YKGuiContainerBaseBoxedFuncFl
         //72 * 26
         if (tip_x <= mouseX && mouseX <= tip_x + 16
         		&& tip_y <= mouseY && mouseY <= tip_y + 50) {
-    		YKLavaFluidHandler fluidHandler = (YKLavaFluidHandler) ((YKTileBoxedThermalily)this.tileEntity).fluidHandler;
-        	Integer mana = fluidHandler.getLiquid();
+        	Integer mana = this.tileEntity.getField(BoxedFieldConst.FLUID);
             
         	//GUIの左上からの位置
             int xAxis = (mouseX - (width - xSize) / 2);

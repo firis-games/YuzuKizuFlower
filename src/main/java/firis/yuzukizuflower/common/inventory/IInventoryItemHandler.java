@@ -21,6 +21,9 @@ public abstract class IInventoryItemHandler implements IInventory {
 	 * ItemHandlerをもつTileEntity
 	 */
 	protected TileEntity tile;
+	public TileEntity getTileEntity() {
+		return this.tile;
+	}
 	
 	/**
 	 * 内部インベントリ

@@ -137,10 +137,7 @@ public abstract class YKTileBaseManaPool extends YKTileBaseInventory
 		if(old != this.mana) {
 			world.updateComparatorOutputLevel(pos, world.getBlockState(pos).getBlock());
 			//botaniaの処理いったんは何もしない
-			//@here
 			//markDispatchable();
-			//同期処理
-			this.playerServerSendPacket();
 		}
 		
 	}

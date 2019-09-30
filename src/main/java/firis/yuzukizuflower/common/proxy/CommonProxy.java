@@ -44,6 +44,7 @@ import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.EnumHand;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
+import net.minecraftforge.fml.common.network.simpleimpl.MessageContext;
 
 public class CommonProxy {
 	
@@ -229,6 +230,14 @@ public class CommonProxy {
 	 */
 	public void initLayerRenderer() {
 		
+	}
+	
+	
+	/**
+	 * EntityPlayer
+	 */
+	public EntityPlayer getPlayerPacket(MessageContext ctx) {
+		return ctx.getServerHandler().player;
 	}
 	
 }

@@ -2,6 +2,7 @@ package firis.yuzukizuflower.common.container;
 
 import firis.yuzukizuflower.common.botania.BotaniaHelper;
 import firis.yuzukizuflower.common.container.slot.YKSlotInventory;
+import firis.yuzukizuflower.common.helpler.VanillaNetworkHelper;
 import firis.yuzukizuflower.common.inventory.ManaEnchanterInventory;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.InventoryPlayer;
@@ -162,4 +163,13 @@ public class YKContainerManaEnchanter extends Container {
         }
         return itemstack;
     }
+	
+	@Override
+	public void detectAndSendChanges() {
+		super.detectAndSendChanges();
+		
+		//こちら側で同期処理を行う
+		VanillaNetworkHelper.sendPacketTileEntity(inventory.getTileEntity());
+		
+	}
 }

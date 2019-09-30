@@ -1,7 +1,6 @@
 package firis.yuzukizuflower.client.gui;
 
 import firis.yuzukizuflower.common.container.YKContainerBoxedLoonium;
-import firis.yuzukizuflower.common.tileentity.IYKTileGuiBoxedFlower;
 import net.minecraft.inventory.IInventory;
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.fml.relauncher.Side;
@@ -19,7 +18,7 @@ public class YKGuiContainerBoxedLoonium extends YKGuiContainerBaseBoxedFuncFlowe
 		
 		super(new YKContainerBoxedLoonium(iTeInv, playerInv));
 		
-		this.tileEntity = (IYKTileGuiBoxedFlower) iTeInv;
+		this.tileEntity = iTeInv;
 		
 		//GUIテクスチャ
 		this.guiTextures = new ResourceLocation("yuzukizuflower", "textures/gui/boxed_loonium.png");

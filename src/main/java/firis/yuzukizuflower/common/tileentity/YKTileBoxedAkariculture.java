@@ -47,14 +47,8 @@ public class YKTileBoxedAkariculture extends YKTileBaseBoxedProcFlower {
 	public void update() {
 		super.update();
 		
-		if (this.world.isRemote) {
-			//パーティクル判定
-			if(!isRedStonePower()
-					&& !this.getStackInputSlotFirst().isEmpty()) {
-				clientSpawnParticle();
-			}
-			return;
-		}
+		//パーティクルスポーン判定
+		checkSpawnParticle();
 	}
 	
 	/**
