@@ -61,7 +61,7 @@ public class YKGuiContainerManaTank extends GuiContainer {
 		Integer metadata = tileEntity.getField(BoxedFieldConst.TIER);
 		
 		//GUIタイトル
-		this.guiTitle = "gui.mana_tank_" + metadata.toString() +  ".name";		
+		this.guiTitle = "gui.mana_tank_" + metadata.toString() +  ".name";
 	}
 	
 	

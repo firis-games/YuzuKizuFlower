@@ -32,6 +32,10 @@ public class ClientInventory implements IInventory {
 		this.inventorySlotItemStack = NonNullList.<ItemStack>withSize(inventory.getSizeInventory(), ItemStack.EMPTY);
 		
 		this.fieldList = NonNullList.<Integer>withSize(inventory.getFieldCount(), 0);
+		//初期値設定
+		for (int i = 0; i < inventory.getFieldCount(); i++) {
+			this.fieldList.set(i, inventory.getField(i));
+		}
 		
 		this.iinventory = inventory;
 		
