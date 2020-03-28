@@ -2,6 +2,8 @@ package firis.yuzukizuflower.common.botania;
 
 import javax.annotation.Nonnull;
 
+import net.minecraft.block.Block;
+import net.minecraft.block.state.IBlockState;
 import net.minecraft.item.ItemStack;
 import net.minecraftforge.oredict.OreDictionary;
 import vazkii.botania.api.BotaniaAPI;
@@ -16,6 +18,9 @@ public class RecipesPureDaisy implements IManaRecipes{
 	 */
 	public ManaRecipe getMatchesRecipe(@Nonnull ItemStack stack, boolean simulate) {
 		
+		//対象がEMPTYの場合は無条件でスキップ
+		if (stack.isEmpty()) return null;
+		
 		ManaRecipe recipe = null;
 		
 		RecipePureDaisy result = null;
@@ -23,8 +28,20 @@ public class RecipesPureDaisy implements IManaRecipes{
 			boolean ret = false;
 			Object input = pdRrecipe.getInput();
 			
-			//文字列で格納されている
-			if (input instanceof String) {
+			//Blockで比較
+			if(input instanceof Block) {
+				ItemStack inputStack = new ItemStack((Block) input);
+				//メタデータは無視
+				ret = stack.getItem() == inputStack.getItem();
+				
+			//IBlockStateで比較
+			} else if (input instanceof IBlockState) {
+				IBlockState state = (IBlockState) input;
+				ItemStack inputStack = new ItemStack(state.getBlock(), 1, state.getBlock().damageDropped(state));
+				ret = ItemStack.areItemsEqual(stack, inputStack);
+				
+			//鉱石辞書で比較
+			} else if (input instanceof String) {
 				String oredict = (String) input;
 				//recipe.isOreDict
 				ret = RecipesPureDaisy.isOreDict(stack, oredict);
