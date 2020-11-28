@@ -22,10 +22,12 @@ import net.minecraft.util.EnumFacing;
 import net.minecraft.util.EnumHand;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
+import net.minecraft.world.WorldServer;
+import net.minecraftforge.common.DimensionManager;
 import net.minecraftforge.event.entity.player.EntityItemPickupEvent;
 import net.minecraftforge.fml.common.Mod.EventBusSubscriber;
-import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.minecraftforge.fml.common.eventhandler.Event.Result;
+import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 import net.minecraftforge.items.CapabilityItemHandler;
@@ -68,6 +70,7 @@ public class YKItemRemoteChest extends Item implements IBauble {
 					nbt.setInteger("BlockPosX", pos.getX());
 					nbt.setInteger("BlockPosY", pos.getY());
 					nbt.setInteger("BlockPosZ", pos.getZ());
+					nbt.setInteger("Dimension", worldIn.provider.getDimension());
 					stack.setTagCompound(nbt);
 				}
 			}
@@ -86,7 +89,7 @@ public class YKItemRemoteChest extends Item implements IBauble {
 		if (EnumHand.MAIN_HAND != handIn) return new ActionResult<ItemStack>(EnumActionResult.PASS, playerIn.getHeldItem(handIn));
 		
 		ItemStack stack = playerIn.getHeldItemMainhand();
-		
+				
 		//条件を満たす場合にGuiを開く
 		if(YKItemRemoteChest.openGui(stack, playerIn, false)) {
 			return new ActionResult<ItemStack>(EnumActionResult.SUCCESS, playerIn.getHeldItem(handIn));
@@ -109,10 +112,15 @@ public class YKItemRemoteChest extends Item implements IBauble {
         	Integer posX = nbt.getInteger("BlockPosX");
         	Integer posY = nbt.getInteger("BlockPosY");
         	Integer posZ = nbt.getInteger("BlockPosZ");
+        	Integer dim = nbt.getInteger("Dimension");
         	
         	BlockPos pos = new BlockPos(posX, posY, posZ);
         	
-        	TileEntity tile = player.getEntityWorld().getTileEntity(pos);
+    		WorldServer dimWorld = DimensionManager.getWorld(dim, false);
+    		if (dimWorld == null) return false;
+        	if (!dimWorld.isBlockLoaded(pos)) return false;
+    		
+        	TileEntity tile = dimWorld.getTileEntity(pos);
         	
         	if (tile != null && !tile.isInvalid()) {
         		IItemHandler capability = tile.getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY, null);
@@ -122,7 +130,7 @@ public class YKItemRemoteChest extends Item implements IBauble {
         			
 	            	//右クリックでGUIを開く
         			player.openGui(YuzuKizuFlower.INSTANCE, guiid,
-	        				player.getEntityWorld(), posX, posY, posZ);
+        					dimWorld, posX, posY, posZ);
         			return true;
         		}
         	}
@@ -145,16 +153,41 @@ public class YKItemRemoteChest extends Item implements IBauble {
         	Integer posX = nbt.getInteger("BlockPosX");
         	Integer posY = nbt.getInteger("BlockPosY");
         	Integer posZ = nbt.getInteger("BlockPosZ");
+        	Integer dim = nbt.getInteger("Dimension");
+        	String dimName = DimensionManager.getProviderType(dim).getName();
         	
-        	
-        	tooltip.add(name + "<" + posX.toString() + ", " + posY.toString() + ", " + posZ.toString() + ">");
+        	tooltip.add(name); 
+        	tooltip.add(dimName);
+        	tooltip.add("<" + posX.toString() + ", " + posY.toString() + ", " + posZ.toString() + ">");
         }
     }
     
     @SideOnly(Side.CLIENT)
     public boolean hasEffect(ItemStack stack)
     {
-        return stack.hasTagCompound();
+    	if(stack.hasTagCompound()) {
+        	NBTTagCompound nbt = stack.getTagCompound();
+        	
+        	Integer posX = nbt.getInteger("BlockPosX");
+        	Integer posY = nbt.getInteger("BlockPosY");
+        	Integer posZ = nbt.getInteger("BlockPosZ");
+        	Integer dim = nbt.getInteger("Dimension");
+        	
+        	BlockPos pos = new BlockPos(posX, posY, posZ);
+        	WorldServer dimWorld = DimensionManager.getWorld(dim, false);
+    		if (dimWorld == null) return false;
+        	if (!dimWorld.isBlockLoaded(pos)) return false;
+    		TileEntity tile = dimWorld.getTileEntity(pos);
+    		if (tile == null) return false;
+        	
+    		if (tile != null && !tile.isInvalid()) {
+        		IItemHandler capability = tile.getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY, null);
+        		if (capability != null) {
+        			return true;
+        		}
+    		}    		
+        }
+        return false;
     }
 
     /******************************************************************************************/
