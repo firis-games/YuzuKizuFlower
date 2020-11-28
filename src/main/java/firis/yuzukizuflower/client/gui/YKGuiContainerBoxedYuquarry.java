@@ -45,7 +45,7 @@ public class YKGuiContainerBoxedYuquarry extends YKGuiContainerBaseBoxedFuncFlow
 		this.guiVisibleFire = false;
 		
 	}
-	
+		
 	/**
 	 * ボタンを追加する
 	 */
@@ -72,6 +72,14 @@ public class YKGuiContainerBoxedYuquarry extends YKGuiContainerBaseBoxedFuncFlow
 	@Override
     protected void drawGuiContainerForegroundLayer(int mouseX, int mouseY)
     {
+		//名称変更
+		boolean isFlatMode = this.tileEntity.getField(BoxedFieldConst.FLAT_MODE) == 1 ? true : false;
+		if (!isFlatMode) {
+			this.guiTitle = "gui.boxed_yuquarry.name";			
+		} else {
+			this.guiTitle = "gui.boxed_yuquarry.flat.name";
+		}
+		
 		//ベースの処理
 		super.drawGuiContainerForegroundLayer(mouseX, mouseY);
 		

@@ -20,5 +20,6 @@ public class BoxedFieldConst {
 	/** ユクァーリー用 **/
 	public static final int MODE = 7;
 	public static final int SILK_TOUCH = 8;
+	public static final int FLAT_MODE = 9;
 	
 }

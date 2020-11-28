@@ -31,6 +31,20 @@ public class YKBlockBoxedYuquarry extends YKBlockBaseManaPool {
 		return new YKTileBoxedYuquarry();
 	}
 	
+	@Override
+	public boolean onBlockActivated(World worldIn, BlockPos pos, IBlockState state, EntityPlayer playerIn, EnumHand hand, EnumFacing facing, float hitX, float hitY, float hitZ)
+    {
+		//ショベル系アイテムの場合
+		ItemStack handItem = playerIn.getHeldItem(hand);
+		if (!handItem.isEmpty() && handItem.getItem().getRegistryName().toString().indexOf("shovel") > -1) {
+			YKTileBoxedYuquarry tile = (YKTileBoxedYuquarry)worldIn.getTileEntity(pos);
+			tile.changeFlatMode();
+			return true;
+		}
+		return super.onBlockActivated(worldIn, pos, state, playerIn, hand, facing, hitX, hitY, hitZ);
+    }
+
+	
 	/**
 	 * メインハンドが森の杖の場合の処理
 	 * @return

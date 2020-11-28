@@ -48,6 +48,7 @@ item.akariculture.name=Akariculture
 
 tile.boxed_yuquarry.name=Boxed Yuquarry
 gui.boxed_yuquarry.name=Boxed Yuquarry
+gui.boxed_yuquarry.flat.name=Boxed Yuquarry [Flat]
 
 item.yuquarry.name=Yuquarry
 

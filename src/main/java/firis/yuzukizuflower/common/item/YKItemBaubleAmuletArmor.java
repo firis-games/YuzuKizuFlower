@@ -23,7 +23,7 @@ public class YKItemBaubleAmuletArmor extends YKItemBaseBaubleAmulet {
 	
 	@Override
 	public BaubleType getBaubleType(ItemStack paramItemStack) {
-		return BaubleType.AMULET;
+		return BaubleType.RING;
 	}
 
 	@Override

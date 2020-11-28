@@ -108,6 +108,21 @@ public class YKTileBoxedYuquarry extends YKTileBaseBoxedProcFlower implements IY
 		return this.silkTouch;
 	}
 	
+	/**
+	 * 整地モード
+	 */
+	protected boolean isFlatMode = false;
+	public boolean isFlatMode() {
+		return this.isFlatMode;
+	}
+	public void changeFlatMode() {
+		this.isFlatMode = !this.isFlatMode;
+		if (!this.isFlatMode) {
+			this.workY = this.getPos().down().getY();
+		} else {
+			this.workY = this.getWorld().provider.getHeight();
+		}
+	}
 	
 	/**
 	 * コンストラクタ
@@ -119,6 +134,7 @@ public class YKTileBoxedYuquarry extends YKTileBaseBoxedProcFlower implements IY
 		//初期mode
 		this.flowerMode = FlowerMode.MODE1;
 		this.silkTouch = false;
+		this.isFlatMode = false;
 		
 		//outputスロット
 		this.outputSlotIndex = IntStream.range(0, 15).boxed().collect(Collectors.toList());
@@ -143,6 +159,7 @@ public class YKTileBoxedYuquarry extends YKTileBaseBoxedProcFlower implements IY
         this.workY = compound.getInteger("workY");
         this.flowerMode = FlowerMode.getById(compound.getInteger("flowerMode"));
         this.silkTouch = compound.getBoolean("silkTouch");
+        this.isFlatMode = compound.getBoolean("isFlatMode");
         this.flowerFacing = EnumFacing.getFront(compound.getInteger("flowerFacing"));
 
     }
@@ -158,6 +175,7 @@ public class YKTileBoxedYuquarry extends YKTileBaseBoxedProcFlower implements IY
         compound.setInteger("workY", this.workY);
         compound.setInteger("flowerMode", this.flowerMode.getId());
         compound.setBoolean("silkTouch", this.silkTouch);
+        compound.setBoolean("isFlatMode", this.isFlatMode);
         compound.setInteger("flowerFacing", this.flowerFacing.getIndex());
         
         return compound;
@@ -221,7 +239,7 @@ public class YKTileBoxedYuquarry extends YKTileBaseBoxedProcFlower implements IY
 			return;
 		}
 		
-		//ブロック設置処理
+		//ブロック破壊処理
 		procYuquarry();
 	}
 	
@@ -235,13 +253,18 @@ public class YKTileBoxedYuquarry extends YKTileBaseBoxedProcFlower implements IY
 		boolean startY = false;
 		
 		//高さを設定
-		if (workY <= -1) {
+		if (workY <= -1 && !isFlatMode) {
 			workY = this.getPos().down().getY();
+			startY = true;
+		} else if (workY <= -1) {
+			workY = this.world.getHeight();
 			startY = true;
 		}
 		
 		//処理終了
-		if (workY == 0) {
+		if (workY == 0 && !isFlatMode) {
+			return;
+		} else if (workY == this.getPos().down().getY() && isFlatMode) {
 			return;
 		}
 		
@@ -284,12 +307,15 @@ public class YKTileBoxedYuquarry extends YKTileBaseBoxedProcFlower implements IY
 					//south z軸プラス
 					//west  x軸マイナス
 					//east  x軸プラス
-					this.replaceLiquidBlock(
+					if (this.replaceLiquidBlock(
 							posStart.north().west().up(), 
-							posEnd.south().east());
-					//マナを消費して処理を終了
-					this.recieveMana(-this.getProcMana());
-					return;
+							posEnd.south().east())) {
+						//マナを消費して処理を終了
+						this.recieveMana(-this.getProcMana());
+						return;
+					}
+					//対象がなければ続行
+					startY = false;
 				}
 				
 				//空気の場合はスルー
@@ -343,13 +369,21 @@ public class YKTileBoxedYuquarry extends YKTileBaseBoxedProcFlower implements IY
 			//基準点を一段下げる
 			workY = workY - 1;
 			startY = true;
+			
+			//処理終了
+			if (workY == 0 && !isFlatMode) {
+				return;
+			} else if (workY == this.getPos().down().getY() && isFlatMode) {
+				return;
+			}
 		}
 	}
 	
 	/**
 	 * 液体を固体ブロックへ変換する処理
 	 */
-	private void replaceLiquidBlock(BlockPos posStart, BlockPos posEnd) {
+	private boolean replaceLiquidBlock(BlockPos posStart, BlockPos posEnd) {
+		boolean isReplace = false;
 		//一段上と2段分の液体を検索して変換する
 		for(BlockPos liquidPos : BlockPos.getAllInBox(posStart, posEnd)) {
 			
@@ -357,6 +391,7 @@ public class YKTileBoxedYuquarry extends YKTileBaseBoxedProcFlower implements IY
 			SoundEvent soundEvent = SoundEvents.BLOCK_LAVA_EXTINGUISH;
 			//液体かどうか
 			if (liquidState.getMaterial().isLiquid()) {
+				isReplace = true;
 				//デフォルト土
 				IBlockState replaceState = Blocks.DIRT.getDefaultState();
 				//水 -> 氷塊
@@ -383,9 +418,9 @@ public class YKTileBoxedYuquarry extends YKTileBaseBoxedProcFlower implements IY
 						SoundCategory.BLOCKS, 
 						0.5F, 
 						2.6F + (world.rand.nextFloat() - world.rand.nextFloat()) * 0.8F);
-				continue;
 			}
 		}
+		return isReplace;
 	}
 	
 	/**
@@ -572,7 +607,11 @@ public class YKTileBoxedYuquarry extends YKTileBaseBoxedProcFlower implements IY
 		this.flowerMode = FlowerMode.nextMode(flowerMode);
 		
 		//モード変更された場合最初からやり直す
-		this.workY = this.getPos().down().getY();
+		if (!this.isFlatMode) {
+			this.workY = this.getPos().down().getY();
+		} else {
+			this.workY = this.getWorld().provider.getHeight();
+		}
 	}
 	
 	//******************************************************************************************
@@ -632,8 +671,9 @@ public class YKTileBoxedYuquarry extends YKTileBaseBoxedProcFlower implements IY
 	 */
 	@Override
 	public int getField(int id) {
-		
-		if (id == BoxedFieldConst.SILK_TOUCH) {
+		if (id == BoxedFieldConst.FLAT_MODE) {
+			return this.isFlatMode() ? 1 : 0;
+		} else if (id == BoxedFieldConst.SILK_TOUCH) {
 			return this.getSilkTouch() ? 1 : 0;
 		} else if (id == BoxedFieldConst.MODE) {
 			return this.getFlowerMode().getId();
@@ -648,6 +688,6 @@ public class YKTileBoxedYuquarry extends YKTileBaseBoxedProcFlower implements IY
 	 */
 	@Override
 	public int getFieldCount() {
-		return 9;
+		return 10;
 	}
 }
