@@ -1,12 +1,14 @@
 package firis.yuzukizuflower.common.item;
 
 import java.util.List;
+import java.util.UUID;
 
 import javax.annotation.Nullable;
 
 import com.google.common.collect.HashMultimap;
 import com.google.common.collect.Multimap;
 
+import baubles.api.BaubleType;
 import baubles.api.IBauble;
 import firis.yuzukizuflower.YuzuKizuFlower;
 import net.minecraft.client.util.ITooltipFlag;
@@ -17,6 +19,9 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.world.World;
 
 public abstract class YKItemBaseBaubleAmulet extends Item implements IBauble {
+	
+	private static UUID uuid1 = UUID.fromString("845DB27C-C624-495F-8C9F-6020A9A58B6C");
+	private static UUID uuid2 = UUID.fromString("bb099c30-6420-4a1b-9fc8-6d8c412c73d5");
 	
 	/**
 	 * コンストラクタ
@@ -73,5 +78,27 @@ public abstract class YKItemBaseBaubleAmulet extends Item implements IBauble {
 	
 	@Override
 	public abstract void addInformation(ItemStack stack, @Nullable World worldIn, List<String> tooltip, ITooltipFlag flagIn);
+	
+	@Override
+	public BaubleType getBaubleType(ItemStack paramItemStack) {
+		if (paramItemStack.hasTagCompound() && paramItemStack.getTagCompound().hasKey("amulet")) {
+			if (!paramItemStack.getTagCompound().getBoolean("amulet")) {
+				return BaubleType.RING;
+			}
+		}
+		return BaubleType.AMULET;
+	}
+	
+	/**
+	 * UUIDをアクセサリーのタイプによって変更する
+	 * @param stack
+	 * @return
+	 */
+	protected UUID getAmuletUUID(ItemStack stack) {
+		if (getBaubleType(stack) == BaubleType.RING) {
+			return uuid2;
+		}
+		return uuid1;
+	}
 	
 }

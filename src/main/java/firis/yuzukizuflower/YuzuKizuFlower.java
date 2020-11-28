@@ -50,6 +50,7 @@ import firis.yuzukizuflower.common.item.YKItemRemoteChest;
 import firis.yuzukizuflower.common.network.NetworkHandler;
 import firis.yuzukizuflower.common.proxy.CommonProxy;
 import firis.yuzukizuflower.common.recipe.BotaniaRecipes;
+import firis.yuzukizuflower.common.recipe.RecipeBaubleAmulet;
 import firis.yuzukizuflower.common.recipe.RecipeBoxedFlower;
 import firis.yuzukizuflower.common.tileentity.YKTileAutoWorkbench;
 import firis.yuzukizuflower.common.tileentity.YKTileBoxedAkanerald;
@@ -1173,5 +1174,8 @@ public class YuzuKizuFlower
     		//レシピの追加
         	event.getRegistry().register(new RecipeBoxedFlower(key));
     	}
+    	
+    	//お守り変更レシピ
+    	event.getRegistry().register(new RecipeBaubleAmulet());
     }
 }
